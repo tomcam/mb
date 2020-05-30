@@ -1,7 +1,6 @@
 package main
 
 var (
-
 	Version = PRODUCT_NAME + " version " +
 		"0.45.0"
 

@@ -34,6 +34,3 @@ func (App *App) execute(templateName string, tpl string, funcMap template.FuncMa
 	}
 	return b.String(), nil
 }
-
-
-

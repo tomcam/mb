@@ -1,9 +1,11 @@
-package main 
-import(
-  "flag"
+package main
+
+import (
+	"flag"
 	"github.com/spf13/cobra"
 	//"github.com/spf13/viper"
 )
+
 var (
 
 	// Declare command-line subcommand to display config info
@@ -23,8 +25,6 @@ var (
 	cmdPageTypeFrom = cmdPageType.String("from", "", "theme to start with")
 	cmdPageTypeTo   = cmdPageType.String("to", "", "name of new pagetype for that theme")
 )
-
-
 
 // Command-line argument values
 type Args struct {
@@ -99,7 +99,7 @@ func (App *App) addCommands() {
       open .pub/index.html
 `,
 			Run: func(cmd *cobra.Command, args []string) {
-        App.publishFile(args[0])
+				App.publishFile(args[0])
 			},
 		}
 
@@ -169,4 +169,3 @@ func (App *App) addCommands() {
 	// When cobra is ready to go call initConfig()
 	cobra.OnInitialize(App.initConfig)
 }
-

@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/spf13/viper"
 	"os"
 )
+
 // info() displays relevant site configuration info for
 // debug purposes. If -v (verbose mode), also print data structures
 func (App *App) info() {
+	fmt.Println("*** prefs.configDir: " + viper.GetString("prefs.configDir"))
 	fmt.Println("App.Flags.Verbose", App.Flags.Verbose)
 	exists("Default config directory", App.Prefs.configDir)
 	exists("Publish directory", App.Site.Publish)
@@ -48,5 +51,3 @@ func exists(description, filename string) {
 		fmt.Println(": (Not present)")
 	}
 }
-
-

@@ -162,7 +162,7 @@ type authors struct {
 
 // readSiteConfig() opens the expected site.toml file, reads, and
 // parses it.
-// TODO: Remove? Replaced by Viper? 
+// TODO: Remove? Replaced by Viper?
 func (App *App) readSiteConfig() error {
 	App.Warning("%s", "readSiteConfig() xxx")
 	return readTomlFile(App.Site.configFile, &App.Site)

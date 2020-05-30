@@ -1,4 +1,5 @@
 package main
+
 import (
 	"bytes"
 	"fmt"
@@ -16,7 +17,9 @@ import (
 	"github.com/yuin/goldmark/renderer/html"
 )
 
-
+// publishFile() is the heart of this program. It converts
+// a Markdown document (with optional TOML at the beginning)
+// to HTML.
 func (App *App) publishFile(filename string) error {
 	var input []byte
 	var err error
@@ -30,7 +33,7 @@ func (App *App) publishFile(filename string) error {
 		return errCode("0102", filename)
 	}
 
-	// Output filename 
+	// Output filename
 	outfile := replaceExtension(filename, "html")
 	// Strip out everything but the filename.
 	//base := filepath.Base(outfile)
@@ -38,7 +41,9 @@ func (App *App) publishFile(filename string) error {
 	// Write everything to a temp file so in case there was an error, the
 	// previous HTML file is preserved.
 	tmpFile, err := ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
-	App.html = App.mdFileToHTMLBuffer(filename, input)
+
+	// Translate from Markdown to HTML!
+	App.html = App.MdFileToHTMLBuffer(filename, input)
 	writeTextFile(tmpFile.Name(), string(App.html))
 
 	// If the write succeeded, rename it to the output file
@@ -58,16 +63,11 @@ func (App *App) publishFile(filename string) error {
 	return nil
 }
 
-
-
-
-
-
-
-// Takes a buffer assumed to have no front matter
-// and converts to HTML
+// Takes a buffer containing Markdown
+// and converts to HTML.
+// Doesn't know about front matter.
 func (App *App) markdownBufferToBytes(input []byte) []byte {
-  fmt.Println("Converting " + string(input))
+	fmt.Println("Converting " + string(input))
 	autoHeadings := parser.WithAttribute()
 	if App.Site.MarkdownOptions.headingIDs == true {
 		autoHeadings = parser.WithAutoHeadingID()
@@ -115,19 +115,17 @@ func (App *App) appendStr(s string) {
 	App.html = append(App.html, s...)
 }
 
-// mdFileToHTMLBuffer() takes a byte slice buffer containing
+// MdFileToHTMLBuffer() takes a byte slice buffer containing
 // a pure Markdown file as input, and returns
 // a byte slice containing the file converted to HTML.
 // It doesn't know about front matter.
 // So it should be preceded by a call to App.parseFrontMatter()
 // if there's any possibility that the file contains front matter.
-// In true HTML fashion, it simply returns an empty buffer on error.
-func (App *App) mdFileToHTMLBuffer(filename string, input []byte) []byte {
+// In the spirit of a browser, it simply returns an empty buffer on error.
+func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 	// Resolve any Go template variables before conversion to HTML.
-  fmt.Println("Skipping template execution xxx")
+	fmt.Println("Skipping template execution xxx")
 	//interp := App.interps(filename, string(input))
 	//return App.markdownBufferToBytes([]byte(interp))
 	return App.markdownBufferToBytes(input)
 }
-
-

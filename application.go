@@ -45,8 +45,6 @@ type App struct {
 	fewerFuncs map[string]interface{}
 }
 
-
-
 // initConfig() determines where configuration file (and other
 // forms of configuration info) can be found, then reads in
 // all that info.
@@ -123,7 +121,7 @@ func newDefaultApp() *App {
 // if the verbose flag was used. Formats it like Fprintf.
 func (App *App) Verbose(format string, a ...interface{}) {
 	if App.Flags.Verbose {
-		fmt.Println(App.fmtMsg(format, a))
+		fmt.Println(App.fmtMsg(format, a...))
 	}
 }
 
@@ -131,12 +129,12 @@ func (App *App) Verbose(format string, a ...interface{}) {
 // to stdout, preceded by the text "Warning: "
 // Overrides the verbose flag. Formats it like Fprintf.
 func (App *App) Warning(format string, a ...interface{}) {
-	fmt.Println("Warning: " + App.fmtMsg(format, a))
+	fmt.Println("Warning: " + App.fmtMsg(format, a...))
 }
 
 // fmtMsg() formats string like Fprintf and writes to a string
 func (App *App) fmtMsg(format string, a ...interface{}) string {
-	return fmt.Sprintf(format, a)
+	return fmt.Sprintf(format, a...)
 }
 
 // QuitError() displays the error passed to it and exits
