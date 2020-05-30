@@ -184,5 +184,3 @@ func getFrontMatter(body []byte, delimiter []byte) (fstart, fend, mstart int) {
 	}
 	return start, end, mstart
 }
-
-

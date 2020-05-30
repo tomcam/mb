@@ -12,24 +12,24 @@ func TestConvert(t *testing.T) {
 		have string
 		want string
 	}{
-    /* ==== */
+		/* HAVE: */
 		{`# hi`,
+			/* WANT: */
 			`<h1 id="hi">hi</h1>`},
 
-    /* ==== */
-    {`===
+		/* HAVE: */
+		{`===
 theme="foo"
 ===
 hi`,
+			/* WANT: */
 			`<p>hi</p>`},
-    /* ==== */
-
 	}
 	App := newDefaultApp()
 	for each, tt := range tests {
 		//t.Run("TestMdFileToHTMLBuffer", func(t *testing.T) {
 		t.Run("TestConvert", func(t *testing.T) {
-      // TODO: Catch that error code
+			// TODO: Catch that error code
 			ans, _ := App.Convert("unitTest", []byte(tt.have))
 			ans = []byte(strings.Trim(string(ans), "\n"))
 			fmt.Printf("test %v\n", each)

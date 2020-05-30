@@ -32,11 +32,10 @@ func (App *App) publishFile(filename string) error {
 		return errCode("0102", filename)
 	}
 
-
-  // Extract front matter and parse.
-  // Starting at the Markdown, convert to HTML.
-  // Interpret templates as well. 
-  App.Convert(filename, input)
+	// Extract front matter and parse.
+	// Starting at the Markdown, convert to HTML.
+	// Interpret templates as well.
+	App.Convert(filename, input)
 
 	// Output filename
 	htmlFile := replaceExtension(filename, "html")
@@ -104,8 +103,8 @@ func (App *App) markdownBufferToBytes(input []byte) []byte {
 
 	var buf bytes.Buffer
 	if err := markdown.Convert(input, &buf); err != nil {
-    // TODO: Need something like displayErrCode("1010") or whatever
-    App.Warning("Error converting Xxx")
+		// TODO: Need something like displayErrCode("1010") or whatever
+		App.Warning("Error converting Xxx")
 		return []byte{}
 	}
 	return buf.Bytes()
@@ -131,7 +130,7 @@ func (App *App) appendStr(s string) {
 func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 	// Resolve any Go template variables before conversion to HTML.
 	interp := App.interps(filename, string(input))
-  // Convert markdown to HTML.
+	// Convert markdown to HTML.
 	return App.markdownBufferToBytes([]byte(interp))
 }
 
@@ -139,17 +138,14 @@ func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 // out the front matter, and sends the Markdown portion to be converted.
 // Write the HTML results to App.Page.Article
 func (App *App) Convert(filename string, input []byte) (start []byte, err error) {
-  // Extract front matter and parse.
-  // Return the starting address of the Markdown.
-  start, err = App.parseFrontMatter(filename, input)
-  if err != nil {
+	// Extract front matter and parse.
+	// Return the starting address of the Markdown.
+	start, err = App.parseFrontMatter(filename, input)
+	if err != nil {
 		return []byte{}, errCode("0103", filename)
-  }
+	}
 	// Resolve any Go template variables before conversion to HTML.
 	interp := App.interps(filename, string(start))
-  App.Page.Article = App.markdownBufferToBytes([]byte(interp))
-  return App.Page.Article, nil
+	App.Page.Article = App.markdownBufferToBytes([]byte(interp))
+	return App.Page.Article, nil
 }
-
-
-

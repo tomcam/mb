@@ -49,11 +49,11 @@ type App struct {
 // forms of configuration info) can be found, then reads in
 // all that info.
 func (App *App) initConfig() {
-	// Tell viper where to look for global config file.
-	viper.AddConfigPath(App.Prefs.configDir)
+	App.Warning("initConfig")
+	// Tell viper where to look for config file.
 	// It can look in as many places as you want.
-	viper.AddConfigPath(filepath.Join(homeDir(), GLOBAL_CONFIG_DIRNAME))
 	viper.AddConfigPath(".")
+	viper.AddConfigPath(filepath.Join(homeDir(), GLOBAL_CONFIG_DIRNAME))
 	viper.SetConfigName(PRODUCT_NAME)
 	// viper likes to apply its own file extensions
 	viper.SetConfigType("toml")
@@ -61,6 +61,7 @@ func (App *App) initConfig() {
 	viper.AutomaticEnv()
 	// Read in metabuzz.toml
 	if err := viper.ReadInConfig(); err != nil {
+		// TODO: Give this a standard error code and display it
 		fmt.Println("error reading in config file:", err.Error())
 		if err, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			// TODO: Handle error properly
@@ -68,9 +69,11 @@ func (App *App) initConfig() {
 		} else {
 			// Ignore case where there simply wasn't a config file,
 			// since it's not a requirement.
+			fmt.Println("XXXXXXXXXXXXx No config file found")
 			App.Verbose("No configuration file found")
 		}
 	}
+  fmt.Println(viper.Get("configdir"))
 }
 
 // newDefaultApp() allocates an App runtime environment
@@ -85,8 +88,8 @@ func newDefaultApp() *App {
 		},
 
 		Page: &Page{
-			assets: []string{},
-      Article: []byte{},
+			assets:  []string{},
+			Article: []byte{},
 		},
 		Prefs: &Prefs{
 			configDir: ".",
@@ -112,15 +115,11 @@ func newDefaultApp() *App {
 	// Add config/env support from cobra and viper
 	App.addCommands()
 
-	App.funcs = template.FuncMap{/* "scode": App.scode, */
-		"ftime": App.ftime, 
-    /*"hostname": App.hostname, "path": App.path, "inc": App.inc */
-  }
-
-
+	App.funcs = template.FuncMap{ /* "scode": App.scode, */
+		"ftime": App.ftime,
+		/*"hostname": App.hostname, "path": App.path, "inc": App.inc */
+	}
 
 	// CONFIG HAS NOT BEEN READ   YET
 	return &App
 }
-
-

@@ -8,9 +8,9 @@ type Page struct {
 	// https://github.com/alecthomas/chroma/tree/master/styles
 	CodeTheme string
 
-	// Content of the article md file itself converted to HTML, 
-  // obviously without header, nav, footer, aside etc.
-	Article[]byte
+	// Content of the article md file itself converted to HTML,
+	// obviously without header, nav, footer, aside etc.
+	Article []byte
 
 	// Fully qualified filename.
 	filePath string

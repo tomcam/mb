@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-  "os"
+	"os"
 )
 
 /*
@@ -122,7 +122,7 @@ var errMsgs = map[string]string{
 	"0908": "Problem creating TOML object",                         // runtime error
 	"0910": "Problem creating output file",                         // filename
 	"0911": "Unable to copy themes directory to publish directory", //
-  "0912": "Problem converting markdown file",                     //
+	"0912": "Problem converting markdown file",                     //
 
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename
@@ -156,12 +156,12 @@ var errMsgs = map[string]string{
 }
 
 type errMsg struct {
-  // Key to a map of error messages
-	key      string
+	// Key to a map of error messages
+	key string
 
-  // If key is the word "PREVIOUS", this will contain an error
-  // message from an earlier action, typically a return from the
-  // Go runtime.
+	// If key is the word "PREVIOUS", this will contain an error
+	// message from an earlier action, typically a return from the
+	// Go runtime.
 	previous string
 	extra    []string
 }
@@ -169,14 +169,14 @@ type errMsg struct {
 // Error() looks up e.key, which is an error code expressed as
 // a string (for example, "1001") and returns its associated map entry.
 // But there's likely much more happening:
-// -  If e.key is "PREVIOUS" it suggests that an error message 
-//    that didn't get displayed probably 
+// -  If e.key is "PREVIOUS" it suggests that an error message
+//    that didn't get displayed probably
 //    should, and its contents in e.previous are returned.
 // -  If e.extra has something, say, a filename, it should be
 //    used to customize the error message.
 // Why the fake number? Because it gets appended to "mbz" in an error message,
 // and I plan for Metabuzz to be so popular that people would be
-// looking up error codes search engines, e.g. mbz1001. And it's a 
+// looking up error codes search engines, e.g. mbz1001. And it's a
 // ghetto way of keeping error codes unique while being kind of sorted
 // in the source code.
 func (e *errMsg) Error() string {
@@ -188,7 +188,7 @@ func (e *errMsg) Error() string {
 		return msg.Error()
 	}
 
-  // Error message from an earlier error return needs to be seen.
+	// Error message from an earlier error return needs to be seen.
 	if e.key == "PREVIOUS" {
 		return fmt.Errorf("%s\n", e.previous).Error()
 	}
@@ -208,7 +208,7 @@ func New(key string, previous string, extra ...string) error {
 	return &errMsg{key, previous, extra}
 }
 
-// errCode() takes an error code, say "0110", and 
+// errCode() takes an error code, say "0110", and
 // one or two optional strings. It adds the error code
 // to the error messages map so that message can be looked
 // up. The additional parameters give information such
@@ -243,7 +243,7 @@ func (App *App) Warning(format string, a ...interface{}) {
 
 // fmtMsg() formats string like Fprintf and writes to a string
 func (App *App) fmtMsg(format string, a ...interface{}) string {
-    return fmt.Sprintf(format, a...)
+	return fmt.Sprintf(format, a...)
 }
 
 func displayErrCode(errCode string) {
@@ -252,7 +252,7 @@ func displayErrCode(errCode string) {
 // displayError() shows the specified error message
 // without exiting to the OS.
 func displayError(e error) {
-  fmt.Println(e.Error())
+	fmt.Println(e.Error())
 }
 
 // QuitError() displays the error passed to it and exits
@@ -263,12 +263,10 @@ func displayError(e error) {
 // constraint, for example, fulfilling an interface method
 // that doesn't support this practice.
 func QuitError(e error) {
-  displayError(e)
+	displayError(e)
 	if e == nil {
 		os.Exit(0)
 	} else {
 		os.Exit(1)
 	}
 }
-
-

@@ -99,16 +99,16 @@ func (App *App) addCommands() {
       open .pub/index.html
 `,
 			Run: func(cmd *cobra.Command, args []string) {
-        if len(args) > 0 {
-          for i, _ := range args {
-            err := App.publishFile(args[i])
-            if err != nil {
-              QuitError(err)
-            }
-          }
-        } else {
-          App.Warning("%s", "Fake build xxx")
-        }
+				if len(args) > 0 {
+					for i, _ := range args {
+						err := App.publishFile(args[i])
+						if err != nil {
+							QuitError(err)
+						}
+					}
+				} else {
+					App.Warning("%s", "Fake build xxx")
+				}
 			},
 		}
 
