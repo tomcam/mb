@@ -86,6 +86,7 @@ func newDefaultApp() *App {
 
 		Page: &Page{
 			assets: []string{},
+      Article: []byte{},
 		},
 		Prefs: &Prefs{
 			configDir: ".",

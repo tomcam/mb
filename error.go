@@ -156,11 +156,29 @@ var errMsgs = map[string]string{
 }
 
 type errMsg struct {
+  // Key to a map of error messages
 	key      string
+
+  // If key is the word "PREVIOUS", this will contain an error
+  // message from an earlier action, typically a return from the
+  // Go runtime.
 	previous string
 	extra    []string
 }
 
+// Error() looks up e.key, which is an error code expressed as
+// a string (for example, "1001") and returns its associated map entry.
+// But there's likely much more happening:
+// -  If e.key is "PREVIOUS" it suggests that an error message 
+//    that didn't get displayed probably 
+//    should, and its contents in e.previous are returned.
+// -  If e.extra has something, say, a filename, it should be
+//    used to customize the error message.
+// Why the fake number? Because it gets appended to "mbz" in an error message,
+// and I plan for Metabuzz to be so popular that people would be
+// looking up error codes search engines, e.g. mbz1001. And it's a 
+// ghetto way of keeping error codes unique while being kind of sorted
+// in the source code.
 func (e *errMsg) Error() string {
 	var msg error
 	// Make sure the error code has documentation
@@ -169,6 +187,8 @@ func (e *errMsg) Error() string {
 			errorCodePrefix+e.key, e.previous)
 		return msg.Error()
 	}
+
+  // Error message from an earlier error return needs to be seen.
 	if e.key == "PREVIOUS" {
 		return fmt.Errorf("%s\n", e.previous).Error()
 	}
@@ -188,6 +208,13 @@ func New(key string, previous string, extra ...string) error {
 	return &errMsg{key, previous, extra}
 }
 
+// errCode() takes an error code, say "0110", and 
+// one or two optional strings. It adds the error code
+// to the error messages map so that message can be looked
+// up. The additional parameters give information such
+// as whether a previous error message should be displayed,
+// or something to customize the message that's already in
+// the error messages map, like a filename.
 func errCode(key string, previous string, extra ...string) error {
 	var e error
 	if len(extra) > 0 {
@@ -219,6 +246,15 @@ func (App *App) fmtMsg(format string, a ...interface{}) string {
     return fmt.Sprintf(format, a...)
 }
 
+func displayErrCode(errCode string) {
+}
+
+// displayError() shows the specified error message
+// without exiting to the OS.
+func displayError(e error) {
+  fmt.Println(e.Error())
+}
+
 // QuitError() displays the error passed to it and exits
 // to the operating system, returning a 1 (any nonzero
 // return means an error ocurred).
@@ -227,10 +263,10 @@ func (App *App) fmtMsg(format string, a ...interface{}) string {
 // constraint, for example, fulfilling an interface method
 // that doesn't support this practice.
 func QuitError(e error) {
+  displayError(e)
 	if e == nil {
 		os.Exit(0)
 	} else {
-		fmt.Println(e.Error())
 		os.Exit(1)
 	}
 }

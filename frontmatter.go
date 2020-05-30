@@ -83,14 +83,13 @@ func (Env *App) parseFrontMatter(filename string, input []byte) (markupStart []b
 	}
 	if start <= 0 && markup < 0 {
 		// Not even sure how this happens.
-		// No markdown AND not front matter.
+		// No markdown AND no front matter.
 		return input, errCode("1001", filename)
 	}
 	decode := string(input[start:stop])
 	if _, err := toml.Decode(decode, &Env.FrontMatter); err != nil {
 		return input[markup:], errCode("0101", filename)
 	}
-	//fmt.Fprintf(os.Stdout, "Input: %+v\nFrontMatter: %+v\n.Markup starts at char %v\n",input, Env.FrontMatter, markup)
 	return input[markup:], nil
 }
 
@@ -164,10 +163,8 @@ func getFrontMatter(body []byte, delimiter []byte) (fstart, fend, mstart int) {
 		// Not found. Maybe it's a windows-style file.
 		secondDelim = bytes.Index(body[dl:], frontMatterDelimiterWin)
 		if secondDelim < 0 {
-			//fmt.Println("Couldn't find second front matter delimiter")
 			return -1, -1, 0
 		}
-		//fmt.Println("Found second Windows delimiter")
 	}
 
 	// Second delimiter found.

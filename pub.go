@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"fmt"
+	//"fmt"
 	//"github.com/gohugoio/hugo/markup/tableofcontents"
 	"io/ioutil"
 	"os"
@@ -33,16 +33,15 @@ func (App *App) publishFile(filename string) error {
 	}
 
 
-  // xxx
-  App.html, err = App.Convert(filename, input)
-  if err != nil {
-    return errCode("0912", filename)
-  }
+  // Extract front matter and parse.
+  // Starting at the Markdown, convert to HTML.
+  // Interpret templates as well. 
+  App.Convert(filename, input)
 
 	// Output filename
-	outfile := replaceExtension(filename, "html")
+	htmlFile := replaceExtension(filename, "html")
 	// Strip out everything but the filename.
-	//base := filepath.Base(outfile)
+	//base := filepath.Base(htmlkjlfile)
 
 	// Write everything to a temp file so in case there was an error, the
 	// previous HTML file is preserved.
@@ -50,19 +49,19 @@ func (App *App) publishFile(filename string) error {
 
 	// Translate from Markdown to HTML!
 	//App.html = App.MdFileToHTMLBuffer(filename, start)
-	writeTextFile(tmpFile.Name(), string(App.html))
+	writeTextFile(tmpFile.Name(), string(App.Page.Article))
 
 	// If the write succeeded, rename it to the output file
 	// This way if there was an existing HTML file but there was
 	// an error in output this time, it doesn't get clobbered.
-	if err = os.Rename(tmpFile.Name(), outfile); err != nil {
+	if err = os.Rename(tmpFile.Name(), htmlFile); err != nil {
 		return err
 	}
 
-	if !fileExists(outfile) {
-		QuitError(errCode("0910", outfile))
+	if !fileExists(htmlFile) {
+		QuitError(errCode("0910", htmlFile))
 	}
-	App.Verbose("\tCreated file %s", outfile)
+	App.Verbose("\tCreated file %s", htmlFile)
 	App.fileCount++
 	//
 	// Success
@@ -73,7 +72,6 @@ func (App *App) publishFile(filename string) error {
 // and converts to HTML.
 // Doesn't know about front matter.
 func (App *App) markdownBufferToBytes(input []byte) []byte {
-	fmt.Println("Converting " + string(input))
 	autoHeadings := parser.WithAttribute()
 	if App.Site.MarkdownOptions.headingIDs == true {
 		autoHeadings = parser.WithAutoHeadingID()
@@ -106,6 +104,8 @@ func (App *App) markdownBufferToBytes(input []byte) []byte {
 
 	var buf bytes.Buffer
 	if err := markdown.Convert(input, &buf); err != nil {
+    // TODO: Need something like displayErrCode("1010") or whatever
+    App.Warning("Error converting Xxx")
 		return []byte{}
 	}
 	return buf.Bytes()
@@ -137,17 +137,17 @@ func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 // Convert() takes a document with optional front matter, parses
 // out the front matter, and sends the Markdown portion to be converted.
 func (App *App) Convert(filename string, input []byte) (start []byte, err error) {
-	// The buffer probably has front matter but that's
-	// not certain. Find any if it does, decode
-	// as TOML, and marshal back to App.FrontMatter.
-	// Return with the starting byte position of the
-	// markdown, which appears after the (optional)
-	// front matter.
-	start, err = App.parseFrontMatter(filename, input)
-	if err != nil {
-		return nil, errCode("0103", filename)
-	}
-  return start, nil
+  // Extract front matter and parse.
+  // Return the starting address of the Markdown.
+  start, err = App.parseFrontMatter(filename, input)
+  if err != nil {
+		return []byte{}, errCode("0103", filename)
+  }
+	// Resolve any Go template variables before conversion to HTML.
+	interp := App.interps(filename, string(start))
+  App.Page.Article = App.markdownBufferToBytes([]byte(interp))
+  return App.Page.Article, nil
 }
+
 
 
