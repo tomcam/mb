@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	//"html/template"
+	"html/template"
 	"log"
 	"os"
 	"path/filepath"
@@ -111,6 +111,13 @@ func newDefaultApp() *App {
 	}
 	// Add config/env support from cobra and viper
 	App.addCommands()
+
+	App.funcs = template.FuncMap{/* "scode": App.scode, */
+		"ftime": App.ftime, 
+    /*"hostname": App.hostname, "path": App.path, "inc": App.inc */
+  }
+
+
 
 	// CONFIG HAS NOT BEEN READ   YET
 	return &App

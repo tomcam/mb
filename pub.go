@@ -125,7 +125,7 @@ func (App *App) appendStr(s string) {
 func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 	// Resolve any Go template variables before conversion to HTML.
 	fmt.Println("Skipping template execution xxx")
-	//interp := App.interps(filename, string(input))
-	//return App.markdownBufferToBytes([]byte(interp))
-	return App.markdownBufferToBytes(input)
+	interp := App.interps(filename, string(input))
+	return App.markdownBufferToBytes([]byte(interp))
+	//return App.markdownBufferToBytes(input)
 }

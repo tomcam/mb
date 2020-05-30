@@ -42,7 +42,7 @@ var errMsgs = map[string]string{
 
 	// 0100	- Error reading file
 	"0101": "Error reading front matter",           // filename
-	"0102": "Error reading Markdown file",          // filename
+	"0102": "Unable to open file",                  // filename
 	"0103": "Error reading front matter",           // filename
 	"0104": "TOML error reading theme file",        // custom message + err.Error()
 	"0105": "TOML error reading PageType file",     // custom message + err.Error()
