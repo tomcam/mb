@@ -1,4 +1,36 @@
 
+## Things I need to test
+- Pub dir gets changed in configuration
+
+## Naming conventions
+- When generating a file start the func name with write
+- When allocating an objecet star the fun name with new
+
+## Errors
+
+### Using PREVIOUS
+
+Normally "PREVIOUS" means an earlier call generated an error so
+it should be propagated. Include as err.Error() in the second
+parameter:
+
+```
+if err := App.writeSiteConfig(); err != nil {
+  // Custom error message already generated
+  return errCode("PREVIOUS", err.Error(), App.Site.configFile)
+  return errCode("0902", App.Site.configFile, err.Error())
+}
+```
+
+### Including error messages from Go runtime calls
+
+```
+f, err := os.Create(filename)
+if err != nil {
+  return errCode("0210", err.Error(), filename)
+}
+```
+
 ## Application configuration data
 
 Themes, shortcode files, and everything else not including the executable file are 

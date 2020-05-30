@@ -44,11 +44,17 @@ func (App *App) publishFile(filename string) error {
 
 	// Write everything to a temp file so in case there was an error, the
 	// previous HTML file is preserved.
-	tmpFile, err := ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
-
+	tmpFileBaseName := PRODUCT_NAME + "-tmp-"
+	tmpFile, err := ioutil.TempFile(App.Site.Publish, tmpFileBaseName)
+	if err != nil {
+		return errCode("0914", "")
+	}
 	// Translate from Markdown to HTML!
 	//App.html = App.MdFileToHTMLBuffer(filename, start)
-	writeTextFile(tmpFile.Name(), string(App.Page.Article))
+	err = writeTextFile(tmpFile.Name(), string(App.Page.Article))
+	if err != nil {
+		return errCode("PREVIOUS", "")
+	}
 
 	// If the write succeeded, rename it to the output file
 	// This way if there was an existing HTML file but there was

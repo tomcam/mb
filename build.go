@@ -12,21 +12,24 @@ import (
 // Assets in the theme/pagetype directories are published, which
 // includes anything other than HTML or Markdown files.
 func (App *App) build() error {
-  App.Warning("%s", "build(): disabling project check temporarily")
+	App.Warning("%s", "build(): disabling project check temporarily")
 	// Make sure this is a project directory
-  /*
-	if !isProject(".") {
-		return errCode("1009", currDir())
-	}
-  */
+	/*
+		if !isProject(".") {
+			return errCode("1009", currDir())
+		}
+	*/
 
 	// Note current position in directory tree
 	App.Site.path = currDir()
 	App.Site.sCodePath = filepath.Join(App.Site.path, SCODE_SUBDIRNAME)
 
-	// Make sure there's a publish directory name
+	// Make sure there's a publish directory name.
+	// Use system default if necessary.
+	// BTW this would be a weird situation.
 	if App.Site.Publish == "" {
-		return errCode("1011", "")
+		//return errCode("1011", "")
+		App.Site.Publish = PublishSubDirName
 	}
 
 	var err error
@@ -45,6 +48,7 @@ func (App *App) build() error {
 		return errCode("0913", "")
 	}
 
+	// Loop through the list of permitted directories for this site.
 	for dir, _ := range App.Site.dirs {
 		// Change to each directory
 		if err := os.Chdir(dir); err != nil {
@@ -56,7 +60,7 @@ func (App *App) build() error {
 			return errCode("0703", dir)
 		}
 
-    // Go through all the Markdown files and convert.
+		// Go through all the Markdown files and convert.
 		for _, file := range files {
 			if !file.IsDir() && isMarkdownFile(file.Name()) {
 				if err := App.publishFile(filepath.Join(dir, file.Name())); err != nil {

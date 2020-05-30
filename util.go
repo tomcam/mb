@@ -32,12 +32,11 @@ func cfgBool(option string) bool {
 // https://golang.org/pkg/os/#UserConfigDir
 func configDir() string {
 	if cfgDir, err := os.UserConfigDir(); err != nil {
-		return filepath.Join(".",GLOBAL_CONFIG_DIRNAME)
+		return filepath.Join(".", GLOBAL_CONFIG_DIRNAME)
 	} else {
-		return filepath.Join(cfgDir, PRODUCT_NAME,GLOBAL_CONFIG_DIRNAME)
+		return filepath.Join(cfgDir, PRODUCT_NAME, GLOBAL_CONFIG_DIRNAME)
 	}
 }
-
 
 // copyDirOnly() copies a directory nonrecursively.
 // Doesn't other directories
@@ -472,7 +471,7 @@ func readTomlFile(filename string, target interface{}) (err error) {
 func writeTomlFile(filename string, target interface{}) error {
 	f, err := os.Create(filename)
 	if err != nil {
-		return errCode("0210", filename)
+		return errCode("0210", err.Error(), filename)
 	}
 	if err = toml.NewEncoder(f).Encode(target); err != nil {
 		return errCode("0908", err.Error())

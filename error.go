@@ -87,7 +87,7 @@ var errMsgs = map[string]string{
 	"0302": "Error deleting old publish directory", // directory name
 
 	// 0400	- Error creating directory
-	"0401": "Error creating publish directory", // Name
+	"0401": "Error creating site directory",    // Name
 	"0402": "Error publishing asset directory", // Name
 	"0403": "Error recreating publish directory",
 	"0404": "Error creating publish directory",   // dir name
@@ -113,7 +113,7 @@ var errMsgs = map[string]string{
 
 	// 0900	- Problem generating something
 	"0901": "Problem creating TOML object",                         // err.Error
-	"0902": "Error creating new site",                              // Full custom error message
+	"0902": "Error creating new site.toml file",                              // Full custom error message
 	"0903": "Error writing to file",                                // Full custom error message
 	"0904": "Theme name taken",                                     // custom message
 	"0905": "Couldn't create directory for new theme",              // custom message
@@ -123,7 +123,8 @@ var errMsgs = map[string]string{
 	"0910": "Problem creating output file",                         // filename
 	"0911": "Unable to copy themes directory to publish directory", //
 	"0912": "Problem converting markdown file",                     //
-  "0913": "Unable to read project directory",                     //
+	"0913": "Unable to read project directory",                     //
+	"0914": "Error creating a temporary file",                      // filename
 
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename
@@ -150,6 +151,7 @@ var errMsgs = map[string]string{
 	"1103": "Can't change to site directory",   // directory name
 	"1104": "Can't change to site directory",   // directory name
 	"1105": "Can't change to site directory",   // directory name
+	"1106": "Can't change to site directory",   // directory name
 
 	// 1200 - Syntax error!
 	"1201": "inc: Couldn't execute template in",   // filename
@@ -196,11 +198,11 @@ func (e *errMsg) Error() string {
 
 	if e.previous != "" {
 		msg = fmt.Errorf("%s: %s (error code %s%s)\n",
-      // The most case: an error code with customization
+			// The most case: an error code with customization
 			errMsgs[e.key], e.previous, errorCodePrefix, e.key)
 	} else {
 		msg = fmt.Errorf("%s (error code %s%s)\n",
-      // The slighly unusual case of an error code with no customization
+			// The slighly unusual case of an error code with no customization
 			errMsgs[e.key], errorCodePrefix, e.key)
 	}
 	return msg.Error()
@@ -218,6 +220,16 @@ func New(key string, previous string, extra ...string) error {
 // as whether a previous error message should be displayed,
 // or something to customize the message that's already in
 // the error messages map, like a filename.
+// When calling a Go runtime routine that could return
+// an error message, make err.Error() the second
+// parameter so its contents are included, like this:
+/*
+	f, err := os.Create(filename)
+	if err != nil {
+		return errCode("0210", err.Error(), filename)
+	}
+*/
+
 func errCode(key string, previous string, extra ...string) error {
 	var e error
 	if len(extra) > 0 {

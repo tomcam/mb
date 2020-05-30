@@ -99,8 +99,8 @@ func (App *App) addCommands() {
       open .pub/index.html
 `,
 			Run: func(cmd *cobra.Command, args []string) {
-        // If there are arguments after build, then
-        // just convert these files one at at time.
+				// If there are arguments after build, then
+				// just convert these files one at at time.
 				if len(args) > 0 {
 					for i, _ := range args {
 						err := App.publishFile(args[i])
@@ -109,14 +109,14 @@ func (App *App) addCommands() {
 						}
 					}
 				} else {
-          // Them more likely case: it's build all by
-          // itself, so go through the whole directory
-          // tree and build as a complete site.
-          err := App.build()
-          if err != nil {
-            QuitError(err)
-          }
-      }
+					// Them more likely case: it's build all by
+					// itself, so go through the whole directory
+					// tree and build as a complete site.
+					err := App.build()
+					if err != nil {
+						QuitError(err)
+					}
+				}
 			},
 		}
 
@@ -125,22 +125,61 @@ func (App *App) addCommands() {
 		 *****************************************************/
 		cmdNew = &cobra.Command{
 			Use:   "new",
-			Short: "new commands: cli new site|theme",
-			Long:  `new commands: Long version`,
-			/*
-							Run: func(cmd *cobra.Command, args []string) {
-								//App.cmdNew(args)
-				        // xxx
-				      },
-			*/
+			Short: "new commands: new site|theme",
+			Long:  `site: Use new site to start a new project. Use new theme to 
+create theme based on an existing one. 
+
+      Typical usage of new site:
+
+      : Create the project named mysite in its own directory.
+      : (Generates a tiny file named index.md)
+      mb new site mysite
+
+      : Make that the current directory. 
+      cd mysite
+
+      : Optional step: Write your Markdown here!
+
+      : Find all .md files and convert to HTML
+      : Copy them into the publish directory named .pub
+      mb build
+
+      : Load the site's home page into a browser.
+      : Windows users, omit the open
+      open .pub/index.html
+`,
 		}
 
 		/*****************************************************
 		    Subcommand: new site
 		*****************************************************/
-		//err      error
 
-		cmdNewSite = &cobra.Command{}
+		cmdNewSite = &cobra.Command{
+			Use: "site {sitename}",
+			Short: "new site mycoolsite",
+			Long: `new site {sitename}
+
+      Where {sitename} is a valid directory name. For example, if your site is calle basiclaptop.com, you would do this:
+
+      mb new site basiclaptop
+`,
+			Run: func(cmd *cobra.Command, args []string) {
+				// If there are arguments after build, then
+				// just convert these files one at at time.
+				if len(args) > 0 {
+          App.Site.Name = args[0]
+				} else {
+					// Them more likely case: it's build all by
+					// itself, so go through the whole directory
+					// tree and build as a complete site.
+          App.Site.Name = promptString("Name of site to create?")
+				}
+        err := App.newSite(App.Site.Name)
+        if err != nil {
+          QuitError(err)
+        }
+      },
+    }
 
 		/*****************************************************
 		     Subcommand: new theme
@@ -163,8 +202,9 @@ func (App *App) addCommands() {
 	cmdNew.AddCommand(cmdNewTheme)
 
 	// Example command line:
-	// new site foo --name=mysite
-	cmdNewSite.Flags().StringVarP(&App.Args.NewSiteName, "name", "n", "", "name of new site (follow file naming conventions)")
+	// new site --name=mysite
+	// xxx
+	//cmdNewSite.Flags().StringVarP(&App.Args.NewSiteName, "name", "n", "", "name of new site (follow file naming conventions)")
 
 	// Example command line:
 	// new site

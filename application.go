@@ -58,9 +58,9 @@ func (App *App) initConfig() {
 	viper.SetConfigType("toml")
 	// TODO: Get this right when I've nailed the other Viper stuff
 	viper.AutomaticEnv()
-	// Read in command line options, and get the 
-  // location of the configuration directory that
-  // itself points to metabuzz.toml
+	// Read in command line options, and get the
+	// location of the configuration directory that
+	// itself points to metabuzz.toml
 	if err := viper.ReadInConfig(); err != nil {
 		// TODO: Give this a standard error code and display it
 		//fmt.Println("error reading in config file:", err.Error())
@@ -73,10 +73,10 @@ func (App *App) initConfig() {
 			App.Verbose("No configuration file found")
 		}
 	}
-  // Are we going to look in the local directory for
-  // site assets, themes, etc., or are we going to 
-  // use the standard application configuration directory?
-  // This determines its location.
+	// Are we going to look in the local directory for
+	// site assets, themes, etc., or are we going to
+	// use the standard application configuration directory?
+	// This determines its location.
 	App.Prefs.configDir = cfgString("configdir")
 	if App.Prefs.configDir == "" {
 		App.Prefs.configDir = configDir()
@@ -102,12 +102,12 @@ func newDefaultApp() *App {
 			configDir: ".",
 		},
 		Site: &Site{
-			configFile: filepath.Join(siteConfigSubDir, siteConfigFilename),
-			dirs:       map[string]mdOptions{},
 			// Assets just go into the publish directory
 			AssetDir: ".",
-			//SiteConfigFile: filepath.Join(siteConfigSubDir, SITE_CONFIG_FILENAME),
 			CommonSubDir: commonSubDirName,
+			//configFile: filepath.Join(siteConfigSubDir, siteConfigFilename),
+			dirs:       map[string]mdOptions{},
+      Language: "en",
 			MarkdownOptions: MarkdownOptions{
 				hardWraps:      false,
 				HighlightStyle: "github",

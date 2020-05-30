@@ -1,9 +1,9 @@
 package main
 
 import (
-//	"fmt"
-//	"os"
-//	"path/filepath"
+	"fmt"
+	"os"
+	"path/filepath"
 )
 
 // Site contains configuration specific to each site, such as
@@ -13,7 +13,7 @@ type Site struct {
 	path string
 
 	// Subdirectry + filename site config file
-	configFile string
+	configFilePath string
 
 	// Full path of shortcode dir for this project. It's computed
 	// at runtime using SCodeDir, also in this struct.
@@ -165,7 +165,7 @@ type authors struct {
 // TODO: Remove? Replaced by Viper?
 func (App *App) readSiteConfig() error {
 	App.Warning("%s", "readSiteConfig() xxx")
-	return readTomlFile(App.Site.configFile, &App.Site)
+	return readTomlFile(App.Site.configFilePath, &App.Site)
 }
 
 // MarkdownOptions consists of goldmark
@@ -185,3 +185,100 @@ type MarkdownOptions struct {
 	// Create id= attributes for all headers automatically
 	headingIDs bool
 }
+
+// writeSiteConfig() writes the contents of App.Site
+// and creates or replaces a TOML file in the
+// project's site subdirectory.
+// Assumes you're in the project directory.
+func (App *App) writeSiteConfig() error {
+	App.Warning("writeSiteConfig(%s) xxx", App.Site.configFilePath)
+	return writeTomlFile(App.Site.configFilePath, App.Site)
+}
+
+// newSite() attempts to create an empty
+// project site using the
+// supplied directory name.
+func (App *App) newSite(sitename string) error {
+	fmt.Println("App.Args.NewSite: " + App.Args.NewSiteName)
+	if sitename == "" {
+		return errCode("1013", "")
+	}
+	// Do a simplistic, fallible check to see if there's
+	// already a site present and quit if so.
+	if isProject(sitename) {
+		return errCode("0951", sitename)
+	}
+
+	// Create the site subdirectory.
+	err := os.MkdirAll(sitename, PROJECT_FILE_PERMISSIONS)
+	if err != nil {
+		return errCode("401", sitename)
+	}
+
+	// Make it the current directory.
+	if err := os.Chdir(sitename); err != nil {
+		return errCode("1106", sitename)
+	}
+
+	// Create minimal directory structure: Publish directory
+	// .site directory, .themes, etc.
+	if err := createDirStructure(&siteDirs); err != nil {
+		return err
+	}
+
+	// Create its site.toml file
+  App.siteDefaults()
+  if err := App.writeSiteConfig(); err != nil {
+    // Custom error message already generated
+    return errCode("PREVIOUS", err.Error(), App.Site.configFilePath)
+  }
+
+	// Copy all themes
+	// from the user application data directory to the site.
+	App.Warning("App.themesPath: %s", App.themesPath)
+	App.Warning("App.Site.themesPath: %s", App.Site.themesPath)
+	promptString("Ready to continue? ")
+	App.Warning("Pretending to copy theme directory from %s to %s",
+		App.themesPath, App.Site.themesPath)
+	/*
+		err = copyDirAll(App.themesPath,App.Site.themesPath)
+		if err != nil {
+			// TODO: Make more specific? and why did this cause a runtime error?
+			//QuitError(errCode("PREVIOUS", err.Error()))
+			QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
+		}
+	*/
+	// Create a little home page
+	indexMd = fmt.Sprintf(indexMd, sitename, sitename)
+	return writeTextFile("index.md", indexMd)
+
+}
+
+
+// siteDefaults() computes values for location of site
+// theme files, publish directory, etc. 
+// Most of them are relative to the site directory.
+// It must be called after config files are read.
+func (App *App) siteDefaults() {
+  App.Warning("%s","siteDefaults() xxx")
+	App.Site.path = currDir()
+  App.Site.configFilePath = filepath.Join(App.Site.path, siteConfigSubDir, siteConfigFilename)
+	App.themesPath = filepath.Join(cfgString("configdir"), THEME_SUBDIRNAME)
+	App.Site.Publish = filepath.Join(App.Site.path, PublishSubDirName)
+	App.Site.Headers = filepath.Join(App.Site.path, headersDir)
+	App.Site.commonDir = filepath.Join(App.Site.path, commonSubDirName)
+	if App.Flags.DontCopy {
+		App.Site.themesPath = App.themesPath // xxx
+	} else {
+		App.Site.themesPath = filepath.Join(App.Site.path, siteThemeDir)
+	}
+	///xxx
+	fmt.Printf("\tApp.Site.path: %+v\n", App.Site.path)
+	fmt.Printf("\tApp.Site.name: %+v\n", App.Site.Name)
+	fmt.Printf("\tApp.Page.filename: %+v\n", App.Page.filename)
+	fmt.Printf("\tApp.Site.themesPath: %+v\n", App.Site.themesPath)
+	fmt.Printf("\tApp.themesPath: %+v\n", App.themesPath)
+}
+
+
+
