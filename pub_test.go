@@ -11,14 +11,17 @@ func TestMdFileToHTMLBuffer(t *testing.T) {
 		have string
 		want string
 	}{
+    /* ==== */
 		{`# hi`,
 			`<h1 id="hi">hi</h1>`},
 
-		{`# h1
-hello, world.`,
-
-			`<h1 id="h1">h1</h1>
-<p>hello, world.</p>`},
+    /* ==== */
+    {`===
+theme="foo"
+===
+hi`,
+			`<p>hi</p`},
+    /* ==== */
 
 	}
 	App := newDefaultApp()

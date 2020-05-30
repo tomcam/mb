@@ -1,12 +1,12 @@
 package main
 
 import (
+	//"os"
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"html/template"
 	"log"
-	"os"
 	"path/filepath"
 )
 
@@ -55,17 +55,16 @@ func (App *App) initConfig() {
 	viper.AddConfigPath(filepath.Join(homeDir(), GLOBAL_CONFIG_DIRNAME))
 	viper.AddConfigPath(".")
 	viper.SetConfigName(PRODUCT_NAME)
-	// viper likes to apply its on file extensions
+	// viper likes to apply its own file extensions
 	viper.SetConfigType("toml")
 	// TODO: Get this right when I've nailed the other Viper stuff
 	viper.AutomaticEnv()
 	// Read in metabuzz.toml
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Println("error reading in config file:", err.Error())
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+		if err, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			// TODO: Handle error properly
-			fmt.Println("config file read error:", err.Error())
-			os.Exit(1)
+			QuitError(err)
 		} else {
 			// Ignore case where there simply wasn't a config file,
 			// since it's not a requirement.
@@ -123,39 +122,4 @@ func newDefaultApp() *App {
 	return &App
 }
 
-// App.Verbose() displays a message followed
-// by a newline to stdout
-// if the verbose flag was used. Formats it like Fprintf.
-func (App *App) Verbose(format string, a ...interface{}) {
-	if App.Flags.Verbose {
-		fmt.Println(App.fmtMsg(format, a...))
-	}
-}
 
-// App.Warn() displays a message followed by a newline
-// to stdout, preceded by the text "Warning: "
-// Overrides the verbose flag. Formats it like Fprintf.
-func (App *App) Warning(format string, a ...interface{}) {
-	fmt.Println("Warning: " + App.fmtMsg(format, a...))
-}
-
-// fmtMsg() formats string like Fprintf and writes to a string
-func (App *App) fmtMsg(format string, a ...interface{}) string {
-	return fmt.Sprintf(format, a...)
-}
-
-// QuitError() displays the error passed to it and exits
-// to the operating system, returning a 1 (any nonzero
-// return means an error ocurred).
-// Normally functions that can generate a runtime error
-// do so by returning an error. But sometimes there's a
-// constraint, for example, fulfilling an interface method
-// that doesn't support this practice.
-func QuitError(e error) {
-	if e == nil {
-		os.Exit(0)
-	} else {
-		fmt.Println(e)
-		os.Exit(1)
-	}
-}

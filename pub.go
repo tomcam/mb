@@ -23,15 +23,21 @@ import (
 func (App *App) publishFile(filename string) error {
 	var input []byte
 	var err error
-	// Note the filename
-	/// xxx
 	App.Page.filePath = filename
 	App.Page.filename = filepath.Base(filename)
+
 	// Read the whole Markdown file into memory as a byte slice.
 	input, err = ioutil.ReadFile(filename)
 	if err != nil {
 		return errCode("0102", filename)
 	}
+
+
+  // xxx
+  App.html, err = App.Convert(filename, input)
+  if err != nil {
+    return errCode("0912", filename)
+  }
 
 	// Output filename
 	outfile := replaceExtension(filename, "html")
@@ -43,7 +49,7 @@ func (App *App) publishFile(filename string) error {
 	tmpFile, err := ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
 
 	// Translate from Markdown to HTML!
-	App.html = App.MdFileToHTMLBuffer(filename, input)
+	//App.html = App.MdFileToHTMLBuffer(filename, start)
 	writeTextFile(tmpFile.Name(), string(App.html))
 
 	// If the write succeeded, rename it to the output file
@@ -124,8 +130,24 @@ func (App *App) appendStr(s string) {
 // In the spirit of a browser, it simply returns an empty buffer on error.
 func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 	// Resolve any Go template variables before conversion to HTML.
-	fmt.Println("Skipping template execution xxx")
 	interp := App.interps(filename, string(input))
 	return App.markdownBufferToBytes([]byte(interp))
-	//return App.markdownBufferToBytes(input)
 }
+
+// Convert() takes a document with optional front matter, parses
+// out the front matter, and sends the Markdown portion to be converted.
+func (App *App) Convert(filename string, input []byte) (start []byte, err error) {
+	// The buffer probably has front matter but that's
+	// not certain. Find any if it does, decode
+	// as TOML, and marshal back to App.FrontMatter.
+	// Return with the starting byte position of the
+	// markdown, which appears after the (optional)
+	// front matter.
+	start, err = App.parseFrontMatter(filename, input)
+	if err != nil {
+		return nil, errCode("0103", filename)
+	}
+  return start, nil
+}
+
+

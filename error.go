@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+  "os"
 )
 
 /*
@@ -121,6 +122,8 @@ var errMsgs = map[string]string{
 	"0908": "Problem creating TOML object",                         // runtime error
 	"0910": "Problem creating output file",                         // filename
 	"0911": "Unable to copy themes directory to publish directory", //
+  "0912": "Problem converting markdown file",                     //
+
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename
 
@@ -194,3 +197,42 @@ func errCode(key string, previous string, extra ...string) error {
 	}
 	return e
 }
+
+// App.Verbose() displays a message followed
+// by a newline to stdout
+// if the verbose flag was used. Formats it like Fprintf.
+func (App *App) Verbose(format string, a ...interface{}) {
+	if App.Flags.Verbose {
+		fmt.Println(App.fmtMsg(format, a...))
+	}
+}
+
+// App.Warning() displays a message followed by a newline
+// to stdout, preceded by the text "Warning: "
+// Overrides the verbose flag. Formats it like Fprintf.
+func (App *App) Warning(format string, a ...interface{}) {
+	fmt.Println("Warning: " + App.fmtMsg(format, a...))
+}
+
+// fmtMsg() formats string like Fprintf and writes to a string
+func (App *App) fmtMsg(format string, a ...interface{}) string {
+    return fmt.Sprintf(format, a...)
+}
+
+// QuitError() displays the error passed to it and exits
+// to the operating system, returning a 1 (any nonzero
+// return means an error ocurred).
+// Normally functions that can generate a runtime error
+// do so by returning an error. But sometimes there's a
+// constraint, for example, fulfilling an interface method
+// that doesn't support this practice.
+func QuitError(e error) {
+	if e == nil {
+		os.Exit(0)
+	} else {
+		fmt.Println(e.Error())
+		os.Exit(1)
+	}
+}
+
+
