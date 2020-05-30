@@ -131,11 +131,13 @@ func (App *App) appendStr(s string) {
 func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 	// Resolve any Go template variables before conversion to HTML.
 	interp := App.interps(filename, string(input))
+  // Convert markdown to HTML.
 	return App.markdownBufferToBytes([]byte(interp))
 }
 
 // Convert() takes a document with optional front matter, parses
 // out the front matter, and sends the Markdown portion to be converted.
+// Write the HTML results to App.Page.Article
 func (App *App) Convert(filename string, input []byte) (start []byte, err error) {
   // Extract front matter and parse.
   // Return the starting address of the Markdown.
