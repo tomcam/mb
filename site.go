@@ -187,11 +187,11 @@ type MarkdownOptions struct {
 }
 
 // writeSiteConfig() writes the contents of App.Site
+// to .site/site.toml
 // and creates or replaces a TOML file in the
 // project's site subdirectory.
 // Assumes you're in the project directory.
 func (App *App) writeSiteConfig() error {
-	App.Warning("writeSiteConfig(%s) xxx", App.Site.configFilePath)
 	return writeTomlFile(App.Site.configFilePath, App.Site)
 }
 

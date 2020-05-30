@@ -122,6 +122,7 @@ func newDefaultApp() *App {
 	// Add config/env support from cobra and viper
 	App.addCommands()
 
+	App.themesPath = filepath.Join(configDir(), THEME_SUBDIRNAME)
 	App.funcs = template.FuncMap{ /* "scode": App.scode, */
 		"ftime": App.ftime,
 		/*"hostname": App.hostname, "path": App.path, "inc": App.inc */
