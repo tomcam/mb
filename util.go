@@ -14,17 +14,30 @@ import (
 	"strings"
 )
 
-// cfgStringOption obtains a value set from a config file, environemnt
+// cfgString() obtains a value set from a config file, environemnt
 // variable, whatever. Simple abstraction over viper
-func cfgStringOption(option string) string {
+func cfgString(option string) string {
 	return viper.GetString(option)
 }
 
-// cfgBoolOption obtains a value set from a config file, environemnt
+// cfgBool() obtains a value set from a config file, environemnt
 // variable, whatever. Simple abstraction over viper
-func cfgBoolOption(option string) bool {
+func cfgBool(option string) bool {
 	return viper.GetBool(option)
 }
+
+// configDir() returns the user's application configuraion directory,
+// or just "." for the current directory if it can't be
+// determined through system calls.
+// https://golang.org/pkg/os/#UserConfigDir
+func configDir() string {
+	if cfgDir, err := os.UserConfigDir(); err != nil {
+		return filepath.Join(".",GLOBAL_CONFIG_DIRNAME)
+	} else {
+		return filepath.Join(cfgDir, PRODUCT_NAME,GLOBAL_CONFIG_DIRNAME)
+	}
+}
+
 
 // copyDirOnly() copies a directory nonrecursively.
 // Doesn't other directories

@@ -1,0 +1,20 @@
+
+## Application configuration data
+
+Themes, shortcode files, and everything else not including the executable file are 
+application configuration data.
+
+### metabuzz.toml
+On startup the first order of business is to find out where application configuration data is.
+If there's a file named `metabuzz.toml` in the current directory, and if that file contains
+a configdir entry, then that's where the application configuration data is supposed to be:
+
+```
+configdir="/Users/tom/code/m2"
+```
+
+Use absolute paths, not things expanded by the shell like `~`.
+
+If there's no `metabuzz.toml` file then the application configuration
+
+

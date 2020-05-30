@@ -1,25 +1,25 @@
 package main
 
 import (
+	//"github.com/spf13/viper"
 	"fmt"
-	"github.com/spf13/viper"
 	"os"
 )
 
 // info() displays relevant site configuration info for
 // debug purposes. If -v (verbose mode), also print data structures
 func (App *App) info() {
-	fmt.Println("*** prefs.yomama: " + viper.GetString("Prefs.yomama"))
-	fmt.Println("*** foo.bar: " + viper.GetString("foo.bar"))
-	fmt.Println("*** configDir: " + viper.GetString("configDir"))
+	//fmt.Println("*** foo.bar: " + viper.GetString("foo.bar"))
+	//fmt.Println("*** configDir: " + viper.GetString("configDir"))
 	//fmt.Println("*** App.Prefs.configDir: " + App.Prefs.configDir)
 	fmt.Println("Home dir: " + homeDir())
 	fmt.Println("App.Flags.Verbose", App.Flags.Verbose)
-	exists("Default config directory", App.Prefs.configDir)
+	exists("Default config directory", configDir())
+	exists("Actual config directory", App.Prefs.configDir)
 	exists("Publish directory", App.Site.Publish)
 	exists("Global Theme directory", App.themesPath)
 	fmt.Println("Code highlighting style: ", App.Site.MarkdownOptions.HighlightStyle)
-	fmt.Println("Highlight:", cfgStringOption("highlight"))
+	fmt.Println("Highlight:", cfgString("highlight"))
 	if isProject(".") {
 		fmt.Println("This appears to be a project/site source directory")
 		exists("Site directory: ", App.Site.path)

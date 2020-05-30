@@ -123,6 +123,7 @@ var errMsgs = map[string]string{
 	"0910": "Problem creating output file",                         // filename
 	"0911": "Unable to copy themes directory to publish directory", //
 	"0912": "Problem converting markdown file",                     //
+  "0913": "Unable to read project directory",                     //
 
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename
@@ -195,10 +196,12 @@ func (e *errMsg) Error() string {
 
 	if e.previous != "" {
 		msg = fmt.Errorf("%s: %s (error code %s%s)\n",
+      // The most case: an error code with customization
 			errMsgs[e.key], e.previous, errorCodePrefix, e.key)
 	} else {
 		msg = fmt.Errorf("%s (error code %s%s)\n",
-			errMsgs[e.key], errorCodePrefix, e.extra)
+      // The slighly unusual case of an error code with no customization
+			errMsgs[e.key], errorCodePrefix, e.key)
 	}
 	return msg.Error()
 }

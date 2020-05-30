@@ -2,7 +2,7 @@ package main
 
 import (
 	//"os"
-	"fmt"
+	//"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"html/template"
@@ -49,7 +49,6 @@ type App struct {
 // forms of configuration info) can be found, then reads in
 // all that info.
 func (App *App) initConfig() {
-	App.Warning("initConfig")
 	// Tell viper where to look for config file.
 	// It can look in as many places as you want.
 	viper.AddConfigPath(".")
@@ -59,21 +58,29 @@ func (App *App) initConfig() {
 	viper.SetConfigType("toml")
 	// TODO: Get this right when I've nailed the other Viper stuff
 	viper.AutomaticEnv()
-	// Read in metabuzz.toml
+	// Read in command line options, and get the 
+  // location of the configuration directory that
+  // itself points to metabuzz.toml
 	if err := viper.ReadInConfig(); err != nil {
 		// TODO: Give this a standard error code and display it
-		fmt.Println("error reading in config file:", err.Error())
+		//fmt.Println("error reading in config file:", err.Error())
 		if err, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			// TODO: Handle error properly
 			QuitError(err)
 		} else {
 			// Ignore case where there simply wasn't a config file,
 			// since it's not a requirement.
-			fmt.Println("XXXXXXXXXXXXx No config file found")
 			App.Verbose("No configuration file found")
 		}
 	}
-  fmt.Println(viper.Get("configdir"))
+  // Are we going to look in the local directory for
+  // site assets, themes, etc., or are we going to 
+  // use the standard application configuration directory?
+  // This determines its location.
+	App.Prefs.configDir = cfgString("configdir")
+	if App.Prefs.configDir == "" {
+		App.Prefs.configDir = configDir()
+	}
 }
 
 // newDefaultApp() allocates an App runtime environment

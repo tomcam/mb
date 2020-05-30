@@ -99,6 +99,8 @@ func (App *App) addCommands() {
       open .pub/index.html
 `,
 			Run: func(cmd *cobra.Command, args []string) {
+        // If there are arguments after build, then
+        // just convert these files one at at time.
 				if len(args) > 0 {
 					for i, _ := range args {
 						err := App.publishFile(args[i])
@@ -107,8 +109,14 @@ func (App *App) addCommands() {
 						}
 					}
 				} else {
-					App.Warning("%s", "Fake build xxx")
-				}
+          // Them more likely case: it's build all by
+          // itself, so go through the whole directory
+          // tree and build as a complete site.
+          err := App.build()
+          if err != nil {
+            QuitError(err)
+          }
+      }
 			},
 		}
 
