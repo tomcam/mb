@@ -13,11 +13,11 @@ func (App *App) info() {
 	//fmt.Println("*** configDir: " + viper.GetString("configDir"))
 	//fmt.Println("*** App.Prefs.configDir: " + App.Prefs.configDir)
 	fmt.Println("Home dir: " + homeDir())
+	fmt.Println("Current dir: " + currDir())
 	fmt.Println("App.Flags.Verbose", App.Flags.Verbose)
 	exists("Default config directory", configDir())
 	exists("Actual config directory", App.Prefs.configDir)
-	exists("Publish directory", App.Site.Publish)
-	exists("Global Theme directory", App.themesPath)
+	exists("Theme directory", App.themesPath)
 	fmt.Println("Code highlighting style: ", App.Site.MarkdownOptions.HighlightStyle)
 	fmt.Println("Highlight:", cfgString("highlight"))
 	if isProject(".") {

@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/spf13/cobra"
+  "fmt"
 	//"github.com/spf13/viper"
 )
 
@@ -177,6 +178,8 @@ create theme based on an existing one.
         err := App.newSite(App.Site.Name)
         if err != nil {
           QuitError(err)
+        } else {
+          fmt.Println("Created site ", App.Site.Name)
         }
       },
     }
@@ -200,11 +203,6 @@ create theme based on an existing one.
 	// Example command line:
 	// new theme
 	cmdNew.AddCommand(cmdNewTheme)
-
-	// Example command line:
-	// new site --name=mysite
-	// xxx
-	//cmdNewSite.Flags().StringVarP(&App.Args.NewSiteName, "name", "n", "", "name of new site (follow file naming conventions)")
 
 	// Example command line:
 	// new site

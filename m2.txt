@@ -3,6 +3,8 @@
 - Pub dir gets changed in configuration
 
 ## Naming conventions
+- The project directory contains your source files, all themes, etc.
+- Site direc:b
 - When generating a file start the func name with write
 - When allocating an objecet star the fun name with new
 

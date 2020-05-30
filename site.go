@@ -164,7 +164,6 @@ type authors struct {
 // parses it.
 // TODO: Remove? Replaced by Viper?
 func (App *App) readSiteConfig() error {
-	App.Warning("%s", "readSiteConfig() xxx")
 	return readTomlFile(App.Site.configFilePath, &App.Site)
 }
 
@@ -205,7 +204,10 @@ func (App *App) newSite(sitename string) error {
 	}
 	// Do a simplistic, fallible check to see if there's
 	// already a site present and quit if so.
-	if isProject(sitename) {
+  // EXCEPTION: You get to assign one site name to
+  // testsidte= in metabuzz.toml, and that site
+  // gets destroyed.
+	if isProject(sitename) && sitename != cfgString("testsite") {
 		return errCode("0951", sitename)
 	}
 
@@ -233,22 +235,14 @@ func (App *App) newSite(sitename string) error {
     return errCode("PREVIOUS", err.Error(), App.Site.configFilePath)
   }
 
-	// Copy all themes
-	// from the user application data directory to the site.
-	App.Warning("App.themesPath: %s", App.themesPath)
-	App.Warning("App.Site.themesPath: %s", App.Site.themesPath)
-	promptString("Ready to continue? ")
-	App.Warning("Pretending to copy theme directory from %s to %s",
-		App.themesPath, App.Site.themesPath)
-	/*
-		err = copyDirAll(App.themesPath,App.Site.themesPath)
-		if err != nil {
-			// TODO: Make more specific? and why did this cause a runtime error?
-			//QuitError(errCode("PREVIOUS", err.Error()))
-			QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
-		}
-	*/
-	// Create a little home page
+	// Copy all themes from the user application data directory 
+  // to the project directory.
+  err = copyDirAll(App.themesPath,App.Site.themesPath)
+  if err != nil {
+    QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
+  }
+
+  // Create a little home page
 	indexMd = fmt.Sprintf(indexMd, sitename, sitename)
 	return writeTextFile("index.md", indexMd)
 
@@ -260,7 +254,6 @@ func (App *App) newSite(sitename string) error {
 // Most of them are relative to the site directory.
 // It must be called after config files are read.
 func (App *App) siteDefaults() {
-  App.Warning("%s","siteDefaults() xxx")
 	App.Site.path = currDir()
   App.Site.configFilePath = filepath.Join(App.Site.path, siteConfigSubDir, siteConfigFilename)
 	App.themesPath = filepath.Join(cfgString("configdir"), THEME_SUBDIRNAME)
@@ -272,12 +265,6 @@ func (App *App) siteDefaults() {
 	} else {
 		App.Site.themesPath = filepath.Join(App.Site.path, siteThemeDir)
 	}
-	///xxx
-	fmt.Printf("\tApp.Site.path: %+v\n", App.Site.path)
-	fmt.Printf("\tApp.Site.name: %+v\n", App.Site.Name)
-	fmt.Printf("\tApp.Page.filename: %+v\n", App.Page.filename)
-	fmt.Printf("\tApp.Site.themesPath: %+v\n", App.Site.themesPath)
-	fmt.Printf("\tApp.themesPath: %+v\n", App.themesPath)
 }
 
 
