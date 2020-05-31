@@ -116,7 +116,6 @@ func CopySymLink(source, dest string) error {
 
 // Copy() does just that. It copies a single file named source to
 // the file named in dest.
-//https://github.com/plus3it/gorecurcopy/blob/master/gorecurcopy.go
 func Copy(src, dest string) error {
 	sourceFileStat, err := os.Stat(src)
 	if err != nil {

@@ -24,6 +24,14 @@ if err := App.writeSiteConfig(); err != nil {
 }
 ```
 
+
+### Customizing
+
+```
+if err := Copy(source, target); err != nil {                                                                    
+  return errCode("0111", "trying to copy "+source+" to "+target)                                                
+}
+```
 ### Including error messages from Go runtime calls
 
 ```
