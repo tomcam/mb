@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+  "fmt"
 	"path/filepath"
 )
 
@@ -11,6 +11,12 @@ type siteDescription struct {
 		mdtext   string
 }
 
+/* SVG file of an exciting 100x100px gray box */
+var svgFile = `<?xml version="1.0" encoding="utf-8"?>
+<svg  xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="100" height="100" style="fill: rgb(216, 216, 216);"/>
+</svg>
+`
 
 var (
 
@@ -20,6 +26,11 @@ var (
 			"",
 			`# Home
 Go [one level deep](one/index.html), [two levels deep](two/three/index.html)
+
+**Box**
+
+![100x100 SVG box](box-100x100.svg)
+
 `},
 		{"index.md",
 			"one",
@@ -76,22 +87,20 @@ Go [home](/index.html)
 	}
 
 )
-/*
-
-   err := App.newSite(App.Site.Name)
-   if err != nil {
-     QuitError(err)
-   } else {
-     fmt.Println("Created site ", App.Site.Name)
-   }
-*/
-
 // writeSiteFromArray() takes an array of 
 // structures containing a filename, 
 // a path to that filename, and the markdown
 // text itself, and writes them out to
 // a test site.
 func writeSiteFromArray(sitename string, site []siteDescription) error {
+  // First put an SVG graphic in the root
+  //path := filepath.Join(site[0].dir, site[0].filename)
+  path := filepath.Join(site[0].dir, "box-100x100.svg")
+  err := writeTextFile(path,svgFile)
+  if err != nil {
+    return errCode("0211", err.Error(), "Sample SVG file")
+    //return errCode("0211", "Sample SVG file")
+  }
   for _, f := range site {
     path := filepath.Join(f.dir,f.filename)
     err := writeTextFile(path, f.mdtext)
@@ -118,17 +127,9 @@ func (App *App) kitchenSink(sitename string) error {
 		return err
 	}
 
+  // Build the site from the array of data structures
   if err := writeSiteFromArray(sitename, siteTest); err != nil {
     return err
-  }
-
-  var path string
-	for _, t := range testPages {
-	  // filename,dir, mdtext
-    //fmt.Printf("%s/%s\n", testPages[each].dir, testPages[each].filename)
-    ///fmt.Printf("%s/%s\n", t.dir, t.filename)
-    path = filepath.Join("/",t.dir,t.filename)
-    fmt.Printf("%s\n%v------\n\n",path, t.mdtext)
   }
 
 	fmt.Println("Created site ", App.Site.Name)

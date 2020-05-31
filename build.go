@@ -66,8 +66,6 @@ func (App *App) build() error {
 			}
 		}
 	}
-  fmt.Printf("PROJECT\n%v\n", App.Site.dirs)
-
 	fmt.Printf("%v ", App.fileCount)
 	if App.fileCount != 1 {
 		fmt.Println("files")
