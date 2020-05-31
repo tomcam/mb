@@ -54,7 +54,8 @@ func (App *App) publishFile(filename string) error {
 	if err != nil {
 		return errCode("0914", err.Error())
 	}
-	// Translate from Markdown to HTML!
+
+	// This is why we're here! Translate from Markdown to HTML
 	err = writeTextFile(tmpFile.Name(), string(App.Page.Article))
 	if err != nil {
 		return errCode("PREVIOUS", "")
@@ -78,13 +79,11 @@ func (App *App) publishFile(filename string) error {
 	defer os.Remove(tmpFile.Name())
 	// Get the relative directory.
   relDir := relDirFile(App.Site.path, outfile)
-	inFilename := filepath.Base(filename)
-	if inFilename == "README.md" {
-		// If there's a README.md but no index.md, rename
-		// the output file to index.html
-		if !optionSet(App.Site.dirs[App.Page.dir], hasIndexMd) {
-			base = "index.html"
-		}
+
+  // If there's a README.md and no index.md, rename
+	// the output file to index.html
+	if App.Page.filename == "README.md" && !optionSet(App.Site.dirs[App.Page.dir], hasIndexMd)  {
+		base = "index.html"
 	}
 
 	// Generate the full pathname of the matching output file, as it will
