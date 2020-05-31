@@ -103,11 +103,11 @@ func newDefaultApp() *App {
 		},
 		Site: &Site{
 			// Assets just go into the publish directory
-			AssetDir: ".",
+			AssetDir:     ".",
 			CommonSubDir: commonSubDirName,
 			//configFile: filepath.Join(siteConfigSubDir, siteConfigFilename),
-			dirs:       map[string]mdOptions{},
-      Language: "en",
+			dirs:     map[string]mdOptions{},
+			Language: "en",
 			MarkdownOptions: MarkdownOptions{
 				hardWraps:      false,
 				HighlightStyle: "github",

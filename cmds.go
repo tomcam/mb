@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/spf13/cobra"
-  "fmt"
 	//"github.com/spf13/viper"
 )
 
@@ -11,6 +11,11 @@ var (
 
 	// Declare command-line subcommand to display config info
 	cmdInfo = flag.NewFlagSet("info", flag.ExitOnError)
+
+	// Declare command-line subcommand to build  a test site
+	cmdKitchenSink = flag.NewFlagSet("kitchensink", flag.ExitOnError)
+
+	///cmdK = flag.NewFlagSet("k", flag.ExitOnError)
 
 	// Declare command-line subcommand to build a project
 	cmdBuild = flag.NewFlagSet("build", flag.ExitOnError)
@@ -72,19 +77,20 @@ func (App *App) addCommands() {
 		}
 
 		/*****************************************************
-		  TOP LEVEL COMMAND: build
+		  TOP LEVEL COMMAND: kitchensink
 		 *****************************************************/
-		cmdBuild = &cobra.Command{
-			Use:   "build",
-			Short: "build: Generates the site HTML and copies to publish directory",
+		cmdKitchenSink = &cobra.Command{
+			Use:   "kitchensink",
+			Short: "kitchensink: Generates a test site showing most features",
 			Long: `
-      build: Generates the site HTML and copies to publish directory 
+      kitchensink:  Builds a disposable site with many Metabuzz features
 
       Typical usage:
 
       : Create the project named mysite in its own directory.
+      : If you don't specify any nanme, it will be caled kitchensink
       : (Generates a tiny file named index.md)
-      mb new site mysite
+      mb kitchensink mysite
 
       : Make that the current directory. 
       cd mysite
@@ -100,23 +106,14 @@ func (App *App) addCommands() {
       open .pub/index.html
 `,
 			Run: func(cmd *cobra.Command, args []string) {
-				// If there are arguments after build, then
-				// just convert these files one at at time.
+				var err error
 				if len(args) > 0 {
-					for i, _ := range args {
-						err := App.publishFile(args[i])
-						if err != nil {
-							QuitError(err)
-						}
-					}
+					err = App.kitchenSink(args[0])
 				} else {
-					// Them more likely case: it's build all by
-					// itself, so go through the whole directory
-					// tree and build as a complete site.
-					err := App.build()
-					if err != nil {
-						QuitError(err)
-					}
+					err = App.kitchenSink("")
+				}
+				if err != nil {
+					QuitError(err)
 				}
 			},
 		}
@@ -127,7 +124,7 @@ func (App *App) addCommands() {
 		cmdNew = &cobra.Command{
 			Use:   "new",
 			Short: "new commands: new site|theme",
-			Long:  `site: Use new site to start a new project. Use new theme to 
+			Long: `site: Use new site to start a new project. Use new theme to 
 create theme based on an existing one. 
 
       Typical usage of new site:
@@ -156,7 +153,7 @@ create theme based on an existing one.
 		*****************************************************/
 
 		cmdNewSite = &cobra.Command{
-			Use: "site {sitename}",
+			Use:   "site {sitename}",
 			Short: "new site mycoolsite",
 			Long: `new site {sitename}
 
@@ -168,21 +165,21 @@ create theme based on an existing one.
 				// If there are arguments after build, then
 				// just convert these files one at at time.
 				if len(args) > 0 {
-          App.Site.Name = args[0]
+					App.Site.Name = args[0]
 				} else {
 					// Them more likely case: it's build all by
 					// itself, so go through the whole directory
 					// tree and build as a complete site.
-          App.Site.Name = promptString("Name of site to create?")
+					App.Site.Name = promptString("Name of site to create?")
 				}
-        err := App.newSite(App.Site.Name)
-        if err != nil {
-          QuitError(err)
-        } else {
-          fmt.Println("Created site ", App.Site.Name)
-        }
-      },
-    }
+				err := App.newSite(App.Site.Name)
+				if err != nil {
+					QuitError(err)
+				} else {
+					fmt.Println("Created site ", App.Site.Name)
+				}
+			},
+		}
 
 		/*****************************************************
 		     Subcommand: new theme
@@ -211,7 +208,8 @@ create theme based on an existing one.
 	// Example command line:
 	// new
 	App.Cmd.AddCommand(cmdNew)
-	App.Cmd.AddCommand(cmdBuild)
+	//App.Cmd.AddCommand(cmdBuild)
+	App.Cmd.AddCommand(cmdKitchenSink)
 	App.Cmd.AddCommand(cmdInfo)
 	// Handle global flags such as Verbose
 	App.Cmd.PersistentFlags().BoolVarP(&App.Flags.Verbose, "verbose", "v", false, "verbose output")

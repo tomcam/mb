@@ -113,7 +113,7 @@ var errMsgs = map[string]string{
 
 	// 0900	- Problem generating something
 	"0901": "Problem creating TOML object",                         // err.Error
-	"0902": "Error creating new site.toml file",                              // Full custom error message
+	"0902": "Error creating new site.toml file",                    // Full custom error message
 	"0903": "Error writing to file",                                // Full custom error message
 	"0904": "Theme name taken",                                     // custom message
 	"0905": "Couldn't create directory for new theme",              // custom message

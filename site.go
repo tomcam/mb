@@ -204,9 +204,9 @@ func (App *App) newSite(sitename string) error {
 	}
 	// Do a simplistic, fallible check to see if there's
 	// already a site present and quit if so.
-  // EXCEPTION: You get to assign one site name to
-  // testsidte= in metabuzz.toml, and that site
-  // gets destroyed.
+	// EXCEPTION: You get to assign one site name to
+	// testsidte= in metabuzz.toml, and that site
+	// gets destroyed.
 	if isProject(sitename) && sitename != cfgString("testsite") {
 		return errCode("0951", sitename)
 	}
@@ -229,33 +229,32 @@ func (App *App) newSite(sitename string) error {
 	}
 
 	// Create its site.toml file
-  App.siteDefaults()
-  if err := App.writeSiteConfig(); err != nil {
-    // Custom error message already generated
-    return errCode("PREVIOUS", err.Error(), App.Site.configFilePath)
-  }
+	App.siteDefaults()
+	if err := App.writeSiteConfig(); err != nil {
+		// Custom error message already generated
+		return errCode("PREVIOUS", err.Error(), App.Site.configFilePath)
+	}
 
-	// Copy all themes from the user application data directory 
-  // to the project directory.
-  err = copyDirAll(App.themesPath,App.Site.themesPath)
-  if err != nil {
-    QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
-  }
+	// Copy all themes from the user application data directory
+	// to the project directory.
+	err = copyDirAll(App.themesPath, App.Site.themesPath)
+	if err != nil {
+		QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
+	}
 
-  // Create a little home page
+	// Create a little home page
 	indexMd = fmt.Sprintf(indexMd, sitename, sitename)
 	return writeTextFile("index.md", indexMd)
 
 }
 
-
 // siteDefaults() computes values for location of site
-// theme files, publish directory, etc. 
+// theme files, publish directory, etc.
 // Most of them are relative to the site directory.
 // It must be called after config files are read.
 func (App *App) siteDefaults() {
 	App.Site.path = currDir()
-  App.Site.configFilePath = filepath.Join(App.Site.path, siteConfigSubDir, siteConfigFilename)
+	App.Site.configFilePath = filepath.Join(App.Site.path, siteConfigSubDir, siteConfigFilename)
 	App.themesPath = filepath.Join(cfgString("configdir"), THEME_SUBDIRNAME)
 	App.Site.Publish = filepath.Join(App.Site.path, PublishSubDirName)
 	App.Site.Headers = filepath.Join(App.Site.path, headersDir)
@@ -266,6 +265,3 @@ func (App *App) siteDefaults() {
 		App.Site.themesPath = filepath.Join(App.Site.path, siteThemeDir)
 	}
 }
-
-
-
