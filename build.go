@@ -12,16 +12,13 @@ import (
 // Assets in the theme/pagetype directories are published, which
 // includes anything other than HTML or Markdown files.
 func (App *App) build() error {
-	App.Warning("%s", "build(): disabling project check temporarily")
-	// Make sure this is a project directory
-	/*
-		if !isProject(".") {
-			return errCode("1009", currDir())
-		}
-	*/
+  if !isProject(".") {
+    return errCode("1009", currDir())
+  }
 
 	// Note current position in directory tree
 	App.Site.path = currDir()
+	App.siteDefaults()
 	App.Site.sCodePath = filepath.Join(App.Site.path, SCODE_SUBDIRNAME)
 
 	// Make sure there's a publish directory name.
@@ -69,6 +66,7 @@ func (App *App) build() error {
 			}
 		}
 	}
+  fmt.Printf("PROJECT\n%v\n", App.Site.dirs)
 
 	fmt.Printf("%v ", App.fileCount)
 	if App.fileCount != 1 {
@@ -79,3 +77,6 @@ func (App *App) build() error {
 
 	return nil
 }
+
+
+

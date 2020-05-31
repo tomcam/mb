@@ -69,8 +69,10 @@ func (App *App) addCommands() {
 		 *****************************************************/
 		cmdInfo = &cobra.Command{
 			Use:   "info",
-			Short: "info TODO: Document this",
-			Long:  `info: TODO: Long version`,
+			Short: "Display configuration and debug information about the site",
+			Long:  `info: TODO: Long version
+Show such information as where theme files can be found,
+whether the current directory is Metabuzz project, and so on`,
 			Run: func(cmd *cobra.Command, args []string) {
 				App.info()
 			},
@@ -98,7 +100,10 @@ func (App *App) addCommands() {
       open .pub/index.html
 `	,
 			Run: func(cmd *cobra.Command, args []string) {
-				App.build()
+        err := App.build()
+				if err != nil {
+					QuitError(err)
+				}
 			},
 		}
 
@@ -106,16 +111,13 @@ func (App *App) addCommands() {
 		  TOP LEVEL COMMAND: kitchensink
 		 *****************************************************/
 		cmdKitchenSink = &cobra.Command{
-			Use:   "kitchensink",
-			Short: "kitchensink: Generates a test site showing most features",
-			Long: `
-      kitchensink:  Builds a disposable site with many Metabuzz features
+			Use:   "kitchensink [sitename]",
+			Short: "Generates a test site showing most features",
+			Long: `kitchensink:  Builds a disposable site that exercises many Metabuzz features.
 
       Typical usage:
 
-      : Create the project named mysite in its own directory.
-      : If you don't specify any nanme, it will be caled kitchensink
-      : (Generates a tiny file named index.md)
+      : Create a standard test project named mysite in its own directory.
       mb kitchensink mysite
 
       : Make that the current directory. 

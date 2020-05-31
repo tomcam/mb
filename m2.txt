@@ -2,14 +2,62 @@
 ## Things I need to test
 - Pub dir gets changed in configuration
 
-## Naming conventions
-- The project directory contains your source files, all themes, etc.
-- Site direc:b
-- When generating a file start the func name with write
-- When allocating an objecet star the fun name with new
 
-## Errors
+# kitchensink {sitename}
 
+The `kitchensink` command generates a test site that exercises many features of Metabuzz.
+You can't change the contents of the site but you can choose its name. 
+
+## Usage
+
+Just use `kitchensink mysite` but replace `mysite` with the name of the site to generate:
+
+
+```
+:: Change mysite to any legal directory name
+mb kitchensink mysite
+```
+
+## Tip: combine it with testsite
+
+If you're doing a lot of testing and don't want to delete the old kitchensink site manually
+every time, you can add a `testsite` entry to [metabuzz.toml](config-file.html#testsite)
+
+# metabuzz.toml
+
+## testsite
+
+Normally when you create a new site and there's already one in that location, Metabuzz makes you delete the site mnually:
+
+```
+$ mb new site foo
+Created site foo
+$ mb new site foo
+Site already exists: foo (error code mbz0951)
+```
+
+But suppose you have a test site you want to tear down and rebuild quickly without being blocked like that?
+Add a `testsite` entry to `metabuzz.toml` like so, and Metabuzz will write over any site by that name, but
+only that name:
+
+
+#### file: metabuzz.toml
+```
+testsite="foobar" 
+```
+
+The same sequence would now look like this:
+```
+:: With great power comes great responsbility
+$ mb new site foo
+Created site foo
+$ mb new site foo
+:: nuked!
+Created site foo
+```
+
+
+## Handling errors in the code 
 ### Using PREVIOUS
 
 Normally "PREVIOUS" means an earlier call generated an error so

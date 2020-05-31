@@ -4,11 +4,11 @@ import (
 	"bytes"
 	//"fmt"
 	//"github.com/gohugoio/hugo/markup/tableofcontents"
+	"strings"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	//"regexp"
-	//"strings"
 	//"text/template"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting"
@@ -25,6 +25,9 @@ func (App *App) publishFile(filename string) error {
 	var err error
 	App.Page.filePath = filename
 	App.Page.filename = filepath.Base(filename)
+	App.Page.dir = currDir()
+  App.Verbose("%s", filename)
+
 
 	// Read the whole Markdown file into memory as a byte slice.
 	input, err = ioutil.ReadFile(filename)
@@ -38,7 +41,7 @@ func (App *App) publishFile(filename string) error {
 	App.Convert(filename, input)
 
 	// Output filename
-	htmlFile := replaceExtension(filename, "html")
+	outfile := replaceExtension(filename, "html")
 	// Strip out everything but the filename.
 	//base := filepath.Base(htmlkjlfile)
 
@@ -46,27 +49,58 @@ func (App *App) publishFile(filename string) error {
 	// previous HTML file is preserved.
 	tmpFileBaseName := PRODUCT_NAME + "-tmp-"
 	tmpFile, err := ioutil.TempFile(App.Site.Publish, tmpFileBaseName)
+	// Ensure the file gets closed before exiting
+	defer os.Remove(tmpFile.Name())
 	if err != nil {
-		return errCode("0914", "")
+		return errCode("0914", err.Error())
 	}
 	// Translate from Markdown to HTML!
-	//App.html = App.MdFileToHTMLBuffer(filename, start)
 	err = writeTextFile(tmpFile.Name(), string(App.Page.Article))
 	if err != nil {
 		return errCode("PREVIOUS", "")
 	}
 
+	// Copy any associated assets such as
+	// images in the same directory.
+	//dirHasMarkdownFiles := App.publishLocalFiles()
+	_ = App.publishLocalFiles(App.Page.dir)
+
+	// Create the output filename by replacing the name of the input file with an html extension
+	//outfile := replaceExtension(filename, "html")
+	// Strip out everything but the filename.
+	base := filepath.Base(outfile)
+
+	// Write everything to a temp file so in case there was an error, the
+	// previous HTML file is preserved.
+	tmpFile, err = ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
+	writeTextFile(tmpFile.Name(), string(App.Page.Article))
+	// Ensure the file gets closed before exiting
+	defer os.Remove(tmpFile.Name())
+	// Get the relative directory.
+  relDir := relDirFile(App.Site.path, outfile)
+	inFilename := filepath.Base(filename)
+	if inFilename == "README.md" {
+		// If there's a README.md but no index.md, rename
+		// the output file to index.html
+		if !optionSet(App.Site.dirs[App.Page.dir], hasIndexMd) {
+			base = "index.html"
+		}
+	}
+
+	// Generate the full pathname of the matching output file, as it will
+	// appear in its published location.
+	outfile = filepath.Join(App.Site.Publish, relDir, base)
 	// If the write succeeded, rename it to the output file
 	// This way if there was an existing HTML file but there was
 	// an error in output this time, it doesn't get clobbered.
-	if err = os.Rename(tmpFile.Name(), htmlFile); err != nil {
+	if err = os.Rename(tmpFile.Name(), outfile); err != nil {
 		return err
 	}
 
-	if !fileExists(htmlFile) {
-		QuitError(errCode("0910", htmlFile))
+	if !fileExists(outfile) {
+		QuitError(errCode("0910", outfile))
 	}
-	App.Verbose("\tCreated file %s", htmlFile)
+	App.Verbose("\tCreated file %s", outfile)
 	App.fileCount++
 	//
 	// Success
@@ -155,3 +189,100 @@ func (App *App) Convert(filename string, input []byte) (start []byte, err error)
 	App.Page.Article = App.markdownBufferToBytes([]byte(interp))
 	return App.Page.Article, nil
 }
+
+// publishLocalFiles() get called for every markdown file
+// in the directory. It copies assets like image files & so forth
+// from the source file's current directory to the publish location,
+// creating a new subdirectory as needed.
+// For example, if your article references ![cat](cat.png)
+// then presumbably cat.png is in the current directory.
+// This copies all nonexcluded files, such as cat.png and
+// any other assets, from this directory
+// into its matching publish directory,
+// same as the source markdown file.
+// Creates a subdirectory under Publish if in a subdirectory
+// and one hasn't yet been created.
+// Keeps track of which directories have had their assets copied to
+// avoid redundant copies.
+// Returns true if there are any markdown files in the current directory.
+// Returns false if markdown files (or any files at all) are abset.
+func (App *App) publishLocalFiles(dir string) bool {
+	relDir := relativeDirectory(App.Site.path, dir)
+	pubDir := filepath.Join(App.Site.Publish, relDir)
+
+	if !optionSet(App.Site.dirs[pubDir], markdownDir) {
+		if err := os.MkdirAll(pubDir, PUBLIC_FILE_PERMISSIONS); err != nil {
+			// TODO: Have this function return error?
+			App.infoLog.Printf(errCode("0404", pubDir).Error())
+		}
+		App.Site.dirs[dir] |= markdownDir
+	}
+	// Get the directory listing.
+	candidates, err := ioutil.ReadDir(dir)
+	if err != nil {
+		// TODO: Return error?
+		App.infoLog.Println("publishLocalFiles(): NO files found")
+		return false
+	}
+
+	// Get list of files in the local directory to exclude from copy
+	var excludeFromDir = searchInfo{
+		list:   App.FrontMatter.ExcludeFilenames,
+		sorted: false}
+
+	// First check the directory to ensure there's at least 1 markdown file.
+	hasMarkdown := false
+
+	// Look for the specific file README.md, which competes with
+	// index.md:
+	// https://stackoverflow.com/questions/58826517/why-do-some-static-site-generators-use-readme-md-instead-of-index-md
+	for _, file := range candidates {
+		filename := file.Name()
+		if hasExtensionFrom(filename, markdownExtensions) {
+			hasMarkdown = true
+		}
+
+		if filename == "README.md" {
+			App.Site.dirs[dir] |= hasReadmeMd
+		}
+		if strings.ToLower(filename) == "index.md" {
+			App.Site.dirs[dir] |= hasIndexMd
+		}
+
+	}
+
+	if hasMarkdown {
+		// Flag this as a directory that contains at least
+		// 1 markdown file.
+		App.Site.dirs[dir] |= markdownDir
+	} else {
+		// No markdown files found, so return
+		return false
+	}
+	for _, file := range candidates {
+		filename := file.Name()
+		// Don't copy if it's a directory.
+		if !file.IsDir() {
+			// Don't copy if its extension is on one of the excluded lists.
+			if !hasExtension(filename, ".css") &&
+				!hasExtensionFrom(filename, markdownExtensions) &&
+				!excludeFromDir.Found(filename) &&
+				!strings.HasPrefix(filename, ".") {
+				// It's a markdown file.
+				// Got the file. Get its fully qualified name.
+				copyFrom := filepath.Join(dir, filename)
+				// Figure out the target directory.
+				relDir := relDirFile(App.Site.path, copyFrom)
+				// Get the target file's fully qualified filename.
+				copyTo := filepath.Join(App.Site.Publish, relDir, filename)
+				if err := Copy(copyFrom, copyTo); err != nil {
+					//QuitError(err.Error())
+					QuitError(errCode("PREVIOUS", err.Error()))
+				}
+			}
+		}
+	}
+	return true
+}
+
+

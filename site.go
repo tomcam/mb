@@ -198,7 +198,6 @@ func (App *App) writeSiteConfig() error {
 // project site using the
 // supplied directory name.
 func (App *App) newSite(sitename string) error {
-	fmt.Println("App.Args.NewSite: " + App.Args.NewSiteName)
 	if sitename == "" {
 		return errCode("1013", "")
 	}
