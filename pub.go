@@ -4,10 +4,10 @@ import (
 	"bytes"
 	//"fmt"
 	//"github.com/gohugoio/hugo/markup/tableofcontents"
-	"strings"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 	//"regexp"
 	//"text/template"
 	"github.com/yuin/goldmark"
@@ -26,9 +26,7 @@ func (App *App) publishFile(filename string) error {
 	App.Page.filePath = filename
 	App.Page.filename = filepath.Base(filename)
 	App.Page.dir = currDir()
-  App.Verbose("%s", filename)
-
-
+	App.Verbose("%s", filename)
 	// Read the whole Markdown file into memory as a byte slice.
 	input, err = ioutil.ReadFile(filename)
 	if err != nil {
@@ -78,11 +76,11 @@ func (App *App) publishFile(filename string) error {
 	// Ensure the file gets closed before exiting
 	defer os.Remove(tmpFile.Name())
 	// Get the relative directory.
-  relDir := relDirFile(App.Site.path, outfile)
-
-  // If there's a README.md and no index.md, rename
+	relDir := relDirFile(App.Site.path, outfile)
+  App.Page.Path = relDir
+	// If there's a README.md and no index.md, rename
 	// the output file to index.html
-	if App.Page.filename == "README.md" && !optionSet(App.Site.dirs[App.Page.dir], hasIndexMd)  {
+	if App.Page.filename == "README.md" && !optionSet(App.Site.dirs[App.Page.dir], hasIndexMd) {
 		base = "index.html"
 	}
 
@@ -283,5 +281,3 @@ func (App *App) publishLocalFiles(dir string) bool {
 	}
 	return true
 }
-
-

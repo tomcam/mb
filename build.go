@@ -12,9 +12,9 @@ import (
 // Assets in the theme/pagetype directories are published, which
 // includes anything other than HTML or Markdown files.
 func (App *App) build() error {
-  if !isProject(".") {
-    return errCode("1009", currDir())
-  }
+	if !isProject(".") {
+		return errCode("1009", currDir())
+	}
 
 	// Note current position in directory tree
 	App.Site.path = currDir()
@@ -75,6 +75,3 @@ func (App *App) build() error {
 
 	return nil
 }
-
-
-

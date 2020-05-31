@@ -40,9 +40,10 @@ type App struct {
 	// Custom functions used in the template language.
 	// All built-in functions must appear here to be publicly available
 	funcs map[string]interface{}
-
-	// Identical to funcs except fewerFuncs cannot have shortcode in it
+	// Copy of funcs but without "scode" 
 	fewerFuncs map[string]interface{}
+
+
 }
 
 // initConfig() determines where configuration file (and other
@@ -123,11 +124,28 @@ func newDefaultApp() *App {
 	App.addCommands()
 
 	App.themesPath = filepath.Join(configDir(), THEME_SUBDIRNAME)
-	App.funcs = template.FuncMap{ /* "scode": App.scode, */
-		"ftime": App.ftime,
+	App.funcs = template.FuncMap{
+    "ftime": App.ftime,
+    "hostname": App.hostname,
+    "inc": App.inc,
+    "path": App.path,
+    "scode": App.scode,
+  }
 		/*"hostname": App.hostname, "path": App.path, "inc": App.inc */
-	}
+
+  // Get a copy of funcs but without 
+  // scode, because including it would cause a 
+  // cycle condition for the scode function
+  App.fewerFuncs = make(map[string]interface{})
+  for key, value := range App.funcs {
+    if key != "scode" {
+      App.fewerFuncs[key] = value
+    }
+  }
 
 	// CONFIG HAS NOT BEEN READ   YET
 	return &App
 }
+
+
+

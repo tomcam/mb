@@ -77,7 +77,7 @@ var errMsgs = map[string]string{
 	"0208": "Error copying file to publish directory",            // Golang error, custom message
 	"0209": "Error creating file",                                // filename
 	"0210": "Error creating TOML file for new site",              // filename
-	"0211": "Error creating sample file",              // filename
+	"0211": "Error creating sample file",                         // filename
 
 	// 0250 - Error closing file
 	"0251": "Error closing copy of file", // filename

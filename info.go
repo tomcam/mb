@@ -14,6 +14,7 @@ func (App *App) info() {
 	//fmt.Println("*** App.Prefs.configDir: " + App.Prefs.configDir)
 	fmt.Println("Home dir: " + homeDir())
 	fmt.Println("Current dir: " + currDir())
+	fmt.Println("scode path: " + App.Site.sCodePath)
 	fmt.Println("App.Flags.Verbose", App.Flags.Verbose)
 	exists("Default config directory", configDir())
 	exists("Actual config directory", App.Prefs.configDir)

@@ -2,6 +2,10 @@
 ## Things I need to test
 - Pub dir gets changed in configuration
 
+Documentation conventions
+
+The parts ofthe HTML page (header, footer, etc.) are called page regions
+https://www.w3.org/WAI/tutorials/page-structure/regions/
 
 # kitchensink {sitename}
 

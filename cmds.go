@@ -70,7 +70,7 @@ func (App *App) addCommands() {
 		cmdInfo = &cobra.Command{
 			Use:   "info",
 			Short: "Display configuration and debug information about the site",
-			Long:  `info: TODO: Long version
+			Long: `info: TODO: Long version
 Show such information as where theme files can be found,
 whether the current directory is Metabuzz project, and so on`,
 			Run: func(cmd *cobra.Command, args []string) {
@@ -79,12 +79,12 @@ whether the current directory is Metabuzz project, and so on`,
 		}
 
 		/*****************************************************
-		  TOP LEVEL COMMAND:build 
+		  TOP LEVEL COMMAND:build
 		 *****************************************************/
 		cmdBuild = &cobra.Command{
 			Use:   "build",
-		  Short: "build: Generates the site HTML and copies to publish directory",
-      Long: `"build: Generates the site HTML and copies to publish directory 
+			Short: "build: Generates the site HTML and copies to publish directory",
+			Long: `"build: Generates the site HTML and copies to publish directory 
       Typical usage:
       : Create the project named mysite in its own directory.
       : (Generates a tiny file named index.md)
@@ -98,9 +98,9 @@ whether the current directory is Metabuzz project, and so on`,
       : Load the site's home page into a browser.
       : Windows users, omit the open
       open .pub/index.html
-`	,
+`,
 			Run: func(cmd *cobra.Command, args []string) {
-        err := App.build()
+				err := App.build()
 				if err != nil {
 					QuitError(err)
 				}
