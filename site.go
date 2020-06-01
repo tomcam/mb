@@ -9,6 +9,7 @@ import (
 // Site contains configuration specific to each site, such as
 // its title, publish directory, and branding string.
 type Site struct {
+
 	// Full path of the directory where the site source is.
 	path string
 
@@ -65,7 +66,7 @@ type Site struct {
 
 	// Target subdirectory for assets such as CSS and images.
 	// It's expected to be a child of the Publish directory.
-	AssetDir string
+  AssetDir string
 
 	// Base directory for URL root, which may be diffferent
 	// from its actual root. For example, GitHub Pages prefers
@@ -247,6 +248,7 @@ func (App *App) newSite(sitename string) error {
 	if err != nil {
 		QuitError(errCode("0915", "from '"+App.sCodePath+"' to '"+App.Site.sCodePath+"'"))
 	}
+	App.Site.AssetDir = filepath.Join(App.Site.Publish, App.Site.AssetDir)
 
 	// Create a little home page
 	indexMd = fmt.Sprintf(indexMd, sitename, sitename)

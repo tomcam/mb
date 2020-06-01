@@ -1,14 +1,12 @@
 package main
 
-/*
 import (
 	"fmt"
-	"github.com/BurntSushi/toml"
-	"os"
+	//"github.com/BurntSushi/toml"
+	//"os"
 	"path/filepath"
 	"strings"
 )
-*/
 
 type Theme struct {
 	// Parent root stylesheets get copied to the child automatically
@@ -60,23 +58,96 @@ type PageType struct {
 	// Don't use wildcards or other Unix patterns normally expanded by the shell.
 	Exclude []string
 
-	// List of all areas used by this page
-	Nav     area
-	Header  area
-	Article area
-	Footer  area
-	Sidebar area
+  // All parts of the page
+	Nav    pageRegion
+	Header  pageRegion
+	Article pageRegion
+	Footer  pageRegion
+	Sidebar pageRegion
 }
 
-// Area could be, say, a header:
+// pageRegion could be, say, a header:
 // html is inline html. filename would be a pathname containing the HTML.
 // It defaults to the name of the component, so if it's a nav and
 // no filename is specified it assumes nav.html
 // Inline HTML would override File if both are specified.
-type area struct {
+type pageRegion struct {
 	// Inline HTML
 	HTML string
 
 	// Filename specifying HTML or Markdown
 	File string
 }
+
+
+
+// loadTheme() copies the theme and pageType, if any, to the Publish directory.
+// They're found in App.FrontMatter.Theme and App.FrontMatter.PageType.
+func (App *App) loadTheme() {
+	themeName := strings.TrimSpace(App.FrontMatter.Theme)
+	// xxx
+	themeDir := filepath.Join(App.Site.themesPath, themeName)
+	if !dirExists(themeDir) {
+		  QuitError(errCode("1004",
+			fmt.Errorf("theme \"%v\" was specified, but couldn't find a directory named %v", App.FrontMatter.Theme, themeDir).Error()))
+	}
+
+	// Generate the fully qualified name of the TOML file for this theme.
+	// TODO: App.themePath()?
+	themePath := pageTypePath(themeDir, themeName)
+	// xxx
+
+	// First get the parent theme shared assets
+	// Temp var because the goal is simply to get the
+	// shared assets.
+	//fmt.Printf("loadTheme(): getting root styles for %v %v\n",themeName, App.FrontMatter.PageType)
+	var p PageType
+	if err := App.PageType(themeName, themeDir, themePath, &p); err != nil {
+		QuitError(errCode("0117", themePath, err.Error()))
+	}
+	App.Theme.RootStylesheets = p.RootStylesheets
+	// See if a pagetype has been requested.
+	if App.FrontMatter.PageType != "" {
+		//if App.FrontMatter.isChild {
+		//fmt.Println("loadTheme(), PageType", App.FrontMatter.PageType)
+		// This is a child theme/page type, not a default/root theme
+		App.FrontMatter.isChild = true
+		themeDir = filepath.Join(themeDir, App.FrontMatter.PageType)
+		themePath = pageTypePath(themeDir, App.FrontMatter.PageType)
+
+	} else {
+		//fmt.Println("loadTheme(), root theme")
+		// This is a default/root theme, not a child theme/page type
+		App.FrontMatter.isChild = false
+		// Try to load the .toml file named after the theme directory.
+		themePath = pageTypePath(themeDir, themeName)
+		//fmt.Println("Hope we inherited", App.Theme.RootStylesheets)
+	}
+	if err := App.PageType(themeName, themeDir, themePath, &App.Theme.PageType); err != nil {
+		QuitError(errCode("0108", fmt.Errorf("Error loading %s", themePath).Error(), err.Error()))
+	}
+}
+
+// pageTypePath() is a utility function to generate the full pathname  of a PageType file
+// from a subdirectory name.
+func pageTypePath(subDir, themeName string) string {
+	return filepath.Join(subDir, themeName+"."+CONFIG_FILE_DEFAULT_EXT)
+}
+
+// PageType() reads in either the default/anonymous pageType (root of the
+// theme directory) or a pageType, named by directory, one level in.
+// themeDir is the fully qualified path name of the theme directory.
+// fullpathName is the fully qualified path name of the .toml file.
+func (App *App) PageType(themeName, themeDir, fullPathName string, PageType *PageType) error {
+	if err := readTomlFile(fullPathName, PageType); err != nil {
+		return errCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", fullPathName, App.FrontMatter.Theme).Error(), err.Error())
+	}
+	PageType.name = themeName
+	PageType.PathName = themeDir
+	App.Theme.PageType = *PageType
+	// Success
+	return nil
+}
+
+
+

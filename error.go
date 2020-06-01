@@ -71,6 +71,7 @@ var errMsgs = map[string]string{
 	"0121": "inc: error reading file",              // filename
 	"0122": "scode: unable to find file",           // filename
 	"0123": "scode: error reading file",            // filename
+	"0124": "Error copying a page asset",            // custom message  
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error

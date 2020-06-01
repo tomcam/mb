@@ -37,9 +37,6 @@ type App struct {
 	// Location of directory containing shortcode files
 	sCodePath string
 
-		// Page being rendered
-	html []byte
-
 	// Custom functions used in the template language.
 	// All built-in functions must appear here to be publicly available
 	funcs map[string]interface{}

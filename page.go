@@ -8,6 +8,11 @@ type Page struct {
 	// https://github.com/alecthomas/chroma/tree/master/styles
 	CodeTheme string
 
+  // Page being rendered
+	html []byte
+
+LHeadTag[]byte
+
 	// Content of the article md file itself converted to HTML,
 	// obviously without header, nav, footer, aside etc.
 	Article []byte
