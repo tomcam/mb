@@ -1,0 +1,23 @@
+stylesheets = [ "docset.css", "docreset.css" ]
+
+# Skin.css would be the color overrides.
+skin = ""
+
+[nav]
+filename = "nav.html"
+
+[header]
+filename = "header.html"
+
+# Not sure we need this
+[content]
+html = ""
+
+[footer]
+filename = "footer.html"
+
+[aside]
+filename = "aside.html"
+
+
+

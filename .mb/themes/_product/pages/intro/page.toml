@@ -1,0 +1,29 @@
+
+stylesheets = [ "docset.css" ]
+
+# Skin.css would be the color overrides.
+skin = ""
+
+[nav]
+#html = "<navbar><strong>DOCSET</strong><a href='/'>Home</a> | <a href='/todo.html'>Navvie McNavbar</a></navbar> | <em>How much more can we say?</em>"
+filename = "nav.html"
+
+[header]
+#html = "<header><h1>hello, world.</h1></header>"
+filename = "header.html"
+
+# Not sure we need this
+[content]
+html = ""
+filename = "content.html"
+
+[footer]
+#html = "<footer>HTML Override footer</footer>"
+filename = "footer.html"
+
+[aside]
+#html = "<h3>Now, as an aside</h3>"
+filename = "aside.html"
+
+
+

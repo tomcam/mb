@@ -224,7 +224,7 @@ func (App *App) newSite(sitename string) error {
 	// Create minimal directory structure: Publish directory
 	// .site directory, .themes, etc.
 	if err := createDirStructure(&siteDirs); err != nil {
-		return err
+		return errCode("PREVIOUS", err.Error())
 	}
 
 	// Create its site.toml file
@@ -241,6 +241,13 @@ func (App *App) newSite(sitename string) error {
 		QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
 	}
 
+	// Copy all scodes from the user application data directory
+	// to the project directory.
+	err = copyDirAll(App.sCodePath, App.Site.sCodePath)
+	if err != nil {
+		QuitError(errCode("0915", "from '"+App.sCodePath+"' to '"+App.Site.sCodePath+"'"))
+	}
+
 	// Create a little home page
 	indexMd = fmt.Sprintf(indexMd, sitename, sitename)
 	return writeTextFile("index.md", indexMd)
@@ -254,13 +261,16 @@ func (App *App) newSite(sitename string) error {
 func (App *App) siteDefaults() {
 	App.Site.path = currDir()
 	App.Site.configFilePath = filepath.Join(App.Site.path, siteConfigSubDir, siteConfigFilename)
-	App.themesPath = filepath.Join(cfgString("configdir"), THEME_SUBDIRNAME)
 	App.Site.Publish = filepath.Join(App.Site.path, PublishSubDirName)
 	App.Site.Headers = filepath.Join(App.Site.path, headersDir)
 	App.Site.commonDir = filepath.Join(App.Site.path, commonSubDirName)
+	App.themesPath = filepath.Join(cfgString("configdir"), themeSubDirName)
+	App.sCodePath = filepath.Join(cfgString("configdir"), sCodeSubDirName)
 	if App.Flags.DontCopy {
 		App.Site.themesPath = App.themesPath // xxx
+		App.Site.sCodePath = App.sCodePath // xxx
 	} else {
 		App.Site.themesPath = filepath.Join(App.Site.path, siteThemeDir)
+		App.Site.sCodePath = filepath.Join(App.Site.path, sCodeSubDirName)
 	}
 }

@@ -1,0 +1,110 @@
+/* docstart.css - Layout, color, and fonts for a generic starter site */ 
+:root 
+	
+{
+		/* Left edge of text in articles, headers, etc. */
+		/* Experiment while I work on clean.css
+		--left-start: 4em;
+		*/
+
+		/* The widest a column of text should be in an article */
+		--max-article-width: 33rem;
+
+		/* The the aside column should be */
+		--max-aside-width: 20rem;
+
+		/* Default foreground (text) color  */
+		--fg: black;
+
+		/* Default background color */
+		--bg: white;
+				
+		/* Primary foreground (text) and background colors in header */
+		--header-fg: black;
+		--header-bg: white;
+
+		/* Secondary foreground (text) and background colors for accents. */
+		--trim-fg: red;
+		--trim-bg: blue;
+		
+		/* Primary foreground (text) and background colors in navbar */
+		--nav-fg: white;
+		--nav-bg: black;
+
+		/* Primary foreground (text) and background colors in footer */
+		--footer-fg: white;
+		--footer-bg: black;
+
+		/* Adjusts header height and keeps it vertically centered */
+		--header-height: 5em;
+}
+
+
+body {
+  font-family:"informal"; 
+}
+
+h1{ font-size:2.5em; }
+h2{ font-size:2em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+
+
+/* HEADER */
+header {height:var(--header-height);line-height:var(--header-height);background-color:var(--header-bg);color:var(--header-fg);overflow:hidden;}
+/* Use h4 for the main header because it's ignored by search engines. This is just a convention used here in docset themes. It's nothing universal. */
+header > h4 {font-size:4em;font-weight:700;display:inline;float:left} 
+/* Abuse strikeout to show text in a different color */
+header > h4 > del {color:var(--trim-fg);text-decoration:none;} 
+
+header > ul > li {list-style-type:none;color:var(--header-fg);display:inline;}
+header > ul > li > a:link {color:var(--header-fg);font-weight:bold;text-decoration:none;margin-left:1em;display:inline;clear:left;}
+header > ul > li > a:hover{text-decoration:underline;color:var(--trim-fg);}
+header > img {background-size:100% 100%;}
+
+/* NAV */
+nav  {color:var(--nav-fg); background-color:var(--nav-bg); }
+nav > p {padding-left: var(--left-start);background-color:var(--nav-bg); }
+nav > img {display:inline;}
+nav > p > a {color:var(--nav-fg);font-style:normal;}
+nav > li > a:hover{text-decoration:underline;color:var(--trim-fg);}
+nav > p {font-style:italic;margin-bottom:1rem;}
+nav {padding-top:1rem;border-top: 1px solid lightgray;border-bottom: 1px solid lightgray;}
+
+/* ARTICLE */
+article {width:var(--max-article-width);}
+article {padding-left: var(--left-start);}
+article > h2 {color:var(--fg);font-size:1.5rem;line-height:1.5em;}
+article > h3  {color:var(--fg);}
+article > p {color:var(--fg);font-weight:light;line-height:1.5em;max-width:var(--max-article-width);margin-bottom:1em;)}
+article > pre {max-width:var(--max-article-width);overflow:auto;}
+article > ul,ol,li {line-height:1.5em; max-width:var(--max-article-width)}
+article > code,pre{font-size: .8em;}
+article > h4 { font-weight:normal;font-size:1em;color:gray;margin-bottom:1em; } /* Byline */
+article > h4 > strong {font-weight:bold;color:black; } /* Byline */
+
+/* ASIDE */
+aside {width:var(--max-aside-width);border-bottom:4px solid black;}
+aside h2 {margin-top: 1em;margin-bottom:.5em}
+aside > h3 {color:var(--trim-fg);font-size:.75em;font-weight:bold;margin-bottom:2;}
+aside > p {margin-bottom:1em;}
+
+/* FOOTER */
+footer {padding-left: var(--left-start);}
+footer {border-top: 1px solid lightgray;} 
+footer > h2 {text-align:center;}
+footer > table > thead > tr > th {padding-top:1em;padding-right:2em;padding-bottom:1em;}
+footer > table > tbody > tr > td > a:link {color:black;text-decoration:none;}
+footer > table > tbody > tr > td > a:hover{color:red;text-decoration:underline;}
+footer > table > tbody > tr > td {padding-right:2em;}
+footer > table {color:darkgray;font-size:.8em;}
+
+/* RESPONSIVE SIZING */
+@media (max-width: 1024px) {
+:root{--left-start: 1rem;}
+aside {display:none}
+footer {display:none}
+}

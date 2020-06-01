@@ -19,7 +19,7 @@ func (App *App) build() error {
 	// Note current position in directory tree
 	App.Site.path = currDir()
 	App.siteDefaults()
-	App.Site.sCodePath = filepath.Join(App.Site.path, SCODE_SUBDIRNAME)
+	App.Site.sCodePath = filepath.Join(App.Site.path, sCodeSubDirName)
 
 	// Make sure there's a publish directory name.
 	// Use system default if necessary.

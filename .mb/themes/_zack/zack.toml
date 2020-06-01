@@ -1,0 +1,26 @@
+
+stylesheets = [ "docreset.css","docset.css","docstart.css", "docroot.css", "zack.css" ]
+
+sitename = "Supah clean"
+
+# Skin.css would be the color overrides.
+skin = ""
+
+[nav]
+#html = "<navbar><strong>DOCSET</strong><a href='/'>Home</a> | <a href='/todo.html'>Navvie McNavbar</a></navbar> | <em>How much more can we say?</em>"
+markdownfile = "nav.md"
+
+[header]
+#html = "<header><h1>hello, world.</h1></header>"
+markdownfile = "header.md"
+
+[footer]
+#html = "<footer>HTML Override footer</footer>"
+markdownfile = "footer.md"
+
+[aside]
+#html = "<h3>Now, as an aside</h3>"
+markdownfile = "aside.md"
+
+
+

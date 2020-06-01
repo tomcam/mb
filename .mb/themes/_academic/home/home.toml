@@ -1,0 +1,14 @@
+
+stylesheets = [ "docreset.css","docset.css","academichome.css"  ]
+
+[nav]
+file = "nav.md"
+
+[header]
+file = "acahome.md"
+
+[sidebar]
+file = "aside.md"
+
+
+

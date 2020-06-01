@@ -1,0 +1,173 @@
+/* IMPORTANT: Downloadable fonts should be imported above this rule  */
+:root 
+{
+		/* personality.css 
+		 * https://coolors.co/ea603b-f2dc5d-f2a359-a4031f-240b36
+		 * 
+		 */
+
+		/* ****************/
+		/* FONT SELECTION */
+		/* ****************/
+		/*
+		 * --------------------------------------------------
+		 * Header style
+		 * --------------------------------------------------
+		 *
+		 * Font family used for headings (it can easily be
+		 * overridden). Often you want headings h1 through
+		 * h6 to use a font familu that contrasts with the
+		 * body text, so you can set it here.
+		 * Docset adds the styles formal, informal, and code  
+		 * to the existing styles serif, sans-serif, and 
+		 * monospace. This can give better results depending
+		 * on the platform, which is a combination of the
+		 * operating system, browser, and versions of both.
+
+
+		/* ****************/
+		/* COLORS         */
+		/* ****************/
+		/*
+		 * Most but not all colors used by a theme appear
+		 * in this CSS file as CSS variables, so that you
+		 * can make big changes to your theme by doing 
+		 * nothing more than altering these values.
+		 * 
+		 * Text colors use fg, meaning foreground, and
+		 * background colors use fg. Sometimes they're
+		 * used to color non-text objects, which is why
+		 * they aren't called -text or -background.
+		 *
+		 * --------------------------------------------------
+		 * Header style
+		 * --------------------------------------------------
+	
+		/* Default foreground (text) and background colors  */
+		--fg: darkgray;
+		--bg: white;
+
+		/* Default foreground (text) and background colors in article */
+		--article-fg: black;
+		--article-bg: var(--bg);
+				
+		/* Default foreground (text) and background colors in aside */
+		--aside-fg: black;
+		--aside-bg: var(--bg);
+
+		/* Primary foreground (text) and background colors in header */
+		--header-fg: #EA603B;
+		--header-bg: white;
+
+		/* Primary foreground (text) and background colors in navbar */
+		--nav-fg: white;
+		--nav-bg: var(--header-fg);
+
+		/* Secondary foreground (text) and background colors for accents. */
+		--trim-fg: #240B36;
+		--trim-bg: #A4031F;
+		
+		/* Primary foreground (text) and background colors in footer */
+		--footer-fg: white;
+		--footer-bg: var(--header-bg);
+
+
+		/* ****************/
+		/* DIMENSIONS      */
+		/* ****************/
+	
+		/* Maximum characters on a line in an article. 
+		 * Has no effect on the width of the column itself. */
+		--max-article-width: 80%; 
+
+		/* The maximum number of characters the aside column should be */
+		--max-aside-width: 20%;    
+
+		/* Header, nav, and footer stretch all the way across
+		 * the screen at 100%. To see gaps (margins) on either side
+		 * reduce that number, then increase --left-gap
+		 * and --right-gap. */
+		--full-page:100%; 
+
+		/* Margin/background visible surrounding article. 
+		 * When --full-page is 100% these should be at 0.
+		 * When --full-page is less than 100% then these
+		 * two should add up to the difference. */
+		--left-gap:0%;
+		--right-gap:0%;
+
+		/* Starting point from left where text (and by default headers) appears */
+		--left-start:0%;
+
+		/* Adjusts header height and keeps it vertically centered */
+		--header-height:3rem;
+
+		/* Adjusts navbar height and keeps it vertically centered */
+		--nav-height:6rem;
+
+		/* Pushes in each side of text (padding, actually. 
+		 * Use only when --full-page is 100%
+		 * This centers the article on the page. 
+		 * If using aside-right or aside-left, this should
+		 * be decreased. */
+		--push-in:15%;
+
+
+}
+
+/* ARTICLE */
+article > p {font-weight:100;font-size:1.25rem;line-height:1.5em;margin-bottom:2rem;}
+article > h1,article > h2 {font-weight:100;}
+article > h2 {margin-top:4rem;}
+article > h2 {color:var(--trim-bg);}
+iarticle{padding-left:var(--push-in); padding-right:var(--push-in);}
+article{padding-left:var(--push-in); padding-right:5%;}
+
+/* Article tables use colors same as header, but reversed in first row */
+article >  table {width:100%;margin-top:2rem;margin-bottom:3rem;}
+article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
+article > table > td,th {padding:1rem;}
+article > table > tbody > tr > td {padding:1rem;border-bottom:.1px solid gray;}
+
+
+
+
+/* ASIDE */
+aside, aside > p, aside > h2, aside > h3, aside > h4 {margin-left:0} 
+aside > h2 {text-align:center;font-size:1.75rem;color:var(--trim-fg);}
+aside > h4 {color:var(--header-bg);background-color:var(--header-fg)}
+aside > p {font-weight:100;line-height:1.5em;}
+aside > p > strong {font-weight:100;color:var(--nav-fg);background-color:var(--nav-bg);}
+
+/* HEADER */
+header {width:var(--full-page);}
+header {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+header {padding-left:var(--push-in);}
+header > h4 {font-size:1rem;font-weight:light;color:var(--header-fg);text-align:center;}
+/* Style h4 links in the header to look like buttons */
+header > h4 > a:link,header > h4 > a:visited, header > h4 > a:focus, header > h4 > a:hover, header > h4 > a:active{padding:.5rem 1rem;color:var(--header-bg);background-color:var(--header-fg);cursor:pointer;text-decoration:none;} /* xxx */
+header > h4 > a:hover{text-decoration:underline;}
+header  > ul {margin-left:0;padding-left:0;padding-right:1rem;}
+
+nav {width:var(--full-page);}
+nav {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+nav {text-align:center;}
+nav > ul > li > a:link {font-size:2rem;font-weight:100;}
+nav > p > a > img {margin-left:1rem;}
+nav > ul > li > a:link, nav > ul > li > a:visited, nav > ul > li > a:focus, nav > ul > li > a:hover, nav > ul > li > a:active {color:var(--header-bg);background-color:var(--header-fg);text-decoration:none;padding:1rem .5rem;} 
+nav > ul > li > a:hover {color:var(--header-fg);background-color:var(--header-bg);} 
+
+footer {width:var(--full-page);}
+footer {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+footer {border-top:none;padding-top:3rem;padding-bottom:3rem;}
+footer, footer > p > a {text-align:center;color:var(--nav-fg);background-color:var(--nav-bg)}
+
+/* RESPONSIVE SIZING */
+@media (max-width: 1024px) {
+article,header,nav,footer{width:100%;}
+header,nav,html{padding-left:0rem;margin:0rem;} 
+article{padding-left:1rem;}
+aside {width:0;display:none}
+footer {display:none}
+}
+

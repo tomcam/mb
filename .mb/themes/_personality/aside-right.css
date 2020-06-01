@@ -1,0 +1,15 @@
+/* Put the aside on the right. */
+:root 
+{
+	/* Pushes in each side of text (padding, actually. 
+	 * Use only when --full-page is 100%
+	 * This centers the article on the page. */
+	--push-in:10%;
+	--max-article-width:70%;
+
+
+
+}
+article, aside {float:left}
+article {clear:left;padding-right:5%;}
+aside {padding-right:0}

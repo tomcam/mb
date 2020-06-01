@@ -15,7 +15,7 @@ Welcome to %s
 		{siteConfigSubDir},
 		{PublishSubDirName},
 		{headersDir},
-		{SCODE_SUBDIRNAME},
+		{siteScodeDir},
 		{commonSubDirName},
 		{siteThemeDir},
 		/*{"_posts"} */}
@@ -62,10 +62,11 @@ const (
 
 	// Name of subdirectory containing shortcode files
 	// Excluded from publishing.
-	SCODE_SUBDIRNAME = ".scodes"
+	sCodeSubDirName = ".scodes"
 
 	// Name inside the global preferences directory for themes.
-	THEME_SUBDIRNAME = "themes"
+	themeSubDirName = ".themes"
+	//THEME_SUBDIRNAME = ".themes"
 
 	// Name of subdirectory within the theme that holds help & sample files
 	// for that theme.
@@ -110,6 +111,9 @@ const (
 	// make theme changes, especially if you're a noob or just want to
 	// type less.
 	siteThemeDir = ".themes"
+
+  // TODO: Necessary?
+  siteScodeDir = ".scodes"
 
 	// Configuration file found in the current site source directory
 	SOURCE_DIR_CONFIG_FILENAME = PRODUCT_NAME + "." + CONFIG_FILE_DEFAULT_EXT

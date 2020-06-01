@@ -26,17 +26,23 @@ import (
    the same error occurs but in different places. Since the
    Go lib returns identical error messages for each one, tracking
    down the error code shows us where the error occurred even if the
-   executable is stripped of debug info */
-var errMsgs = map[string]string{
-	// Sample usage: return errCode("0401", err.Error())
-	// Sample usage: return errCode("0401", err.Error(), filename)
-	// Sample usage:
-	// if err := copyDirOnly(from, to); err != nil {
-	//		msg := fmt.Sprintf("Unable to copy from pageType directory %s to new pageType directory %s", from, to)
-	//		return errCode("0906", msg)
-	// }
+   executable is stripped of debug info 
 
-	// Sample usage:	 msg := fmt.Errorf("Error attempting to create project file %s: %v", projectFile, err.Error()).Error()
+	Sample usage: return errCode("0401", err.Error())
+	Sample usage: return errCode("0401", err.Error(), filename)
+	err = copyDirAll(App.themesPath, App.Site.themesPath)
+	if err != nil {
+		QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
+	}
+  if err := copyDirOnly(from, to); err != nil {
+	  msg := fmt.Sprintf("Unable to copy from pageType directory %s to new pageType directory %s", from, to)
+	  return errCode("0906", msg)
+
+		Sample usage:	 msg := fmt.Errorf("Error attempting to create project file %s: %v", projectFile, err.Error()).Error()
+  */
+
+
+var errMsgs = map[string]string{
 
 	// Just print the last error
 	"PREVIOUS": " ",
@@ -126,6 +132,7 @@ var errMsgs = map[string]string{
 	"0912": "Problem converting markdown file",                     //
 	"0913": "Unable to read project directory",                     //
 	"0914": "Error creating a temporary file",                      // filename
+	"0915": "Unable to copy scodes directory to publish directory", // custome error message
 
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename

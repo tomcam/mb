@@ -81,7 +81,7 @@ func (App *App) excludeDirs() []string {
 		commonSubDirName,
 		headersDir,
 		PublishSubDirName,
-		SCODE_SUBDIRNAME,
+		sCodeSubDirName,
 		siteConfigSubDir,
 		siteThemeDir)
 }

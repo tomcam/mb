@@ -1,0 +1,16 @@
+stylesheets = [ "docreset.css","docset.css","docstart.css", "debut.css"  ]
+
+[nav]
+markdownfile = "nav.md"
+
+[header]
+markdownfile = "header.md"
+
+[footer]
+markdownfile = "footer.md"
+
+[aside]
+markdownfile = "aside.md"
+
+
+

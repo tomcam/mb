@@ -34,7 +34,10 @@ type App struct {
 	// Location of global themes directory
 	themesPath string
 
-	// Page being rendered
+	// Location of directory containing shortcode files
+	sCodePath string
+
+		// Page being rendered
 	html []byte
 
 	// Custom functions used in the template language.
@@ -121,7 +124,8 @@ func newDefaultApp() *App {
 	// Add config/env support from cobra and viper
 	App.addCommands()
 
-	App.themesPath = filepath.Join(configDir(), THEME_SUBDIRNAME)
+	App.themesPath = filepath.Join(configDir(), themeSubDirName)
+	App.sCodePath = filepath.Join(configDir(), sCodeSubDirName)
 	App.funcs = template.FuncMap{
 		"ftime":    App.ftime,
 		"hostname": App.hostname,
