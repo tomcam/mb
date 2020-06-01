@@ -101,6 +101,23 @@ func (App *App) path() string {
 	return App.Page.Path
 }
 
+// scode() provides a not-very-good shortcode feature. Can't figure
+// out how to do a better job considering a Go template function
+// can take only a map, but you can't pass map literals.
+// You need to pass it a map with a key named "filename" 
+// that matches a file in ".scodes". Currently the
+// only thing that works with Javascript is youtube.html
+/*
+    Example:
+    ====
+    [List]
+    youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
+    ===
+    ## Youtube?
+    {{ scode .FrontMatter.List.youtube }}
+
+
+*/
 func (App *App) scode(params map[string]interface{}) template.HTML {
 	filename, ok := params["filename"].(string)
 	if !ok {
