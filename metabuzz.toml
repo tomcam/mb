@@ -1,1 +1,6 @@
-configdir="/Users/tom/code/m2"
+configdir="/Users/tom/code/m2/.mb"
+testsite="fobar"
+
+[foo]
+bar="ned"
+
