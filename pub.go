@@ -77,7 +77,7 @@ func (App *App) publishFile(filename string) error {
 	defer os.Remove(tmpFile.Name())
 	// Get the relative directory.
 	relDir := relDirFile(App.Site.path, outfile)
-  App.Page.Path = relDir
+	App.Page.Path = relDir
 	// If there's a README.md and no index.md, rename
 	// the output file to index.html
 	if App.Page.filename == "README.md" && !optionSet(App.Site.dirs[App.Page.dir], hasIndexMd) {

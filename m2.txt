@@ -1,4 +1,33 @@
 
+===
+[List]
+youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
+===
+
+{{"{{"}} scode .FrontMatter.List.youtube {{"}}"}} 
+
+
+===
+[List]
+youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
+===
+
+{{ scode .FrontMatter.List.youtube }} 
+
+
+Mention this gives a "Video unavailable" error when not running a web server
+===
+[List]
+youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
+===
+
+{{ scode .FrontMatter.List.youtube }} 
+
+
+
+{{ scode "y.html" }}
+{{ scode "youtube.html" "tcrTQUVkUe0" }}
+
 ## Things I need to test
 - Pub dir gets changed in configuration
 

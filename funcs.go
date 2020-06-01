@@ -101,12 +101,7 @@ func (App *App) path() string {
 	return App.Page.Path
 }
 
-
-
-// scode lets you insert an HTML file. Good if you want
-// to embed Youtube or Twitter, for example.
 func (App *App) scode(params map[string]interface{}) template.HTML {
-	App.Verbose("scode(): starting with %+v.\n", params)
 	filename, ok := params["filename"].(string)
 	if !ok {
 		return template.HTML("filename missing")
@@ -136,10 +131,12 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 
 	var s string
 	// Apply the template to it.
-	// The one function missing from fewerFuncs is scode() itself.
+	// The one function missing from fewerFuncs is shortcode() itself.
 	if s, err = App.execute(filename, string(input), App.fewerFuncs); err != nil {
 		QuitError(errCode("1202", filename))
 	}
 	return template.HTML(s)
 }
+
+
 
