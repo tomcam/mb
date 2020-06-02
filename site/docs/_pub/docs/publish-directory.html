@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>The Publish directory</title>
+
+<meta name="description" content="Try these featured Metabuzz themes live">
+
+<script>
+  (function(a,b,c){var d=a.history,e=document,f=navigator||{},g=localStorage,
+  h=encodeURIComponent,i=d.pushState,k=function(){return Math.random().toString(36)},
+  l=function(){return g.cid||(g.cid=k()),g.cid},m=function(r){var s=[];for(var t in r)
+  r.hasOwnProperty(t)&&void 0!==r[t]&&s.push(h(t)+"="+h(r[t]));return s.join("&")},
+  n=function(r,s,t,u,v,w,x){var z="https://www.google-analytics.com/collect",
+  A=m({v:"1",ds:"web",aip:c.anonymizeIp?1:void 0,tid:b,cid:l(),t:r||"pageview",
+  sd:c.colorDepth&&screen.colorDepth?screen.colorDepth+"-bits":void 0,dr:e.referrer||
+  void 0,dt:e.title,dl:e.location.origin+e.location.pathname+e.location.search,ul:c.language?
+  (f.language||"").toLowerCase():void 0,de:c.characterSet?e.characterSet:void 0,
+  sr:c.screenSize?(a.screen||{}).width+"x"+(a.screen||{}).height:void 0,vp:c.screenSize&&
+  a.visualViewport?(a.visualViewport||{}).width+"x"+(a.visualViewport||{}).height:void 0,
+  ec:s||void 0,ea:t||void 0,el:u||void 0,ev:v||void 0,exd:w||void 0,exf:"undefined"!=typeof x&&
+  !1==!!x?0:void 0});if(f.sendBeacon)f.sendBeacon(z,A);else{var y=new XMLHttpRequest;
+  y.open("POST",z,!0),y.send(A)}};d.pushState=function(r){return"function"==typeof d.onpushstate&&
+  d.onpushstate({state:r}),setTimeout(n,c.delay||10),i.apply(d,arguments)},n(),
+  a.ma={trackEvent:function o(r,s,t,u){return n("event",r,s,t,u)},
+  trackException:function q(r,s){return n("exception",null,null,null,null,r,s)}}})
+  (window,"UA-152078779-1",{anonymizeIp:true,colorDepth:true,characterSet:true,screenSize:true,language:true});
+</script>
+
+
+</head>
+<body>
+
+<article><h1 id="the-publish-directory">The Publish directory</h1>
+<p>The publish directory contains your website: the set of HTML files, theme files, CSS, image, sound, and other assets that Metabuzz generates from your Markdown files and other assets. It is in the <code>.pub</code> subdirectory immediately off the root of your site directory. Ultimately it will be copied to the <code>WWW</code> or whatever directory your web host uses to publish HTML files from.</p>
+<p>You are not expected to make changes to the publish directory manually, because each time you run <code>mb build</code> the first thing that happens is that its contents are deleted. Otherwise you wouldn't have a reliable way of reliably creating a site if you need to roll back a version.</p>
+<p>Let's go through the creation of a minimal site to see how the publish directory is populated.</p>
+<h3 id="create-a-site">Create a site</h3>
+<ul>
+<li>First create the site, here called <code>test</code>.</li>
+</ul>
+<pre><code>mb new site test
+</code></pre>
+<ul>
+<li>Go to the new site's directory.</li>
+</ul>
+<pre><code>cd test
+</code></pre>
+<ul>
+<li>Look at the stub <code>index.md</code> file:</li>
+</ul>
+<h5 id="file-indexmd">file: index.md</h5>
+<pre><code># test
+
+Welcome to test
+</code></pre>
+<h3 id="examine-the-sites-contents">Examine the site's contents</h3>
+<ul>
+<li>Now look at the site directory. It will have contents something like this.</li>
+</ul>
+<pre><code>index.md
+.common
+.headers
+.site
+.pub
+.scodes
+.themes
+</code></pre>
+<ul>
+<li>If you check out the <code>.pub</code> directory you'll see it's empty.</li>
+</ul>
+<h3 id="build-the-site-and-look-at-the-output">Build the site and look at the output</h3>
+<ul>
+<li>Now create the site:</li>
+</ul>
+<pre><code>mb build
+</code></pre>
+<ul>
+<li>And take a look at the <code>.pub</code> directory, also known as the Publish directory:</li>
+</ul>
+<pre><code>index.html
+facebook-32x32-white.svg
+linkedin-32x32-white.svg
+twitter-32x32-white.svg
+youtube-32x32-white.svg
+themes/
+
+</code></pre>
+<ul>
+<li>Here's what portions of <code>index.html</code> look like, with the rest replaced by <code>...</code> for brevity:</li>
+</ul>
+<h5 id="file-indexhtml">file: index.html</h5>
+<pre><code>&lt;DOCTYPE html&gt;
+&lt;html lang=en&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+
+&lt;title&gt;metabuzz: Title needed here, squib&lt;/title&gt;
+
+&lt;meta name=&quot;description&quot; content=&quot;test&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/wide/reset.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/wide/fonts.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/wide/layout.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/wide/sizes.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/wide/theme-light.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/wide/wide.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/wide/responsive.css&quot;&gt;
+
+...
+
+&lt;header&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/&quot;&gt;Default&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/&quot;&gt;Create&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/&quot;&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/&quot;&gt;Try it Free&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/&quot;&gt;News&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/&quot;&gt;Specials&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/&quot;&gt;Privacy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;&quot;&gt;
+  &lt;img src=&quot;twitter-32x32-white.svg&quot; alt=&quot;Twitter logo&quot; /&gt;&lt;/a&gt; 
+  &lt;a href=&quot;&quot;&gt;&lt;img src=&quot;facebook-32x32-white.svg&quot; alt=&quot;Facebook logo&quot; /&gt;
+...
+&lt;/nav&gt;
+
+&lt;article&gt;&lt;h1 id=&quot;test&quot;&gt;test&lt;/h1&gt;
+&lt;p&gt;Welcome to test&lt;/p&gt;
+&lt;/article&gt;
+
+&lt;footer&gt;&lt;h2 id=&quot;wide&quot;&gt;&lt;a href=&quot;/&quot;&gt;wide&lt;/a&gt;&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;SECTIONS&lt;/th&gt;
+...
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+<ul>
+<li>Look at the <code>.pub/themes</code> subdirectory.</li>
+</ul>
+<pre><code>wide/
+</code></pre>
+<p>Wide is the theme Metabuzz uses if you don't specify a different one in the <a href="front-matter.html">front matter</a> or the <a href="site-file.html">site file</a>.</p>
+<p>If you had other pages using different themes they'd be copied under the <code>.pub/themes</code> directory as well.</p>
+<ul>
+<li>Finally, inspect the contents of the <code>.pub/themes/wide</code> directory:</li>
+</ul>
+<pre><code>wide.css
+fonts.css
+layout.css
+reset.css
+responsive.css
+sizes.css
+theme-light.css
+</code></pre>
+</article>
+
+</body>
+</html>

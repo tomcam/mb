@@ -1,0 +1,93 @@
+===
+theme = "pillar"
+===
+{{ if .Site.Name }}
+ * [{{ .Site.Name }}](/)
+{{ else if .FrontMatter.Theme }}
+ * [{{ .FrontMatter.Theme }}](/)
+{{ else if .Site.Authors }} 
+  {{ $author := index .Site.Authors 0  }}
+  {{ $fullName := $author.FullName }}
+  {{- if eq $fullName "" }}
+   * [Metabuzz Empty Authors[]](/)
+  {{- else }}
+ * [{{ $fullName }}](/)
+{{ end }}
+{{ else }}
+* [Metabuzz No Authors[] at all](/)
+* [Create](/)
+* [Pricing](/)
+* [Try it Free](/)
+{{ end }}
+
+{{- /* index.md */ -}}
+
+
+
+# DO NOT TOUCH: WORKS IN HEADER
+
+{{ if .Site.Authors }} {{ $author := index .Site.Authors 0  }}
+{{ $fullName := $author.FullName }}
+{{- if eq $fullName "" }}
+* [Metabuzz Empty Authors[]](/)
+{{- else }}
+* [{{ $fullName }}](/)
+{{ end }}
+{{ else if .Site.Name }}
+* [{{ .Site.Name }}](/)
+* [Create](/)
+* [Pricing](/)
+* [Try it Free](/)
+{{ end }}
+
+
+
+
+# DO NOT TOUCH THIS WORKS IN HEADER
+
+{{ if .Site.Authors }} {{ $author := index .Site.Authors 0  }}
+{{ $fullName := $author.FullName }}
+{{- if eq $fullName "" }}
+* [Metabuzz Empty Authors[]](/)
+{{- else }}
+* [{{ $fullName }}](/)
+{{ end }}
+{{ else }}
+* [Metabuzz No Authors[] at all](/)
+* [Create](/)
+* [Pricing](/)
+* [Try it Free](/)
+{{ end }}
+
+
+
+# DO NOT TOUCH
+
+{{ if .Site.Authors }} {{ $author := index .Site.Authors 0  }}
+{{ $fullName := $author.FullName }}
+{{- if eq $fullName "" }}
+* [Metabuzz Empty Authors[]](/)
+{{- else }}
+* [{{ $fullName }}](/)
+{{ end }}
+{{ else }}
+* [Metabuzz No Authors[] at all](/)
+{{ end }}
+
+
+# OLD HEADER
+
+{{- if .Site.Company.Name  }}                                                   
+* [{{- .Site.Company.Name }}](/)                                                
+
+{{- else if .Site.Name }}
+* [{{- .Site.Name }}](/)                                                  
+
+{{ end -}}
+
+* [Create](/)
+* [Pricing](/)
+* [Try it Free](/)
+* {{ .Site.Name }}
+
+

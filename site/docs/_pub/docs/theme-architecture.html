@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Metabuzz theme architecture</title>
+
+<meta name="description" content="Try these featured Metabuzz themes live">
+
+<script>
+  (function(a,b,c){var d=a.history,e=document,f=navigator||{},g=localStorage,
+  h=encodeURIComponent,i=d.pushState,k=function(){return Math.random().toString(36)},
+  l=function(){return g.cid||(g.cid=k()),g.cid},m=function(r){var s=[];for(var t in r)
+  r.hasOwnProperty(t)&&void 0!==r[t]&&s.push(h(t)+"="+h(r[t]));return s.join("&")},
+  n=function(r,s,t,u,v,w,x){var z="https://www.google-analytics.com/collect",
+  A=m({v:"1",ds:"web",aip:c.anonymizeIp?1:void 0,tid:b,cid:l(),t:r||"pageview",
+  sd:c.colorDepth&&screen.colorDepth?screen.colorDepth+"-bits":void 0,dr:e.referrer||
+  void 0,dt:e.title,dl:e.location.origin+e.location.pathname+e.location.search,ul:c.language?
+  (f.language||"").toLowerCase():void 0,de:c.characterSet?e.characterSet:void 0,
+  sr:c.screenSize?(a.screen||{}).width+"x"+(a.screen||{}).height:void 0,vp:c.screenSize&&
+  a.visualViewport?(a.visualViewport||{}).width+"x"+(a.visualViewport||{}).height:void 0,
+  ec:s||void 0,ea:t||void 0,el:u||void 0,ev:v||void 0,exd:w||void 0,exf:"undefined"!=typeof x&&
+  !1==!!x?0:void 0});if(f.sendBeacon)f.sendBeacon(z,A);else{var y=new XMLHttpRequest;
+  y.open("POST",z,!0),y.send(A)}};d.pushState=function(r){return"function"==typeof d.onpushstate&&
+  d.onpushstate({state:r}),setTimeout(n,c.delay||10),i.apply(d,arguments)},n(),
+  a.ma={trackEvent:function o(r,s,t,u){return n("event",r,s,t,u)},
+  trackException:function q(r,s){return n("exception",null,null,null,null,r,s)}}})
+  (window,"UA-152078779-1",{anonymizeIp:true,colorDepth:true,characterSet:true,screenSize:true,language:true});
+</script>
+
+
+</head>
+<body>
+
+<article><h1 id="metabuzz-theme-architecture">Metabuzz theme architecture</h1>
+<p>If you just want a tutorial on how to create your own theme, visit the <a href="tutorial-custom-theme.html">Tutorial: Creating a custom theme for Metabuzz</a> page.</p>
+<p>Metabuzz is designed to let you create attractive, full-featured websites as soon as you've installed the software. All you need to know is the basics of Markdown, and even that's optional, because any text at all is valid Markdown. (See the <a href="https://spec.commonmark.org#characters-and-lines">CommonMark spec</a> if you're interested).</p>
+<p>A Metabuzz site lives in its own directory. Inside it are a number of subdirectories for the site's source (markdown files and graphic assets such as images, <code>favicon.ico</code>, site configuration, and helper files for things like embedding tweets or YouTube videos). Some of these directories start with the period or dot character. They're hidden by default on Unix-style systems but otherwise they're no different from any other directory.</p>
+<p>There is also a directory holding the output of the site--the rendered HTML. This portion gets copied to the web server when you're ready to publish. If you use Git it's easy to make this happen automatially when you push you repository.</p>
+<h2 id="creating-a-metabuzz-site">Creating a Metabuzz site</h2>
+<p>Here's what it looks like to build your first site after installing Metabuzz.</p>
+<h3 id="run-mb-new-sitename">Run mb new [sitename]</h3>
+<p>Once per website, you need to create the site's directory and starter files.
+In this example, the site is creatively named <code>foo</code>.</p>
+<ul>
+<li>Type this into your terminal/command prompt:</li>
+</ul>
+<pre><code>mb new site foo
+</code></pre>
+<p>You should get back this message:</p>
+<pre><code>Created site foo
+</code></pre>
+<ul>
+<li>Now switch to that directory.</li>
+</ul>
+<pre><code>cd foo
+</code></pre>
+<h2 id="metabuzz-translates-markdown-md-files-into-html-files">Metabuzz translates Markdown (.md) files into .html files</h2>
+<p>In general, Metabuzz expects as its input Markdown files, which use the extension <code>.md</code>, and asset files such as graphic images in the current directory, then translates the Markdown files into HTML versions and copies everying into a publication directory. The file <code>index.md</code> gets translated into <code>index.html</code>, the file <code>contact.md</code> is translated into <code>contact.html</code>, and so on.</p>
+<p>Other files in the same directory as the Markdown file also get copied. HTML files are copied unchanged, as are graphics, sound files, text files, and anything else that might be there. The <a href="site-file.html">site configuration file</a> lets you specify files to exclude.</p>
+<h2 id="note-on-markdown-file-extensions">Note on Markdown file extensions</h2>
+<p>Metabuzz accepts all common filename extensions for the Markdown source files:</p>
+<p><code>.md</code>,<code>.md</code>, <code>.mdown</code>, <code>.mdtext</code>, <code>.mdtxt</code>, <code>.markdown</code>, <code>.mdwn</code>, <code>.mkd</code>, <code>.mkdn</code>, and <code>.text</code></p>
+<h3 id="create-the-markdown-file-indexmd">Create the markdown file index.md</h3>
+<p>You need only a single line of Markdown to create a Metabuzz website. <em>No additional files are necessary, and no other text is necessary in your Markdown file.</em></p>
+<ul>
+<li>Open a text editor type something like this into a file named <code>index.md</code>:</li>
+</ul>
+<pre><code>Welcome to foo
+</code></pre>
+<p>Users of some Markdown-based sites such as GitHub expect to use <code>README.md</code> instead of <code>index.md</code>. That's fine too. And because of the prevalance of such systems, if you have both <code>README.md</code> and <code>index.md</code> in the same directory then <code>index.md</code> is ignored and <code>README.md</code> gets converted into <code>index.html</code>.</p>
+<ul>
+<li>Save your file and exit the editor.</li>
+</ul>
+<h3 id="build-the-site-and-view-it">Build the site and view it</h3>
+<p>All right. You have your source saved. Time to turn it into a website. You do that with the <code>mb build</code> command.</p>
+<pre><code>mb build
+</code></pre>
+<p>You are informed that the site has been built:</p>
+<pre><code>Created site foo 
+</code></pre>
+<p>The file <code>index.md</code> you just created got converted into a web page named <code>index.html</code> and copied into a directory named <code>.pub</code>. Let's load that page into a web browser.</p>
+<h3 id="load-the-web-page-into-a-browser-windows-users">Load the web page into a browser: Windows users</h3>
+<p>In Windows, you can load a web page into the browser simply by typing its address:</p>
+<pre><code>.pub/index.hml
+</code></pre>
+<h3 id="load-the-web-page-into-a-browser-macos">Load the web page into a browser: MacOS</h3>
+<p>In MacOS, you load a web page into the browser with the <code>open</code> command:</p>
+<pre><code>open .pub/index.hml
+</code></pre>
+<p>The result is a full-featured page:</p>
+<p><img src="default-page-1280x1024.png" alt="" /></p>
+<h2 id="change-to-a-dark-theme">Change to a dark theme</h2>
+<p>Let's see how to use a dark theme instead.</p>
+<ul>
+<li>Open up the <code>index.md</code> source file and insert these three lines to the beginning of the file:</li>
+</ul>
+<pre><code>===
+mode = &quot;dark
+===
+</code></pre>
+<p>The entire file should look like this:</p>
+<pre><code>===
+mode = &quot;dark
+===
+Welcome to foo
+</code></pre>
+<p>As you've probably guessed, if a file starts with the <code>===</code> line, everything until the nexet  <code>===</code> line is considered a directive that gives clues about how to build the page. It is not page content and does not appear in the HTML output file. This is known as <a href="front-matter.html">front matter</a>. Technically this is considered a separate document from the CommonMark document, even though they're in the same file.</p>
+<ul>
+<li>Rebuild the site:</li>
+</ul>
+<pre><code>mb build
+Created site foo 
+</code></pre>
+<ul>
+<li>And refresh the page in your web browser to view the changes.</li>
+</ul>
+<p>You'll see the page in reversed colors more suited to working at night.</p>
+<h2 id="how-metabuzz-creates-a-page">How Metabuzz creates a page</h2>
+<p>So where did the rest of the web page come from?</p>
+<p>The 5 parts of a page generated by Metabuzz are:</p>
+<ul>
+<li>Header</li>
+<li>Navbar</li>
+<li>Article</li>
+<li>Sidebar</li>
+<li>Footer</li>
+</ul>
+<p>They are all generated from templates written in Markdown or HTML, and combined with a set of CSS files to create the output HTML file. All files optional, and they're all assembled based on instructions in the theme's TOML file, discussed next.</p>
+<h2 id="files-that-make-up-a-metabuzz-theme">Files that make up a Metabuzz theme</h2>
+<p>Let's take a look at a complete Metabuzz theme with no pagetypes.
+In this example the theme is named <code>mytheme</code>, so it's
+stored in a directory by that name.</p>
+<pre><code>mytheme
+├── mytheme.css
+├── mytheme.toml
+├── fonts.css
+├── footer.md
+├── header.md
+├── layout.css
+├── nav.md
+├── reset.css
+├── responsive.css
+├── sidebar-left.css
+├── sidebar-right.css
+├── sidebar.md
+├── sizes.css
+├── theme-dark.css
+└── theme-light.css
+</code></pre>
+<p>The only necessary files required for a theme are the TOML file, <code>theme-dark.css</code>, and <code>theme-light.css</code>. The list above is typical of the Metabuz built-in theme set, because they have hundreds of features built into a framework they all share.</p>
+<p>The following are named after the theme:</p>
+<ul>
+<li>The name of the theme directory</li>
+<li>The name of the main CSS file</li>
+<li>The name of the TOML file for this theme</li>
+</ul>
+<h2 id="the-themes-toml-file">The theme's TOML file</h2>
+<p>The TOML file directs the creation of all parts of the web page.</p>
+<h2 id="stylesheets-metabuzz-normally-uses">Stylesheets Metabuzz normally uses</h2>
+<p>Metabuzz distinguishes between what it calls &quot;root stylesheets&quot; and &quot;stylesheets&quot;.</p>
+<p><strong>reset.css</strong> creates a consistent look across all browsers for a blank HTML document.</p>
+<p>**</p>
+<p>stylesheets = [ &quot;sizes.css&quot;, &quot;theme-light.css&quot;,
+&quot;default.css&quot;, &quot;responsive.css&quot;  ]</p>
+<p>rootstylesheets = [ &quot;reset.css&quot;, &quot;fonts.css&quot;, &quot;layout.css&quot; ]</p>
+<h3 id="note">Note</h3>
+<p>The <code>stylesheets</code> and <code>rootstylesheets</code> values should
+actually be on a single line, but formatting limitations
+force theme to be split into two lines in the example below.</p>
+<pre><code>stylesheets = [ &quot;sizes.css&quot;, &quot;theme-light.css&quot;, 
+  &quot;default.css&quot;, &quot;responsive.css&quot;  ]
+
+rootstylesheets = [ &quot;reset.css&quot;, &quot;fonts.css&quot;, &quot;layout.css&quot; ]
+
+branding = &quot;Default Theme&quot;
+
+[nav]
+file = &quot;nav.md&quot;
+
+[header]
+file = &quot;header.md&quot;
+
+[footer]
+file = &quot;footer.md&quot;
+
+[sidebar]
+file = &quot;sidebar.md&quot;
+</code></pre>
+<p>[nav]
+file = &quot;nav.md&quot;</p>
+<p>[header]
+file = &quot;header.md&quot;</p>
+<p>[footer]
+file = &quot;footer.md&quot;</p>
+<p>[sidebar]
+file = &quot;sidebar.md&quot;</p>
+<p>A minimal web page generated by Metabuzz employing the world's
+most useless theme, here called <code>mytheme</code>, looks like this:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=en&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+
+&lt;title&gt;Welcome to My Site&lt;/title&gt;
+
+&lt;meta name=&quot;description&quot; content=&quot;foo&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/mytheme/reset.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/mytheme/fonts.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/mytheme/layout.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/mytheme/sizes.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/mytheme/theme-light.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/mytheme/mytheme.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;themes/mytheme/responsive.css&quot;&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;header&gt;Header&lt;/header&gt;
+
+&lt;nav&gt;Navbar&lt;/nav&gt;
+
+&lt;article&gt;&lt;h1 id=&quot;my-site&quot;&gt;foo&lt;/h1&gt;
+&lt;p&gt;Welcome to My Site&lt;/p&gt;
+&lt;/article&gt;
+
+&lt;footer&gt;Footer&lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2 id="directory-naming">Directory naming</h2>
+<p>A Metabuzz theme takes its name from the name of its containing
+directory. Themes are stored in a directory named <code>.mb/themes</code>.</p>
+</article>
+
+</body>
+</html>

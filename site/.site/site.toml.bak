@@ -1,0 +1,39 @@
+Name = "site"
+Branding = ""
+CommonSubDir = ""
+Language = "en"
+Mode = ""
+Theme = ""
+AssetDir = ""
+BaseDir = ""
+ExcludeDirs = "[ ".sample", ".common" ]
+Publish = ".pub"
+Headers = ".headers"
+ThemeDir = "/Users/tom/code/mb/.mb/themes"
+Ganalytics = ""
+
+[MarkdownOptions]
+  HighlightStyle = ""
+
+[Author]
+  FullName = ""
+  URL = ""
+
+[Company]
+  Name = "METABUZZ"
+  URL = "https://metabuzz.com"
+  HeaderLogo = ""
+
+[Social]
+  DeviantArt = ""
+  Facebook = ""
+  Github = ""
+  Gitlabs = ""
+  Instagram = ""
+  LinkedIn = ""
+  Pinterest = ""
+  Reddit = ""
+  Tumblr = ""
+  Twitter = ""
+  Weibo = ""
+  YouTube = ""

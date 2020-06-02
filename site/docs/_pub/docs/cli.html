@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Using the command line</title>
+
+<meta name="description" content="Try these featured Metabuzz themes live">
+
+<script>
+  (function(a,b,c){var d=a.history,e=document,f=navigator||{},g=localStorage,
+  h=encodeURIComponent,i=d.pushState,k=function(){return Math.random().toString(36)},
+  l=function(){return g.cid||(g.cid=k()),g.cid},m=function(r){var s=[];for(var t in r)
+  r.hasOwnProperty(t)&&void 0!==r[t]&&s.push(h(t)+"="+h(r[t]));return s.join("&")},
+  n=function(r,s,t,u,v,w,x){var z="https://www.google-analytics.com/collect",
+  A=m({v:"1",ds:"web",aip:c.anonymizeIp?1:void 0,tid:b,cid:l(),t:r||"pageview",
+  sd:c.colorDepth&&screen.colorDepth?screen.colorDepth+"-bits":void 0,dr:e.referrer||
+  void 0,dt:e.title,dl:e.location.origin+e.location.pathname+e.location.search,ul:c.language?
+  (f.language||"").toLowerCase():void 0,de:c.characterSet?e.characterSet:void 0,
+  sr:c.screenSize?(a.screen||{}).width+"x"+(a.screen||{}).height:void 0,vp:c.screenSize&&
+  a.visualViewport?(a.visualViewport||{}).width+"x"+(a.visualViewport||{}).height:void 0,
+  ec:s||void 0,ea:t||void 0,el:u||void 0,ev:v||void 0,exd:w||void 0,exf:"undefined"!=typeof x&&
+  !1==!!x?0:void 0});if(f.sendBeacon)f.sendBeacon(z,A);else{var y=new XMLHttpRequest;
+  y.open("POST",z,!0),y.send(A)}};d.pushState=function(r){return"function"==typeof d.onpushstate&&
+  d.onpushstate({state:r}),setTimeout(n,c.delay||10),i.apply(d,arguments)},n(),
+  a.ma={trackEvent:function o(r,s,t,u){return n("event",r,s,t,u)},
+  trackException:function q(r,s){return n("exception",null,null,null,null,r,s)}}})
+  (window,"UA-152078779-1",{anonymizeIp:true,colorDepth:true,characterSet:true,screenSize:true,language:true});
+</script>
+
+
+</head>
+<body>
+
+<article><h1 id="using-the-command-line">Using the command line</h1>
+<p>[Create a new project]<br />
+<a href="#build-a-site">Build a site</a><br />
+<a href="#config">Display configuration</a><br />
+<a href="#del">Delete me</a></p>
+<h2 id="build-a-site">Build a site</h2>
+<pre><code>mb build
+</code></pre>
+<h3 id="build-a-site-using-global-themes-instead-of-local">Build a site using global themes instead of local</h3>
+<p>When you create a site all the Metabuzz themes get copied to the site's <code>.themes</code> directory. That way if you change a theme it doesn't affect other sites created using that theme. If you want to use the original Metabuzz thems, use the <code>-d</code> option like this:</p>
+<pre><code>mb -d build
+</code></pre>
+<h2 id="create-a-theme">Create a theme</h2>
+<p>To create a theme you copy an existing one:</p>
+<pre><code>d2 copytheme
+</code></pre>
+<p>You're asked which theme you'd like to copy:</p>
+<pre><code>Name of theme to copy?
+</code></pre>
+<h2 id="create-a-new-project">Create a new project</h2>
+<h3 id="init">init</h3>
+<h4 id="create-a-new-project-in-the-current-directory">Create a new project in the current directory</h4>
+<p><code>init</code> by itself assumes you've created a new directory
+and changed to it, and that you want your project
+to be based there. If it looks like there's
+already a project, nothing will happen.</p>
+<p>Example:</p>
+<pre style="background-color:#fff">$ ./docset init
+</pre><h3 id="init--sitename">init -sitename</h3>
+<h4 id="create-a-new-project-directory">Create a new project directory</h4>
+<p>Example: Create a new project named foo</p>
+<p>Create a directory named <code>foo</code> in the current directory.
+and populate it with the required fies.</p>
+<pre style="background-color:#fff">$ ./docset init -sitename=foo
+</pre><p>If there's already a project directory by that name,
+it stays in place and the command returns an error. Nothing gets deleted.</p>
+<h2 id="new">new</h2>
+<h4 id="create-a-new-theme">Create a new theme</h4>
+<p>To create a new theme, use <code>new</code>, followed by <code>theme=</code> and<br />
+a valid directory (and file) name. In this example,
+the new theme is named <code>foo2</code>.</p>
+<pre><code>docset new -theme=foo2 
+</code></pre>
+<p>If there's already a theme directory by that name,
+it stays in place and the command returns an error. Nothing gets deleted.</p>
+<p>Using <code>-theme=</code> without the <code>-from</code> flag creates a theme based on the default
+themes. You can choose any theme to be the <a href="product-config.html#defaulttheme">default</a>.</p>
+<h3 id="create-a-theme-from-any-specified-theme">Create a theme from any specified theme</h3>
+<p>Using the command line you can also create a theme from any
+theme you choose, not just the default. Specify that theme's name
+using the <code>-from=</code> flag:</p>
+<pre><code>docset new -theme=foo2 -from=clean
+</code></pre>
+<p>If there's already a theme directory by that name,
+it stays in place and the command returns an error. Nothing gets deleted.</p>
+<h2 id="-showsettings">-showsettings</h2>
+<h2 id="display-configuration--display-configuration-">Display configuration {: #display-configuration }</h2>
+<h2 id="del">DELETE ME</h2>
+<p>Shows global configuration settings such as where the configuration
+file lives, the location of the user's home directory, etc.</p>
+<p>Example:</p>
+<pre style="background-color:#fff">$ mb info
+</pre><h2 id="verbose--v-flag">Verbose -v flag</h2>
+<p>Metabuzz can process files much faster the standard output displays text, so it doesn't say much when you're building a site. If you get errors that you can't figure out, it may help to turn on Verbose mode during a build. Here's an example:</p>
+<pre><code>mb new site mysite
+cd mysite
+mb -v build
+</code></pre>
+<p>The output will look something like this:</p>
+<pre><code>[/Users/jared/html/mysite/index.md]
+	Theme: [wide]
+	Mode: [light]
+	Created file [/Users/jared/html/mysite/.pub/index.html]
+</code></pre>
+</article>
+
+</body>
+</html>

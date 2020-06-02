@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Metabuzz documentation conventions</title>
+
+<meta name="description" content="Try these featured Metabuzz themes live">
+
+<script>
+  (function(a,b,c){var d=a.history,e=document,f=navigator||{},g=localStorage,
+  h=encodeURIComponent,i=d.pushState,k=function(){return Math.random().toString(36)},
+  l=function(){return g.cid||(g.cid=k()),g.cid},m=function(r){var s=[];for(var t in r)
+  r.hasOwnProperty(t)&&void 0!==r[t]&&s.push(h(t)+"="+h(r[t]));return s.join("&")},
+  n=function(r,s,t,u,v,w,x){var z="https://www.google-analytics.com/collect",
+  A=m({v:"1",ds:"web",aip:c.anonymizeIp?1:void 0,tid:b,cid:l(),t:r||"pageview",
+  sd:c.colorDepth&&screen.colorDepth?screen.colorDepth+"-bits":void 0,dr:e.referrer||
+  void 0,dt:e.title,dl:e.location.origin+e.location.pathname+e.location.search,ul:c.language?
+  (f.language||"").toLowerCase():void 0,de:c.characterSet?e.characterSet:void 0,
+  sr:c.screenSize?(a.screen||{}).width+"x"+(a.screen||{}).height:void 0,vp:c.screenSize&&
+  a.visualViewport?(a.visualViewport||{}).width+"x"+(a.visualViewport||{}).height:void 0,
+  ec:s||void 0,ea:t||void 0,el:u||void 0,ev:v||void 0,exd:w||void 0,exf:"undefined"!=typeof x&&
+  !1==!!x?0:void 0});if(f.sendBeacon)f.sendBeacon(z,A);else{var y=new XMLHttpRequest;
+  y.open("POST",z,!0),y.send(A)}};d.pushState=function(r){return"function"==typeof d.onpushstate&&
+  d.onpushstate({state:r}),setTimeout(n,c.delay||10),i.apply(d,arguments)},n(),
+  a.ma={trackEvent:function o(r,s,t,u){return n("event",r,s,t,u)},
+  trackException:function q(r,s){return n("exception",null,null,null,null,r,s)}}})
+  (window,"UA-152078779-1",{anonymizeIp:true,colorDepth:true,characterSet:true,screenSize:true,language:true});
+</script>
+
+
+</head>
+<body>
+
+<article><h1 id="metabuzz-documentation-conventions">Metabuzz documentation conventions</h1>
+<h3 id="filenames">Filenames</h3>
+<h2 id="screenshots">Screenshots</h2>
+<h3 id="screenshot-dimensions">Screenshot dimensions</h3>
+<ul>
+<li>Landscape mode screenshot dimensions: 1280x1024</li>
+<li>Portrait mode screenshot dimensions: 1024x1280</li>
+<li>Smaller versions for galleries are currently 200x250</li>
+</ul>
+<h3 id="screenshot-file-naming-conventions">Screenshot file naming conventions</h3>
+<ul>
+<li>
+<p>Append &quot;-&quot; and the dimensions after the screenshot.</p>
+</li>
+<li>
+<p>For galleries, use &quot;theme-&quot;, theme name, &quot;-&quot;, and dimensions. Examples:</p>
+<p>theme-default-dark-1024x1280.png
+theme-default-dark-200x250.png
+theme-default-dark-nosidebar-1280x1024.png</p>
+</li>
+</ul>
+</article>
+
+</body>
+</html>

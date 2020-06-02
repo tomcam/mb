@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Glossary</title>
+
+<meta name="description" content="Try these featured Metabuzz themes live">
+
+<script>
+  (function(a,b,c){var d=a.history,e=document,f=navigator||{},g=localStorage,
+  h=encodeURIComponent,i=d.pushState,k=function(){return Math.random().toString(36)},
+  l=function(){return g.cid||(g.cid=k()),g.cid},m=function(r){var s=[];for(var t in r)
+  r.hasOwnProperty(t)&&void 0!==r[t]&&s.push(h(t)+"="+h(r[t]));return s.join("&")},
+  n=function(r,s,t,u,v,w,x){var z="https://www.google-analytics.com/collect",
+  A=m({v:"1",ds:"web",aip:c.anonymizeIp?1:void 0,tid:b,cid:l(),t:r||"pageview",
+  sd:c.colorDepth&&screen.colorDepth?screen.colorDepth+"-bits":void 0,dr:e.referrer||
+  void 0,dt:e.title,dl:e.location.origin+e.location.pathname+e.location.search,ul:c.language?
+  (f.language||"").toLowerCase():void 0,de:c.characterSet?e.characterSet:void 0,
+  sr:c.screenSize?(a.screen||{}).width+"x"+(a.screen||{}).height:void 0,vp:c.screenSize&&
+  a.visualViewport?(a.visualViewport||{}).width+"x"+(a.visualViewport||{}).height:void 0,
+  ec:s||void 0,ea:t||void 0,el:u||void 0,ev:v||void 0,exd:w||void 0,exf:"undefined"!=typeof x&&
+  !1==!!x?0:void 0});if(f.sendBeacon)f.sendBeacon(z,A);else{var y=new XMLHttpRequest;
+  y.open("POST",z,!0),y.send(A)}};d.pushState=function(r){return"function"==typeof d.onpushstate&&
+  d.onpushstate({state:r}),setTimeout(n,c.delay||10),i.apply(d,arguments)},n(),
+  a.ma={trackEvent:function o(r,s,t,u){return n("event",r,s,t,u)},
+  trackException:function q(r,s){return n("exception",null,null,null,null,r,s)}}})
+  (window,"UA-152078779-1",{anonymizeIp:true,colorDepth:true,characterSet:true,screenSize:true,language:true});
+</script>
+
+
+</head>
+<body>
+
+<article><h1 id="glossary">Glossary</h1>
+<h2 id="commonmark">Commonmark</h2>
+<p>See <a href="#markdown">Markdown</a></p>
+<h2 id="global-configuration-file">Global configuration file</h2>
+<p>The <a href="config-file.html">global configuration file</a> is a file named <code>metabuzz.toml</code> normally stored in a subdirectory named <code>.mb</code> that contains information that applies to all projects you create with Metabuzz---for example, where the theme files are stored.</p>
+<h2 id="markdown">Markdown</h2>
+<p>Markdown is a sensible way to represent text files so that they read easily as plain text if printed out, but also carry enough semantic meaning that they can be converted into HTML.
+The closest thing to an industry standard for Markdown is <a href="https://commonmark.org">CommonMark</a>. Metabuzz converts all CommonMark text according to specification, and includes extensions for things like tables, strikethrough, and autolinks. See the source to <a href="https://github.com/yuin/goldmark">Goldmark</a> for more information on extensions.</p>
+<p>Take this example of Markdown you might use in a document:</p>
+<pre><code># Introduction
+
+*hello*, world
+</code></pre>
+<p>The above would be converted in HTML that looks like this.</p>
+<pre><code>&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;hello&lt;/em&gt;, world.&lt;/p&gt;
+</code></pre>
+<p>That means the <code># Introduction</code> actually represents the HTML heading type <code>h1</code>, which is the hightest level of organization. <code>## Introduction</code> would generated an <code>h2</code> header, and so on.</p>
+<p>The asterisk characters are replaced by the <code>&lt;em&gt;</code> tag pair, which means they have the semantic power of emphasis. This is represented by HTML as italics, although you could override it in CSS.</p>
+<h2 id="pagetype">Pagetype</h2>
+<p>See also <a href="#theme">theme</a></p>
+<h2 id="project">Project</h2>
+<p>See <a href="#site">site</a></p>
+<h2 id="publish-directory">Publish directory</h2>
+<p>The <a href="publish-directory.html">publish directory</a> contains your website: the set of HTML files, theme files, CSS, image, sound, and other assets that Metabuzz generates from your Markdown files and other assets. It is in the <code>.pub</code> subdirectory immediately off the root of your <a href="site.html">site directory</a>. Ultimately it will be copied to the WWW or whatever directory your web host uses to publish HTML files from.</p>
+<h2 id="readmemd">README.md</h2>
+<p><code>README.md</code> has a special property. If there's a Markdown file named <code>README.md</code> in a directory, it gets renamed to <code>index.html</code> and becomes the &quot;home page&quot; for that directory, even if there's already an <code>index.md</code> file. Wait, what? It's because <a href="https://guides.github.com/features/wikis/">GitHub</a> uses that convention for <code>README.md</code> and GitHub is the big dog. Hey, we didn't make the rules.</p>
+<p><a id="site"></a></p>
+<h2 id="site-aka-site-directory">Site, aka site directory</h2>
+<p><em>Project</em> and <em>site</em> normallly have the same informal meaning: a <a href="site-directory.html">directory</a> containing all themes, the sites Markdown documents, graphic assets, stylesheets, and related files required to create a website. It's created automatically when you use the <a href="tutorial01.html#building-your-site">build command</a>.</p>
+<h2 id="site-configuration-file">Site configuration file</h2>
+<p>The <a href="site-file.html">site configuration file</a>, also called simply the <em>site file</em>, holds information about the project you're working on. It's a file named <code>.site.toml</code> stored in a subdirectory of your project named <code>.site</code>. Example of site-specific data includes the company name, the URL of the site, the author of the site, and so on.</p>
+<p>You can have as many site files as you want. They are completely independent, so you can create all the websites you want as long as the Markdown and other files go in different directories.</p>
+<h2 id="template-language">Template language</h2>
+<p>The <a href="template-language.html">template language</a> doesn't refer to themes, which in some content management systems are called templates. Instead, the template language is a text-replacment system that adds features to your website that can't be added using pure HTML. Metabuzz uses the <a href="https://golang.org/pkg/text/template/">Go template package</a> unchanged, so if you have any questions that aren't handled by the Metabuzz documentation you'll find it either there or in the <a href="https://golang.org/src/text/template/template.go">Go template package source code</a>.</p>
+<h2 id="theme">Theme</h2>
+<p>Every Metabuzz site has a <a href="themes.md">theme</a>, which is a collection of stylesheets and graphic images structured in a particular way. A theme has its own folder, which is used as the name of the theme, and a confguration file listing what files comprise the theme. If you haven't specified a theme in your <a href="#site-configuration-file">site file</a> or page <a href="#front-matter">front matter</a> then the theme named Default is used.</p>
+<p>A theme is technically a <a href="#pagetype">pagetype</a>. The only difference between the two is that the theme may contain other pagetypes. For example, a blog-oriented theme might have a home pagetype and a blog pagetype.</p>
+<p>See also <a href="#pagetype">pagetype</a></p>
+</article>
+
+</body>
+</html>

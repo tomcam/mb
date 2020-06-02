@@ -1,0 +1,57 @@
+
+Header
+
+* [Pillar](/)
+* [Product](/)
+* [Create](/)
+* [Pricing](/)
+* [Resources](/)
+* [FREE TRIAL](/)
+
+
+
+
+
+
+Comments
+
+/* ****************************/
+/*  HEADER BRANDING AND LINKS */
+/* ****************************/
+
+/*
+ * --------------------------------------------------
+ * Simplest case: Branded name, nothing else
+ * --------------------------------------------------
+ */
+ 
+/*
+ * --------------------------------------------------
+ * If you have more than one item, use an unordered list. These styles
+ * show the first item with branding applied,
+ * any number of links following, still slightly
+ * larger than body text, and a last link that
+ * looks like a button.
+ * --------------------------------------------------
+ */
+
+/* **************************************************/
+/*  ARTICLE-MAIN PORTION OF TEXT                    */
+/* **************************************************/
+
+
+/* **************************************************/
+/*  SIDEBAR (ASIDE TAG)                             */
+/* **************************************************/
+
+aside, aside > p, aside > h2, aside > h3, aside > h4 {margin-left:0;padding-left:1rem;padding-right:1rem;} 
+aside > h3 {color:var(--trim-fg);}
+aside > h4 {color:var(--header-bg);background-color:var(--header-fg)}
+
+
+/* **************************************************/
+/*  FOOTER                                          */
+/* **************************************************/
+
+footer {border-top: 1px solid var(--trim-fg);} 
+

@@ -1,0 +1,10 @@
+===
+theme="CHANGEME"
+mode="light"
+sidebar="right"
+===
+
+{{ inc "allfiles.md" }}
+
+
+

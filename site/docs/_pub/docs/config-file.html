@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Global Configuration File</title>
+
+<meta name="description" content="Try these featured Metabuzz themes live">
+
+<script>
+  (function(a,b,c){var d=a.history,e=document,f=navigator||{},g=localStorage,
+  h=encodeURIComponent,i=d.pushState,k=function(){return Math.random().toString(36)},
+  l=function(){return g.cid||(g.cid=k()),g.cid},m=function(r){var s=[];for(var t in r)
+  r.hasOwnProperty(t)&&void 0!==r[t]&&s.push(h(t)+"="+h(r[t]));return s.join("&")},
+  n=function(r,s,t,u,v,w,x){var z="https://www.google-analytics.com/collect",
+  A=m({v:"1",ds:"web",aip:c.anonymizeIp?1:void 0,tid:b,cid:l(),t:r||"pageview",
+  sd:c.colorDepth&&screen.colorDepth?screen.colorDepth+"-bits":void 0,dr:e.referrer||
+  void 0,dt:e.title,dl:e.location.origin+e.location.pathname+e.location.search,ul:c.language?
+  (f.language||"").toLowerCase():void 0,de:c.characterSet?e.characterSet:void 0,
+  sr:c.screenSize?(a.screen||{}).width+"x"+(a.screen||{}).height:void 0,vp:c.screenSize&&
+  a.visualViewport?(a.visualViewport||{}).width+"x"+(a.visualViewport||{}).height:void 0,
+  ec:s||void 0,ea:t||void 0,el:u||void 0,ev:v||void 0,exd:w||void 0,exf:"undefined"!=typeof x&&
+  !1==!!x?0:void 0});if(f.sendBeacon)f.sendBeacon(z,A);else{var y=new XMLHttpRequest;
+  y.open("POST",z,!0),y.send(A)}};d.pushState=function(r){return"function"==typeof d.onpushstate&&
+  d.onpushstate({state:r}),setTimeout(n,c.delay||10),i.apply(d,arguments)},n(),
+  a.ma={trackEvent:function o(r,s,t,u){return n("event",r,s,t,u)},
+  trackException:function q(r,s){return n("exception",null,null,null,null,r,s)}}})
+  (window,"UA-152078779-1",{anonymizeIp:true,colorDepth:true,characterSet:true,screenSize:true,language:true});
+</script>
+
+
+</head>
+<body>
+
+<article><h1 id="global-configuration-file">Global Configuration File</h1>
+<h2 id="changing-where-application-configuration-data-is-stored">Changing where application configuration data is stored</h2>
+<p>Upon installation themes and other customizable assets are stored whereever
+your system expects user application data to be, in a directory named
+<code>metabuzz/.mb</code>. For example, for a user named Rajiv on a Mac the directory containing theme files would be something like:</p>
+<pre><code>/Users/tom/Library/Application Support/metabuzz/.mb/themes
+
+</code></pre>
+<p>You can change that location easily. One reason to do this is that you might want your themes in the same Git repository as your project, which means they'd have to be in a subdirectory of your project. You can't fake Git by creating a symlink (also known as an alias), because Git will slap you down for attempting to use symlinks.</p>
+<p>Metabuzz looks for a global configuration file named <code>.mb/metabuzz.toml</code> in  your home directory when it starts. If it finds such a file, it looks at the <code>configdir</code> setting to see if you've decided to move the the global config file. Here's how to take advantage of this and change the config file's directory location.</p>
+<pre><code># Create a directory named .mb in 
+# your home directory.
+mkdir ~/.mb
+# Create a config file in that directory
+nvim ~/.mb/metabuzz.toml
+
+</code></pre>
+<p>Now edit the file to include the new location for theme files. In this example, your username is Rajiv and you want the theme files to be stored with your current project, which is called <code>mymanual</code> and is found in your home directory under <code>/docs</code>:</p>
+<pre><code>configdir=&quot;/Users/rajiv/docs/mymanual/.mb&quot;
+</code></pre>
+<p>Don't use designations like <code>~</code> because those are expected to be resolved by the shell before Metabuzz is invoked.</p>
+<p>Now all theme files are found not in <code>/Users/rajiv/Library/Application Support/metabuzz/.mb/themes</code> but inside of Rajiv's <code>mymanual</code> directory. Don't worry; this doesn't add more than a few hundred K of mostly text files to the project.</p>
+</article>
+
+</body>
+</html>
