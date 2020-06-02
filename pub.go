@@ -8,13 +8,30 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	//"regexp"
+	"regexp"
 	//"text/template"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
+)
+
+
+var (
+	// Credit to anonymous user at:
+	// https://play.golang.org/p/OfQ91QadBCH
+	h1, _        = regexp.Compile("(?m)^\\s*#{1}\\s*([^#\\n]+)$")
+	anyHeader, _ = regexp.Compile("(?m)^\\s*#{2,6}\\s*([^#\\n]+)$")
+  notPound, _ = regexp.Compile("(?m)[^#|\\s].*$")
+
+
+closingTags = 
+`
+</body>
+</html>
+`
+
 )
 
 // publishFile() is the heart of this program. It converts
@@ -37,7 +54,7 @@ func (App *App) publishFile(filename string) error {
   // Obviously that includes an optional theme or pagetype designation.
 	// Starting at the Markdown, convert to HTML.
 	// Interpret templates as well.
-  start, err := App.parseFrontMatter(filename, input)
+  App.Page.markdownStart, err = App.parseFrontMatter(filename, input)
 	if err != nil {
 		return errCode("0103", filename)
 	}
@@ -51,53 +68,62 @@ func (App *App) publishFile(filename string) error {
   App.loadTheme()
   // Parse front matter.
   // Convert article to HTML
-  App.Article(filename, start)
+  App.Article(filename, input)
 // xxx
+  // Begin HTML document.
+  // Open the <head> tag.
   App.startHTML()
-  //app.addTitleTag()
-  //HTMLHeadTag  = app.headerTags()
+
+  // If a title wasn't specified in the front matter, 
+  // Generate title tag contents from headers. Find the first
+  // h1. If that fails, find the first h2-h6. If that
+  // fails, put up a self-aggrandizing error message.
+  App.titleTag()
+
+  App.descriptionTag()
+
+  App.headTags()
+
 	// Output filename
 	outfile := replaceExtension(filename, "html")
   relDir := relDirFile(App.Site.path, outfile)
-	// Strip out everything but the filename.
-	//base := filepath.Base(htmlkjlfile)
 
-	// Write everything to a temp file so in case there was an error, the
-	// previous HTML file is preserved.
-	tmpFileBaseName := PRODUCT_NAME + "-tmp-"
-	tmpFile, err := ioutil.TempFile(App.Site.Publish, tmpFileBaseName)
-	// Ensure the file gets closed before exiting
-	defer os.Remove(tmpFile.Name())
-	if err != nil {
-		return errCode("0914", err.Error())
+  // START ASSEMBLING PAGE
+  App.appendStr(App.Page.startHTML)
+  App.appendStr(wrapTag("<title>",App.Page.titleTag,true))
+  App.appendStr(wrapTag("<description>",App.Page.descriptionTag,true))
+  App.appendStr(App.Page.headTags)
+
+  // Hoover up any miscellanous files lying around,
+  // like other HTML files, graphic assets, etc.
+  App.localFiles(relDir)
+
+  // Write the closing head tag and the opening
+  // body tag
+  App.closeHeadOpenBody()
+
+	//App.appendStr(wrapTag("<article>", []byte(App.Page.Article), true))
+	App.appendStr(App.pageRegionToHTML(&App.Theme.PageType.Header, "<header>"))
+	App.appendStr(App.pageRegionToHTML(&App.Theme.PageType.Nav, "<nav>"))
+  App.appendStr(wrapTag("<article>", string(App.Page.Article), true))
+	sidebar := strings.ToLower(App.FrontMatter.Sidebar)
+	if sidebar == "left" || sidebar == "right" {
+		App.appendStr(App.pageRegionToHTML(&App.Theme.PageType.Sidebar, "<aside>"))
 	}
+	App.appendStr(App.pageRegionToHTML(&App.Theme.PageType.Footer, "<footer>"))
 
-	// Copy any associated assets such as
-	// images in the same directory.
-	//dirHasMarkdownFiles := App.publishLocalFiles()
-	dirHasMarkdownFiles := App.publishLocalFiles(App.Page.dir)
-	if dirHasMarkdownFiles {
-
-		// Create its theme directory
-		assetDir := filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
-		if err := os.MkdirAll(assetDir, PUBLIC_FILE_PERMISSIONS); err != nil {
-			App.infoLog.Printf(errCode("0402", assetDir).Error())
-			return errCode("0402", assetDir)
-		}
-		App.publishPageTypeAssets()
-		// xxxx
-	}
+  // Complete the HTML document with closing <body> and <html> tags
+  App.appendStr(closingTags)
 
 
-	// Create the output filename by replacing the name of the input file with an html extension
-	//outfile := replaceExtension(filename, "html")
 	// Strip out everything but the filename.
 	base := filepath.Base(outfile)
 
 	// Write everything to a temp file so in case there was an error, the
 	// previous HTML file is preserved.
-	tmpFile, err = ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
-	writeTextFile(tmpFile.Name(), string(App.Page.Article))
+  tmpFile, err := ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
+	//writeTextFile(tmpFile.Name(), string(App.Page.Article))
+	writeTextFile(tmpFile.Name(), string(App.Page.html))
 	// Ensure the file gets closed before exiting
 	defer os.Remove(tmpFile.Name())
 	// Get the relative directory.
@@ -524,7 +550,7 @@ func stylesheetTag(stylesheet string) string {
 
 // startHTML() begins the HTML document and opens the head tag
 func (App *App)startHTML() {
-	App.appendStr("<!DOCTYPE html>" + "\n" +
+	App.Page.startHTML = ("<!DOCTYPE html>" + "\n" +
 		"<html lang=" + App.Site.Language + ">" +
 		`
 <head>
@@ -533,27 +559,52 @@ func (App *App)startHTML() {
 `)
 }
 
-/*
-
-func (App *app)addTitleTag() {
-	if App.FrontMatter.Title != "" {
-		return
-	}
-	// Next best: the document has a heading.
-	firstHeading := App.findFirstHeading(input)
-	if firstHeading != "" {
-		firstHeading = stripHeading(firstHeading)
-		if firstHeading != "" {
-			// Parse in case heading is something like .FrontMatter.Theme
-			// in double curlies
-			return App.interps(filename, firstHeading)
-		}
-	}
-	// TODO: Issue warning
-	return PRODUCT_NAME + ": Title needed here, squib"
+// firstHeader() returns the first header it founds in the markdown.
+// It looks through the whole text for an h1. If not found,
+// it looks for the first h2 to h6 it can find.
+// Otherwise it returns ""
+func firstHeader(markdown string) string {
+  result := header1(markdown)
+  if result != "" {
+    return result
+  }
+  return header2To6(markdown)
 }
-*/
+// header1() extracts the first h1 it finds in the markdown 
+func header1(s string) string {
+	any := h1.FindString(strings.Trim(s, "\n\t\r"))
+	if any != "" {
+    return(notPound.FindString(any))
+  }else {
+     return ""
+  }
+}
 
+// header2To6() extracts the first h2-h2 it finds.
+func header2To6(s string) string {
+	any := anyHeader.FindString(strings.Trim(s, "\n\t\r"))
+	if any != "" {
+    return notPound.FindString(any)
+	} else {
+	  return ""
+	}
+}
+
+
+func (App *App)titleTag() {
+	//App.appendStr("\n<title>" + title + "</title>\n")
+  var title string
+	if App.FrontMatter.Title != "" {
+    title = App.FrontMatter.Title
+	} else {
+    title = firstHeader(string(App.Page.markdownStart))
+  }
+  if title == "" {
+    title = PRODUCT_NAME + ": Title needed here, squib"
+  }
+  App.Page.titleTag = title
+
+}
 // Article() takes a document with optional front matter, parses
 // out the front matter, and sends the Markdown portion to be converted.
 // Write the HTML results to App.Page.Article
@@ -569,5 +620,183 @@ func (App *App) Article(filename string, input []byte) (start []byte, err error)
 	App.Page.Article = App.markdownBufferToBytes([]byte(interp))
 	return App.Page.Article, nil
 }
+
+
+
+
+// stripHeading() returns the string following a Markdown heading.
+// It is guaranteed a string of the form "### foo",
+// where there can be 1-6 # characters. As with findFirstHeading()
+// it's not the most general purpose routine ever and may
+// need revisiting, because it assumes a lot about the
+// Markdown format, which is more flexible than this.
+// TODO: Check to see if it's even used
+func stripHeading(heading string) string {
+	match := strings.Index(heading, " ")
+	l := len(heading)
+	if l < 0 {
+		return ""
+	}
+	return (heading[match+1 : l])
+}
+
+
+// headTags() inserts miscellaneous items such as Google Analytics tags
+// into the header before it's close.
+func (App *App) headTags() {
+	App.Page.headTags = App.headerFiles() +
+		App.headerTagGanalytics()
+}
+
+// headerFiles() finds all the files in the headers subdirectory
+// and copies them into the HMTL headers of every file on the site.
+func (App *App) headerFiles() string {
+	var h string
+	headers, err := ioutil.ReadDir(App.Site.Headers)
+	if err != nil {
+	  QuitError(errCode("0706", headersDir))
+	}
+	for _, file := range headers {
+		h += fileToString(filepath.Join(App.Site.Headers, file.Name()))
+	}
+	return h
+}
+
+// headerTagGanalytics() generates a Google Analytics script, if a tracking
+// ID is available. If not it returns an empty string so it's always
+// safe to call.
+func (App *App) headerTagGanalytics() string {
+	if App.Site.Ganalytics == "" {
+		return ""
+	}
+	result := strings.Replace(ganalyticsTag, "XX-XXXXXXXXX-X", App.Site.Ganalytics, 1)
+	// Only include if it worked
+	if result == ganalyticsTag {
+		return ""
+	}
+	return result + "\n"
+}
+
+// getDescription() does everything it can to generate a Description
+// metatag for the file.
+func (App *App) descriptionTag() {
+	// Best case: user supplied the description in the front matter.
+	if App.FrontMatter.Description != "" {
+		App.Page.descriptionTag = App.FrontMatter.Description
+	} else if App.Site.Branding != "" {
+		App.Page.descriptionTag = App.Site.Branding
+  } else if App.Site.Name != "" {
+		App.Page.descriptionTag = App.Site.Name
+	} else {
+	  App.Page.descriptionTag = "Powered by " + PRODUCT_NAME
+  }
+}
+
+func (App *App) localFiles(relDir string) {
+	// Copy any associated assets such as
+	// images in the same directory.
+	dirHasMarkdownFiles := App.publishLocalFiles(App.Page.dir)
+	if dirHasMarkdownFiles {
+		// Create its theme directory
+		assetDir := filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
+		if err := os.MkdirAll(assetDir, PUBLIC_FILE_PERMISSIONS); err != nil {
+			App.infoLog.Printf(errCode("0402", assetDir).Error())
+			QuitError(errCode("0402", assetDir))
+		}
+		App.publishPageTypeAssets()
+	}
+}
+
+// closeHeadOpenBody() writes the closing </head> tag
+// and starts the <body> tag
+func (App *App) closeHeadOpenBody() {
+var closer = `
+</head>
+<body>
+`
+	App.appendStr(closer)
+}
+
+func wrapTag(tag string, contents string, block bool) string {
+	var newline string
+	if block {
+		newline = "\n"
+	}
+	if len(tag) > 3 {
+		output := newline + tag + contents + tag[:1] + "/" + tag[1:] + newline
+		return output
+	}
+	return ""
+}
+
+// Wraps the contents within a block/style tag,
+// so it turns <p>hello, world.<p> into
+// <article><p>hello, world.<p></article>
+// If block is true, adds newlines strictly for
+// clarity in the output HTML.
+func wrapTagBytes(tag string, html []byte, block bool) string {
+	var newline string
+	if block {
+		newline = "\n"
+	}
+	if len(tag) > 3 {
+		output := newline + tag + string(html) + tag[:1] + "/" + tag[1:] + newline
+		return output
+	}
+	return ""
+}
+
+// pageRegionToHTML() takes an page region (header, nav, article, sidebar, or footer)
+// and converts it to HTML. All we know is that it's been specified
+// but we don't know whether's a Markdown file, inline HTML, whatever.
+func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
+	switch tag {
+	case "<header>", "<nav>", "<article>", "<aside>", "<footer>":
+		var path string
+		path = filepath.Join(App.Theme.PageType.PathName, a.File)
+    fmt.Printf("pageRegionToHTML tag: %v, file: %v\n", tag, path)
+
+		// A .sidebar file trumps all else.
+		// See if there's a file with the same name as
+		// the root source file but with a .sidebar extension.
+		if tag == "<aside>" {
+			// Base it on the root Markdown filename and the
+			// extension .sidebar, so foo.md might also have
+			// a foo.sidebar.
+			// Construct a path to possible .sidebar file.
+			sidebarfile := replaceExtension(App.Page.filePath, "sidebar")
+			if fileExists(sidebarfile) {
+				// If that .sidebar file exists, immediately
+				// insert into the stream and leave,
+				// because it's the highest priority.
+				input := fileToBuf(sidebarfile)
+				return wrapTag(tag, string(App.MdFileToHTMLBuffer(sidebarfile, input)), true)
+			}
+		}
+		// Inline HTML is the highest priority
+		if a.HTML != "" {
+			return a.HTML
+		}
+		// Skip if there's no file specified
+		if a.File == "" {
+			return ""
+		}
+		var input []byte
+		// Error if the specified file can't be found.
+		if !fileExists(path) {
+			QuitError(errCode("1015",path))
+		}
+		if isMarkdownFile(path) {
+			input = fileToBuf(path)
+      fmt.Printf("File contents: %v\n", string(App.MdFileToHTMLBuffer(path, input)))
+			return wrapTag(tag, string(App.MdFileToHTMLBuffer(path, input)), true)
+		}
+		return fileToString(path)
+	default:
+		QuitError(errCode("1203",tag))
+	}
+  return ""
+}
+
 
 

@@ -115,6 +115,7 @@ var errMsgs = map[string]string{
 	"0703": "Error reading directory",          // directory name
 	"0704": "Missing name of source directory", // directory name to copy from
 	"0705": "Missing name of target directory", // directory name to copy to
+  "0706": "Unable to read from headers directory", // Name of headers directory
 
 	// 0800	- Can't determine the name of something
 	"0801": "",
@@ -153,6 +154,7 @@ var errMsgs = map[string]string{
 	"1012": "Please specify a site name",
 	"1013": "Please specify a site name",
 	"1014": "Unable to determine application configuration data directory",
+  "1015": "Theme TOML specifies a file that can't be found", // filename
 
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name
@@ -165,6 +167,7 @@ var errMsgs = map[string]string{
 	// 1200 - Syntax error!
 	"1201": "inc: Couldn't execute template in",   // filename
 	"1202": "scode: Couldn't execute template in", // filename
+  "1203": "Unknown tag type",                  // Tag name
 }
 
 type errMsg struct {
