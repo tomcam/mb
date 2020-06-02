@@ -84,7 +84,7 @@ const (
 
 	// Name of theme used to create other themes, or theme to be
 	// used if for some reason no others are present
-	DEFAULT_THEME_NAME = "wide"
+	defaultThemeName = "wide"
 
 	// Name of the directory that holds items used by projects, such
 	// as themes and shortcodes.

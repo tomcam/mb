@@ -9,6 +9,7 @@ import (
 // info() displays relevant site configuration info for
 // debug purposes. If -v (verbose mode), also print data structures
 func (App *App) info() {
+  App.siteDefaults()
 	//fmt.Println("*** foo.bar: " + viper.GetString("foo.bar"))
 	//fmt.Println("*** configDir: " + viper.GetString("configDir"))
 	//fmt.Println("*** App.Prefs.configDir: " + App.Prefs.configDir)
@@ -20,6 +21,7 @@ func (App *App) info() {
 	exists("Actual config directory", App.Prefs.configDir)
 	exists("Theme directory", App.themesPath)
 	fmt.Println("Code highlighting style: ", App.Site.MarkdownOptions.HighlightStyle)
+	fmt.Println("Default theme: ", App.defaultTheme())
 	fmt.Println("Highlight:", cfgString("highlight"))
 	if isProject(".") {
 		fmt.Println("This appears to be a project/site source directory")

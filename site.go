@@ -13,7 +13,7 @@ type Site struct {
 	// Full path of the directory where the site source is.
 	path string
 
-	// Subdirectry + filename site config file
+	// Full path to site config file
 	configFilePath string
 
 	// Full path of shortcode dir for this project. It's computed
@@ -161,13 +161,6 @@ type authors struct {
 	Authors []author
 }
 
-// readSiteConfig() opens the expected site.toml file, reads, and
-// parses it.
-// TODO: Remove? Replaced by Viper?
-func (App *App) readSiteConfig() error {
-	return readTomlFile(App.Site.configFilePath, &App.Site)
-}
-
 // MarkdownOptions consists of goldmark
 // options used when converting markdown to HTML.
 type MarkdownOptions struct {
@@ -263,16 +256,30 @@ func (App *App) newSite(sitename string) error {
 func (App *App) siteDefaults() {
 	//App.Site.path = currDir()
 	App.Site.configFilePath = filepath.Join(App.Site.path, siteConfigSubDir, siteConfigFilename)
+  fmt.Println("App.Site.configFilePath: " + App.Site.configFilePath)
 	App.Site.Publish = filepath.Join(App.Site.path, PublishSubDirName)
 	App.Site.Headers = filepath.Join(App.Site.path, headersDir)
 	App.Site.commonDir = filepath.Join(App.Site.path, commonSubDirName)
 	App.themesPath = filepath.Join(cfgString("configdir"), themeSubDirName)
 	App.sCodePath = filepath.Join(cfgString("configdir"), sCodeSubDirName)
 	if App.Flags.DontCopy {
-		App.Site.themesPath = App.themesPath // xxx
-		App.Site.sCodePath = App.sCodePath // xxx
+		App.Site.themesPath = App.themesPath
+		App.Site.sCodePath = App.sCodePath
 	} else {
 		App.Site.themesPath = filepath.Join(App.Site.path, siteThemeDir)
 		App.Site.sCodePath = filepath.Join(App.Site.path, sCodeSubDirName)
 	}
+  if err := App.readSiteConfig(); err != nil {
+    //App.Warning(errCode("PREVIOUS", ""))
+    displayError(errCode("PREVIOUS", ""))
+  }
 }
+
+// readSiteConfig() opens the expected site.toml file, reads, 
+// parses it, and assigns its values to App.Site.
+func (App *App) readSiteConfig() error {
+	return readTomlFile(App.Site.configFilePath, &App.Site)
+}
+
+
+

@@ -40,11 +40,7 @@ type Args struct {
 	// Name for new site created with new site name=foo
 	NewSiteName string
 
-	// From part of Name for new theme from=default
-	NewThemeFrom string
-	// to part of name for new theme to=mytheme
-	NewThemeTo string
-}
+ }
 
 // Globally required flags, such as Verbose
 type Flags struct {
@@ -185,7 +181,7 @@ create theme based on an existing one.
 			Short: "new site mycoolsite",
 			Long: `new site {sitename}
 
-      Where {sitename} is a valid directory name. For example, if your site is calle basiclaptop.com, you would do this:
+      Where {sitename} is a valid directory name. For example, if your site is called basiclaptop.com, you would do this:
 
       mb new site basiclaptop
 `,
@@ -212,22 +208,104 @@ create theme based on an existing one.
 		/*****************************************************
 		     Subcommand: new theme
 		*****************************************************/
-		cmdNewTheme = &cobra.Command{}
+
+    // the foo part of:
+    // new theme foo
+    NewThemeName string
+    // the bar part of 
+    // new theme foo from bar
+    NewThemeFrom = App.defaultTheme()
+		cmdNewTheme = &cobra.Command{
+			Use:   "theme {newtheme} | from {oldtheme} ",
+			Short: "new theme mytheme",
+			Long: `site: Use new site to start a new project. Use new theme to 
+create theme based on an existing one. 
+
+      Typical usage of new theme:
+
+      mb new theme brochure
+
+      : Edit theme files
+      vim .mb/.themes/brochure/brochure.css
+      vim .mb/.themes/brochure/theme-dark.css
+`,
+			Run: func(cmd *cobra.Command, args []string) {
+				// If there are arguments after build, then
+				// just convert these files one at at time.
+				if len(args) > 0 {
+					NewThemeName = args[0]
+				} else {
+					// Them more likely case: it's build all by
+					// itself, so go through the whole directory
+					// tree and build as a complete site.
+					NewThemeName = promptString("Name of theme to create?")
+				}
+        // xxx
+        // Create a new theme from the default theme
+				App.newTheme(NewThemeName, NewThemeFrom)
+        /*
+				if err != nil {
+					App.QuitError(err)
+				} else {
+					fmt.Println("Created theme", NewThemeName)
+				}
+        */
+			},
+		}
+
+
+		cmdNewThemeFrom = &cobra.Command{
+			Use:   "theme {newtheme} from {oldtheme} ",
+			Short: "new theme mytheme from empty",
+			Long: `Create a new theme by copying an existing one. 
+
+      Typical usage of new theme:
+
+      mb new theme brochure from marlow
+
+      : Edit theme files
+      vim .mb/.themes/brochure/brochure.css
+      vim .mb/.themes/brochure/theme-dark.css
+`,
+			Run: func(cmd *cobra.Command, args []string) {
+				// If there are arguments after build, then
+				// just convert these files one at at time.
+				if len(args) > 0 {
+				  promptString("Create theme " + args[0] + "?")
+				} else {
+					// Them more likely case: it's build all by
+					// itself, so go through the whole directory
+					// tree and build as a complete site.
+					promptString("xxx Name of theme to create?")
+				}
+        // xxx
+        promptString("xxx Prtending to create new theme")
+        /*
+				err := App.newSite(App.Site.Name)
+				if err != nil {
+					App.QuitError(err)
+				} else {
+					fmt.Println("Created site ", App.Site.Name)
+				}
+        */
+			},
+		}
+
+
+
+
+
+
 	)
 
 	// Example command line:
 	// new theme --from=pillar
-	cmdNewTheme.Flags().StringVarP(&App.Args.NewThemeFrom, "from", "f", DEFAULT_THEME_NAME, "name of theme to copy from")
+	//cmdNewTheme.Flags().StringVarP(&App.Args.NewThemeFrom, "from", "f", DEFAULT_THEME_NAME, "name of theme to copy from")
 	// Example command line:
 	// new theme --to=mytheme
-	cmdNewTheme.Flags().StringVarP(&App.Args.NewThemeTo, "to", "t", "", "name of theme to create (required)")
-	cmdNewTheme.MarkFlagRequired("to")
+	//cmdNewTheme.Flags().StringVarP(&App.Args.NewThemeTo, "to", "t", "", "name of theme to create (required)")
+	//cmdNewTheme.MarkFlagRequired("to")
 
-	// newTheme
-	// xxx
-	// Example command line:
-	// new theme
-	cmdNew.AddCommand(cmdNewTheme)
 
 	// Example command line:
 	// new site
@@ -236,6 +314,9 @@ create theme based on an existing one.
 	// Example command line:
 	// new
 	App.Cmd.AddCommand(cmdNew)
+	cmdNew.AddCommand(cmdNewTheme)
+  cmdNewTheme.AddCommand(cmdNewThemeFrom)
+
 	App.Cmd.AddCommand(cmdBuild)
 	App.Cmd.AddCommand(cmdKitchenSink)
 	App.Cmd.AddCommand(cmdInfo)

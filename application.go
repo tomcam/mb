@@ -3,6 +3,7 @@ package main
 import (
 	//"os"
 	//"fmt"
+  "strings"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"html/template"
@@ -107,7 +108,7 @@ func newDefaultApp() *App {
 		},
 		FrontMatter: &FrontMatter{
 			// Name of default theme can overridden in a config file
-			Theme: DEFAULT_THEME_NAME,
+			Theme: defaultThemeName,
 		},
 	}
 	// Add config/env support from cobra and viper
@@ -136,4 +137,21 @@ func newDefaultApp() *App {
 
 	// CONFIG HAS NOT BEEN READ   YET
 	return &App
+}
+
+// defaultTheme() returns the simplen name of
+// the theme used to create new pages
+// if no theme is specified and to create new themes if no
+// source theme is specified.
+func (App *App) defaultTheme() string {
+  theme := defaultThemeName
+  if App.Site.Theme != "" {
+    theme = App.Site.Theme
+  }
+
+  if cfgString("defaulttheme") != "" {
+    theme = cfgString("defaulttheme")
+  }
+
+  return strings.ToLower(theme)
 }

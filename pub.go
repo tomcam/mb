@@ -58,7 +58,7 @@ func (App *App) publishFile(filename string) error {
 		return errCode("0102", filename)
 	}
   // TODO: Wrong. Setting default them properly means checking site.
-  App.FrontMatter.Theme = DEFAULT_THEME_NAME
+  App.FrontMatter.Theme = defaultThemeName
   App.FrontMatter.PageType = ""
 
 
@@ -73,7 +73,7 @@ func (App *App) publishFile(filename string) error {
 
 	// If no theme was specified in the front matter, but one was specified in the
 	// site config, make it the theme.
-	if App.Site.Theme != "" && (App.FrontMatter.Theme == DEFAULT_THEME_NAME || App.FrontMatter.Theme == "") {
+	if App.Site.Theme != "" && (App.FrontMatter.Theme == defaultThemeName || App.FrontMatter.Theme == "") {
 		App.FrontMatter.Theme = App.Site.Theme
 	}
    App.loadTheme()
@@ -351,7 +351,7 @@ func (App *App) publishLocalFiles(dir string) bool {
 func (App *App) publishPageTypeAssets() {
 	// Is the default aka parent theme?
 	p := App.Page.Theme.PageType
-	if p.name == "" || p.name == DEFAULT_THEME_NAME {
+	if p.name == "" || p.name == defaultThemeName {
 		// Default PageType
 		App.publishAssets()
 	} else {
