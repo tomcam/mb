@@ -91,7 +91,7 @@ func (App *App) publishFile(filename string) error {
   // START ASSEMBLING PAGE
   App.appendStr(App.Page.startHTML)
   App.appendStr(wrapTag("<title>",App.Page.titleTag,true))
-  App.appendStr(wrapTag("<description>",App.Page.descriptionTag,true))
+  App.appendStr(metatag("description",App.Page.descriptionTag))
   App.appendStr(App.Page.headTags)
 
   // Hoover up any miscellanous files lying around,
@@ -690,8 +690,11 @@ func (App *App) descriptionTag() {
 	} else {
 	  App.Page.descriptionTag = "Powered by " + PRODUCT_NAME
   }
+
 }
 
+// localFiles() copies any files that happen to be lying around.
+// It also generates stylesheet links
 func (App *App) localFiles(relDir string) {
 	// Copy any associated assets such as
 	// images in the same directory.
@@ -754,7 +757,6 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 	case "<header>", "<nav>", "<article>", "<aside>", "<footer>":
 		var path string
 		path = filepath.Join(App.Theme.PageType.PathName, a.File)
-    fmt.Printf("pageRegionToHTML tag: %v, file: %v\n", tag, path)
 
 		// A .sidebar file trumps all else.
 		// See if there's a file with the same name as
@@ -788,7 +790,6 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		}
 		if isMarkdownFile(path) {
 			input = fileToBuf(path)
-      fmt.Printf("File contents: %v\n", string(App.MdFileToHTMLBuffer(path, input)))
 			return wrapTag(tag, string(App.MdFileToHTMLBuffer(path, input)), true)
 		}
 		return fileToString(path)
@@ -798,5 +799,11 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
   return ""
 }
 
+
+// Generates a meta tag
+func metatag(tag string, content string) string {
+	const quote = `"`
+	return ("\n<meta name=" + quote + tag + quote + " content=" + quote + content + quote + ">\n")
+}
 
 
