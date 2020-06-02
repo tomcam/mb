@@ -46,9 +46,7 @@ func (App *App) publishFile(filename string) error {
   var p Page
   App.Page = &p
   // Probably belongs in build.go if anything
- 	App.themesPath = filepath.Join(configDir(), themeSubDirName)
-	App.sCodePath = filepath.Join(configDir(), sCodeSubDirName)
- App.siteDefaults()
+  App.siteDefaults()
 	App.Page.filePath = filename
 	App.Page.filename = filepath.Base(filename)
 	App.Page.dir = currDir()
