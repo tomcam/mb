@@ -1,1 +1,0 @@
-[Home](/) [Tech](/) [Reviews](/) [Tutorials](/)

@@ -84,26 +84,23 @@ type pageRegion struct {
 // loadTheme() copies the theme and pageType, if any, to the Publish directory.
 // They're found in App.FrontMatter.Theme and App.FrontMatter.PageType.
 func (App *App) loadTheme() {
-	themeName := strings.TrimSpace(App.FrontMatter.Theme)
-	// xxx
+	themeName := strings.ToLower(strings.TrimSpace(App.FrontMatter.Theme))
 	themeDir := filepath.Join(App.Site.themesPath, themeName)
 	if !dirExists(themeDir) {
-		  QuitError(errCode("1004",
+		  App.QuitError(errCode("1004",
 			fmt.Errorf("theme \"%v\" was specified, but couldn't find a directory named %v", App.FrontMatter.Theme, themeDir).Error()))
 	}
 
 	// Generate the fully qualified name of the TOML file for this theme.
 	// TODO: App.themePath()?
 	themePath := pageTypePath(themeDir, themeName)
-	// xxx
 
 	// First get the parent theme shared assets
 	// Temp var because the goal is simply to get the
 	// shared assets.
-	//fmt.Printf("loadTheme(): getting root styles for %v %v\n",themeName, App.FrontMatter.PageType)
 	var p PageType
 	if err := App.PageType(themeName, themeDir, themePath, &p); err != nil {
-		QuitError(errCode("0117", themePath, err.Error()))
+		App.QuitError(errCode("0117", themePath, err.Error()))
 	}
 	App.Theme.RootStylesheets = p.RootStylesheets
 	// See if a pagetype has been requested.
@@ -124,7 +121,7 @@ func (App *App) loadTheme() {
 		//fmt.Println("Hope we inherited", App.Theme.RootStylesheets)
 	}
 	if err := App.PageType(themeName, themeDir, themePath, &App.Theme.PageType); err != nil {
-		QuitError(errCode("0108", fmt.Errorf("Error loading %s", themePath).Error(), err.Error()))
+		App.QuitError(errCode("0108", fmt.Errorf("Error loading %s", themePath).Error(), err.Error()))
 	}
 }
 

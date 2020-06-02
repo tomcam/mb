@@ -102,7 +102,7 @@ whether the current directory is Metabuzz project, and so on`,
 			Run: func(cmd *cobra.Command, args []string) {
 				err := App.build()
 				if err != nil {
-					QuitError(err)
+					App.QuitError(err)
 				}
 			},
 		}
@@ -141,7 +141,7 @@ whether the current directory is Metabuzz project, and so on`,
 					err = App.kitchenSink("")
 				}
 				if err != nil {
-					QuitError(err)
+					App.QuitError(err)
 				}
 			},
 		}
@@ -202,7 +202,7 @@ create theme based on an existing one.
 				}
 				err := App.newSite(App.Site.Name)
 				if err != nil {
-					QuitError(err)
+					App.QuitError(err)
 				} else {
 					fmt.Println("Created site ", App.Site.Name)
 				}

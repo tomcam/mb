@@ -65,7 +65,7 @@ func (App *App) initConfig() {
 		//fmt.Println("error reading in config file:", err.Error())
 		if err, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			// TODO: Handle error properly
-			QuitError(err)
+			App.QuitError(err)
 		} else {
 			// Ignore case where there simply wasn't a config file,
 			// since it's not a requirement.

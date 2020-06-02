@@ -5,6 +5,6 @@ func main() {
 	App := newDefaultApp()
 	// Read configuration files, environment, and command line.
 	if err := App.Cmd.Execute(); err != nil {
-		QuitError(err)
+		App.QuitError(err)
 	}
 }

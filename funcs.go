@@ -74,23 +74,23 @@ func (App *App) inc(filename string) template.HTML {
 		case "common":
 			filename = filepath.Join(App.Site.commonDir, filename)
 		default:
-			QuitError(errCode("0119", location))
+			App.QuitError(errCode("0119", location))
 		}
 	}
 	if !fileExists(filename) {
-		QuitError(errCode("0120", filename))
+		App.QuitError(errCode("0120", filename))
 	}
 
 	input, err = ioutil.ReadFile(filename)
 	if err != nil {
-		QuitError(errCode("0121", filename))
+		App.QuitError(errCode("0121", filename))
 	}
 
 	var s string
 	// Apply the template to it.
 	// The one function missing from fewerFuncs is shortcode() itself.
 	if s, err = App.execute(filename, string(input), App.fewerFuncs); err != nil {
-		QuitError(errCode("1201", filename))
+		App.QuitError(errCode("1201", filename))
 	}
 	return template.HTML(s)
 }
@@ -138,19 +138,19 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 	filename = filepath.Join(App.Site.sCodePath, filename)
 
 	if !fileExists(filename) {
-		QuitError(errCode("0122", filename))
+		App.QuitError(errCode("0122", filename))
 	}
 
 	input, err = ioutil.ReadFile(filename)
 	if err != nil {
-		QuitError(errCode("0123", filename))
+		App.QuitError(errCode("0123", filename))
 	}
 
 	var s string
 	// Apply the template to it.
 	// The one function missing from fewerFuncs is shortcode() itself.
 	if s, err = App.execute(filename, string(input), App.fewerFuncs); err != nil {
-		QuitError(errCode("1202", filename))
+		App.QuitError(errCode("1202", filename))
 	}
 	return template.HTML(s)
 }

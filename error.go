@@ -135,6 +135,7 @@ var errMsgs = map[string]string{
 	"0913": "Unable to read project directory",                     //
 	"0914": "Error creating a temporary file",                      // filename
 	"0915": "Unable to copy scodes directory to publish directory", // custome error message
+  "0916": "Unable to copy a style sheet",                         // custom message
 
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename
@@ -289,7 +290,10 @@ func displayError(e error) {
 // do so by returning an error. But sometimes there's a
 // constraint, for example, fulfilling an interface method
 // that doesn't support this practice.
-func QuitError(e error) {
+func (App *App)QuitError(e error) {
+  if App.Page.filePath != "" {
+    fmt.Printf("%s ", App.Page.filePath)
+  }
 	displayError(e)
 	if e == nil {
 		os.Exit(0)

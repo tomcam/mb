@@ -132,7 +132,7 @@ func writeSiteFromArray(sitename string, site []siteDescription) error {
 func (App *App) kitchenSink(sitename string) error {
 	err := App.newSite(sitename)
 	if err != nil {
-		QuitError(err)
+		App.QuitError(err)
 	}
 
 	// Create directory structure for test site

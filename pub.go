@@ -40,10 +40,16 @@ closingTags =
 func (App *App) publishFile(filename string) error {
 	var input []byte
 	var err error
+  // Get a fresh new Page object if doing more
+  // than one file at a clip. Which is obviously
+  // most of the time.
+  var p Page
+  App.Page = &p
 	App.Page.filePath = filename
 	App.Page.filename = filepath.Base(filename)
 	App.Page.dir = currDir()
 	App.Verbose("%s", filename)
+	//fmt.Printf("%s\n", App.Page.filename)
 	// Read the whole Markdown file into memory as a byte slice.
 	input, err = ioutil.ReadFile(filename)
 	if err != nil {
@@ -146,7 +152,7 @@ func (App *App) publishFile(filename string) error {
 	}
 
 	if !fileExists(outfile) {
-		QuitError(errCode("0910", outfile))
+		App.QuitError(errCode("0910", outfile))
 	}
 	App.Verbose("\tCreated file %s", outfile)
 	App.fileCount++
@@ -230,7 +236,7 @@ func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 func (App *App) frontMatter(filename string, input []byte) (start []byte, err error) {
 	start, err = App.parseFrontMatter(filename, input)
 	if err != nil {
-		return []byte{}, QuitError(errCode("0103", filename))
+		return []byte{}, App.QuitError(errCode("0103", filename))
 	}
   return start, nil
 }
@@ -322,8 +328,8 @@ func (App *App) publishLocalFiles(dir string) bool {
 				// Get the target file's fully qualified filename.
 				copyTo := filepath.Join(App.Site.Publish, relDir, filename)
 				if err := Copy(copyFrom, copyTo); err != nil {
-					//QuitError(err.Error())
-					QuitError(errCode("PREVIOUS", err.Error()))
+					//App.QuitError(err.Error())
+					App.QuitError(errCode("PREVIOUS", err.Error()))
 				}
 			}
 		}
@@ -448,7 +454,7 @@ func (App *App) publishAssets() {
 		to := filepath.Join(assetDir, file)
 		// xxx
 		if err := Copy(from, to); err != nil {
-			QuitError(errCode("0124","from '"+from+"' to '"+to+"'"))
+			App.QuitError(errCode("0124","from '"+from+"' to '"+to+"'"))
 		}
 	}
 }
@@ -506,9 +512,8 @@ func (App *App) copyStylesheet(file string) {
 	// there's no reason to copy this file
 	to = filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
 	if err := Copy(from, to); err != nil {
-		App.infoLog.Printf("%s", err.Error())
+		App.QuitError(errCode("0915", "from '"+from+"' to '"+to+"'"))
 	}
-
 }
 
 // Look alongside the current file to assets to publish
@@ -654,7 +659,7 @@ func (App *App) headerFiles() string {
 	var h string
 	headers, err := ioutil.ReadDir(App.Site.Headers)
 	if err != nil {
-	  QuitError(errCode("0706", headersDir))
+	  App.QuitError(errCode("0706", headersDir))
 	}
 	for _, file := range headers {
 		h += fileToString(filepath.Join(App.Site.Headers, file.Name()))
@@ -704,7 +709,7 @@ func (App *App) localFiles(relDir string) {
 		assetDir := filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
 		if err := os.MkdirAll(assetDir, PUBLIC_FILE_PERMISSIONS); err != nil {
 			App.infoLog.Printf(errCode("0402", assetDir).Error())
-			QuitError(errCode("0402", assetDir))
+			App.QuitError(errCode("0402", assetDir))
 		}
 		App.publishPageTypeAssets()
 	}
@@ -786,7 +791,7 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		var input []byte
 		// Error if the specified file can't be found.
 		if !fileExists(path) {
-			QuitError(errCode("1015",path))
+			App.QuitError(errCode("1015",path))
 		}
 		if isMarkdownFile(path) {
 			input = fileToBuf(path)
@@ -794,7 +799,7 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		}
 		return fileToString(path)
 	default:
-		QuitError(errCode("1203",tag))
+		App.QuitError(errCode("1203",tag))
 	}
   return ""
 }

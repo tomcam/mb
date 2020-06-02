@@ -239,14 +239,14 @@ func (App *App) newSite(sitename string) error {
 	// to the project directory.
 	err = copyDirAll(App.themesPath, App.Site.themesPath)
 	if err != nil {
-		QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
+		App.QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
 	}
 
 	// Copy all scodes from the user application data directory
 	// to the project directory.
 	err = copyDirAll(App.sCodePath, App.Site.sCodePath)
 	if err != nil {
-		QuitError(errCode("0915", "from '"+App.sCodePath+"' to '"+App.Site.sCodePath+"'"))
+		App.QuitError(errCode("0915", "from '"+App.sCodePath+"' to '"+App.Site.sCodePath+"'"))
 	}
 	App.Site.AssetDir = filepath.Join(App.Site.Publish, App.Site.AssetDir)
 
