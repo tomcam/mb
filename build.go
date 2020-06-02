@@ -15,7 +15,7 @@ func (App *App) build() error {
 	if !isProject(".") {
 		return errCode("1009", currDir())
 	}
-
+  App.Site.path = currDir()
 	App.siteDefaults()
 
 	var err error

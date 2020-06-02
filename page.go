@@ -3,6 +3,9 @@ package main
 // type Page contains read-only information about the Markdown page currently
 // being processed.
 type Page struct {
+	// Currently loaded theme
+	Theme Theme
+
 	// Name of theme used for code highlighting
 	// Currently using Chroma:
 	// https://github.com/alecthomas/chroma/tree/master/styles

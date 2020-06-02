@@ -6,7 +6,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"html/template"
-	"log"
 	"path/filepath"
 )
 
@@ -24,13 +23,6 @@ type App struct {
 	Site        *Site
 	Page        *Page
 	FrontMatter *FrontMatter
-	// INTERNAL
-	infoLog  *log.Logger
-	errorLog *log.Logger
-
-	// Currently loaded theme
-	Theme Theme
-
 	// Location of global themes directory
 	themesPath string
 
@@ -121,8 +113,8 @@ func newDefaultApp() *App {
 	// Add config/env support from cobra and viper
 	App.addCommands()
 
-	App.themesPath = filepath.Join(configDir(), themeSubDirName)
-	App.sCodePath = filepath.Join(configDir(), sCodeSubDirName)
+	//App.themesPath = filepath.Join(configDir(), themeSubDirName)
+	//App.sCodePath = filepath.Join(configDir(), sCodeSubDirName)
 	App.funcs = template.FuncMap{
 		"ftime":    App.ftime,
 		"hostname": App.hostname,

@@ -102,7 +102,7 @@ func (App *App) loadTheme() {
 	if err := App.PageType(themeName, themeDir, themePath, &p); err != nil {
 		App.QuitError(errCode("0117", themePath, err.Error()))
 	}
-	App.Theme.RootStylesheets = p.RootStylesheets
+	App.Page.Theme.RootStylesheets = p.RootStylesheets
 	// See if a pagetype has been requested.
 	if App.FrontMatter.PageType != "" {
 		//if App.FrontMatter.isChild {
@@ -118,9 +118,9 @@ func (App *App) loadTheme() {
 		App.FrontMatter.isChild = false
 		// Try to load the .toml file named after the theme directory.
 		themePath = pageTypePath(themeDir, themeName)
-		//fmt.Println("Hope we inherited", App.Theme.RootStylesheets)
+		//fmt.Println("Hope we inherited", App.Page.Theme.RootStylesheets)
 	}
-	if err := App.PageType(themeName, themeDir, themePath, &App.Theme.PageType); err != nil {
+	if err := App.PageType(themeName, themeDir, themePath, &App.Page.Theme.PageType); err != nil {
 		App.QuitError(errCode("0108", fmt.Errorf("Error loading %s", themePath).Error(), err.Error()))
 	}
 }
@@ -141,7 +141,7 @@ func (App *App) PageType(themeName, themeDir, fullPathName string, PageType *Pag
 	}
 	PageType.name = themeName
 	PageType.PathName = themeDir
-	App.Theme.PageType = *PageType
+	App.Page.Theme.PageType = *PageType
 	// Success
 	return nil
 }

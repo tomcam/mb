@@ -72,6 +72,7 @@ var errMsgs = map[string]string{
 	"0122": "scode: unable to find file",           // filename
 	"0123": "scode: error reading file",            // filename
 	"0124": "Error copying a page asset",            // custom message  
+	"0125": "Error copying a style sheet",            // custom message  
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -156,6 +157,7 @@ var errMsgs = map[string]string{
 	"1013": "Please specify a site name",
 	"1014": "Unable to determine application configuration data directory",
   "1015": "Theme TOML specifies a file that can't be found", // filename
+  "1016": "Unable to read directory", // filename
 
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name

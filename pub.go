@@ -44,9 +44,11 @@ func (App *App) publishFile(filename string) error {
   // than one file at a clip. Which is obviously
   // most of the time.
   var p Page
-  //var s Site
-  //App.Site = &s
   App.Page = &p
+  // Probably belongs in build.go if anything
+ 	App.themesPath = filepath.Join(configDir(), themeSubDirName)
+	App.sCodePath = filepath.Join(configDir(), sCodeSubDirName)
+ App.siteDefaults()
 	App.Page.filePath = filename
 	App.Page.filename = filepath.Base(filename)
 	App.Page.dir = currDir()
@@ -57,6 +59,10 @@ func (App *App) publishFile(filename string) error {
 	if err != nil {
 		return errCode("0102", filename)
 	}
+  // TODO: Wrong. Setting default them properly means checking site.
+  App.FrontMatter.Theme = DEFAULT_THEME_NAME
+  App.FrontMatter.PageType = ""
+
 
 	// Extract front matter and parse.
   // Obviously that includes an optional theme or pagetype designation.
@@ -72,8 +78,7 @@ func (App *App) publishFile(filename string) error {
 	if App.Site.Theme != "" && (App.FrontMatter.Theme == DEFAULT_THEME_NAME || App.FrontMatter.Theme == "") {
 		App.FrontMatter.Theme = App.Site.Theme
 	}
-
-  App.loadTheme()
+   App.loadTheme()
   // Parse front matter.
   // Convert article to HTML
   App.Article(filename, input)
@@ -111,14 +116,14 @@ func (App *App) publishFile(filename string) error {
   App.closeHeadOpenBody()
 
 	//App.appendStr(wrapTag("<article>", []byte(App.Page.Article), true))
-	App.appendStr(App.pageRegionToHTML(&App.Theme.PageType.Header, "<header>"))
-	App.appendStr(App.pageRegionToHTML(&App.Theme.PageType.Nav, "<nav>"))
+	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Header, "<header>"))
+	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Nav, "<nav>"))
   App.appendStr(wrapTag("<article>", string(App.Page.Article), true))
 	sidebar := strings.ToLower(App.FrontMatter.Sidebar)
 	if sidebar == "left" || sidebar == "right" {
-		App.appendStr(App.pageRegionToHTML(&App.Theme.PageType.Sidebar, "<aside>"))
+		App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Sidebar, "<aside>"))
 	}
-	App.appendStr(App.pageRegionToHTML(&App.Theme.PageType.Footer, "<footer>"))
+	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Footer, "<footer>"))
 
   // Complete the HTML document with closing <body> and <html> tags
   App.appendStr(closingTags)
@@ -267,7 +272,7 @@ func (App *App) publishLocalFiles(dir string) bool {
 	if !optionSet(App.Site.dirs[pubDir], markdownDir) {
 		if err := os.MkdirAll(pubDir, PUBLIC_FILE_PERMISSIONS); err != nil {
 			// TODO: Have this function return error?
-			App.infoLog.Printf(errCode("0404", pubDir).Error())
+			App.QuitError(errCode("0404", pubDir, err.Error()))
 		}
 		App.Site.dirs[dir] |= markdownDir
 	}
@@ -275,8 +280,7 @@ func (App *App) publishLocalFiles(dir string) bool {
 	candidates, err := ioutil.ReadDir(dir)
 	if err != nil {
 		// TODO: Return error?
-		App.infoLog.Println("publishLocalFiles(): NO files found")
-		return false
+		App.QuitError(errCode("1016", dir,err.Error()))
 	}
 
 	// Get list of files in the local directory to exclude from copy
@@ -348,13 +352,13 @@ func (App *App) publishLocalFiles(dir string) bool {
 // as well. (You can exclude files using Exclude in the theme's toml file.)
 func (App *App) publishPageTypeAssets() {
 	// Is the default aka parent theme?
-	p := App.Theme.PageType
+	p := App.Page.Theme.PageType
 	if p.name == "" || p.name == DEFAULT_THEME_NAME {
 		// Default PageType
 		App.publishAssets()
 	} else {
 		// It's a child theme aka pagetype.
-		App.Theme.PageType = p
+		App.Page.Theme.PageType = p
 		App.publishAssets()
 		// TODO:This would happen more than once
 		// with multiple pageTypes, so I should
@@ -366,7 +370,7 @@ func (App *App) publishPageTypeAssets() {
 // relevant files from the pageType (or default theme) directory
 // to be published.
 func (App *App) publishAssets() {
-	p := App.Theme.PageType
+	p := App.Page.Theme.PageType
 	App.findPageAssetsToPublish()
 	App.findPageTypeAssetsToPublish()
 	// Copy out different stylesheet depending on the
@@ -380,9 +384,9 @@ func (App *App) publishAssets() {
 	}
 
 	//fmt.Printf("About to copy %v root stylesheets for %s %s\n",
-	//  len(App.Theme.RootStylesheets), App.FrontMatter.Theme, App.PageType.name)
+	//  len(App.Page.Theme.RootStylesheets), App.FrontMatter.Theme, App.PageType.name)
 	// Copy shared stylesheets first
-	for _, file := range App.Theme.RootStylesheets {
+	for _, file := range App.Page.Theme.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
 		// TODO: Decide whether this should be in root stylesheets and/or regular.
@@ -408,7 +412,7 @@ func (App *App) publishAssets() {
 		relDir := relDirFile(App.Site.path, App.Page.filePath)
 
 		// Get full path of stylesheet to copy from theme directory.
-		from := filepath.Join(App.Theme.PageType.PathName, file)
+		from := filepath.Join(App.Page.Theme.PageType.PathName, file)
 		// Get directory to which this file will be copied for publishing
 		assetDir := filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
 		// Create a fully qualified filename for the published file
@@ -418,7 +422,7 @@ func (App *App) publishAssets() {
 		// Turn it into a "link" tag.
 		App.appendStr(stylesheetTag(pathname))
 		if err := Copy(from, to); err != nil {
-			App.infoLog.Printf("%s", err.Error())
+			App.QuitError(errCode("0125","from '"+from+"' to '"+to+"'"))
 		}
 	}
 	// Copy other files in the theme directory to the target publish directory.
@@ -434,10 +438,10 @@ func (App *App) publishAssets() {
 	// icons. More on this situation below.
 
 	// xxx
-	//fmt.Println("About to publish", App.Theme.PageType.otherAssets)
+	//fmt.Println("About to publish", App.Page.Theme.PageType.otherAssets)
 
-	for _, file := range App.Theme.PageType.otherAssets {
-		from := filepath.Join(App.Theme.PageType.PathName, file)
+	for _, file := range App.Page.Theme.PageType.otherAssets {
+		from := filepath.Join(App.Page.Theme.PageType.PathName, file)
 		// Create a matching directory for assets
 		relDir := relDirFile(App.Site.path, App.Page.filePath)
 		// Create a fully qualified filename for the published file
@@ -464,14 +468,14 @@ func (App *App) publishAssets() {
 
 // findPageTypeAssetsToPublish() obtains a list of non-stylesheet asset files in the current
 // PageType directory that should be published, so, anything but Markdown, toml, HTML, and a
-// few other excluded types. It writes these to App.Theme.PageType.otherAssets
-// It writes stylesheets to App.Theme.currPageType.stylesheets.
+// few other excluded types. It writes these to App.Page.Theme.PageType.otherAssets
+// It writes stylesheets to App.Page.Theme.currPageType.stylesheets.
 // That because the otherAssets files can just get copied over, by the stylesheets
 // file list needs to be turned into stylesheet links.
 func (App *App) findPageTypeAssetsToPublish() {
 	// First get the list of stylesheets specified for this PageType.
 	// Get a directory listing of all the non-source files
-	dir := App.Theme.PageType.PathName
+	dir := App.Page.Theme.PageType.PathName
 	// Get the full directory listing.
 	candidates, err := ioutil.ReadDir(dir)
 	if err != nil {
@@ -488,7 +492,7 @@ func (App *App) findPageTypeAssetsToPublish() {
 				} else {
 					// TODO: These belong on Page, not currPageType or whatever
 					//fmt.Println("  Adding asset",filename)
-					App.Theme.PageType.otherAssets = append(App.Theme.PageType.otherAssets, filename)
+					App.Page.Theme.PageType.otherAssets = append(App.Page.Theme.PageType.otherAssets, filename)
 				}
 			}
 		} else {
@@ -505,7 +509,7 @@ func (App *App) findPageTypeAssetsToPublish() {
 func (App *App) copyStylesheet(file string) {
 	relDir := relDirFile(App.Site.path, App.Page.filePath)
 	assetDir := filepath.Join(App.Site.AssetDir, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
-	from := filepath.Join(App.Theme.PageType.PathName, file)
+	from := filepath.Join(App.Page.Theme.PageType.PathName, file)
 	to := filepath.Join(assetDir, file)
 	pathname := filepath.Join(themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
 	App.appendStr(stylesheetTag(pathname))
@@ -710,7 +714,6 @@ func (App *App) localFiles(relDir string) {
 		// Create its theme directory
 		assetDir := filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
 		if err := os.MkdirAll(assetDir, PUBLIC_FILE_PERMISSIONS); err != nil {
-			App.infoLog.Printf(errCode("0402", assetDir).Error())
 			App.QuitError(errCode("0402", assetDir))
 		}
 		App.publishPageTypeAssets()
@@ -763,7 +766,7 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 	switch tag {
 	case "<header>", "<nav>", "<article>", "<aside>", "<footer>":
 		var path string
-		path = filepath.Join(App.Theme.PageType.PathName, a.File)
+		path = filepath.Join(App.Page.Theme.PageType.PathName, a.File)
 
 		// A .sidebar file trumps all else.
 		// See if there's a file with the same name as
