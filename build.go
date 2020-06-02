@@ -16,18 +16,7 @@ func (App *App) build() error {
 		return errCode("1009", currDir())
 	}
 
-	// Note current position in directory tree
-	App.Site.path = currDir()
 	App.siteDefaults()
-	App.Site.sCodePath = filepath.Join(App.Site.path, sCodeSubDirName)
-
-	// Make sure there's a publish directory name.
-	// Use system default if necessary.
-	// BTW this would be a weird situation.
-	if App.Site.Publish == "" {
-		//return errCode("1011", "")
-		App.Site.Publish = PublishSubDirName
-	}
 
 	var err error
 	// Delete any existing publish dir

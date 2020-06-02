@@ -44,6 +44,8 @@ func (App *App) publishFile(filename string) error {
   // than one file at a clip. Which is obviously
   // most of the time.
   var p Page
+  //var s Site
+  //App.Site = &s
   App.Page = &p
 	App.Page.filePath = filename
 	App.Page.filename = filepath.Base(filename)
