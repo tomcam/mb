@@ -1,0 +1,16 @@
+# ???? BE SURE TO ADD THIS TO ERROR-CODES.MD
+
+## Error message:  XXX
+
+XXX Short summary
+
+## How you got here
+
+XXX 
+
+## What to do about it
+
+XXX
+
+
+
