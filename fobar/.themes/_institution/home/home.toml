@@ -1,0 +1,23 @@
+
+stylesheets = [ "docreset.css","docset.css","docstart.css", "institution.css",  "institution-home.css"]
+[nav]
+#html = "<navbar><strong>DOCSET</strong><a href='/'>Home</a> | <a href='/todo.html'>Navvie McNavbar</a></navbar> | <em>How much more can we say?</em>"
+#markdownfile = "nav.md"
+
+[header]
+#html = "<header><h1>hello, world.</h1></header>"
+# ![Generic building picture](blue-building-2040x1365.jpg)
+#  #### Welcome to Institution 
+# ### Ranked #1 For 3 Years in a Row
+markdownfile = "header.md"
+
+[footer]
+#html = "<footer>HTML Override footer</footer>"
+markdownfile = "footer.md"
+
+[aside]
+#html = "<h3>Now, as an aside</h3>"
+#kmarkdownfile = "aside.md"
+
+
+

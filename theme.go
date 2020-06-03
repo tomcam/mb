@@ -79,13 +79,27 @@ type pageRegion struct {
 	File string
 }
 
+// themeName() returns the simple name of the current theme.
+func (App *App) currThemeName() string {
+	theme := strings.ToLower(strings.TrimSpace(App.FrontMatter.Theme))
+  if theme == "" {
+    theme = App.defaultTheme()
+  }
+  return theme
+}
 
+// themePath() returns the fully qualified path name of the curren theme
+func (App *App) currThemePath() string {
+	return filepath.Join(App.Site.themesPath, App.currThemeName())
+}
 
 // loadTheme() copies the theme and pageType, if any, to the Publish directory.
 // They're found in App.FrontMatter.Theme and App.FrontMatter.PageType.
 func (App *App) loadTheme() {
-	themeName := strings.ToLower(strings.TrimSpace(App.FrontMatter.Theme))
-	themeDir := filepath.Join(App.Site.themesPath, themeName)
+	themeName := App.currThemeName()
+	themeDir := App.currThemePath()
+	//themeName := strings.ToLower(strings.TrimSpace(App.FrontMatter.Theme))
+	//themeDir := filepath.Join(App.Site.themesPath, themeName)
 	if !dirExists(themeDir) {
 		  App.QuitError(errCode("1004",
 			fmt.Errorf("theme \"%v\" was specified, but couldn't find a directory named %v", App.FrontMatter.Theme, themeDir).Error()))

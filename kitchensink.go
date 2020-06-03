@@ -25,6 +25,8 @@ var (
 			`# Home
 Go [one level deep](one/index.html), [two levels deep](two/three/index.html)
 
+Try the [home pagetype](one/pagetype.html)
+
 Host: {{ hostname }}
 
 Time: {{ ftime }}
@@ -44,7 +46,16 @@ This page is 1 level deep.
 
 The time is {{ ftime }}
 `},
-		{"index.md",
+		{"pagetype.md",
+			"one",
+			`===
+pagetype="home"
+===
+# PageType test
+This uses the pagetype named {{ .FrontMatter.PageType }}
+
+The time is {{ ftime }}
+`},		{"index.md",
 			"two/three",
 			`# Page 2
 This page is 2 levels deep.
@@ -77,6 +88,9 @@ Go [home 4](/./index.html)
 			"",
 			`# Home
 Go [one level deep](one/index.html), [two levels deep](two/three/index.html)
+
+Try a page with [templates disabled](two/three/templates-off.html]
+
 `},
 		{"index.md",
 			"one",
@@ -89,6 +103,17 @@ The time is {{ ftime }}
 			"two/three",
 			`# Page 2
 This page is 2 levels deep.
+
+Go [home](/index.html)
+`},
+		{"templates-off.md",
+			"two/three",
+			`===
+templates="off"
+===
+# Templates are disabled on this page 
+
+Take a {{ look }} and note the {{ ftime }}
 
 Go [home](/index.html)
 `},

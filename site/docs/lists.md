@@ -1,3 +1,6 @@
+===
+templates="off"
+===
 # Lists
 
 The `[List]` section in the front matter of a MarkDown file is a powerful
@@ -26,8 +29,9 @@ Here is an example Markdown file containing
 
 ##### file listex01.md
 
+```
 ===
-[List]
+\[List\]
 title="Metabuzz: The Greatest Hits"
 books=["Cujo","Perdido"]
 mixed=["Double quoted",'single-quoted','"mixed" quotes']
@@ -38,6 +42,7 @@ biglist= [
 ===
 
 Welcome to {{ .FrontMatter.title }}
+```
 
 
 

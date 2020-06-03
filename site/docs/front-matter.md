@@ -1,6 +1,10 @@
+===
+templates="off"
+===
 
 # TODO:
 * No empty front matter allowed
+
 
 ## excludedFiles
 
@@ -23,3 +27,13 @@ Remember to keep your product keyk secret.
 
 TODO: Explain it needs to be last
 
+## templates
+
+For documentation purposes. If you're writing documentation that uses the template language, setting `templates="off"` prevents templates on that page from
+being executed. Helps when you're documenting, well, templates.
+
+===
+templates="off"
+===
+
+hello, {{ world. }}

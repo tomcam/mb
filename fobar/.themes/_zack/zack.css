@@ -1,0 +1,108 @@
+/* IMPORTANT: Downloadable fonts should be imported above this rule 
+ * docroot.css or maybe later 1.css - 
+ * jLayout, color, and fonts for a generic starter site */ 
+:root 
+{
+		/* ****************/
+		/* FONT SELECTION */
+		/* ****************/
+
+		/* Font family used in headlines */
+		/* Docs adds the styles formal, informal, and code */
+		--header-style: informal;
+
+		/* Font style (family) used in body text */
+		--body-style:var(--informal);
+
+
+		/* ****************/
+		/* COLORS         */
+		/* ****************/
+
+		/* Default foreground (text) and background colors  */
+		--fg: black;
+		--bg: white;
+
+		/* Default foreground (text) and background colors in article */
+		--article-fg: --header-bg;
+		--article-bg: whitesmoke;
+				
+		/* Default foreground (text) and background colors in aside */
+		--aside-fg: black;
+		--aside-bg: whitesmoke;
+
+		/* Primary foreground (text) and background colors in header */
+		--header-fg: white;
+		--header-bg: darkblue;
+
+		/* Primary foreground (text) and background colors in navbar */
+		--nav-fg: white;
+		--nav-bg: darkblue;
+
+		/* Secondary foreground (text) and background colors for accents. */
+		--trim-fg: gray;
+		--trim-bg: white;
+		
+		/* Primary foreground (text) and background colors in footer */
+		--footer-fg: white;
+		--footer-bg: darkblue;
+
+
+		/* ****************/
+		/* DIMENSIONS      */
+		/* ****************/
+	
+		/* Maximum characters on a line in an article. 
+		 * Has no effect on the width of the column itself. */
+		--max-article-width: 54rem;
+
+		/* The maximum number of characters the aside column should be */
+		--max-aside-width: 19rem;
+
+		/* Adjusts header height and keeps it vertically centered */
+		--header-height: 4rem;
+
+		/* Adjusts navbar height and keeps it vertically centered */
+		--nav-height: 4rem;
+
+		/* Starting point from left where text (and by default headers) appears */
+		--left-start:5%;
+
+		/* Header, nav, and footer stretch all the way across
+		 * the screen at 100%. To see gaps (margins) on either side
+		 * reduce that number, then increase --left-gap
+		 * and --right-gap. */
+		--full-page:70%;
+
+		/* Margin/background visible surrounding article. 
+		 * When --full-page is 100% these should be at 0.
+		 * When --full-page is less than 100% then these
+		 * two should add up to the difference. */
+		--left-gap:10%;
+		--right-gap:10%;
+
+		/* To make page float in middle:
+		 * Set --full-page to 80% or whatever
+		 * Set --left-gap and --right-gap to 5% or 10% or similar
+		 */
+
+
+}
+
+
+header > ul >  li:first-child {font-weight:bold;font-size:calc(300%);} 
+header > ul > li > a > del {text-decoration:none;font-size:calc(120%);}
+header > ul > li > a:link{color:white;text-decoration:none;font-weight:100;} 
+header > ul > li > a:visited{color:white;text-decoration:none;font-weight:100;} 
+header > ul > li > a:hover {text-decoration:none;} 
+header {padding-left:0%;}
+
+nav > p > a > img {text-align:right;margin-right:.75rem;}
+nav  {padding-left:40%;}
+
+article {margin-top:2rem;margin-bottom:2rem;}
+article > p > img {width:90%;} 
+article > h1 {font-weight:medium;}
+article > h2 {color:var(--header-bg);}
+article {margin-right:0;}
+article > pre > code {font-family:code;font-size:1rem;max-width:var(--max-article-width);overflow:auto;}

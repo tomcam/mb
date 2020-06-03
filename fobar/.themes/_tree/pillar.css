@@ -1,0 +1,116 @@
+/* IMPORTANT: Downloadable fonts should be imported above this rule  */
+:root 
+{
+		/* ****************/
+		/* FONT SELECTION */
+		/* ****************/
+
+		/* Font family used in headlines */
+		/* Docset adds the styles formal, informal, and code */
+		/* to the existing serif, sans-serif, and monospace for  */
+		/* improved appearance per operating system.  */
+		--header-style:var(--informal);
+
+		/* Font style (family) used in body text */
+		--body-style:var(--informal);
+
+
+		/* ****************/
+		/* COLORS         */
+		/* ****************/
+
+		/* Default foreground (text) and background colors  */
+		--fg: black;
+		--bg: white;
+
+		/* Default foreground (text) and background colors in article */
+		--article-fg: black;
+		--article-bg: var(--bg);
+				
+		/* Default foreground (text) and background colors in aside */
+		--aside-fg: black;
+		--aside-bg: var(--bg);
+
+		/* Primary foreground (text) and background colors in header */
+		--header-fg: white;
+		--header-bg: darkblue;
+
+		/* Primary foreground (text) and background colors in navbar */
+		--nav-fg: white;
+		--nav-bg: darkblue;
+
+		/* Secondary foreground (text) and background colors for accents. */
+		--trim-fg: gray;
+		--trim-bg: white;
+		
+		/* Primary foreground (text) and background colors in footer */
+		--footer-fg: white;
+		--footer-bg: darkblue;
+
+
+		/* ****************/
+		/* DIMENSIONS      */
+		/* ****************/
+	
+		/* Maximum characters on a line in an article. 
+		 * Has no effect on the width of the column itself. */
+		--max-article-width: 80%; 
+
+		/* The maximum number of characters the aside column should be */
+		--max-aside-width: 25%;    /* 14rem */
+
+		/* Header, nav, and footer stretch all the way across
+		 * the screen at 100%. To see gaps (margins) on either side
+		 * reduce that number, then increase --left-gap
+		 * and --right-gap. */
+		--full-page:80%; 
+
+		/* Margin/background visible surrounding article. 
+		 * When --full-page is 100% these should be at 0.
+		 * When --full-page is less than 100% then these
+		 * two should add up to the difference. */
+		--left-gap:15%;
+		--right-gap:0%;
+
+		/* Starting point from left where text (and by default headers) appears */
+		--left-start:5%;
+
+		/* Adjusts header height and keeps it vertically centered */
+		--header-height: 8rem;
+
+		/* Adjusts navbar height and keeps it vertically centered */
+		--nav-height: 3rem;
+
+
+}
+
+article > h1,article > h2 {font-weight:700;}
+article > h2 {margin-top:4rem;}
+article > h2 {color:var(--header-bg);}
+
+aside, aside > p, aside > h2, aside > h3, aside > h4 {margin-left:0;padding-left:1rem;padding-right:1rem;} 
+aside > h3 {color:var(--trim-fg);}
+aside > h4 {color:var(--header-bg);background-color:var(--header-fg)}
+
+header > h4 {color:var(--header-fg);text-align:center;}
+header {width:var(--full-page);}
+header {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+header  > ul {margin-left:0;padding-left:0;padding-right:1rem;}
+
+nav {width:var(--full-page);}
+nav {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+nav {padding-left:30%;}
+nav > p > a > img {margin-left:1rem;}
+
+footer {width:var(--full-page);}
+footer {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+
+/* RESPONSIVE SIZING */
+@media (max-width: 1024px) {
+article,header,nav,footer{width:100%;}
+header,nav,html{padding-left:0rem;margin:0rem;} 
+article{padding-left:3rem;}
+aside {width:0;display:none}
+footer {display:none}
+}
+

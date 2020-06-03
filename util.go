@@ -443,7 +443,7 @@ func writeTextFile(filename, contents string) error {
 	var out *os.File
 	var err error
 	if out, err = os.Create(filename); err != nil {
-		return errCode("0204", "Problem creating copy of file %v: %v\n", filename, err.Error())
+		return errCode("0204", "Problem creating file %v: %v\n", filename, err.Error())
 	}
 	if _, err = out.WriteString(contents); err != nil {
 		return errCode("0903", "Problem writing to file %v: %v\n", filename, err.Error())

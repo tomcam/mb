@@ -1,0 +1,111 @@
+/* IMPORTANT: Downloadable fonts should be imported above this rule  */
+@import url('https://fonts.googleapis.com/css?family=Nova+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&display=swap');
+/* IMPORTANT: Downloadable fonts should be imported above this rule  */
+:root 
+{
+		/* ****************/
+		/* FONT SELECTION */
+		/* ****************/
+
+		/* Font family used in headlines */
+		/* Docset adds the styles formal, informal, and code */
+		/* to the existing serif, sans-serif, and monospace for  */
+		/* improved appearance per operating system.  */
+		--header-style:'Nova Mono';
+
+		/* Font style (family) used in body text */
+		--body-style:var(--informal);
+
+
+		/* ****************/
+		/* COLORS         */
+		/* ****************/
+
+		/* Default foreground (text) and background colors  */
+		--fg:#08415C;
+		--bg:#EEE5E9;
+
+		/* Default foreground (text) and background colors in article */
+		--article-fg: black;
+		--article-bg: white;
+				
+		/* Default foreground (text) and background colors in aside */
+		--aside-fg: black;
+		--aside-bg: white;
+
+		/* Primary foreground (text) and background colors in header */
+		--header-bg:#CC2936;
+		--header-fg:white;
+
+		/* Primary foreground (text) and background colors in navbar */
+		--nav-fg:CC2936; 
+		--nav-bg:#F6F6F8;
+
+		/* Secondary foreground (text) and background colors for accents. */
+		--trim-fg:#CC2936;
+		--trim-bg: blue;
+		
+		/* Primary foreground (text) and background colors in footer */
+		--footer-fg: white;
+		--footer-bg: var(--header-bg);
+
+
+		/* ****************/
+		/* DIMENSIONS      */
+		/* ****************/
+	
+		/* Maximum characters on a line in an article. 
+		 * Has no effect on the width of the column itself. */
+		--max-article-width: 60%; 
+
+		/* The maximum number of characters the aside column should be */
+		--max-aside-width: 10%;    
+
+		/* Header, nav, and footer stretch all the way across
+		 * the screen at 100%. To see gaps (margins) on either side
+		 * reduce that number, then increase --left-gap
+		 * and --right-gap. */
+		--full-page:80%; 
+
+		/* Margin/background visible surrounding article. 
+		 * When --full-page is 100% these should be at 0.
+		 * When --full-page is less than 100% then these
+		 * two should add up to the difference. */
+		--left-gap:10%;
+		--right-gap:10%;
+
+		/* Starting point from left where text (and by default headers) appears */
+		--left-start:5%;
+
+		/* Adjusts header height and keeps it vertically centered */
+		--header-height: 4rem;
+
+		/* Adjusts navbar height and keeps it vertically centered */
+		--nav-height: 3rem;
+
+		/* Pushes in each side of text (padding, actually. 
+		 * Use only when --full-page is 100%
+		 * This centers the article on the page. 
+		 * If using aside-right or aside-left, this should
+		 * be decreased. */
+		--push-in:0%;
+
+
+
+}
+/*
+ * https://coolors.co/08415c-cc2936-6b818c-f1bf98-eee5e9 
+*/
+
+html,body {font-family:'Roboto Condensed',informal}
+
+/* RESPONSIVE SIZING */
+@media (max-width: 1024px) {
+article,header,nav,footer{width:100%;}
+header,nav,html{padding-left:0rem;margin:0rem;} 
+article{padding-left:3rem;}
+aside {width:0;display:none}
+footer {display:none}
+}
+

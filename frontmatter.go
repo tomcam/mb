@@ -41,6 +41,11 @@ type FrontMatter struct {
 	// List of filenames to exclude
 	ExcludeFilenames []string
 
+
+  // If set to "off", don't execute templates on this page.
+  // Used for documentation purposes.
+  Templates string
+
 	// User data.
 	List interface{}
 }

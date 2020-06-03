@@ -1,0 +1,6 @@
+* ![Metabuzz logo](metabuzz-logo-64x64.png)
+* [~~Pro~~](/)
+* [News](/)
+* [Download](/)
+* [Try it](/)
+* [Order](/)

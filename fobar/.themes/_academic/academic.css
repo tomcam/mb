@@ -1,0 +1,37 @@
+:root 
+	
+{
+		/* The widest a column of text should be in an article */
+		--max-article-width: 43rem;
+
+		/* Left edge of text in articles, headers, etc. */
+		--left-start: 4em;
+
+		/* Default foreground (text) color  */
+		--fg: #404040;
+
+		/* Default background color */
+		--bg: #F3F3F3; /*  #F5F5F5; */
+}
+
+html,body {font-size:18px;font-family:sans-serif;}
+header {font-weight:normal;font-size:2em;}
+html {background-color: var(--bg);margin-top:2rem;margin-left:10rem;margin-right:10rem;margin-bottom:15rem;}
+header {color:var(--fg);background-color:var(--bg);max-width:var(--max-article-width);} 
+header > h1 {text-align:center;color:var(--fg);background-color:var(--bg);} 
+nav {background-color:var(--bg);margin-top:2rem;margin-bottom:2rem;}
+article {max-width:var(--max-article-width);color:var(--fg);background-color:white;box-shadow: 0 1px 6px rgba(0,0,0,.15);padding-left:4em;padding-right:4em;padding-bottom:6em;}
+article > h1 {color:var(--fg);text-align:center;padding-top:2em;padding-bottom:3em;}
+article > h2{ color:var(--fg);font-size:1.5em;margin-top:.75em;margin-bottom:.75em; }
+article > pre > code {background-color:lightgoldenrodyellow;padding-right:65%;min-width:var(--max-article-width);}
+p {margin-bottom:1em;}
+h1{ font-size:1.5em; }
+h3{ font-size:1.5em; }
+h4{ font-size:1.2em; }
+h5{ font-size:1em; }
+h6{ font-size:0.9em; }
+
+@media (max-width: 1024px) {
+:root{--left-start: 1rem;}
+footer {display:none}
+}

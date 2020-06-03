@@ -1,0 +1,73 @@
+:root 
+{
+		--bg:#F6F6F8; /* #dff9fb; */
+		--fg:#130f40;
+		--header-bg:#4834D4;
+		--header-fg:white;
+		--header-height:4.5rem;
+		--trim-fg:#22a6b3;
+		--nav-fg:#BE2EDD;
+		--nav-bg:#F6F6F8;
+		--max-article-width: 43rem;
+}
+
+article {width:80%}
+aside {display:none;}
+
+html {background-color:var(--bg);font-size:18px; }
+body {background-color: var(--bg);}
+
+/* HEADER */
+header{margin-bottom:1rem;margin-top:0;padding-top:0;} 
+/* Make the first item (or the last with last-child) stand out */
+header > ul {line-height:2rem;}
+header > ul >  li:first-child {font-size:calc(200%);} 
+header > ul > li > a > del {text-decoration:none;font-size:calc(120%);}
+header > ul > li > a:link{color:white;text-decoration:none;font-weight:100;} 
+header > ul > li > a:visited{color:white;text-decoration:none;font-weight:100;} 
+header > ul > li > a:hover {text-decoration:none;} 
+
+
+/* NAV */
+nav {margin-left:4rem;padding-left:20%;padding-right:20%;}
+nav {margin-top:2rem;margin-bottom:2rem;}
+nav {border-top:none;border-bottom:none;}
+nav > p > a:link {color:var(--nav-fg);font-weight:bold;text-decoration:none;}
+nav > p > a:hover {color:#22a6b3}
+
+article {margin-left:10%;margin-right:10%;}
+article p,ul,ol,h1,h2,h3,h4,h5,h6,dl {padding-left:4rem;padding-right:2em;}
+article > pre {margin-right:20%;margin-left:10%;}
+article > pre {padding-left:1rem;margin-top:1rem;margin-bottom:1rem;padding-top:1rem;padding-bottom:1rem;border-top:1px solid darkgray;border-bottom:1px solid darkgray;background-color:#F8F9FA;}
+
+article {color:var(--fg);background-color:white;padding-bottom:6em;}
+article{padding-top:2rem;}
+article > h1 {color:var(--fg);font-weight:bold;padding-top:1rem;padding-bottom:1rem;}
+article > h4 > strong {margin-top:2rem;color:black;font-weight:bold;}
+article > h5 {color:gray;font-weight:bold;}
+article > h6 {color:gray;font-weight:bold;}
+article > h6 > strong {color:black;font-weight:bold;}
+article > h2{font-size:1.5em;margin-top:.75em;margin-bottom:.75em; }
+article > h3{margin-top:2rem;}
+article > pre > code {font-size:.8rem;}
+article > blockquote {font-style:italic;border-left:1rem solid var(--header-fg);margin:0 0 4rem 4rem;padding:2rem;overflow:auto;}
+
+aside{padding-top:4rem;border-bottom:none;}
+
+footer > table {margin-left:10%;margin-right:20%;}
+footer {padding-left:10%;padding-right:10%;}
+
+
+/* DEFINITION LISTS */
+dt {font-weight:bold;}
+dd {margin-bottom:1em;}
+
+/* RESPONSIVE SCREEN SIZES */
+@media screen and (max-width: 1024px) {
+header,nav,article,footer {padding-left:1rem;margin-left:1rem;}
+article > p {padding-left:1rem;margin-left:1rem;}
+article > p,h1,h2,h3,ol,ul {padding-left:1rem;margin-left:1rem;}
+aside {display:none}
+footer {display:none}
+}
+

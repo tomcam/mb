@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+  "strings"
 	"text/template"
 )
 
@@ -13,24 +14,24 @@ import (
 // source file parsing errors that occur.
 func (App *App) interps(filename string, input string) string {
 	var s string
-	var err error
-	if s, err = App.execute(filename, input, App.funcs); err != nil {
-		return ""
-	}
+  if strings.ToLower(App.FrontMatter.Templates) != "off" {
+	  s = App.execute(filename, input, App.funcs)
+  }
 	return s
 }
 
 // execute() parses a Go template, then executes it against HTML/template source.
 // Returns a string containing the result.
-func (App *App) execute(templateName string, tpl string, funcMap template.FuncMap) (buf string, err error) {
+func (App *App) execute(templateName string, tpl string, funcMap template.FuncMap) (string) {
 	var t *template.Template
-	if t, err = template.New(templateName).Funcs(funcMap).Parse(tpl); err != nil {
-		return "", err
+  var err error
+  if t, err = template.New(templateName).Funcs(funcMap).Parse(tpl); err != nil {
+		App.QuitError(errCode("0917", err.Error()))
 	}
 	var b bytes.Buffer
-	err = t.ExecuteTemplate(&b, templateName, App)
+  err = t.ExecuteTemplate(&b, templateName, App)
 	if err != nil {
-		return "", err
+		App.QuitError(errCode("1204", err.Error()))
 	}
-	return b.String(), nil
+	return b.String()
 }

@@ -1,0 +1,15 @@
+/* For aside=left, uncomment 
+article {width:45%;padding-right:5%;}
+article{min-width:55%;margin-left:0%;margin-right:20%;}
+aside {width:15%;margin-right:0;}
+*/
+
+header {width:var(--full-page);}
+header {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+
+nav {width:var(--full-page);}
+nav {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+
+footer {width:var(--full-page);}
+footer {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+

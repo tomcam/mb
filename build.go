@@ -16,6 +16,7 @@ func (App *App) build() error {
 		return errCode("1009", currDir())
 	}
   App.Site.path = currDir()
+  fmt.Println("*** build() App.Site.path: " + App.Site.path)
 	App.siteDefaults()
 
 	var err error
@@ -28,6 +29,8 @@ func (App *App) build() error {
 	if err != nil {
 		return errCode("0403", App.Site.Publish)
 	}
+  // xxx
+  fmt.Println("created publish dir " + App.Site.Publish)
 
 	// Get a list of all files & directories in the site.
 	if _, err = App.getProjectTree(App.Site.path); err != nil {
@@ -40,6 +43,7 @@ func (App *App) build() error {
 		if err := os.Chdir(dir); err != nil {
 			return errCode("1101", dir)
 		}
+    fmt.Println("\ncd " + dir)
 		// Get the files in just this directory
 		files, err := ioutil.ReadDir(".")
 		if err != nil {

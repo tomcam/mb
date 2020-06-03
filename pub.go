@@ -45,6 +45,8 @@ func (App *App) publishFile(filename string) error {
   // most of the time.
   var p Page
   App.Page = &p
+  var f FrontMatter
+  App.FrontMatter = &f
   // Probably belongs in build.go if anything
   App.siteDefaults()
 	App.Page.filePath = filename
@@ -73,7 +75,8 @@ func (App *App) publishFile(filename string) error {
 
 	// If no theme was specified in the front matter, but one was specified in the
 	// site config, make it the theme.
-	if App.Site.Theme != "" && (App.FrontMatter.Theme == defaultThemeName || App.FrontMatter.Theme == "") {
+	//if App.Site.Theme != "" && (App.FrontMatter.Theme == defaultThemeName || App.FrontMatter.Theme == "") {
+	if App.Site.Theme != "" && App.FrontMatter.Theme == "" {
 		App.FrontMatter.Theme = App.Site.Theme
 	}
    App.loadTheme()
@@ -133,8 +136,15 @@ func (App *App) publishFile(filename string) error {
 	// Write everything to a temp file so in case there was an error, the
 	// previous HTML file is preserved.
   tmpFile, err := ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
+  if err != nil {
+    App.QuitError(errCode("PREVIOUS", err.Error()))
+  }
+
+  fmt.Println("Temp file " + tmpFile.Name())
 	//writeTextFile(tmpFile.Name(), string(App.Page.Article))
-	writeTextFile(tmpFile.Name(), string(App.Page.html))
+  if err = writeTextFile(tmpFile.Name(), string(App.Page.html)); err != nil {
+    App.QuitError(errCode("PREVIOUS", err.Error()))
+  }
 	// Ensure the file gets closed before exiting
 	defer os.Remove(tmpFile.Name())
 	// Get the relative directory.
@@ -267,11 +277,14 @@ func (App *App) publishLocalFiles(dir string) bool {
 	relDir := relativeDirectory(App.Site.path, dir)
 	pubDir := filepath.Join(App.Site.Publish, relDir)
 
+  // If this directory hasn't been created, create it.
 	if !optionSet(App.Site.dirs[pubDir], markdownDir) {
 		if err := os.MkdirAll(pubDir, PUBLIC_FILE_PERMISSIONS); err != nil {
 			// TODO: Have this function return error?
 			App.QuitError(errCode("0404", pubDir, err.Error()))
 		}
+    // Mark that the directory has been created so this
+    // doesn't get repeated.
 		App.Site.dirs[dir] |= markdownDir
 	}
 	// Get the directory listing.
@@ -331,10 +344,17 @@ func (App *App) publishLocalFiles(dir string) bool {
 				relDir := relDirFile(App.Site.path, copyFrom)
 				// Get the target file's fully qualified filename.
 				copyTo := filepath.Join(App.Site.Publish, relDir, filename)
+        // xxx
+        fmt.Printf("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
 				if err := Copy(copyFrom, copyTo); err != nil {
 					//App.QuitError(err.Error())
 					App.QuitError(errCode("PREVIOUS", err.Error()))
 				}
+        // TODO: Get rid of fileExists() when possible xxx
+        promptString("Check for " + copyTo)
+        if !fileExists(copyTo) {
+          App.QuitError(errCode("PREVIOUS", copyTo))
+        }
 			}
 		}
 	}
@@ -431,9 +451,11 @@ func (App *App) publishAssets() {
 	// tag for them and then copy them right to the published theme directory.
 	// The other files are dealt with here. Probably they would typically
 	// be graphics files. They will be copied not to the
-	// asset directory, but right into the document directory. Which is counterinutive
+	// asset directory, but right into the document directory. 
+  // Which feels counterinutive
 	// and kind of wrong, because they are likely to be something like social media
-	// icons. More on this situation below.
+	// icons. More on this situation below, but of course they are actually 
+  // part of the page itself.
 
 	// xxx
 	//fmt.Println("About to publish", App.Page.Theme.PageType.otherAssets)
@@ -516,7 +538,7 @@ func (App *App) copyStylesheet(file string) {
 	// there's no reason to copy this file
 	to = filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
 	if err := Copy(from, to); err != nil {
-		App.QuitError(errCode("0915", "from '"+from+"' to '"+to+"'"))
+		App.QuitError(errCode("0916", "from '"+from+"' to '"+to+"'"))
 	}
 }
 
@@ -617,17 +639,16 @@ func (App *App)titleTag() {
 // Article() takes a document with optional front matter, parses
 // out the front matter, and sends the Markdown portion to be converted.
 // Write the HTML results to App.Page.Article
-func (App *App) Article(filename string, input []byte) (start []byte, err error) {
+func (App *App) Article(filename string, input []byte) {
 	// Extract front matter and parse.
 	// Return the starting address of the Markdown.
-	start, err = App.parseFrontMatter(filename, input)
+  start, err := App.parseFrontMatter(filename, input)
 	if err != nil {
-		return []byte{}, errCode("0103", filename)
+		App.QuitError(errCode("0103", filename))
 	}
 	// Resolve any Go template variables before conversion to HTML.
 	interp := App.interps(filename, string(start))
 	App.Page.Article = App.markdownBufferToBytes([]byte(interp))
-	return App.Page.Article, nil
 }
 
 

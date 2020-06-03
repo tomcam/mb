@@ -1,0 +1,3 @@
+/* Add minimal layout to the tufte.css style sheet */
+aside {max-width:20em;}
+article {width:40em;}

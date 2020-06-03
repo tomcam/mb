@@ -254,9 +254,7 @@ func (App *App) newSite(sitename string) error {
 // Most of them are relative to the site directory.
 // It must be called after config files are read.
 func (App *App) siteDefaults() {
-	//App.Site.path = currDir()
 	App.Site.configFilePath = filepath.Join(App.Site.path, siteConfigSubDir, siteConfigFilename)
-  fmt.Println("App.Site.configFilePath: " + App.Site.configFilePath)
 	App.Site.Publish = filepath.Join(App.Site.path, PublishSubDirName)
 	App.Site.Headers = filepath.Join(App.Site.path, headersDir)
 	App.Site.commonDir = filepath.Join(App.Site.path, commonSubDirName)

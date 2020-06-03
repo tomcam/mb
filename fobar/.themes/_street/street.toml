@@ -1,0 +1,14 @@
+stylesheets = ["docreset.css", "docset.css", "docstart.css", "https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap", "street.css"]
+
+[header]
+markdownfile = "header.md"
+
+[nav]
+#markdownfile = "nav.md"
+
+[aside]
+markdownfile = "aside.md"
+
+[footer]
+markdownfile = "footer.md"
+

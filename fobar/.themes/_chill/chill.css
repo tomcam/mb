@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,900&display=swap');
+:root 
+{
+		--bg:#F6F6F8; 
+		--fg:#130f40;
+		--header-bg:#F6F6F8;
+		--header-fg:purple;
+		--header-height:4rem;
+		--trim-fg:#E56236 ; /* chocolate #E56236 */
+		--trim-bg: blue;
+		--nav-fg:purple;
+		--nav-bg:#F6F6F8;
+		--max-article-width: 43rem;
+}
+html {background-color:var(--bg);font-size:20px;}
+a:link {color:var(--header-fg);}
+/* HEADER */
+header{margin-bottom:1rem;margin-top:0;} 
+header {padding:0 10% 0 10%;}
+
+/* Make the first item (or the last with last-child) stand out */
+header > h4 {color:var(--header-fg);font-family: 'Fredoka One', sans-serif; }
+header > h4 > del  {color:var(--trim-fg);} /*#E56236 */ 
+header > ul > li {line-height:5rem;}
+
+/* Last item of the unordered list is styled to look like a button and stays to the right */
+header > ul >  li:last-child {float:right;} /* font-size:calc(150%); */ 
+header > ul >  li:last-child > a {margin-right:4em; background-color: var(--trim-fg);color: white;padding: .5em 1em;text-decoration: none;text-transform: uppercase;webkit-border-radius: 1rem;-moz-border-radius: 1rem;border-radius: 1rem;
+}
+header > ul > li > a > del {text-decoration:none;font-size:calc(120%);}
+header > ul > li > a:link{color:var(--header-fg);text-decoration:none;font-weight:100;} 
+header > ul > li > a:visited{color:var(--header-fg);text-decoration:none;font-weight:100;} 
+header > ul > li > a:hover {text-decoration:none;} 
+header > ul > li:last-child > a {color:white;}
+
+/* NAV */
+nav {margin-left:10%;}
+nav {border-top:none;border-bottom:none;}
+nav > p > a:link {color:var(--nav-fg);font-weight:bold;text-decoration:none;margin-right:2rem;}
+nav > p > a:hover {color:white;background-color:var(--trim-fg);padding:.5em .5em .5em .5em;border-radius:.5em .5em .5em .5em}
+
+/* ARTICLE */
+
+article {margin-left:10%;margin-right:0%;}
+article {padding-left:5%;padding-right:5%}
+article {width:60%;margin-top:1rem;box-shadow:1px 1px 3px grey;min-height:60vh;}
+article {font-family:'Lato',informal;sans-serif;}
+article > pre {margin-right:20%;margin-left:10%;}
+article > pre {padding-left:1rem;margin-top:1rem;margin-bottom:1rem;padding-top:1rem;padding-bottom:1rem;border-top:1px solid darkgray;border-bottom:1px solid darkgray;background-color:#F8F9FA;}
+article {color:var(--fg);background-color:white;padding-bottom:6em;}
+article > h1{margin-top:0;color:var(--header-fg);font-weight:900;font-size:2.5rem;padding-top:2rem;padding-bottom:2rem;}
+article > h2{font-size:2em;margin-top:.75em;margin-bottom:.75em;font-weight:normal;}
+article > h3 {font-weight:normal;;}
+article > hr {margin-top:3rem;margin-bottom:2rem;border-top: .5rem solid var(--trim-fg);border-radius:1rem;}
+article > h4 { font-weight:normal;font-size:.8em;color:gray;margin-bottom:1em; } /* Byline */
+article > h4 > strong {font-weight:normal;color:black; } /* Byline */
+ 
+article > h5 {font-size:.8em;color:gray;font-weight:light;margin-bottom:1rem;} /* Credits */
+article > h5 > strong {font-weight:normal;color:black;} /* Credits */
+article > h6 {color:gray;font-weight:bold;}
+article > h6 > strong {color:black;font-weight:bold;}
+article > pre > code {font-size:.8rem;}
+article > blockquote {font-style:italic;border-left:1rem solid var(--header-fg);margin:0 0 4rem 4rem;padding:2rem;overflow:auto;}
+article > img {padding-right:14rem;max-width: calc(50% - var(--max-article-width));}
+
+/* ASIDE */
+aside {font-family:'Lato',informal;sans-serif;}
+
+aside{width:25%;padding-top:4rem;border-bottom:none;box-shadow:1px 1px 3px grey;min-height:60vh;}
+aside {background-color:white;margin: 3rem 1rem 2rem 1rem;padding: 0 2rem 0 2rem;border-bottom: 4px solid var(--trim-fg);}
+aside > h2 {font-weight:bold;font-size:1rem;}
+aside > h3 {font-weight:bold;color:var(--trim-fg)}
+aside > h4 {font-weight:bold;font-size:calc(80%);text-decoration:none;color:var(--trim-fg)}
+
+/* FOOTER */
+
+footer {padding-left:10%;padding-right:10%;}
+footer {margin-top:4rem;background-color:midnightblue;}
+footer > table {color:yellow;}
+footer > table > tbody {color:green;}
+footer > table > thead > tr {color:white;}
+footer > table > tbody > tr > td > a {color:white;}
+
+/* DEFINITION LISTS */
+dt {font-weight:bold;}
+dd {margin-bottom:1em;}
+
+/* RESPONSIVE SCREEN SIZES */
+@media screen and (max-width: 1024px) {
+header,nav,article,footer, article{width:auto;padding-left:1rem;margin-left:1rem;margin-right:1em;}
+aside {display:none}
+footer {display:none}
+}
+

@@ -135,8 +135,9 @@ var errMsgs = map[string]string{
 	"0912": "Problem converting markdown file",                     //
 	"0913": "Unable to read project directory",                     //
 	"0914": "Error creating a temporary file",                      // filename
-	"0915": "Unable to copy scodes directory to publish directory", // custome error message
+	"0915": "Unable to copy scodes directory to publish directory", // custom error message
   "0916": "Unable to copy a style sheet",                         // custom message
+  "0917": "Error creating ",                              // filename, Golang message
 
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename
@@ -171,6 +172,7 @@ var errMsgs = map[string]string{
 	"1201": "inc: Couldn't execute template in",   // filename
 	"1202": "scode: Couldn't execute template in", // filename
   "1203": "Unknown tag type",                  // Tag name
+  "1204": "Error executing",         // filename, Go error message
 }
 
 type errMsg struct {
@@ -212,8 +214,8 @@ func (e *errMsg) Error() string {
 	}
 
 	if e.previous != "" {
-		msg = fmt.Errorf("%s: %s (error code %s%s)\n",
-			// The most case: an error code with customization
+		msg = fmt.Errorf("%s %s (error code %s%s)\n",
+			// The most common case: an error code with customization
 			errMsgs[e.key], e.previous, errorCodePrefix, e.key)
 	} else {
 		msg = fmt.Errorf("%s (error code %s%s)\n",

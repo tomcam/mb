@@ -1,4 +1,87 @@
 
+# Todo
+- Ensure default theme in site.toml works. I don't think it does
+- Enure naming config file on the command line works
+# Adding a command
+
+Example using new them:
+$ mb new theme foo
+$ mb new theme foo from wide
+
+cmds.go
+- function addCommands()
+  - Near the top, jlk0Add cmdNew:
+```
+		/*****************************************************
+		  TOP LEVEL COMMAND: new
+		 *****************************************************/
+		cmdNew = &cobra.Command{
+			Use:   "new",
+			Short: "new site or new theme",
+			Long: `site: Use new site to start a new project. Use new theme to 
+create theme based on an existing one. 
+
+      Typical usage of new theme:
+
+      mb new theme brochure
+
+      : Edit theme files
+      vim .mb/.themes/brochure/brochure.css
+      vim .mb/.themes/brochure/theme-dark.css
+      etc
+
+`,
+		}
+```
+
+  - Add subcommand:
+```
+		/*****************************************************
+		    Subcommand: new site
+		*****************************************************/
+
+		cmdNewSite = &cobra.Command{
+			Use:   "site {sitename}",
+			Short: "new site mycoolsite",
+			Long: `new site {sitename}
+
+      Where {sitename} is a valid directory name. For example, if your site is calle basiclaptop.com, you would do this:
+
+      mb new site basiclaptop
+`,
+			Run: func(cmd *cobra.Command, args []string) {
+				// If there are arguments after build, then
+				// just convert these files one at at time.
+				if len(args) > 0 {
+					App.Site.Name = args[0]
+				} else {
+					// Them more likely case: it's build all by
+					// itself, so go through the whole directory
+					// tree and build as a complete site.
+					App.Site.Name = promptString("Name of site to create?")
+				}
+				err := App.newSite(App.Site.Name)
+				if err != nil {
+					App.QuitError(err)
+				} else {
+					fmt.Println("Created site ", App.Site.Name)
+				}
+			},
+		}
+
+
+```
+  - Near the bottom,use AddCommand for the top level new:
+```
+	App.Cmd.AddCommand(cmdNew)
+```
+
+  - And add its subcommand
+```
+	cmdNew.AddCommand(cmdNewTheme)
+```
+
+
 # Things to document
 
 * Description in front matter

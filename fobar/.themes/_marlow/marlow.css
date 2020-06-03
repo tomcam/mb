@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:100,400,700&display=swap');
+/* IMPORTANT: Downloadable fonts should be imported above this rule  */
+:root 
+{
+		/* ****************/
+		/* FONT SELECTION */
+		/* ****************/
+
+		/* Font family used in headlines */
+		/* Docset adds the styles formal, informal, and code */
+		/* to the existing serif, sans-serif, and monospace for  */
+		/* improved appearance per operating system.  */
+		--header-style:'IBM Plex Sans',informal;
+
+		/* Font style (family) used in body text */
+		--body-style:var(--informal);
+
+
+		/* ****************/
+		/* COLORS         */
+		/* ****************/
+
+		/* Default foreground (text) and background colors  */
+		--fg: black;
+		--bg: #F6F6F6;
+
+		/* Default foreground (text) and background colors in article */
+		--article-fg: black;
+		--article-bg: white;
+				
+		/* Default foreground (text) and background colors in aside */
+		--aside-fg: black;
+		--aside-bg: var(--bg);
+
+		/* Primary foreground (text) and background colors in header */
+		--header-fg: red;
+		--header-bg: #CA054D;/* #5019D3; */
+
+		/* Primary foreground (text) and background colors in navbar */
+		--nav-fg: black;
+		--nav-bg: var(--header-bg);/*  #FFCF9C; */
+
+		/* Secondary foreground (text) and background colors for accents. */
+		--trim-fg: #3B1C32; 
+		--trim-bg: #DE6449;
+		
+		/* Primary foreground (text) and background colors in footer */
+		--footer-fg: white;
+		--footer-bg: var(--header-bg);
+
+
+		/* ****************/
+		/* DIMENSIONS      */
+		/* ****************/
+	
+		/* Maximum characters on a line in an article. 
+		 * Has no effect on the width of the column itself. */
+		 --max-article-width: 70%; 
+
+		/* The maximum number of characters the aside column should be */
+		--max-aside-width: 10%;   
+
+		/* Header, nav, and footer stretch all the way across
+		 * the screen at 100%. To see gaps (margins) on either side
+		 * reduce that number, then increase --left-gap
+		 * and --right-gap. */
+		--full-page:80%; 
+
+		/* Margin/background visible surrounding article. 
+		 * When --full-page is 100% these should be at 0.
+		 * When --full-page is less than 100% then these
+		 * two should add up to the difference. */
+		--left-gap:10%;
+		--right-gap:10%;
+
+		/* Starting point from left where text (and by default headers) appears */
+		--left-start:5%;
+
+		/* Adjusts header height and keeps it vertically centered */
+		--header-height: 6rem;
+
+		/* Adjusts navbar height and keeps it vertically centered */
+		--nav-height: 16rem;
+
+
+}
+
+/* HEADER */
+header  {font-family:'IBM Plex Sans',informal;font-weight:100;color:white;}
+header > h4 {font-size:1.5rem;font-family:var(--header-style);color:white;font-weight:100;}
+header {margin-bottom:0;}
+/* NAV */
+nav > h2 {margin-right:2rem;color:var(--bg);font-weight:bold;display:inline;float:left;margin-bottom:0;margin-top:0;}
+nav > p > a {display:inline;float:left;}
+nav {font-family:var(--header-style);}
+nav > p > a {margin-right:1rem;font-family:var(--header-style);font-size:1.25rem;font-weight:400;text-decoration:none;}
+
+/* ARTICLE */
+article {margin-top:2rem;font-family:var(--header-style);}
+article > h1 {font-weight:bold;margin-top:3rem;}
+article > h2 {color:var(--trim-fg);font-weight:700;margin-top:8rem;}
+article > h3 {margin-top:4rem;}
+article > h4 {margin-top:1rem;font-weight:700;color:gray;}
+article > p {margin-top:2rem;}
+article > pre {margin-top:2rem;color:white;width:var(--max-article-width);background-color:var(--header-bg);font-size:.8rem;line-height:1.2rem;padding-left:1rem;padding-right:5%;margin-bottom:1rem;padding-top:1rem;padding-bottom:1rem;border-top:1px solid darkgray;border-bottom:1px solid darkgray;}
+
+/* ASIDE */
+aside {margin-left:0;padding-left:0;padding-right:0;}
+
+/* FOOTER */
+footer > {font-family:san-serif,'IBM Plex Sans',informal;color:white;}
+
+/* RESPONSIVE SIZING */
+@media (max-width: 1024px) {
+article,header,nav,footer{width:100%;}
+header,nav,html{padding-left:0rem;margin:0rem;} 
+article{padding-left:3rem;}
+aside {width:0;display:none}
+footer {display:none}
+}
+

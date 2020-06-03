@@ -1,0 +1,33 @@
+
+#stylesheets = ["https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css", "docset.css", "intro.css"]
+stylesheets = ["splendor.min.css", "docset.css", "tom.css" ]
+
+# Skin.css would be the color overrides.
+skin = ""
+
+[nav]
+#filename = "nav.html"
+markdownfile = "nav.md"
+
+[header]
+#html = "<header><h1>hello, world.</h1></header>"
+#filename = "header.html"
+markdownfile = "header.md"
+
+# Not sure we need this
+[content]
+html = ""
+filename = "content.html"
+
+[footer]
+#html = "<footer>HTML Override footer</footer>"
+#filename = "footer.html"
+markdownfile = "footer.md"
+
+[aside]
+#html = "<h3>Now, as an aside</h3>"
+#filename = "aside.html"
+markdownfile = "aside.md"
+
+
+

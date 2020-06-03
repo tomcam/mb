@@ -1,0 +1,20 @@
+
+stylesheets = [ "docreset.css","docset.css","times.css" ]
+
+# Skin.css would be the color overrides.
+skin = ""
+
+[header]
+#html = "<header><h1>hello, world.</h1></header>"
+markdownfile = "header.md"
+
+[footer]
+#html = "<footer>HTML Override footer</footer>"
+markdownfile = "footer.md"
+
+[aside]
+#html = "<h3>Now, as an aside</h3>"
+markdownfile = "aside.md"
+
+
+

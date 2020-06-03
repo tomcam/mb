@@ -86,12 +86,9 @@ func (App *App) inc(filename string) template.HTML {
 		App.QuitError(errCode("0121", filename))
 	}
 
-	var s string
 	// Apply the template to it.
 	// The one function missing from fewerFuncs is shortcode() itself.
-	if s, err = App.execute(filename, string(input), App.fewerFuncs); err != nil {
-		App.QuitError(errCode("1201", filename))
-	}
+  s := App.execute(filename, string(input), App.fewerFuncs)
 	return template.HTML(s)
 }
 
@@ -146,12 +143,9 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 		App.QuitError(errCode("0123", filename))
 	}
 
-	var s string
 	// Apply the template to it.
 	// The one function missing from fewerFuncs is shortcode() itself.
-	if s, err = App.execute(filename, string(input), App.fewerFuncs); err != nil {
-		App.QuitError(errCode("1202", filename))
-	}
+  s := App.execute(filename, string(input), App.fewerFuncs)
 	return template.HTML(s)
 }
 
