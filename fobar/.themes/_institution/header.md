@@ -1,4 +1,0 @@
-* [INSTITUTION](/)
-* [Contact](/)
-* [About](/)
-* [FAQ](/)

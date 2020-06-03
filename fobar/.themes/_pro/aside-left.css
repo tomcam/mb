@@ -1,5 +1,0 @@
-/* Put the aside on the left. */
-article, aside {float:right}
-article {clear:right;}
-article{min-width:75%;}
-aside{width:15%;}
