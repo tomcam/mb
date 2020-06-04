@@ -1,7 +1,6 @@
 package main
 
 import (
-	//"os"
 	//"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -51,7 +50,8 @@ func (App *App) initConfig() {
 	// Places to look for a metabuz.toml ponting to the global application config dir.
 	// It can look in as many places as you want.
 	// Look in the local directory for a directory named just named ".mb".
-	viper.AddConfigPath(filepath.Join(".", globalConfigurationDirName))
+	//viper.AddConfigPath(filepath.Join(".", globalConfigurationDirName))
+	viper.AddConfigPath(filepath.Join("."))
 	// Location to look for metabuzz.toml
 	// Look in the ~/ directory for an ".mb" directory.
 	viper.AddConfigPath(filepath.Join(homeDir(), globalConfigurationDirName))
@@ -65,17 +65,17 @@ func (App *App) initConfig() {
 	// location of the configuration directory that
 	// itself points to metabuzz.toml
 	if err := viper.ReadInConfig(); err != nil {
-		// TODO: Give this a standard error code and display it
-		// Acutally not an error if there's no config file
+		// Actually not an error if there's no config file
+    // so you have to be in Verbose mode
 		App.Verbose(errCode("0126", err.Error()).Error())
 	}
 	// Are we going to look in the local directory for
 	// site assets, themes, etc., or are we going to
 	// use the standard application configuration directory?
 	// This determines its location.
-	//App.configFilePath = filepath.Join(App.configFileDir, cfgString("configdir"))
-	App.configDir = cfgString("configdir")
-	//fmt.Println("App.configDir: " + App.configDir)
+	if cfgString("configdir") != "" {
+	  App.configDir = cfgString("configdir")
+  }
 }
 
 // newDefaultApp() allocates an App runtime environment

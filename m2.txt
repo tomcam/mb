@@ -89,6 +89,9 @@ create theme based on an existing one.
 
 # Things to document
 
+* new site: Doesn't delete an existing directory. That lets you turn an existing directory into a site.
+OTOH when you publish, any existing .pub directory is deleted 
+
 * Description in front matter
 
 ===

@@ -323,14 +323,12 @@ func (App *App) publishLocalFiles(dir string) bool {
 				relDir := relDirFile(App.Site.path, copyFrom)
 				// Get the target file's fully qualified filename.
 				copyTo := filepath.Join(App.Site.Publish, relDir, filename)
-				// xxx
-				App.Verbose("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
+				//App.Verbose("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
 				if err := Copy(copyFrom, copyTo); err != nil {
 					//App.QuitError(err.Error())
 					App.QuitError(errCode("PREVIOUS", err.Error()))
 				}
-				// TODO: Get rid of fileExists() when possible xxx
-				promptString("Check for " + copyTo)
+				// TODO: Get rid of fileExists() when possible
 				if !fileExists(copyTo) {
 					App.QuitError(errCode("PREVIOUS", copyTo))
 				}

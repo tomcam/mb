@@ -90,7 +90,7 @@ func (App *App) currThemeName() string {
 
 // themePath() returns the fully qualified path name of the curren theme
 func (App *App) currThemePath() string {
-	path := filepath.Join(App.Site.siteThemesPath, App.currThemeName())
+	path := filepath.Join(App.themesPath, App.currThemeName())
 	return path
 }
 

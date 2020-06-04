@@ -283,6 +283,7 @@ func (App *App) siteDefaults() {
 	App.Site.headersPath = filepath.Join(App.Site.path, headersDir)
 	App.Site.commonDir = filepath.Join(App.Site.path, commonDir)
 	App.themesPath = filepath.Join(App.configDir, themeSubDirName)
+  fmt.Printf("siteDefaults() App.themesPath: %v\n", App.themesPath)
 	App.Site.siteThemesPath = filepath.Join(App.Site.path, siteThemeDir)
 	App.sCodePath = filepath.Join(App.configDir, sCodeDir)
 	App.Site.sCodePath = filepath.Join(App.Site.path, sCodeDir)
