@@ -1,4 +1,9 @@
 
+# Configuration
+- First order of businesses is Metabuzz global configuration. That's where Metabuzz-global info comes from, and it affects every site created by Metabuzz. It's passed through command line flags, environment variables, and metabuzz.toml. Currenlty viper does that stuff. Application configuration data (themes, shortcodes, etc.) is normally located in the metabuzz/.mb subdirectory of the system-specific application directory (see docs for os.UserConfigDir()). But you may want it to be elsewhere. For example, it makes sense to use a work directory so Git will manage it. To change that, you need a metabuzz.toml file either in ~ or in the current directory.
+- Second comes the Application object, which happens inside the site. Its initialization comes in initConfig(), which is called by Viper after processing the command line. intiConfig() in turn calls viper.ReadConfig().
+- The Application object contains a Site object.Third to be initialized is the Site object, which reads a site configuration file in the site's .site/site.toml file. It's different for each site you create and has things like the site's name, branding, and so on.  
+
 # Todo
 - Ensure default theme in site.toml works. I don't think it does
 - Enure naming config file on the command line works

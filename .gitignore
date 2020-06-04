@@ -6,6 +6,9 @@ foo.*
 foobar.*
 foo/
 foobar/
+fobar/
+site/fobar.*
+site/fobar
 .DS_Store
 .git
 .pub/
