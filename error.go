@@ -72,7 +72,7 @@ var errMsgs = map[string]string{
 	"0123": "scode: error reading file",            // filename
 	"0124": "Error copying a page asset",           // custom message
 	"0125": "Error copying a style sheet",          // custom message
-	"0126": "Global ",                              // Viper runtime error
+  "0126": "Error reading config file " + productName + "." + configFileDefaultExt,                              // Viper runtime error
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -141,7 +141,7 @@ var errMsgs = map[string]string{
 	"0917": "Error creating ",                                   // filename, Golang message
 
 	// 0950 - Something's already there
-	"0951": "Site already exists", // sitename
+  "0951": "Site already exists:", // sitename
 
 	// 1000	- Something's missing that should be there
 	"1001": "Missing front matter and markdown", // filename

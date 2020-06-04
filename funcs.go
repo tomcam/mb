@@ -43,7 +43,7 @@ The location of the file appears first, before a pipe character.
 It can be one of:
 
 "article" for the current markdown file's directory
-"common" for the Site.CommonSubDir subdirectory
+"common" for the Site.commonSubDir subdirectory
 
 So it might look like :
 

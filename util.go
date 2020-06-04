@@ -36,7 +36,7 @@ func configDir() string {
 		return filepath.Join(".", globalConfigurationDirName)
 	} else {
 		// Got an actual valid global application data directory
-		return filepath.Join(cfgDir, PRODUCT_NAME, globalConfigurationDirName)
+		return filepath.Join(cfgDir, productName, globalConfigurationDirName)
 	}
 }
 

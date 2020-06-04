@@ -34,7 +34,7 @@ type Site struct {
 
 	// Directory to share reusable text.
 	// Use the computed value Site.commonDir for hte full path.
-	CommonSubDir string
+	commonSubDir string
 
 	// Company name & other info user specifies in site.toml
 	Company companyConfig
@@ -243,8 +243,6 @@ func (App *App) newSite(sitename string) error {
 
 	// Copy all themes from the application data directory
 	// to the site directory.
-	fmt.Println("newSite() Copying from '" + App.themesPath + "' to '" + App.Site.siteThemesPath + "'")
-
 	err = copyDirAll(App.themesPath, App.Site.siteThemesPath)
 	if err != nil {
 		//App.QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.siteThemesPath+"'"))
@@ -278,12 +276,11 @@ func (App *App) siteDefaults() {
 		displayError(errCode("PREVIOUS", ""))
 	}
 	App.Site.Publish = filepath.Join(App.Site.path, publishDir)
-	App.Site.pubThemesPath = filepath.Join(App.Site.Publish, pubThemesDir)
+	App.Site.pubThemesPath = filepath.Join(App.Site.Publish, themeSubDirName)
 
 	App.Site.headersPath = filepath.Join(App.Site.path, headersDir)
 	App.Site.commonDir = filepath.Join(App.Site.path, commonDir)
 	App.themesPath = filepath.Join(App.configDir, themeSubDirName)
-  fmt.Printf("siteDefaults() App.themesPath: %v\n", App.themesPath)
 	App.Site.siteThemesPath = filepath.Join(App.Site.path, siteThemeDir)
 	App.sCodePath = filepath.Join(App.configDir, sCodeDir)
 	App.Site.sCodePath = filepath.Join(App.Site.path, sCodeDir)

@@ -1,7 +1,7 @@
 package main
 
 var (
-	Version = PRODUCT_NAME + " version " +
+	Version = productName + " version " +
 		"0.45.0"
 
 	// Tiny starter file for index.md
@@ -72,7 +72,7 @@ const (
 	sCodeDir = ".scodes"
 
 	// This themes directory actually gets written to the project
-	pubThemesDir = "themes"
+	//pubThemesDir = "themes"
 
 	// Name inside the global preferences directory for themes.
 	themeSubDirName = ".themes"
@@ -102,17 +102,17 @@ const (
 	globalConfigurationDirName = ".mb"
 
 	// Default file extension used by configuration files.
-	CONFIG_FILE_DEFAULT_EXT = "toml"
+	configFileDefaultExt = "toml"
 
 	// A configuration file passed to the command line.
-	CONFIG_FILENAME = PRODUCT_NAME + "." + CONFIG_FILE_DEFAULT_EXT
+	CONFIG_FILENAME = productName + "." + configFileDefaultExt
 
 	// The configuration file in the user's application
 	// data directory, without the path.
-	APP_DATA_CONFIG_FILENAME = PRODUCT_NAME + "." + CONFIG_FILE_DEFAULT_EXT
+	APP_DATA_CONFIG_FILENAME = productName + "." + configFileDefaultExt
 
 	// The local configuration file name without the path.
-	LOCAL_CONFIG_FILENAME = PRODUCT_NAME + "." + CONFIG_FILE_DEFAULT_EXT
+	LOCAL_CONFIG_FILENAME = productName + "." + configFileDefaultExt
 
 	// By default, the published site gets its theme from a local copy
 	// within the site directory. It then copies from that copy to
@@ -126,7 +126,7 @@ const (
 	siteScodeDir = ".scodes"
 
 	// Configuration file found in the current site source directory
-	SOURCE_DIR_CONFIG_FILENAME = PRODUCT_NAME + "." + CONFIG_FILE_DEFAULT_EXT
+	SOURCE_DIR_CONFIG_FILENAME = productName + "." + configFileDefaultExt
 
 	// Actual colloquial name for this product
 	// but used in directories & other
@@ -135,7 +135,7 @@ const (
 	// like docset or metabuzz.
 	// TODO: If this changes update GLOBAL_CONFIG_DIRNAME
 	// TODO: Change this when I settle on a product name, and also change PRODUCT_SHORT_NAME
-	PRODUCT_NAME = "metabuzz"
+	productName = "metabuzz"
 
 	// Abbreviation, used for name command line program.
 	ProductShortName = "mb"
@@ -165,7 +165,7 @@ const (
 	siteConfigDir = ".site"
 
 	// Name of the file that holds site configuration information
-	siteConfigFilename = "site" + "." + CONFIG_FILE_DEFAULT_EXT
+	siteConfigFilename = "site" + "." + configFileDefaultExt
 
 	// String that precedes error codes
 	errorCodePrefix = "mbz"

@@ -99,6 +99,7 @@ func (App *App) currThemePath() string {
 func (App *App) loadTheme() {
 	themeName := App.currThemeName()
 	themeDir := App.currThemePath()
+  //fmt.Println("\tloadTheme(" + themeName + ")")
 	//themeName := strings.ToLower(strings.TrimSpace(App.FrontMatter.Theme))
 	//themeDir := filepath.Join(App.Site.themesPath, themeName)
 	if !dirExists(themeDir) {
@@ -109,7 +110,7 @@ func (App *App) loadTheme() {
 	// Generate the fully qualified name of the TOML file for this theme.
 	// TODO: App.themePath()?
 	themePath := pageTypePath(themeDir, themeName)
-
+  // xxx
 	// First get the parent theme shared assets
 	// Temp var because the goal is simply to get the
 	// shared assets.
@@ -120,15 +121,15 @@ func (App *App) loadTheme() {
 	App.Page.Theme.RootStylesheets = p.RootStylesheets
 	// See if a pagetype has been requested.
 	if App.FrontMatter.PageType != "" {
-		//if App.FrontMatter.isChild {
-		//fmt.Println("loadTheme(), PageType", App.FrontMatter.PageType)
+		if App.FrontMatter.isChild {
+		//fmt.Println("\tloadTheme(), PageType", App.FrontMatter.PageType)
 		// This is a child theme/page type, not a default/root theme
 		App.FrontMatter.isChild = true
 		themeDir = filepath.Join(themeDir, App.FrontMatter.PageType)
 		themePath = pageTypePath(themeDir, App.FrontMatter.PageType)
-
+    }
 	} else {
-		//fmt.Println("loadTheme(), root theme")
+		//fmt.Println("\tloadTheme(), root theme")
 		// This is a default/root theme, not a child theme/page type
 		App.FrontMatter.isChild = false
 		// Try to load the .toml file named after the theme directory.
@@ -143,7 +144,9 @@ func (App *App) loadTheme() {
 // pageTypePath() is a utility function to generate the full pathname  of a PageType file
 // from a subdirectory name.
 func pageTypePath(subDir, themeName string) string {
-	return filepath.Join(subDir, themeName+"."+CONFIG_FILE_DEFAULT_EXT)
+  path := filepath.Join(subDir, themeName+"."+configFileDefaultExt)
+  fmt.Println("pageTypePath: " + path)
+	return path
 }
 
 // PageType() reads in either the default/anonymous pageType (root of the
@@ -154,9 +157,12 @@ func (App *App) PageType(themeName, themeDir, fullPathName string, PageType *Pag
 	if err := readTomlFile(fullPathName, PageType); err != nil {
 		return errCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", fullPathName, App.FrontMatter.Theme).Error(), err.Error())
 	}
+  fmt.Printf("\tpageType path: +%v\n", fullPathName)
+  fmt.Printf("\tpageType raw: +%v\n", PageType)
 	PageType.name = themeName
 	PageType.PathName = themeDir
 	App.Page.Theme.PageType = *PageType
+  fmt.Println("\npageType: " + PageType.name)
 	// Success
 	return nil
 }
@@ -271,7 +277,7 @@ func (App *App) themePath(theme string) string {
 // themeTOMLFilename() returns the fully qualified pathname
 // of the named theme's expected TOML filename.
 func (App *App) themeTOMLFilename(theme, themePath string) string {
-	return filepath.Join(themePath, theme+"."+CONFIG_FILE_DEFAULT_EXT)
+	return filepath.Join(themePath, theme+"."+configFileDefaultExt)
 }
 
 // isTheme() returns true if the fully qualified
@@ -318,7 +324,7 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	// the theme. If it's a new theme, it would be in something
 	// like /themes/mynewtheme/mynewtheme.toml. If it's a pagetype for an existing
 	// theme, it would be in something like /themes/mynewtheme/blog/blog.toml
-	tomlFilename := destFilename + "." + CONFIG_FILE_DEFAULT_EXT
+	tomlFilename := destFilename + "." + configFileDefaultExt
 	if !isChild {
 		// It's a new theme
 		targetDir = filepath.Join(App.Site.themesPath, to)
@@ -370,7 +376,7 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	}
 
 	// Now get rid of the previous .toml and .css files
-	delToml := filepath.Join(targetDir, from+"."+CONFIG_FILE_DEFAULT_EXT)
+	delToml := filepath.Join(targetDir, from+"."+configFileDefaultExt)
 	delCSS := filepath.Join(targetDir, from+".css")
 	// Delete them if they exist. No error is returned if there's a problem.
 	// Because I live on the edge, baby.

@@ -1,7 +1,7 @@
 package main
 
 import (
-	//"fmt"
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"html/template"
@@ -56,9 +56,9 @@ func (App *App) initConfig() {
 	// Look in the ~/ directory for an ".mb" directory.
 	viper.AddConfigPath(filepath.Join(homeDir(), globalConfigurationDirName))
 	// Name of the config file is metabuz, dot..
-	viper.SetConfigName(PRODUCT_NAME)
+	viper.SetConfigName(productName)
 	// toml. viper likes to apply its own file extensions
-	viper.SetConfigType("toml")
+	viper.SetConfigType(configFileDefaultExt)
 	// TODO: Get this right when I've nailed the other Viper stuff
 	viper.AutomaticEnv()
 	// Read in command line options, and get the
@@ -98,7 +98,7 @@ func newDefaultApp() *App {
 		Site: &Site{
 			// Assets just go into the publish directory
 			AssetDir:     ".",
-			CommonSubDir: commonDir,
+			commonSubDir: commonDir,
 			//configFile: filepath.Join(siteConfigDir, siteConfigFilename),
 			dirs:     map[string]mdOptions{},
 			Language: "en",
@@ -141,7 +141,7 @@ func newDefaultApp() *App {
 	return &App
 }
 
-// defaultTheme() returns the simplen name of
+// defaultTheme() returns the simple name of
 // the theme used to create new pages
 // if no theme is specified and to create new themes if no
 // source theme is specified.
@@ -154,6 +154,6 @@ func (App *App) defaultTheme() string {
 	if cfgString("defaulttheme") != "" {
 		theme = cfgString("defaulttheme")
 	}
-
+  fmt.Println("defaultTheme(): "+ theme)
 	return strings.ToLower(theme)
 }
