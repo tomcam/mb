@@ -39,8 +39,7 @@ type Args struct {
 
 	// Name for new site created with new site name=foo
 	NewSiteName string
-
- }
+}
 
 // Globally required flags, such as Verbose
 type Flags struct {
@@ -209,13 +208,13 @@ create theme based on an existing one.
 		     Subcommand: new theme
 		*****************************************************/
 
-    // the foo part of:
-    // new theme foo
-    NewThemeName string
-    // the bar part of 
-    // new theme foo from bar
-    NewThemeFrom = App.defaultTheme()
-		cmdNewTheme = &cobra.Command{
+		// the foo part of:
+		// new theme foo
+		NewThemeName string
+		// the bar part of
+		// new theme foo from bar
+		NewThemeFrom = App.defaultTheme()
+		cmdNewTheme  = &cobra.Command{
 			Use:   "theme {newtheme} | from {oldtheme} ",
 			Short: "new theme mytheme",
 			Long: `site: Use new site to start a new project. Use new theme to 
@@ -240,19 +239,18 @@ create theme based on an existing one.
 					// tree and build as a complete site.
 					NewThemeName = promptString("Name of theme to create?")
 				}
-        // xxx
-        // Create a new theme from the default theme
+				// xxx
+				// Create a new theme from the default theme
 				App.newTheme(NewThemeName, NewThemeFrom)
-        /*
-				if err != nil {
-					App.QuitError(err)
-				} else {
-					fmt.Println("Created theme", NewThemeName)
-				}
-        */
+				/*
+					if err != nil {
+						App.QuitError(err)
+					} else {
+						fmt.Println("Created theme", NewThemeName)
+					}
+				*/
 			},
 		}
-
 
 		cmdNewThemeFrom = &cobra.Command{
 			Use:   "theme {newtheme} from {oldtheme} ",
@@ -271,31 +269,25 @@ create theme based on an existing one.
 				// If there are arguments after build, then
 				// just convert these files one at at time.
 				if len(args) > 0 {
-				  promptString("Create theme " + args[0] + "?")
+					promptString("Create theme " + args[0] + "?")
 				} else {
 					// Them more likely case: it's build all by
 					// itself, so go through the whole directory
 					// tree and build as a complete site.
 					promptString("xxx Name of theme to create?")
 				}
-        // xxx
-        promptString("xxx Prtending to create new theme")
-        /*
-				err := App.newSite(App.Site.Name)
-				if err != nil {
-					App.QuitError(err)
-				} else {
-					fmt.Println("Created site ", App.Site.Name)
-				}
-        */
+				// xxx
+				promptString("xxx Prtending to create new theme")
+				/*
+					err := App.newSite(App.Site.Name)
+					if err != nil {
+						App.QuitError(err)
+					} else {
+						fmt.Println("Created site ", App.Site.Name)
+					}
+				*/
 			},
 		}
-
-
-
-
-
-
 	)
 
 	// Example command line:
@@ -306,7 +298,6 @@ create theme based on an existing one.
 	//cmdNewTheme.Flags().StringVarP(&App.Args.NewThemeTo, "to", "t", "", "name of theme to create (required)")
 	//cmdNewTheme.MarkFlagRequired("to")
 
-
 	// Example command line:
 	// new site
 	cmdNew.AddCommand(cmdNewSite)
@@ -315,7 +306,7 @@ create theme based on an existing one.
 	// new
 	App.Cmd.AddCommand(cmdNew)
 	cmdNew.AddCommand(cmdNewTheme)
-  cmdNewTheme.AddCommand(cmdNewThemeFrom)
+	cmdNewTheme.AddCommand(cmdNewThemeFrom)
 
 	App.Cmd.AddCommand(cmdBuild)
 	App.Cmd.AddCommand(cmdKitchenSink)

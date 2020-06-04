@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strings"
 	"regexp"
+	"strings"
 	//"text/template"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting"
@@ -17,21 +17,17 @@ import (
 	"github.com/yuin/goldmark/renderer/html"
 )
 
-
 var (
 	// Credit to anonymous user at:
 	// https://play.golang.org/p/OfQ91QadBCH
 	h1, _        = regexp.Compile("(?m)^\\s*#{1}\\s*([^#\\n]+)$")
 	anyHeader, _ = regexp.Compile("(?m)^\\s*#{2,6}\\s*([^#\\n]+)$")
-  notPound, _ = regexp.Compile("(?m)[^#|\\s].*$")
+	notPound, _  = regexp.Compile("(?m)[^#|\\s].*$")
 
-
-closingTags = 
-`
+	closingTags = `
 </body>
 </html>
 `
-
 )
 
 // publishFile() is the heart of this program. It converts
@@ -40,15 +36,15 @@ closingTags =
 func (App *App) publishFile(filename string) error {
 	var input []byte
 	var err error
-  // Get a fresh new Page object if doing more
-  // than one file at a clip. Which is obviously
-  // most of the time.
-  var p Page
-  App.Page = &p
-  var f FrontMatter
-  App.FrontMatter = &f
-  // Probably belongs in build.go if anything
-  App.siteDefaults()
+	// Get a fresh new Page object if doing more
+	// than one file at a clip. Which is obviously
+	// most of the time.
+	var p Page
+	App.Page = &p
+	var f FrontMatter
+	App.FrontMatter = &f
+	// Probably belongs in build.go if anything
+	App.siteDefaults()
 	App.Page.filePath = filename
 	App.Page.filename = filepath.Base(filename)
 	App.Page.dir = currDir()
@@ -59,16 +55,15 @@ func (App *App) publishFile(filename string) error {
 	if err != nil {
 		return errCode("0102", filename)
 	}
-  // TODO: Wrong. Setting default them properly means checking site.
-  App.FrontMatter.Theme = defaultThemeName
-  App.FrontMatter.PageType = ""
-
+	// TODO: Wrong. Setting default them properly means checking site.
+	App.FrontMatter.Theme = defaultThemeName
+	App.FrontMatter.PageType = ""
 
 	// Extract front matter and parse.
-  // Obviously that includes an optional theme or pagetype designation.
+	// Obviously that includes an optional theme or pagetype designation.
 	// Starting at the Markdown, convert to HTML.
 	// Interpret templates as well.
-  App.Page.markdownStart, err = App.parseFrontMatter(filename, input)
+	App.Page.markdownStart, err = App.parseFrontMatter(filename, input)
 	if err != nil {
 		return errCode("0103", filename)
 	}
@@ -79,72 +74,71 @@ func (App *App) publishFile(filename string) error {
 	if App.Site.Theme != "" && App.FrontMatter.Theme == "" {
 		App.FrontMatter.Theme = App.Site.Theme
 	}
-   App.loadTheme()
-  // Parse front matter.
-  // Convert article to HTML
-  App.Article(filename, input)
-// xxx
-  // Begin HTML document.
-  // Open the <head> tag.
-  App.startHTML()
+	App.loadTheme()
+	// Parse front matter.
+	// Convert article to HTML
+	App.Article(filename, input)
+	// xxx
+	// Begin HTML document.
+	// Open the <head> tag.
+	App.startHTML()
 
-  // If a title wasn't specified in the front matter, 
-  // Generate title tag contents from headers. Find the first
-  // h1. If that fails, find the first h2-h6. If that
-  // fails, put up a self-aggrandizing error message.
-  App.titleTag()
+	// If a title wasn't specified in the front matter,
+	// Generate title tag contents from headers. Find the first
+	// h1. If that fails, find the first h2-h6. If that
+	// fails, put up a self-aggrandizing error message.
+	App.titleTag()
 
-  App.descriptionTag()
+	App.descriptionTag()
 
-  App.headTags()
+	App.headTags()
 
 	// Output filename
 	outfile := replaceExtension(filename, "html")
-  relDir := relDirFile(App.Site.path, outfile)
+	relDir := relDirFile(App.Site.path, outfile)
 
-  // START ASSEMBLING PAGE
-  App.appendStr(App.Page.startHTML)
-  App.appendStr(wrapTag("<title>",App.Page.titleTag,true))
-  App.appendStr(metatag("description",App.Page.descriptionTag))
-  App.appendStr(App.Page.headTags)
+	// START ASSEMBLING PAGE
+	App.appendStr(App.Page.startHTML)
+	App.appendStr(wrapTag("<title>", App.Page.titleTag, true))
+	App.appendStr(metatag("description", App.Page.descriptionTag))
+	App.appendStr(App.Page.headTags)
 
-  // Hoover up any miscellanous files lying around,
-  // like other HTML files, graphic assets, etc.
-  App.localFiles(relDir)
+	// Hoover up any miscellanous files lying around,
+	// like other HTML files, graphic assets, etc.
+	App.localFiles(relDir)
 
-  // Write the closing head tag and the opening
-  // body tag
-  App.closeHeadOpenBody()
+	// Write the closing head tag and the opening
+	// body tag
+	App.closeHeadOpenBody()
 
 	//App.appendStr(wrapTag("<article>", []byte(App.Page.Article), true))
 	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Header, "<header>"))
 	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Nav, "<nav>"))
-  App.appendStr(wrapTag("<article>", string(App.Page.Article), true))
+	App.appendStr(wrapTag("<article>", string(App.Page.Article), true))
 	sidebar := strings.ToLower(App.FrontMatter.Sidebar)
 	if sidebar == "left" || sidebar == "right" {
 		App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Sidebar, "<aside>"))
 	}
 	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Footer, "<footer>"))
 
-  // Complete the HTML document with closing <body> and <html> tags
-  App.appendStr(closingTags)
-
+	// Complete the HTML document with closing <body> and <html> tags
+	App.appendStr(closingTags)
 
 	// Strip out everything but the filename.
 	base := filepath.Base(outfile)
 
 	// Write everything to a temp file so in case there was an error, the
 	// previous HTML file is preserved.
-  tmpFile, err := ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
-  if err != nil {
-    App.QuitError(errCode("PREVIOUS", err.Error()))
-  }
+	tmpFile, err := ioutil.TempFile(App.Site.Publish, PRODUCT_NAME+"-tmp-")
+	if err != nil {
+		App.QuitError(errCode("PREVIOUS", err.Error()))
+	}
 
-  fmt.Println("Temp file " + tmpFile.Name())
+	fmt.Println("Temp file " + tmpFile.Name())
 	//writeTextFile(tmpFile.Name(), string(App.Page.Article))
-  if err = writeTextFile(tmpFile.Name(), string(App.Page.html)); err != nil {
-    App.QuitError(errCode("PREVIOUS", err.Error()))
-  }
+	if err = writeTextFile(tmpFile.Name(), string(App.Page.html)); err != nil {
+		App.QuitError(errCode("PREVIOUS", err.Error()))
+	}
 	// Ensure the file gets closed before exiting
 	defer os.Remove(tmpFile.Name())
 	// Get the relative directory.
@@ -243,20 +237,6 @@ func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 	return App.markdownBufferToBytes([]byte(interp))
 }
 
-
-
-// frontMatter() extracts front matter, if any, and parses it.
-// Return the starting address of the Markdown.
-/*
-func (App *App) frontMatter(filename string, input []byte) (start []byte, err error) {
-	start, err = App.parseFrontMatter(filename, input)
-	if err != nil {
-		return []byte{}, App.QuitError(errCode("0103", filename))
-	}
-  return start, nil
-}
-*/
-
 // publishLocalFiles() get called for every markdown file
 // in the directory. It copies assets like image files & so forth
 // from the source file's current directory to the publish location,
@@ -277,21 +257,21 @@ func (App *App) publishLocalFiles(dir string) bool {
 	relDir := relativeDirectory(App.Site.path, dir)
 	pubDir := filepath.Join(App.Site.Publish, relDir)
 
-  // If this directory hasn't been created, create it.
+	// If this directory hasn't been created, create it.
 	if !optionSet(App.Site.dirs[pubDir], markdownDir) {
 		if err := os.MkdirAll(pubDir, PUBLIC_FILE_PERMISSIONS); err != nil {
 			// TODO: Have this function return error?
 			App.QuitError(errCode("0404", pubDir, err.Error()))
 		}
-    // Mark that the directory has been created so this
-    // doesn't get repeated.
+		// Mark that the directory has been created so this
+		// doesn't get repeated.
 		App.Site.dirs[dir] |= markdownDir
 	}
 	// Get the directory listing.
 	candidates, err := ioutil.ReadDir(dir)
 	if err != nil {
 		// TODO: Return error?
-		App.QuitError(errCode("1016", dir,err.Error()))
+		App.QuitError(errCode("1016", dir, err.Error()))
 	}
 
 	// Get list of files in the local directory to exclude from copy
@@ -344,17 +324,17 @@ func (App *App) publishLocalFiles(dir string) bool {
 				relDir := relDirFile(App.Site.path, copyFrom)
 				// Get the target file's fully qualified filename.
 				copyTo := filepath.Join(App.Site.Publish, relDir, filename)
-        // xxx
-        fmt.Printf("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
+				// xxx
+				fmt.Printf("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
 				if err := Copy(copyFrom, copyTo); err != nil {
 					//App.QuitError(err.Error())
 					App.QuitError(errCode("PREVIOUS", err.Error()))
 				}
-        // TODO: Get rid of fileExists() when possible xxx
-        promptString("Check for " + copyTo)
-        if !fileExists(copyTo) {
-          App.QuitError(errCode("PREVIOUS", copyTo))
-        }
+				// TODO: Get rid of fileExists() when possible xxx
+				promptString("Check for " + copyTo)
+				if !fileExists(copyTo) {
+					App.QuitError(errCode("PREVIOUS", copyTo))
+				}
 			}
 		}
 	}
@@ -440,7 +420,7 @@ func (App *App) publishAssets() {
 		// Turn it into a "link" tag.
 		App.appendStr(stylesheetTag(pathname))
 		if err := Copy(from, to); err != nil {
-			App.QuitError(errCode("0125","from '"+from+"' to '"+to+"'"))
+			App.QuitError(errCode("0125", "from '"+from+"' to '"+to+"'"))
 		}
 	}
 	// Copy other files in the theme directory to the target publish directory.
@@ -451,11 +431,11 @@ func (App *App) publishAssets() {
 	// tag for them and then copy them right to the published theme directory.
 	// The other files are dealt with here. Probably they would typically
 	// be graphics files. They will be copied not to the
-	// asset directory, but right into the document directory. 
-  // Which feels counterinutive
+	// asset directory, but right into the document directory.
+	// Which feels counterinutive
 	// and kind of wrong, because they are likely to be something like social media
-	// icons. More on this situation below, but of course they are actually 
-  // part of the page itself.
+	// icons. More on this situation below, but of course they are actually
+	// part of the page itself.
 
 	// xxx
 	//fmt.Println("About to publish", App.Page.Theme.PageType.otherAssets)
@@ -480,11 +460,10 @@ func (App *App) publishAssets() {
 		to := filepath.Join(assetDir, file)
 		// xxx
 		if err := Copy(from, to); err != nil {
-			App.QuitError(errCode("0124","from '"+from+"' to '"+to+"'"))
+			App.QuitError(errCode("0124", "from '"+from+"' to '"+to+"'"))
 		}
 	}
 }
-
 
 // findPageTypeAssetsToPublish() obtains a list of non-stylesheet asset files in the current
 // PageType directory that should be published, so, anything but Markdown, toml, HTML, and a
@@ -525,10 +504,10 @@ func (App *App) findPageTypeAssetsToPublish() {
 	}
 }
 
-
 func (App *App) copyStylesheet(file string) {
 	relDir := relDirFile(App.Site.path, App.Page.filePath)
-	assetDir := filepath.Join(App.Site.AssetDir, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
+	//assetDir := filepath.Join(App.Site.AssetDir, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
+	assetDir := filepath.Join(App.Site.AssetDir, relDir, pubThemesDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
 	from := filepath.Join(App.Page.Theme.PageType.PathName, file)
 	to := filepath.Join(assetDir, file)
 	pathname := filepath.Join(themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
@@ -536,7 +515,8 @@ func (App *App) copyStylesheet(file string) {
 	// assetDir only exists if there was at least 1
 	// markdown file in that directory. If it doesn't exist,
 	// there's no reason to copy this file
-	to = filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
+	//to = filepath.Join(App.Site.Publish, relDir, themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
+	to = filepath.Join(App.Site.Publish, relDir, pubThemesDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
 	if err := Copy(from, to); err != nil {
 		App.QuitError(errCode("0916", "from '"+from+"' to '"+to+"'"))
 	}
@@ -554,17 +534,17 @@ func (App *App) findPageAssetsToPublish() {
 
 	// Check if this has already been done
 	if App.Page.assets == nil {
-    for _, file := range candidates {
-      filename := file.Name()
-      if !file.IsDir() {
-        if !hasExtensionFrom(filename, markdownExtensions) &&
-          !hasExtensionFrom(filename, excludedAssetExtensions) &&
-          !hasExtension(filename, ".css") {
-          App.Page.assets = append(App.Page.assets, filename)
-        }
-      }
-    }
-  }
+		for _, file := range candidates {
+			filename := file.Name()
+			if !file.IsDir() {
+				if !hasExtensionFrom(filename, markdownExtensions) &&
+					!hasExtensionFrom(filename, excludedAssetExtensions) &&
+					!hasExtension(filename, ".css") {
+					App.Page.assets = append(App.Page.assets, filename)
+				}
+			}
+		}
+	}
 }
 
 // stylesheetTag() produces just that.
@@ -578,9 +558,8 @@ func stylesheetTag(stylesheet string) string {
 	return `<link rel="stylesheet" href="` + stylesheet + `">` + "\n"
 }
 
-
 // startHTML() begins the HTML document and opens the head tag
-func (App *App)startHTML() {
+func (App *App) startHTML() {
 	App.Page.startHTML = ("<!DOCTYPE html>" + "\n" +
 		"<html lang=" + App.Site.Language + ">" +
 		`
@@ -595,54 +574,55 @@ func (App *App)startHTML() {
 // it looks for the first h2 to h6 it can find.
 // Otherwise it returns ""
 func firstHeader(markdown string) string {
-  result := header1(markdown)
-  if result != "" {
-    return result
-  }
-  return header2To6(markdown)
+	result := header1(markdown)
+	if result != "" {
+		return result
+	}
+	return header2To6(markdown)
 }
-// header1() extracts the first h1 it finds in the markdown 
+
+// header1() extracts the first h1 it finds in the markdown
 func header1(s string) string {
 	any := h1.FindString(strings.Trim(s, "\n\t\r"))
 	if any != "" {
-    return(notPound.FindString(any))
-  }else {
-     return ""
-  }
+		return (notPound.FindString(any))
+	} else {
+		return ""
+	}
 }
 
 // header2To6() extracts the first h2-h2 it finds.
 func header2To6(s string) string {
 	any := anyHeader.FindString(strings.Trim(s, "\n\t\r"))
 	if any != "" {
-    return notPound.FindString(any)
+		return notPound.FindString(any)
 	} else {
-	  return ""
+		return ""
 	}
 }
 
-
-func (App *App)titleTag() {
+func (App *App) titleTag() {
 	//App.appendStr("\n<title>" + title + "</title>\n")
-  var title string
+	var title string
 	if App.FrontMatter.Title != "" {
-    title = App.FrontMatter.Title
+		title = App.FrontMatter.Title
 	} else {
-    title = firstHeader(string(App.Page.markdownStart))
-  }
-  if title == "" {
-    title = PRODUCT_NAME + ": Title needed here, squib"
-  }
-  App.Page.titleTag = title
+		title = firstHeader(string(App.Page.markdownStart))
+	}
+	if title == "" {
+		title = PRODUCT_NAME + ": Title needed here, squib"
+	}
+	App.Page.titleTag = title
 
 }
+
 // Article() takes a document with optional front matter, parses
 // out the front matter, and sends the Markdown portion to be converted.
 // Write the HTML results to App.Page.Article
 func (App *App) Article(filename string, input []byte) {
 	// Extract front matter and parse.
 	// Return the starting address of the Markdown.
-  start, err := App.parseFrontMatter(filename, input)
+	start, err := App.parseFrontMatter(filename, input)
 	if err != nil {
 		App.QuitError(errCode("0103", filename))
 	}
@@ -650,9 +630,6 @@ func (App *App) Article(filename string, input []byte) {
 	interp := App.interps(filename, string(start))
 	App.Page.Article = App.markdownBufferToBytes([]byte(interp))
 }
-
-
-
 
 // stripHeading() returns the string following a Markdown heading.
 // It is guaranteed a string of the form "### foo",
@@ -670,7 +647,6 @@ func stripHeading(heading string) string {
 	return (heading[match+1 : l])
 }
 
-
 // headTags() inserts miscellaneous items such as Google Analytics tags
 // into the header before it's close.
 func (App *App) headTags() {
@@ -682,12 +658,12 @@ func (App *App) headTags() {
 // and copies them into the HMTL headers of every file on the site.
 func (App *App) headerFiles() string {
 	var h string
-	headers, err := ioutil.ReadDir(App.Site.Headers)
+	headers, err := ioutil.ReadDir(App.Site.headersPath)
 	if err != nil {
-	  App.QuitError(errCode("0706", headersDir))
+		App.QuitError(errCode("0706", App.Site.headersPath))
 	}
-	for _, file := range headers {
-		h += fileToString(filepath.Join(App.Site.Headers, file.Name()))
+  for _, file := range headers {
+		h += fileToString(filepath.Join(App.Site.headersPath, file.Name()))
 	}
 	return h
 }
@@ -715,11 +691,11 @@ func (App *App) descriptionTag() {
 		App.Page.descriptionTag = App.FrontMatter.Description
 	} else if App.Site.Branding != "" {
 		App.Page.descriptionTag = App.Site.Branding
-  } else if App.Site.Name != "" {
+	} else if App.Site.Name != "" {
 		App.Page.descriptionTag = App.Site.Name
 	} else {
-	  App.Page.descriptionTag = "Powered by " + PRODUCT_NAME
-  }
+		App.Page.descriptionTag = "Powered by " + PRODUCT_NAME
+	}
 
 }
 
@@ -742,7 +718,7 @@ func (App *App) localFiles(relDir string) {
 // closeHeadOpenBody() writes the closing </head> tag
 // and starts the <body> tag
 func (App *App) closeHeadOpenBody() {
-var closer = `
+	var closer = `
 </head>
 <body>
 `
@@ -815,7 +791,7 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		var input []byte
 		// Error if the specified file can't be found.
 		if !fileExists(path) {
-			App.QuitError(errCode("1015",path))
+			App.QuitError(errCode("1015", path))
 		}
 		if isMarkdownFile(path) {
 			input = fileToBuf(path)
@@ -823,16 +799,13 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		}
 		return fileToString(path)
 	default:
-		App.QuitError(errCode("1203",tag))
+		App.QuitError(errCode("1203", tag))
 	}
-  return ""
+	return ""
 }
-
 
 // Generates a meta tag
 func metatag(tag string, content string) string {
 	const quote = `"`
 	return ("\n<meta name=" + quote + tag + quote + " content=" + quote + content + quote + ">\n")
 }
-
-

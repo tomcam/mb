@@ -32,9 +32,11 @@ func cfgBool(option string) bool {
 // https://golang.org/pkg/os/#UserConfigDir
 func configDir() string {
 	if cfgDir, err := os.UserConfigDir(); err != nil {
-		return filepath.Join(".", GLOBAL_CONFIG_DIRNAME)
+    // Can't determine from the OS, so just use the current directory.
+		return filepath.Join(".", globalConfigurationDirName)
 	} else {
-		return filepath.Join(cfgDir, PRODUCT_NAME, GLOBAL_CONFIG_DIRNAME)
+    // Got an actual valid global application data directory
+		return filepath.Join(cfgDir, PRODUCT_NAME, globalConfigurationDirName)
 	}
 }
 
@@ -81,6 +83,11 @@ func copyDirAll(source, dest string) error {
 	if dest == "" {
 		return errCode("0705", dest)
 	}
+
+ 	if dest == source  {
+		return errCode("0707", "from '"+source+"' to '"+dest+"'")
+	}
+
 	err := gorecurcopy.CopyDirectory(source, dest)
 	//return errCode("0406","from '"+source+"' to '"+dest+"'",err.Error())
 	if err != nil {
@@ -415,7 +422,7 @@ func replaceExtension(filename string, newExtension string) string {
 // siteDir() returns the expected name of a site subdirectory  in
 // the given path.
 func siteDir(path string) string {
-	return filepath.Join(path, siteConfigSubDir)
+	return filepath.Join(path, siteConfigDir)
 }
 
 // userName() returns the

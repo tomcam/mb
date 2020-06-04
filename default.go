@@ -12,14 +12,21 @@ Welcome to %s
 `
 	// Directory configuration for a project--a new site.
 	siteDirs = [][]string{
-		{siteConfigSubDir},
-		{PublishSubDirName},
+    {siteConfigDir},
+		{publishDir},
 		{headersDir},
 		{siteScodeDir},
-		{commonSubDirName},
+		{commonDir},
 		{siteThemeDir},
-		/*{"_posts"} */}
-
+    /*
+    {globalConfigurationDirName, siteConfigDir},
+		{globalConfigurationDirName, publishDir},
+		{globalConfigurationDirName, headersDir},
+		{globalConfigurationDirName, siteScodeDir},
+		{globalConfigurationDirName, commonDir},
+		{globalConfigurationDirName, siteThemeDir},
+    */
+    }
 	// Markdown file extensions
 	markdownExtensions = searchInfo{list: []string{
 		".Rmd",
@@ -47,13 +54,13 @@ Welcome to %s
 const (
 	// Name of the subdirectory that holds shared text.
 	// Excluded from publishing.
-	commonSubDirName = ".common"
+	commonDir = ".common"
 
 	// Name of the subdirectory the rendered files get rendered
 	// to. It can't be changed because it's used to determine
 	// whether a site is contained within its parent directory.
 	// Excluded from publishing.
-	PublishSubDirName = ".pub"
+	publishDir = ".pub"
 
 	// Name of the subdirectory containing files that get copied
 	// into the header of each HTML file rendered by the site
@@ -62,7 +69,10 @@ const (
 
 	// Name of subdirectory containing shortcode files
 	// Excluded from publishing.
-	sCodeSubDirName = ".scodes"
+	sCodeDir = ".scodes"
+
+  // This themes directory actually gets written to the project
+  pubThemesDir = "themes"
 
 	// Name inside the global preferences directory for themes.
 	themeSubDirName = ".themes"
@@ -89,7 +99,7 @@ const (
 	// Name of the directory that holds items used by projects, such
 	// as themes and shortcodes.
 	// TODO: Change this when I settle on a product name
-	GLOBAL_CONFIG_DIRNAME = ".mb"
+	globalConfigurationDirName = ".mb"
 
 	// Default file extension used by configuration files.
 	CONFIG_FILE_DEFAULT_EXT = "toml"
@@ -112,8 +122,8 @@ const (
 	// type less.
 	siteThemeDir = ".themes"
 
-  // TODO: Necessary?
-  siteScodeDir = ".scodes"
+	// TODO: Necessary?
+	siteScodeDir = ".scodes"
 
 	// Configuration file found in the current site source directory
 	SOURCE_DIR_CONFIG_FILENAME = PRODUCT_NAME + "." + CONFIG_FILE_DEFAULT_EXT
@@ -152,7 +162,7 @@ const (
 
 	// Name of the subdirectory in the project where the site info is held.
 	// That incldes the site.toml file and also the publish directory.
-	siteConfigSubDir = ".site"
+	siteConfigDir = ".site"
 
 	// Name of the file that holds site configuration information
 	siteConfigFilename = "site" + "." + CONFIG_FILE_DEFAULT_EXT

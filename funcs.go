@@ -1,9 +1,9 @@
 package main
 
 import (
-	"os"
 	"html/template"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -35,8 +35,6 @@ func (App *App) hostname() string {
 		return hostname
 	}
 }
-
-
 
 // inc inserts the named file into the current Markdown file.
 /* Treats it as a Go template, so either HTML or Markdown
@@ -88,10 +86,9 @@ func (App *App) inc(filename string) template.HTML {
 
 	// Apply the template to it.
 	// The one function missing from fewerFuncs is shortcode() itself.
-  s := App.execute(filename, string(input), App.fewerFuncs)
+	s := App.execute(filename, string(input), App.fewerFuncs)
 	return template.HTML(s)
 }
-
 
 // path() returns the current markdown document's directory
 func (App *App) path() string {
@@ -101,17 +98,17 @@ func (App *App) path() string {
 // scode() provides a not-very-good shortcode feature. Can't figure
 // out how to do a better job considering a Go template function
 // can take only a map, but you can't pass map literals.
-// You need to pass it a map with a key named "filename" 
+// You need to pass it a map with a key named "filename"
 // that matches a file in ".scodes". Currently the
 // only thing that works with Javascript is youtube.html
 /*
-    Example:
-    ====
-    [List]
-    youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
-    ===
-    ## Youtube?
-    {{ scode .FrontMatter.List.youtube }}
+   Example:
+   ====
+   [List]
+   youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
+   ===
+   ## Youtube?
+   {{ scode .FrontMatter.List.youtube }}
 
 
 */
@@ -145,9 +142,6 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 
 	// Apply the template to it.
 	// The one function missing from fewerFuncs is shortcode() itself.
-  s := App.execute(filename, string(input), App.fewerFuncs)
+	s := App.execute(filename, string(input), App.fewerFuncs)
 	return template.HTML(s)
 }
-
-
-

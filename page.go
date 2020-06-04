@@ -10,28 +10,28 @@ type Page struct {
 	// Currently using Chroma:
 	// https://github.com/alecthomas/chroma/tree/master/styles
 	CodeTheme string
-  // Begins the HTML document, assigns the language,
-  // and opens the head tag
-  startHTML string
+	// Begins the HTML document, assigns the language,
+	// and opens the head tag
+	startHTML string
 
-  // Contennts of <title> tag
-  titleTag string
+	// Contennts of <title> tag
+	titleTag string
 
-  // Optional <head> tags, like Google Analytics
-  headTags string
+	// Optional <head> tags, like Google Analytics
+	headTags string
 
-  // Optional, additional header entries
-  headerFiles string
+	// Optional, additional header entries
+	headerFiles string
 
-  // Contents of <description> tage
-  descriptionTag string
+	// Contents of <description> tage
+	descriptionTag string
 
-  // Page being rendered
+	// Page being rendered
 	html []byte
 
-  // Position in buffer where Markdown text begins, after
-  // the optional front matter
-  markdownStart []byte
+	// Position in buffer where Markdown text begins, after
+	// the optional front matter
+	markdownStart []byte
 
 	// Content of the article md file itself converted to HTML,
 	// obviously without header, nav, footer, aside etc.
@@ -54,7 +54,6 @@ type Page struct {
 	assets []string
 }
 
-
 // Area could be, say, a header:
 // html is inline html. filename would be a pathname containing the HTML.
 // It defaults to the name of the component, so if it's a nav and
@@ -67,5 +66,3 @@ type area struct {
 	// Filename specifying HTML or Markdown
 	File string
 }
-
-

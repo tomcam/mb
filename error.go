@@ -26,7 +26,7 @@ import (
    the same error occurs but in different places. Since the
    Go lib returns identical error messages for each one, tracking
    down the error code shows us where the error occurred even if the
-   executable is stripped of debug info 
+   executable is stripped of debug info
 
 	Sample usage: return errCode("0401", err.Error())
 	Sample usage: return errCode("0401", err.Error(), filename)
@@ -39,8 +39,7 @@ import (
 	  return errCode("0906", msg)
 
 		Sample usage:	 msg := fmt.Errorf("Error attempting to create project file %s: %v", projectFile, err.Error()).Error()
-  */
-
+*/
 
 var errMsgs = map[string]string{
 
@@ -71,8 +70,9 @@ var errMsgs = map[string]string{
 	"0121": "inc: error reading file",              // filename
 	"0122": "scode: unable to find file",           // filename
 	"0123": "scode: error reading file",            // filename
-	"0124": "Error copying a page asset",            // custom message  
-	"0125": "Error copying a style sheet",            // custom message  
+	"0124": "Error copying a page asset",           // custom message
+	"0125": "Error copying a style sheet",          // custom message
+  "0126": "Global ", // Viper runtime error
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -111,12 +111,13 @@ var errMsgs = map[string]string{
 	"0601": "",
 
 	// 0700	- Error reading directory
-	"0701": "Can't copy theme",                 // Custom msg
-	"0702": "Error copying directory",          // Go error + dir name
-	"0703": "Error reading directory",          // directory name
-	"0704": "Missing name of source directory", // directory name to copy from
-	"0705": "Missing name of target directory", // directory name to copy to
-  "0706": "Unable to read from headers directory", // Name of headers directory
+	"0701": "Can't copy theme",                      // Custom msg
+	"0702": "Error copying directory",               // Go error + dir name
+	"0703": "Error reading directory",               // directory name
+	"0704": "Missing name of source directory",      // directory name to copy from
+	"0705": "Missing name of target directory",      // directory name to copy to
+	"0706": "Unable to read from headers directory", // Name of headers directory
+  "0707": "Directories are identical:", // custom message
 
 	// 0800	- Can't determine the name of something
 	"0801": "",
@@ -131,13 +132,13 @@ var errMsgs = map[string]string{
 	"0907": "Pagetype name taken",                                  // custom message
 	"0908": "Problem creating TOML object",                         // runtime error
 	"0910": "Problem creating output file",                         // filename
-	"0911": "Unable to copy themes directory to publish directory", //
+	"0911": "Unable to copy themes directory to site directory", // custom message
 	"0912": "Problem converting markdown file",                     //
 	"0913": "Unable to read project directory",                     //
 	"0914": "Error creating a temporary file",                      // filename
-	"0915": "Unable to copy scodes directory to publish directory", // custom error message
-  "0916": "Unable to copy a style sheet",                         // custom message
-  "0917": "Error creating ",                              // filename, Golang message
+	"0915": "Unable to copy scodes directory to site directory", // custom message
+	"0916": "Unable to copy a style sheet",                         // custom message
+	"0917": "Error creating ",                                      // filename, Golang message
 
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename
@@ -146,7 +147,7 @@ var errMsgs = map[string]string{
 	"1001": "Missing front matter and markdown", // filename
 	"1002": "This isn't a project directory",    // full custom message
 	"1003": "Unable to find theme",              // full custom message
-	"1004": "Unable to open theme directory",    // full custom message
+	"1004": "The",                               // full custom message
 	"1005": "PageType not found",                // full custom message
 	"1006": "PageType not found",                // full custom message
 	"1007": "Error reading theme",               // full custom message
@@ -157,8 +158,8 @@ var errMsgs = map[string]string{
 	"1012": "Please specify a site name",
 	"1013": "Please specify a site name",
 	"1014": "Unable to determine application configuration data directory",
-  "1015": "Theme TOML specifies a file that can't be found", // filename
-  "1016": "Unable to read directory", // filename
+	"1015": "Theme TOML specifies a file that can't be found", // filename
+	"1016": "Unable to read directory",                        // filename
 
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name
@@ -171,8 +172,8 @@ var errMsgs = map[string]string{
 	// 1200 - Syntax error!
 	"1201": "inc: Couldn't execute template in",   // filename
 	"1202": "scode: Couldn't execute template in", // filename
-  "1203": "Unknown tag type",                  // Tag name
-  "1204": "Error executing",         // filename, Go error message
+	"1203": "Unknown tag type",                    // Tag name
+	"1204": "Error executing",                     // filename, Go error message
 }
 
 type errMsg struct {
@@ -294,10 +295,10 @@ func displayError(e error) {
 // do so by returning an error. But sometimes there's a
 // constraint, for example, fulfilling an interface method
 // that doesn't support this practice.
-func (App *App)QuitError(e error) {
-  if App.Page.filePath != "" {
-    fmt.Printf("%s ", App.Page.filePath)
-  }
+func (App *App) QuitError(e error) {
+	if App.Page.filePath != "" {
+		fmt.Printf("%s ", App.Page.filePath)
+	}
 	displayError(e)
 	if e == nil {
 		os.Exit(0)

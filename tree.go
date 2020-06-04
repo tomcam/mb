@@ -78,10 +78,10 @@ func (App *App) excludeDirs() []string {
 	// Add the publish directory if it isn't already there.
 	return append(App.Site.ExcludeDirs,
 
-		commonSubDirName,
+		commonDir,
 		headersDir,
-		PublishSubDirName,
-		sCodeSubDirName,
-		siteConfigSubDir,
+		publishDir,
+		sCodeDir,
+		siteConfigDir,
 		siteThemeDir)
 }

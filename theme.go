@@ -58,8 +58,8 @@ type PageType struct {
 	// Don't use wildcards or other Unix patterns normally expanded by the shell.
 	Exclude []string
 
-  // All parts of the page
-	Nav    pageRegion
+	// All parts of the page
+	Nav     pageRegion
 	Header  pageRegion
 	Article pageRegion
 	Footer  pageRegion
@@ -82,15 +82,16 @@ type pageRegion struct {
 // themeName() returns the simple name of the current theme.
 func (App *App) currThemeName() string {
 	theme := strings.ToLower(strings.TrimSpace(App.FrontMatter.Theme))
-  if theme == "" {
-    theme = App.defaultTheme()
-  }
-  return theme
+	if theme == "" {
+		theme = App.defaultTheme()
+	}
+	return theme
 }
 
 // themePath() returns the fully qualified path name of the curren theme
 func (App *App) currThemePath() string {
-	return filepath.Join(App.Site.themesPath, App.currThemeName())
+  path := filepath.Join(App.Site.siteThemesPath, App.currThemeName())
+  return path
 }
 
 // loadTheme() copies the theme and pageType, if any, to the Publish directory.
@@ -101,8 +102,8 @@ func (App *App) loadTheme() {
 	//themeName := strings.ToLower(strings.TrimSpace(App.FrontMatter.Theme))
 	//themeDir := filepath.Join(App.Site.themesPath, themeName)
 	if !dirExists(themeDir) {
-		  App.QuitError(errCode("1004",
-			fmt.Errorf("theme \"%v\" was specified, but couldn't find a directory named %v", App.FrontMatter.Theme, themeDir).Error()))
+		App.QuitError(errCode("1004",
+			fmt.Errorf("theme \"%v\" was specified, but couldn't find a theme directory named %v", App.FrontMatter.Theme, themeDir).Error()))
 	}
 
 	// Generate the fully qualified name of the TOML file for this theme.
@@ -163,7 +164,6 @@ func (App *App) PageType(themeName, themeDir, fullPathName string, PageType *Pag
 func (App *App) newTheme(from, to string) error {
 	return App.copyTheme(from, to, false)
 }
-
 
 // copyThemeDirectory() copies the directory specified by the fully qualified directory name
 // from, to the fully qualified  directory name to.
@@ -290,8 +290,6 @@ func (App *App) isTheme(dir, tomlFile string) error {
 	return nil
 }
 
-
-
 // updateThemeDirectory() takes a theme directory freshly copied from
 // another theme directory, renames the .css file with the theme's name,
 // then creates a TOML file.
@@ -390,5 +388,3 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	targetCSSFile = replaceExtension(targetTomlFile, "css")
 	return Copy(sourceCSSFile, targetCSSFile)
 }
-
-

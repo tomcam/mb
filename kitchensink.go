@@ -55,7 +55,7 @@ pagetype="home"
 This uses the pagetype named {{ .FrontMatter.PageType }}
 
 The time is {{ ftime }}
-`},		{"index.md",
+`}, {"index.md",
 			"two/three",
 			`# Page 2
 This page is 2 levels deep.
