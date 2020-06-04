@@ -8,7 +8,13 @@ import (
 type siteDescription struct {
 	filename string
 	dir      string
+	embedded embedded
 	mdtext   string
+}
+
+type embedded struct {
+	filename string
+	contents string
 }
 
 /* SVG file of an exciting 100x100px gray box */
@@ -22,6 +28,7 @@ var (
 	siteTest = []siteDescription{
 		{"index.md",
 			"",
+			embedded{filename: "box-100x100.svg", contents: svgFile},
 			`# Home
 Go [one level deep](one/index.html), [two levels deep](two/three/index.html)
 
@@ -41,6 +48,7 @@ Location of this file: {{ path }}
 `},
 		{"index.md",
 			"one",
+			embedded{filename: "", contents: ""},
 			`# Page 1
 This page is 1 level deep.
 
@@ -48,6 +56,7 @@ The time is {{ ftime }}
 `},
 		{"pagetype.md",
 			"one",
+			embedded{filename: "", contents: ""},
 			`===
 pagetype="home"
 ===
@@ -57,11 +66,15 @@ This uses the pagetype named {{ .FrontMatter.PageType }}
 The time is {{ ftime }}
 `}, {"index.md",
 			"two/three",
+			embedded{filename: "box-100x100.svg", contents: svgFile},
 			`# Page 2
 This page is 2 levels deep.
 
 Location of this file: {{ path }}
 
+**Box**
+
+![100x100 SVG box](box-100x100.svg)
 
 Go [home 1](/index.html)
 
@@ -74,53 +87,10 @@ Go [home 4](/./index.html)
 `},
 	}
 
-	// Create a test site to exercise important features
-	// given a filename, the path to that filename,
-	// and the Markdown text itself.
-	// This probably won't end well but I can't think of a better
-	// way to do this with limited time.
-	testPages = []struct {
-		filename string
-		dir      string
-		mdtext   string
-	}{
-		{"index.md",
-			"",
-			`# Home
-Go [one level deep](one/index.html), [two levels deep](two/three/index.html)
-
-Try a page with [templates disabled](two/three/templates-off.html]
-
-`},
-		{"index.md",
-			"one",
-			`# Page 1
-This page is 1 level deep.
-
-The time is {{ ftime }}
-`},
-		{"index.md",
-			"two/three",
-			`# Page 2
-This page is 2 levels deep.
-
-Go [home](/index.html)
-`},
-		{"templates-off.md",
-			"two/three",
-			`===
-templates="off"
-===
-# Templates are disabled on this page 
-
-Take a {{ look }} and note the {{ ftime }}
-
-Go [home](/index.html)
-`},
-	}
-
 	/* Directory structure for the test site */
 	testDirs = [][]string{
+		// Don't forget the svg file is copied into directories 0 and 2,
+		// in other words, those named  "one" and "three"
 		{"one"},
 		{"two", "three"},
 	}
@@ -130,21 +100,25 @@ Go [home](/index.html)
 // structures containing a filename,
 // a path to that filename, and the markdown
 // text itself, and writes them out to
-// a test site.
+// a test site. It may also contain nonzero
+// values for embedded, which is the contents
+// of a single embedded value written out as
+// its own file, for example, an SVG image.
 func writeSiteFromArray(sitename string, site []siteDescription) error {
-	// First put an SVG graphic in the root
-	//path := filepath.Join(site[0].dir, site[0].filename)
-	path := filepath.Join(site[0].dir, "box-100x100.svg")
-	err := writeTextFile(path, svgFile)
-	if err != nil {
-		return errCode("0211", err.Error(), "Sample SVG file")
-		//return errCode("0211", "Sample SVG file")
-	}
 	for _, f := range site {
+		// Write out the Markdown page in its directory.
 		path := filepath.Join(f.dir, f.filename)
 		err := writeTextFile(path, f.mdtext)
 		if err != nil {
 			return errCode("PREVIOUS", err.Error(), path)
+		}
+		// If there's an embedded file, write it out
+		if f.embedded.filename != "" {
+			path := filepath.Join(f.dir, f.embedded.filename)
+			err := writeTextFile(path, f.embedded.contents)
+			if err != nil {
+				return errCode("PREVIOUS", err.Error(), path)
+			}
 		}
 	}
 	return nil

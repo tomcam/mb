@@ -32,10 +32,10 @@ func cfgBool(option string) bool {
 // https://golang.org/pkg/os/#UserConfigDir
 func configDir() string {
 	if cfgDir, err := os.UserConfigDir(); err != nil {
-    // Can't determine from the OS, so just use the current directory.
+		// Can't determine from the OS, so just use the current directory.
 		return filepath.Join(".", globalConfigurationDirName)
 	} else {
-    // Got an actual valid global application data directory
+		// Got an actual valid global application data directory
 		return filepath.Join(cfgDir, PRODUCT_NAME, globalConfigurationDirName)
 	}
 }
@@ -84,7 +84,7 @@ func copyDirAll(source, dest string) error {
 		return errCode("0705", dest)
 	}
 
- 	if dest == source  {
+	if dest == source {
 		return errCode("0707", "from '"+source+"' to '"+dest+"'")
 	}
 

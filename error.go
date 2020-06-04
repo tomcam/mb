@@ -72,7 +72,7 @@ var errMsgs = map[string]string{
 	"0123": "scode: error reading file",            // filename
 	"0124": "Error copying a page asset",           // custom message
 	"0125": "Error copying a style sheet",          // custom message
-  "0126": "Global ", // Viper runtime error
+	"0126": "Global ",                              // Viper runtime error
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -117,28 +117,28 @@ var errMsgs = map[string]string{
 	"0704": "Missing name of source directory",      // directory name to copy from
 	"0705": "Missing name of target directory",      // directory name to copy to
 	"0706": "Unable to read from headers directory", // Name of headers directory
-  "0707": "Directories are identical:", // custom message
+	"0707": "Directories are identical:",            // custom message
 
 	// 0800	- Can't determine the name of something
 	"0801": "",
 
 	// 0900	- Problem generating something
-	"0901": "Problem creating TOML object",                         // err.Error
-	"0902": "Error creating new site.toml file",                    // Full custom error message
-	"0903": "Error writing to file",                                // Full custom error message
-	"0904": "Theme name taken",                                     // custom message
-	"0905": "Couldn't create directory for new theme",              // custom message
-	"0906": "Problem creating new theme files",                     // custom message
-	"0907": "Pagetype name taken",                                  // custom message
-	"0908": "Problem creating TOML object",                         // runtime error
-	"0910": "Problem creating output file",                         // filename
+	"0901": "Problem creating TOML object",                      // err.Error
+	"0902": "Error creating new site.toml file",                 // Full custom error message
+	"0903": "Error writing to file",                             // Full custom error message
+	"0904": "Theme name taken",                                  // custom message
+	"0905": "Couldn't create directory for new theme",           // custom message
+	"0906": "Problem creating new theme files",                  // custom message
+	"0907": "Pagetype name taken",                               // custom message
+	"0908": "Problem creating TOML object",                      // runtime error
+	"0910": "Problem creating output file",                      // filename
 	"0911": "Unable to copy themes directory to site directory", // custom message
-	"0912": "Problem converting markdown file",                     //
-	"0913": "Unable to read project directory",                     //
-	"0914": "Error creating a temporary file",                      // filename
+	"0912": "Problem converting markdown file",                  //
+	"0913": "Unable to read project directory",                  //
+	"0914": "Error creating a temporary file",                   // filename
 	"0915": "Unable to copy scodes directory to site directory", // custom message
-	"0916": "Unable to copy a style sheet",                         // custom message
-	"0917": "Error creating ",                                      // filename, Golang message
+	"0916": "Unable to copy a style sheet",                      // custom message
+	"0917": "Error creating ",                                   // filename, Golang message
 
 	// 0950 - Something's already there
 	"0951": "Site already exists", // sitename

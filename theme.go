@@ -90,8 +90,8 @@ func (App *App) currThemeName() string {
 
 // themePath() returns the fully qualified path name of the curren theme
 func (App *App) currThemePath() string {
-  path := filepath.Join(App.Site.siteThemesPath, App.currThemeName())
-  return path
+	path := filepath.Join(App.Site.siteThemesPath, App.currThemeName())
+	return path
 }
 
 // loadTheme() copies the theme and pageType, if any, to the Publish directory.

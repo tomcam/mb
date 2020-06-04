@@ -24,8 +24,8 @@ type App struct {
 	Page        *Page
 	FrontMatter *FrontMatter
 
-  // Fully qualfied directory name of application data directory
-  configDir string
+	// Fully qualfied directory name of application data directory
+	configDir string
 
 	// Location of global themes directory
 	themesPath string
@@ -44,18 +44,18 @@ type App struct {
 // forms of configuration info) can be found, then reads in
 // all that info.
 func (App *App) initConfig() {
-  // There may or may not be a metabuzz.toml file around redirecting where
-  // to look for Metabuzz application data such as themes and shortcodes.
-  // So assume it's where the system likes it, under a "metabuzz/.mb" subdirectory.
-  App.configDir = configDir()
+	// There may or may not be a metabuzz.toml file around redirecting where
+	// to look for Metabuzz application data such as themes and shortcodes.
+	// So assume it's where the system likes it, under a "metabuzz/.mb" subdirectory.
+	App.configDir = configDir()
 	// Places to look for a metabuz.toml ponting to the global application config dir.
 	// It can look in as many places as you want.
-  // Look in the local directory for a directory named just named ".mb".
+	// Look in the local directory for a directory named just named ".mb".
 	viper.AddConfigPath(filepath.Join(".", globalConfigurationDirName))
-  // Location to look for metabuzz.toml
-  // Look in the ~/ directory for an ".mb" directory.
+	// Location to look for metabuzz.toml
+	// Look in the ~/ directory for an ".mb" directory.
 	viper.AddConfigPath(filepath.Join(homeDir(), globalConfigurationDirName))
-  // Name of the config file is metabuz, dot..
+	// Name of the config file is metabuz, dot..
 	viper.SetConfigName(PRODUCT_NAME)
 	// toml. viper likes to apply its own file extensions
 	viper.SetConfigType("toml")
@@ -67,7 +67,7 @@ func (App *App) initConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		// TODO: Give this a standard error code and display it
 		// Acutally not an error if there's no config file
-    App.Verbose(errCode("0126", err.Error()).Error())
+		App.Verbose(errCode("0126", err.Error()).Error())
 	}
 	// Are we going to look in the local directory for
 	// site assets, themes, etc., or are we going to

@@ -20,11 +20,14 @@ import (
 var (
 	// Credit to anonymous user at:
 	// https://play.golang.org/p/OfQ91QadBCH
-	h1, _        = regexp.Compile("(?m)^\\s*#{1}\\s*([^#\\n]+)$")
+	// Match an h1 in Markdown
+	h1, _ = regexp.Compile("(?m)^\\s*#{1}\\s*([^#\\n]+)$")
+	// Match headers 2-6 in Markdown
 	anyHeader, _ = regexp.Compile("(?m)^\\s*#{2,6}\\s*([^#\\n]+)$")
-	notPound, _  = regexp.Compile("(?m)[^#|\\s].*$")
+	// Match everything after the pound sign on a line starting with the pound sign
+	notPound, _ = regexp.Compile("(?m)[^#|\\s].*$")
 
-	closingTags = `
+	closingHTMLTags = `
 </body>
 </html>
 `
@@ -122,7 +125,7 @@ func (App *App) publishFile(filename string) error {
 	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Footer, "<footer>"))
 
 	// Complete the HTML document with closing <body> and <html> tags
-	App.appendStr(closingTags)
+	App.appendStr(closingHTMLTags)
 
 	// Strip out everything but the filename.
 	base := filepath.Base(outfile)
@@ -134,8 +137,6 @@ func (App *App) publishFile(filename string) error {
 		App.QuitError(errCode("PREVIOUS", err.Error()))
 	}
 
-	fmt.Println("Temp file " + tmpFile.Name())
-	//writeTextFile(tmpFile.Name(), string(App.Page.Article))
 	if err = writeTextFile(tmpFile.Name(), string(App.Page.html)); err != nil {
 		App.QuitError(errCode("PREVIOUS", err.Error()))
 	}
@@ -260,7 +261,6 @@ func (App *App) publishLocalFiles(dir string) bool {
 	// If this directory hasn't been created, create it.
 	if !optionSet(App.Site.dirs[pubDir], markdownDir) {
 		if err := os.MkdirAll(pubDir, PUBLIC_FILE_PERMISSIONS); err != nil {
-			// TODO: Have this function return error?
 			App.QuitError(errCode("0404", pubDir, err.Error()))
 		}
 		// Mark that the directory has been created so this
@@ -270,7 +270,6 @@ func (App *App) publishLocalFiles(dir string) bool {
 	// Get the directory listing.
 	candidates, err := ioutil.ReadDir(dir)
 	if err != nil {
-		// TODO: Return error?
 		App.QuitError(errCode("1016", dir, err.Error()))
 	}
 
@@ -325,7 +324,7 @@ func (App *App) publishLocalFiles(dir string) bool {
 				// Get the target file's fully qualified filename.
 				copyTo := filepath.Join(App.Site.Publish, relDir, filename)
 				// xxx
-				fmt.Printf("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
+				App.Verbose("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
 				if err := Copy(copyFrom, copyTo); err != nil {
 					//App.QuitError(err.Error())
 					App.QuitError(errCode("PREVIOUS", err.Error()))
@@ -662,7 +661,7 @@ func (App *App) headerFiles() string {
 	if err != nil {
 		App.QuitError(errCode("0706", App.Site.headersPath))
 	}
-  for _, file := range headers {
+	for _, file := range headers {
 		h += fileToString(filepath.Join(App.Site.headersPath, file.Name()))
 	}
 	return h

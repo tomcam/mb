@@ -14,8 +14,7 @@ type Site struct {
 	// It's expected to be a child of the Publish directory.
 	AssetDir string
 
-
-  // List of authors with roles and websites in site.toml
+	// List of authors with roles and websites in site.toml
 	Authors []author
 
 	// Base directory for URL root, which may be diffferent
@@ -25,7 +24,7 @@ type Site struct {
 	BaseDir string
 
 	// Site's branding, any string, that user specifies in site.toml
-  //. So, for example,
+	//. So, for example,
 	// if the Name is 'my-project' this might be
 	// 'My Insanely Cool Project"
 	Branding string
@@ -37,7 +36,7 @@ type Site struct {
 	// Use the computed value Site.commonDir for hte full path.
 	CommonSubDir string
 
-  // Company name & other info user specifies in site.toml
+	// Company name & other info user specifies in site.toml
 	Company companyConfig
 
 	// List of all directories in the site
@@ -60,13 +59,13 @@ type Site struct {
 	// Example: favicon links.
 	Headers []string
 
-  // Full path of headers for "code injection"
-  headersPath string
+	// Full path of headers for "code injection"
+	headersPath string
 
-  // for HTML header, as in "en" or "fr"
+	// for HTML header, as in "en" or "fr"
 	Language string
 
-  // Flags indicating which non-CommonMark Markdown extensions to use
+	// Flags indicating which non-CommonMark Markdown extensions to use
 	MarkdownOptions MarkdownOptions
 
 	// Mode ("dark" or "light") used by this site unless overridden in front matter
@@ -84,9 +83,9 @@ type Site struct {
 	// Directory for finished site--rendered HTML & asset output
 	Publish string
 
-  // Fully qualified directory name of the location themes get copied
-  // to in the published site
-  pubThemesPath string
+	// Fully qualified directory name of the location themes get copied
+	// to in the published site
+	pubThemesPath string
 
 	// Full path of shortcode dir for this project. It's computed
 	// at runtime using SCodeDir, also in this struct.
@@ -244,7 +243,7 @@ func (App *App) newSite(sitename string) error {
 
 	// Copy all themes from the application data directory
 	// to the site directory.
-	fmt.Println("newSite() Copying from '"+App.themesPath+"' to '"+App.Site.siteThemesPath+"'")
+	fmt.Println("newSite() Copying from '" + App.themesPath + "' to '" + App.Site.siteThemesPath + "'")
 
 	err = copyDirAll(App.themesPath, App.Site.siteThemesPath)
 	if err != nil {
@@ -289,7 +288,7 @@ func (App *App) siteDefaults() {
 	App.Site.sCodePath = filepath.Join(App.Site.path, sCodeDir)
 	App.Site.headersPath = filepath.Join(App.Site.path, sCodeDir)
 	if App.Flags.DontCopy {
-    fmt.Println("TODO: Finish the -d option here in site.go")
+		fmt.Println("TODO: Finish the -d option here in site.go")
 		App.Site.themesPath = App.themesPath
 		App.Site.sCodePath = App.sCodePath
 	}

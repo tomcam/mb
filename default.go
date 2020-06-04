@@ -12,21 +12,21 @@ Welcome to %s
 `
 	// Directory configuration for a project--a new site.
 	siteDirs = [][]string{
-    {siteConfigDir},
+		{siteConfigDir},
 		{publishDir},
 		{headersDir},
 		{siteScodeDir},
 		{commonDir},
 		{siteThemeDir},
-    /*
-    {globalConfigurationDirName, siteConfigDir},
-		{globalConfigurationDirName, publishDir},
-		{globalConfigurationDirName, headersDir},
-		{globalConfigurationDirName, siteScodeDir},
-		{globalConfigurationDirName, commonDir},
-		{globalConfigurationDirName, siteThemeDir},
-    */
-    }
+		/*
+			    {globalConfigurationDirName, siteConfigDir},
+					{globalConfigurationDirName, publishDir},
+					{globalConfigurationDirName, headersDir},
+					{globalConfigurationDirName, siteScodeDir},
+					{globalConfigurationDirName, commonDir},
+					{globalConfigurationDirName, siteThemeDir},
+		*/
+	}
 	// Markdown file extensions
 	markdownExtensions = searchInfo{list: []string{
 		".Rmd",
@@ -71,8 +71,8 @@ const (
 	// Excluded from publishing.
 	sCodeDir = ".scodes"
 
-  // This themes directory actually gets written to the project
-  pubThemesDir = "themes"
+	// This themes directory actually gets written to the project
+	pubThemesDir = "themes"
 
 	// Name inside the global preferences directory for themes.
 	themeSubDirName = ".themes"
