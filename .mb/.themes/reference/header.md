@@ -1,4 +1,4 @@
-* [{{.Theme.PageType.Branding}}](/) 
+* [{{.Site.Branding}}](/) 
 * [Quick Install](/)
 * [Tutorial](/)
 * [Reference](/)

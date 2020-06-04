@@ -52,7 +52,6 @@ func (App *App) publishFile(filename string) error {
 	App.Page.filename = filepath.Base(filename)
 	App.Page.dir = currDir()
 	App.Verbose("%s", filename)
-	//fmt.Printf("%s\n", App.Page.filename)
 	// Read the whole Markdown file into memory as a byte slice.
 	input, err = ioutil.ReadFile(filename)
 	if err != nil {
@@ -385,10 +384,7 @@ func (App *App) publishAssets() {
 
 	}
 
-	//fmt.Printf("About to copy %v root stylesheets for %s %s\n",
-	//  len(App.Page.Theme.RootStylesheets), App.FrontMatter.Theme, App.PageType.name)
 	// Copy shared stylesheets first
-	fmt.Println("\tRoot stylesheets", App.Page.Theme.RootStylesheets)
 	for _, file := range App.Page.Theme.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
@@ -406,7 +402,6 @@ func (App *App) publishAssets() {
 		}
 		App.copyStylesheet(file)
 	}
-  fmt.Println("\tstylesheets",p.Stylesheets)
 	for _, file := range p.Stylesheets {
 		// Add the stylesheet tag
 		// And copy the stylesheet itself
@@ -431,7 +426,6 @@ func (App *App) publishAssets() {
 		pathname := filepath.Join(themeSubDirName, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
 		// Turn it into a "link" tag.
 		App.appendStr(stylesheetTag(pathname))
-	  fmt.Println("\t", pathname)
 		if err := Copy(from, to); err != nil {
 			App.QuitError(errCode("0125", "from '"+from+"' to '"+to+"'"))
 		}
@@ -451,7 +445,6 @@ func (App *App) publishAssets() {
 	// part of the page itself.
 
 	// xxx
-	fmt.Println("\tAbout to publish other page assets", App.Page.Theme.PageType.otherAssets)
 
 	for _, file := range App.Page.Theme.PageType.otherAssets {
 		from := filepath.Join(App.Page.Theme.PageType.PathName, file)
@@ -502,8 +495,6 @@ func (App *App) publishThemeAssets() {
 				// If it's a stylesheet, add to the private list
 				if hasExtension(filename, ".css") {
 				} else {
-					// TODO: These belong on Page, not currPageType or whatever
-					//fmt.Println("  Adding asset",filename)
 					App.Page.Theme.PageType.otherAssets = append(App.Page.Theme.PageType.otherAssets, filename)
 				}
 			}

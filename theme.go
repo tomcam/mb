@@ -99,9 +99,6 @@ func (App *App) currThemePath() string {
 func (App *App) loadTheme() {
 	themeName := App.currThemeName()
 	themeDir := App.currThemePath()
-  //fmt.Println("\tloadTheme(" + themeName + ")")
-	//themeName := strings.ToLower(strings.TrimSpace(App.FrontMatter.Theme))
-	//themeDir := filepath.Join(App.Site.themesPath, themeName)
 	if !dirExists(themeDir) {
 		App.QuitError(errCode("1004",
 			fmt.Errorf("theme \"%v\" was specified, but couldn't find a theme directory named %v", App.FrontMatter.Theme, themeDir).Error()))
@@ -122,19 +119,16 @@ func (App *App) loadTheme() {
 	// See if a pagetype has been requested.
 	if App.FrontMatter.PageType != "" {
 		if App.FrontMatter.isChild {
-		//fmt.Println("\tloadTheme(), PageType", App.FrontMatter.PageType)
 		// This is a child theme/page type, not a default/root theme
 		App.FrontMatter.isChild = true
 		themeDir = filepath.Join(themeDir, App.FrontMatter.PageType)
 		themePath = pageTypePath(themeDir, App.FrontMatter.PageType)
     }
 	} else {
-		//fmt.Println("\tloadTheme(), root theme")
 		// This is a default/root theme, not a child theme/page type
 		App.FrontMatter.isChild = false
 		// Try to load the .toml file named after the theme directory.
 		themePath = pageTypePath(themeDir, themeName)
-		//fmt.Println("Hope we inherited", App.Page.Theme.RootStylesheets)
 	}
 	if err := App.PageType(themeName, themeDir, themePath, &App.Page.Theme.PageType); err != nil {
 		App.QuitError(errCode("0108", fmt.Errorf("Error loading %s", themePath).Error(), err.Error()))
@@ -145,7 +139,6 @@ func (App *App) loadTheme() {
 // from a subdirectory name.
 func pageTypePath(subDir, themeName string) string {
   path := filepath.Join(subDir, themeName+"."+configFileDefaultExt)
-  fmt.Println("pageTypePath: " + path)
 	return path
 }
 
@@ -157,12 +150,9 @@ func (App *App) PageType(themeName, themeDir, fullPathName string, PageType *Pag
 	if err := readTomlFile(fullPathName, PageType); err != nil {
 		return errCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", fullPathName, App.FrontMatter.Theme).Error(), err.Error())
 	}
-  fmt.Printf("\tpageType path: +%v\n", fullPathName)
-  fmt.Printf("\tpageType raw: +%v\n", PageType)
 	PageType.name = themeName
 	PageType.PathName = themeDir
 	App.Page.Theme.PageType = *PageType
-  fmt.Println("\npageType: " + PageType.name)
 	// Success
 	return nil
 }

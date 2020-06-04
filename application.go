@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"html/template"
@@ -154,6 +154,5 @@ func (App *App) defaultTheme() string {
 	if cfgString("defaulttheme") != "" {
 		theme = cfgString("defaulttheme")
 	}
-  fmt.Println("defaultTheme(): "+ theme)
 	return strings.ToLower(theme)
 }
