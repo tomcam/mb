@@ -1,11 +1,10 @@
 Branding = "Try these featured Metabuzz themes live"
 Language = "en"
 Theme = "reference"
-Dir = "/Users/tom/code/d2/gal"
 AssetDir = "assets"
 BaseDir = ""
 Publish = ".pub"
-ThemeDir = "/Users/tom/code/mb/.mb/themes"
+ThemeDir = "/Users/tom/code/m2/.m2/themes"
 Ganalytics = "UA-152078779-1"
 ExcludeDirs = [ ".sample", ".common"]
 

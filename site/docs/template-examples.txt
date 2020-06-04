@@ -1,3 +1,6 @@
+===
+templates="off"
+===
 [List]
 logomode = { light="metabuzz-red.svg", dark="card-bulleted-outline-40x40.svg" }
 

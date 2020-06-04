@@ -14,7 +14,10 @@ type Site struct {
 	// It's expected to be a child of the Publish directory.
 	AssetDir string
 
-	// List of authors with roles and websites in site.toml
+	// Make it easy if you just have 1 author.
+	Author author
+
+		// List of authors with roles and websites in site.toml
 	Authors []author
 
 	// Base directory for URL root, which may be diffferent
@@ -284,7 +287,6 @@ func (App *App) siteDefaults() {
 	App.Site.siteThemesPath = filepath.Join(App.Site.path, siteThemeDir)
 	App.sCodePath = filepath.Join(App.configDir, sCodeDir)
 	App.Site.sCodePath = filepath.Join(App.Site.path, sCodeDir)
-	App.Site.headersPath = filepath.Join(App.Site.path, sCodeDir)
 	if App.Flags.DontCopy {
 		fmt.Println("TODO: Finish the -d option here in site.go")
 		App.Site.themesPath = App.themesPath

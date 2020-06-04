@@ -4,7 +4,6 @@ import (
 	//"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"html/template"
 	"path/filepath"
 	"strings"
 )
@@ -116,15 +115,8 @@ func newDefaultApp() *App {
 	// Add config/env support from cobra and viper
 	App.addCommands()
 
-	//App.themesPath = filepath.Join(configDir(), themeSubDirName)
-	//App.sCodePath = filepath.Join(configDir(), sCodeDir)
-	App.funcs = template.FuncMap{
-		"ftime":    App.ftime,
-		"hostname": App.hostname,
-		"inc":      App.inc,
-		"path":     App.path,
-		"scode":    App.scode,
-	}
+  App.addTemplateFunctions()
+
 	/*"hostname": App.hostname, "path": App.path, "inc": App.inc */
 
 	// Get a copy of funcs but without

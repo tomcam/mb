@@ -9,6 +9,16 @@ import (
 	"time"
 )
 
+func (App *App) echo(params ...string) string {
+	if len(params) < 1 {
+	  return ""
+	}
+  var s, ret string
+ for _, s = range params {
+    ret = ret + s  + " "
+  }
+	return  ret
+}
 // ftime() returns the current, local, formatted time.
 // Can pass in a formatting string
 // https://golang.org/pkg/time/#Time.Format
@@ -144,4 +154,15 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 	// The one function missing from fewerFuncs is shortcode() itself.
 	s := App.execute(filename, string(input), App.fewerFuncs)
 	return template.HTML(s)
+}
+
+func (App *App) addTemplateFunctions() {
+	App.funcs = template.FuncMap{
+    "echo":     App.echo,
+		"ftime":    App.ftime,
+		"hostname": App.hostname,
+		"inc":      App.inc,
+		"path":     App.path,
+		"scode":    App.scode,
+	}
 }

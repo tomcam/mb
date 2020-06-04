@@ -1,3 +1,6 @@
+===
+templates="off"
+===
 # Scode
 
 ## TODO: See Zola's
