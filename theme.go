@@ -157,7 +157,19 @@ func (App *App) PageType(themeName, themeDir, fullPathName string, PageType *Pag
 	return nil
 }
 
+// newTheme() generates a new theme from an old one.
+// Equivalent of mb new theme
 func (App *App) newTheme(from, to string) error {
+  if from == to {
+    App.QuitError(errCode("0918", ""))
+  }
+  if from == "" {
+    from = App.defaultTheme()
+  }
+  if to == "" {
+    App.QuitError(errCode("1017", ""))
+  }
+  promptString("About to create theme " + to)
 	return App.copyTheme(from, to, false)
 }
 
@@ -194,18 +206,16 @@ func (App *App) createPageType(theme, pageType string) error {
 	// Generate name of TOML file expected to be there
 	tomlFile := App.themeTOMLFilename(theme, source)
 	// Check for both these elements.
-	if err := App.isTheme(source, tomlFile); err != nil {
+	if !App.isTheme(source, tomlFile)  {
 		return errCode("1010", source+"  doesn't seem to be a theme")
 	}
 	// Destination directory is a subdirectory of
 	// theme
 	dest := filepath.Join(source, pageType)
-	/*
-		if dirExists(dest) {
-			// TODO: Original error code needed
-			return errCode("0907", "directory "+dest+" already exists")
-		}
-	*/
+  if dirExists(dest) {
+    // TODO: Original error code needed
+    return errCode("0919", "directory "+dest+" already exists")
+  }
 	err := App.copyTheme(theme, dest, true)
 	if err != nil {
 		return errCode("PREVIOUS", err.Error())
@@ -231,8 +241,9 @@ func (App *App) copyTheme(from, to string, isChild bool) error {
 	// Generate name of TOML file expected to be there
 	tomlFile := App.themeTOMLFilename(from, source)
 	// Check for both these elements.
-	if err := App.isTheme(source, tomlFile); err != nil {
-		return errCode("1008", "Missing directory ", source, " or TOML file ", tomlFile)
+	fmt.Printf("copyTheme(): checking for %v at %v\n:",source, tomlFile)
+	if !App.isTheme(source, tomlFile) {
+		return errCode("1008", from)
 	}
 
 	var dest string
@@ -267,23 +278,25 @@ func (App *App) themePath(theme string) string {
 // themeTOMLFilename() returns the fully qualified pathname
 // of the named theme's expected TOML filename.
 func (App *App) themeTOMLFilename(theme, themePath string) string {
-	return filepath.Join(themePath, theme+"."+configFileDefaultExt)
+	return filepath.Join(App.themesPath, theme+"."+configFileDefaultExt)
 }
 
 // isTheme() returns true if the fully qualified
 // directory pathname exists, and if it contains
 // a TOML file by the specified name
-func (App *App) isTheme(dir, tomlFile string) error {
+func (App *App) isTheme(dir, tomlFile string) bool {
 	// See if there's a directory of that name.
+  fmt.Printf("Seeing if the directory %s and the TOML file %s exist\n", dir, tomlFile)
+
 	if !dirExists(dir) {
-		return errCode("0701", dir+" directory not found")
+		return false 
 	}
 
 	if !fileExists(tomlFile) {
-		return errCode("0115", dir+" theme TOML file "+tomlFile+" is missing")
+		App.QuitError(errCode("0115", dir+" theme TOML file "+tomlFile+" is missing"))
 	}
 	// Success
-	return nil
+	return  true
 }
 
 // updateThemeDirectory() takes a theme directory freshly copied from

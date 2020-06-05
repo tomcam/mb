@@ -139,6 +139,8 @@ var errMsgs = map[string]string{
 	"0915": "Unable to copy scodes directory to site directory", // custom message
 	"0916": "Unable to copy a style sheet",                      // custom message
 	"0917": "Error creating ",                                   // filename, Golang message
+  "0918": "Can't copy a theme onto itself. That would be silly.", //
+  "0919": "Pagetype name is already taken",                     // custom message
 
 	// 0950 - Something's already there
   "0951": "Site already exists:", // sitename
@@ -151,7 +153,7 @@ var errMsgs = map[string]string{
 	"1005": "PageType not found",                // full custom message
 	"1006": "PageType not found",                // full custom message
 	"1007": "Error reading theme",               // full custom message
-	"1008": "No theme file by that name",        // custom message
+	"1008": "No theme file by the name",        // custom message
 	"1009": "Not a project directory",           //  Dir name
 	"1010": "Not a theme file",                  // full custom message
 	"1011": "No Publish directory specified",    //
@@ -160,6 +162,7 @@ var errMsgs = map[string]string{
 	"1014": "Unable to determine application configuration data directory",
 	"1015": "Theme TOML specifies a file that can't be found", // filename
 	"1016": "Unable to read directory",                        // filename
+  "1017": "Missing name of the theme to create.",
 
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name

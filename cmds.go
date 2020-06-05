@@ -241,14 +241,11 @@ create theme based on an existing one.
 				}
 				// xxx
 				// Create a new theme from the default theme
-				App.newTheme(NewThemeName, NewThemeFrom)
-				/*
-					if err != nil {
-						App.QuitError(err)
-					} else {
-						fmt.Println("Created theme", NewThemeName)
-					}
-				*/
+				NewThemeFrom = promptStringDefault("Name to copy it from?", NewThemeFrom)
+        if err := App.newTheme(NewThemeFrom,NewThemeName); err != nil {
+          App.QuitError(errCode("PREVIOUS", err.Error()))
+        }
+				fmt.Println("Created theme", NewThemeName)
 			},
 		}
 

@@ -125,6 +125,9 @@ youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
 
 ## Things I need to test
 - Pub dir gets changed in configuration
+- Copy new theme onto itself
+- Copy nonexistent theme to a new one
+- Copy a new theme to ""
 
 Documentation conventions
 
