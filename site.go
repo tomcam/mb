@@ -238,7 +238,6 @@ func (App *App) newSite(sitename string) error {
 	}
 
 	// Create its site.toml file
-	App.siteDefaults()
 	if err := App.writeSiteConfig(); err != nil {
 		// Custom error message already generated
 		return errCode("PREVIOUS", err.Error(), App.Site.siteFilePath)
@@ -272,7 +271,6 @@ func (App *App) newSite(sitename string) error {
 // It must be called after command line flags, env
 // variables, and other application configuration has been done.
 func (App *App) siteDefaults() {
-	//App.Site.path = currDir()
 	App.Site.siteFilePath = filepath.Join(App.Site.path, siteConfigDir, siteConfigFilename)
 	if err := App.readSiteConfig(); err != nil {
 		//App.Warning(errCode("PREVIOUS", ""))
@@ -284,7 +282,6 @@ func (App *App) siteDefaults() {
 	App.Site.headersPath = filepath.Join(App.Site.path, headersDir)
 	App.Site.commonDir = filepath.Join(App.Site.path, commonDir)
 	App.themesPath = filepath.Join(App.configDir, themeSubDirName)
-  fmt.Printf("siteDefaults(): App.themesPath is %s\n", App.themesPath)
 	App.Site.siteThemesPath = filepath.Join(App.Site.path, siteThemeDir)
 	App.sCodePath = filepath.Join(App.configDir, sCodeDir)
 	App.Site.sCodePath = filepath.Join(App.Site.path, sCodeDir)

@@ -90,8 +90,6 @@ func (App *App) currThemeName() string {
 
 // themePath() returns the fully qualified path name of the curren theme
 func (App *App) currThemePath() string {
-  fmt.Printf("currThemePath: App.themesPath is %s and App.currThemeName() is %s\n", 
-  App.themesPath, App.currThemeName())
 	path := filepath.Join(App.themesPath, App.currThemeName())
 	return path
 }
@@ -236,14 +234,12 @@ func (App *App) createPageType(theme, pageType string) error {
 // If isChild is true, then to is actually a child pageType of from,
 // so there's different handling.
 func (App *App) copyTheme(from, to string, isChild bool) error {
-	//fmt.Printf("copyTheme()\nfrom: %v\nto: %v\nisChild: %v\n",from, to, isChild)
 	// Obtain the fully qualified name of the source
 	// theme directory to copy
 	source := App.themePath(from)
 	// Generate name of TOML file expected to be there
 	tomlFile := App.themeTOMLFilename(from, source)
 	// Check for both these elements.
-	fmt.Printf("copyTheme(): checking for %v at %v\n:",source, tomlFile)
 	if !App.isTheme(source, tomlFile) {
 		return errCode("1008", from)
 	}
@@ -274,7 +270,6 @@ func (App *App) copyTheme(from, to string, isChild bool) error {
 // themePath() returns the fully qualified pathname of the
 // named theme's directory.
 func (App *App) themePath(theme string) string {
-  fmt.Println("themePath(): App.themesPath is " + App.themesPath)
 	return filepath.Join(App.themesPath, theme)
 }
 // xxx
@@ -290,7 +285,6 @@ func (App *App) themeTOMLFilename(theme, themePath string) string {
 // a TOML file by the specified name
 func (App *App) isTheme(dir, tomlFile string) bool {
 	// See if there's a directory of that name.
-  fmt.Printf("Seeing if the directory %s and the TOML file %s exist\n", dir, tomlFile)
 
 	if !dirExists(dir) {
 		return false 
@@ -313,7 +307,6 @@ func (App *App) isTheme(dir, tomlFile string) bool {
 // tomlFile is the fully qualified name for the theme named from.
 func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bool) error {
 	// Create a toml file for the new theme
-  fmt.Printf("UpdateThemeDirectory(from: %s\ndest: %s\nto: %s\ntomlFile: %s\n,isChild: %v\n)\n", from, dest, to, tomlFile, isChild)
 
 	// Parse the original toml file to get its list of stylesheets.
 	// Goal is to replace the original theme stylesheet name, say, default.css,
@@ -355,21 +348,15 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	// Get the new name to replace it with.
 	targetCSSFile = destFilename + ".css"
 
-  fmt.Printf("updateThemeDirectory(): source CSS file is %s, target CSS file is %s. Contents of toml file ar +%v\n",
-    sourceCSSFile, targetCSSFile, p)
-
-  fmt.Println("target TOML file: " + targetTomlFile)
 	// The TOML file has a declaration along the lines of
 	//stylesheets = [ "sizes.css", "theme-light.css", "myoldtheme.css"  ]
 	// Look through the old list of stylesheets from the TOML file. Replace the old stylesheet
 	// name ("myoldtheme.css" in this example)with the new one.
 	newStylesheets := []string{}
 	for _, cssFile := range p.Stylesheets {
-    fmt.Printf("\tcssFile: [%s] sourceCSSFile: [%s] targetCSSFile: [%s]\n", cssFile, sourceCSSFile, targetCSSFile)
 		if cssFile == sourceCSSFile {
 			// Found a matching stylesheet filename. Replace
 			// it with the new stylesheet name.
-      fmt.Println("\t\tFound match")
 			newStylesheets = append(newStylesheets, targetCSSFile)
 		} else {
 			// It's a generic file like sizes.css or fonts.css,
