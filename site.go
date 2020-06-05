@@ -17,7 +17,7 @@ type Site struct {
 	// Make it easy if you just have 1 author.
 	Author author
 
-		// List of authors with roles and websites in site.toml
+	// List of authors with roles and websites in site.toml
 	Authors []author
 
 	// Base directory for URL root, which may be diffferent
@@ -33,11 +33,7 @@ type Site struct {
 	Branding string
 
 	// Full pathname of common directory. Derived from CommonSubDir
-	commonDir string
-
-	// Directory to share reusable text.
-	// Use the computed value Site.commonDir for hte full path.
-	commonSubDir string
+	commonPath string
 
 	// Company name & other info user specifies in site.toml
 	Company companyConfig
@@ -96,12 +92,6 @@ type Site struct {
 
 	// Full path to site config file
 	siteFilePath string
-
-	// ThemesPath is where all the themes are stored.
-	// It is computed at startup based on configuration values.
-	// Either it was copied to the site directory or you're
-	// using the global theme directory
-	siteThemesPath string
 
 	// Social media URLs
 	Social socialConfig
@@ -236,7 +226,7 @@ func (App *App) newSite(sitename string) error {
 	if err := createDirStructure(&siteDirs); err != nil {
 		return errCode("PREVIOUS", err.Error())
 	}
-
+  App.siteDefaults()
 	// Create its site.toml file
 	if err := App.writeSiteConfig(); err != nil {
 		// Custom error message already generated
@@ -245,10 +235,9 @@ func (App *App) newSite(sitename string) error {
 
 	// Copy all themes from the application data directory
 	// to the site directory.
-	err = copyDirAll(App.themesPath, App.Site.siteThemesPath)
+	err = copyDirAll(App.themesPath, App.Site.themesPath)
 	if err != nil {
-		//App.QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.siteThemesPath+"'"))
-		App.QuitError(errCode("PREVIOUS", err.Error()))
+		App.QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
 	}
 
 	// Copy all scodes from the user application data directory
@@ -271,20 +260,32 @@ func (App *App) newSite(sitename string) error {
 // It must be called after command line flags, env
 // variables, and other application configuration has been done.
 func (App *App) siteDefaults() {
-	App.Site.siteFilePath = filepath.Join(App.Site.path, siteConfigDir, siteConfigFilename)
+  App.Site.path = currDir()
+	// Next read in the site configuration file, which may override things
+	// like AssetDir and Publish.
+	App.Site.siteFilePath = filepath.Join(App.Site.path, globalConfigurationDirName, siteConfigDir, siteConfigFilename)
 	if err := App.readSiteConfig(); err != nil {
-		//App.Warning(errCode("PREVIOUS", ""))
 		displayError(errCode("PREVIOUS", ""))
 	}
-	App.Site.Publish = filepath.Join(App.Site.path, publishDir)
-	App.Site.pubThemesPath = filepath.Join(App.Site.Publish, themeSubDirName)
 
-	App.Site.headersPath = filepath.Join(App.Site.path, headersDir)
-	App.Site.commonDir = filepath.Join(App.Site.path, commonDir)
-	App.themesPath = filepath.Join(App.configDir, themeSubDirName)
-	App.Site.siteThemesPath = filepath.Join(App.Site.path, siteThemeDir)
+
+	// Unlike the other dot directories, Publish is only
+	// 1 level deep. It is not nested inside the .mb directory
+	App.Site.Publish = filepath.Join(App.Site.path, publishDir)
+	App.Site.pubThemesPath = filepath.Join(App.Site.Publish, themeDir)
+
+	// TODO: Move to  NewDefaultApp() and change to AppDefaults I think
+	// scode path?
+	App.commonPath = filepath.Join(App.configDir, commonDir)
+	App.headersPath = filepath.Join(App.configDir, headersDir)
 	App.sCodePath = filepath.Join(App.configDir, sCodeDir)
-	App.Site.sCodePath = filepath.Join(App.Site.path, sCodeDir)
+	App.themesPath = filepath.Join(App.configDir, themeDir)
+
+	App.Site.commonPath = filepath.Join(App.Site.path, globalConfigurationDirName, commonDir)
+	App.Site.headersPath = filepath.Join(App.Site.path, globalConfigurationDirName, headersDir)
+	App.Site.sCodePath = filepath.Join(App.Site.path, globalConfigurationDirName, sCodeDir)
+	App.Site.themesPath = filepath.Join(App.Site.path, globalConfigurationDirName, themeDir)
+
 	if App.Flags.DontCopy {
 		fmt.Println("TODO: Finish the -d option here in site.go")
 		App.Site.themesPath = App.themesPath

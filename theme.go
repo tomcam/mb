@@ -101,13 +101,13 @@ func (App *App) loadTheme() {
 	themeDir := App.currThemePath()
 	if !dirExists(themeDir) {
 		App.QuitError(errCode("1004",
-			fmt.Errorf("theme \"%v\" was specified, but couldn't find a theme directory named %v", App.FrontMatter.Theme, themeDir).Error()))
+			fmt.Errorf("theme \"%v\" was specified, but couldn't find a theme directory named %v", themeName, themeDir).Error()))
 	}
 
 	// Generate the fully qualified name of the TOML file for this theme.
 	// TODO: App.themePath()?
 	themePath := pageTypePath(themeDir, themeName)
-  // xxx
+	// xxx
 	// First get the parent theme shared assets
 	// Temp var because the goal is simply to get the
 	// shared assets.
@@ -119,11 +119,11 @@ func (App *App) loadTheme() {
 	// See if a pagetype has been requested.
 	if App.FrontMatter.PageType != "" {
 		if App.FrontMatter.isChild {
-		// This is a child theme/page type, not a default/root theme
-		App.FrontMatter.isChild = true
-		themeDir = filepath.Join(themeDir, App.FrontMatter.PageType)
-		themePath = pageTypePath(themeDir, App.FrontMatter.PageType)
-    }
+			// This is a child theme/page type, not a default/root theme
+			App.FrontMatter.isChild = true
+			themeDir = filepath.Join(themeDir, App.FrontMatter.PageType)
+			themePath = pageTypePath(themeDir, App.FrontMatter.PageType)
+		}
 	} else {
 		// This is a default/root theme, not a child theme/page type
 		App.FrontMatter.isChild = false
@@ -138,7 +138,7 @@ func (App *App) loadTheme() {
 // pageTypePath() is a utility function to generate the full pathname  of a PageType file
 // from a subdirectory name.
 func pageTypePath(subDir, themeName string) string {
-  path := filepath.Join(subDir, themeName+"."+configFileDefaultExt)
+	path := filepath.Join(subDir, themeName+"."+configFileDefaultExt)
 	return path
 }
 
@@ -160,16 +160,15 @@ func (App *App) PageType(themeName, themeDir, fullPathName string, PageType *Pag
 // newTheme() generates a new theme from an old one.
 // Equivalent of mb new theme
 func (App *App) newTheme(from, to string) error {
-  if from == to {
-    App.QuitError(errCode("0918", ""))
-  }
-  if from == "" {
-    from = App.defaultTheme()
-  }
-  if to == "" {
-    App.QuitError(errCode("1017", ""))
-  }
-  promptString("About to create theme " + to)
+	if from == to {
+		App.QuitError(errCode("0918", ""))
+	}
+	if from == "" {
+		from = App.defaultTheme()
+	}
+	if to == "" {
+		App.QuitError(errCode("1017", ""))
+	}
 	return App.copyTheme(from, to, false)
 }
 
@@ -206,16 +205,16 @@ func (App *App) createPageType(theme, pageType string) error {
 	// Generate name of TOML file expected to be there
 	tomlFile := App.themeTOMLFilename(theme, source)
 	// Check for both these elements.
-	if !App.isTheme(source, tomlFile)  {
+	if !App.isTheme(source, tomlFile) {
 		return errCode("1010", source+"  doesn't seem to be a theme")
 	}
 	// Destination directory is a subdirectory of
 	// theme
 	dest := filepath.Join(source, pageType)
-  if dirExists(dest) {
-    // TODO: Original error code needed
-    return errCode("0919", "directory "+dest+" already exists")
-  }
+	if dirExists(dest) {
+		// TODO: Original error code needed
+		return errCode("0919", "directory "+dest+" already exists")
+	}
 	err := App.copyTheme(theme, dest, true)
 	if err != nil {
 		return errCode("PREVIOUS", err.Error())
@@ -272,6 +271,7 @@ func (App *App) copyTheme(from, to string, isChild bool) error {
 func (App *App) themePath(theme string) string {
 	return filepath.Join(App.themesPath, theme)
 }
+
 // xxx
 
 // themeTOMLFilename() returns the fully qualified pathname
@@ -287,14 +287,14 @@ func (App *App) isTheme(dir, tomlFile string) bool {
 	// See if there's a directory of that name.
 
 	if !dirExists(dir) {
-		return false 
+		return false
 	}
 
 	if !fileExists(tomlFile) {
 		App.QuitError(errCode("0115", dir+" theme TOML file "+tomlFile+" is missing"))
 	}
 	// Success
-	return  true
+	return true
 }
 
 // updateThemeDirectory() takes a theme directory freshly copied from
@@ -393,4 +393,19 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	// It's not a child pageType, it's peer of the original.
 	targetCSSFile = replaceExtension(targetTomlFile, "css")
 	return Copy(sourceCSSFile, targetCSSFile)
+}
+
+// defaultTheme() returns the simple name of
+// the theme used to create new pages
+// if no theme is specified and to create new themes if no
+// source theme is specified.
+func (App *App) defaultTheme() string {
+	theme := defaultThemeName
+	if App.Site.Theme != "" {
+		theme = App.Site.Theme
+	}
+	if cfgString("defaulttheme") != "" {
+		theme = cfgString("defaulttheme")
+	}
+	return strings.ToLower(theme)
 }

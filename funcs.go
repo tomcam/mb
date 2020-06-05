@@ -11,14 +11,15 @@ import (
 
 func (App *App) echo(params ...string) string {
 	if len(params) < 1 {
-	  return ""
+		return ""
 	}
-  var s, ret string
- for _, s = range params {
-    ret = ret + s  + " "
-  }
-	return  ret
+	var s, ret string
+	for _, s = range params {
+		ret = ret + s + " "
+	}
+	return ret
 }
+
 // ftime() returns the current, local, formatted time.
 // Can pass in a formatting string
 // https://golang.org/pkg/time/#Time.Format
@@ -80,7 +81,7 @@ func (App *App) inc(filename string) template.HTML {
 		case "article":
 			filename = filepath.Join(App.Page.dir, filename)
 		case "common":
-			filename = filepath.Join(App.Site.commonDir, filename)
+			filename = filepath.Join(App.Site.commonPath, filename)
 		default:
 			App.QuitError(errCode("0119", location))
 		}
@@ -158,7 +159,7 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 
 func (App *App) addTemplateFunctions() {
 	App.funcs = template.FuncMap{
-    "echo":     App.echo,
+		"echo":     App.echo,
 		"ftime":    App.ftime,
 		"hostname": App.hostname,
 		"inc":      App.inc,

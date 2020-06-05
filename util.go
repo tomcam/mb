@@ -422,7 +422,7 @@ func replaceExtension(filename string, newExtension string) string {
 // siteDir() returns the expected name of a site subdirectory  in
 // the given path.
 func siteDir(path string) string {
-	return filepath.Join(path, siteConfigDir)
+	return filepath.Join(path, globalConfigurationDirName, siteConfigDir)
 }
 
 // userName() returns the

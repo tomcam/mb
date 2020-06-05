@@ -77,11 +77,10 @@ func (App *App) excludeDirs() []string {
 	//fmt.Println("Excluded in site.toml:", App.Site.ExcludeDirs)
 	// Add the publish directory if it isn't already there.
 	return append(App.Site.ExcludeDirs,
-
 		commonDir,
 		headersDir,
 		publishDir,
 		sCodeDir,
 		siteConfigDir,
-		siteThemeDir)
+		themeDir)
 }

@@ -1,10 +1,10 @@
 package main
 
 import (
+  //"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"path/filepath"
-	"strings"
 )
 
 // App contains all runtime options required to convert a markdown
@@ -21,8 +21,14 @@ type App struct {
 	Page        *Page
 	FrontMatter *FrontMatter
 
+	// Fully qualified directory name of the common files subdirectory
+	commonPath string
+
 	// Fully qualfied directory name of application data directory
 	configDir string
+
+	// Fully qulaified directorhy name of the headers directory for "code injection"
+	headersPath string
 
 	// Location of global themes directory
 	themesPath string
@@ -64,7 +70,7 @@ func (App *App) initConfig() {
 	// itself points to metabuzz.toml
 	if err := viper.ReadInConfig(); err != nil {
 		// Actually not an error if there's no config file
-    // so you have to be in Verbose mode
+		// so you have to be in Verbose mode
 		App.Verbose(errCode("0126", err.Error()).Error())
 	}
 	// Are we going to look in the local directory for
@@ -72,9 +78,9 @@ func (App *App) initConfig() {
 	// use the standard application configuration directory?
 	// This determines its location.
 	if cfgString("configdir") != "" {
-	  App.configDir = cfgString("configdir")
-  }
-  App.siteDefaults()
+		App.configDir = cfgString("configdir")
+	}
+	App.siteDefaults()
 }
 
 // newDefaultApp() allocates an App runtime environment
@@ -96,8 +102,7 @@ func newDefaultApp() *App {
 		},
 		Site: &Site{
 			// Assets just go into the publish directory
-			AssetDir:     ".",
-			commonSubDir: commonDir,
+			AssetDir: ".",
 			//configFile: filepath.Join(siteConfigDir, siteConfigFilename),
 			dirs:     map[string]mdOptions{},
 			Language: "en",
@@ -115,7 +120,7 @@ func newDefaultApp() *App {
 	// Add config/env support from cobra and viper
 	App.addCommands()
 
-  App.addTemplateFunctions()
+	App.addTemplateFunctions()
 
 	/*"hostname": App.hostname, "path": App.path, "inc": App.inc */
 
@@ -131,20 +136,4 @@ func newDefaultApp() *App {
 
 	// CONFIG HAS NOT BEEN READ   YET
 	return &App
-}
-
-// defaultTheme() returns the simple name of
-// the theme used to create new pages
-// if no theme is specified and to create new themes if no
-// source theme is specified.
-func (App *App) defaultTheme() string {
-	theme := defaultThemeName
-	if App.Site.Theme != "" {
-		theme = App.Site.Theme
-	}
-
-	if cfgString("defaulttheme") != "" {
-		theme = cfgString("defaulttheme")
-	}
-	return strings.ToLower(theme)
 }

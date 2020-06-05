@@ -128,6 +128,7 @@ youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
 - Copy new theme onto itself
 - Copy nonexistent theme to a new one
 - Copy a new theme to ""
+- new site AND kitchensink
 
 Documentation conventions
 

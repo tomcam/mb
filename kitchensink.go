@@ -49,7 +49,10 @@ Location of this file: {{ path }}
 		{"index.md",
 			"one",
 			embedded{filename: "", contents: ""},
-			`# Page 1
+			`===
+theme="marlow"
+===
+# Page 1
 This page is 1 level deep.
 
 The time is {{ ftime }}

@@ -15,10 +15,9 @@ func (App *App) build() error {
 	if !isProject(".") {
 		return errCode("1009", currDir())
 	}
-	App.Site.path = currDir()
-	App.siteDefaults()
 
 	var err error
+  App.siteDefaults()
 	// Delete any existing publish dir
 	if err := os.RemoveAll(App.Site.Publish); err != nil {
 		return errCode("0302", App.Site.Publish)
@@ -29,9 +28,13 @@ func (App *App) build() error {
 		return errCode("0403", App.Site.Publish)
 	}
 
+  if App.Site.path == "" {
+    return errCode("1018", "")
+  }
+
 	// Get a list of all files & directories in the site.
 	if _, err = App.getProjectTree(App.Site.path); err != nil {
-		return errCode("0913", "")
+		return errCode("0913", App.Site.path)
 	}
 
 	// Loop through the list of permitted directories for this site.

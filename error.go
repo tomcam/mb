@@ -47,32 +47,32 @@ var errMsgs = map[string]string{
 	"PREVIOUS": " ",
 
 	// 0100	- Error reading file
-	"0101": "Error reading front matter",           // filename
-	"0102": "Unable to open file",                  // filename
-	"0103": "Error reading front matter",           // filename
-	"0104": "TOML error reading theme file",        // custom message + err.Error()
-	"0105": "TOML error reading PageType file",     // custom message + err.Error()
-	"0106": "Error copying file to publish",        // custom message
-	"0107": "Error opening a file to publish",      // custom message + err.Error()
-	"0108": "Error reading theme file",             // custom message + err.Error()
-	"0109": "Unable to find theme TOML file",       // custom message
-	"0110": "Error copying CSS file for new theme", // custom message
-	"0111": "Error copying file for new theme",     // custom message
-	"0112": "File doesn't seem to exist",           // Filename
-	"0113": "File isn't normal",                    // filename
-	"0114": "Error opening file",                   // filename
-	"0115": "Unable to find theme TOML file",       //  message
-	"0116": "TOML error reading theme file",        // custom message + err.Error()
-	"0117": "Unable to get shared stylesheets",     // Name of TOML file
-	"0118": "Error reading configuration",          //
-	"0119": "inc: unable to open location",         // location
-	"0120": "inc: unable to open file",             // filename
-	"0121": "inc: error reading file",              // filename
-	"0122": "scode: unable to find file",           // filename
-	"0123": "scode: error reading file",            // filename
-	"0124": "Error copying a page asset",           // custom message
-	"0125": "Error copying a style sheet",          // custom message
-  "0126": "Error reading config file " + productName + "." + configFileDefaultExt,                              // Viper runtime error
+	"0101": "Error reading front matter",                                            // filename
+	"0102": "Unable to open file",                                                   // filename
+	"0103": "Error reading front matter",                                            // filename
+	"0104": "TOML error reading theme file",                                         // custom message + err.Error()
+	"0105": "TOML error reading PageType file",                                      // custom message + err.Error()
+	"0106": "Error copying file to publish",                                         // custom message
+	"0107": "Error opening a file to publish",                                       // custom message + err.Error()
+	"0108": "Error reading theme file",                                              // custom message + err.Error()
+	"0109": "Unable to find theme TOML file",                                        // custom message
+	"0110": "Error copying CSS file for new theme",                                  // custom message
+	"0111": "Error copying file for new theme",                                      // custom message
+	"0112": "File doesn't seem to exist",                                            // Filename
+	"0113": "File isn't normal",                                                     // filename
+	"0114": "Error opening file",                                                    // filename
+	"0115": "Unable to find theme TOML file",                                        //  message
+	"0116": "TOML error reading theme file",                                         // custom message + err.Error()
+	"0117": "Unable to get shared stylesheets",                                      // Name of TOML file
+	"0118": "Error reading configuration",                                           //
+	"0119": "inc: unable to open location",                                          // location
+	"0120": "inc: unable to open file",                                              // filename
+	"0121": "inc: error reading file",                                               // filename
+	"0122": "scode: unable to find file",                                            // filename
+	"0123": "scode: error reading file",                                             // filename
+	"0124": "Error copying a page asset",                                            // custom message
+	"0125": "Error copying a style sheet",                                           // custom message
+	"0126": "Error reading config file " + productName + "." + configFileDefaultExt, // Viper runtime error
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -86,6 +86,7 @@ var errMsgs = map[string]string{
 	"0209": "Error creating file",                                // filename
 	"0210": "Error creating TOML file for new site",              // filename
 	"0211": "Error creating sample file",                         // filename
+  "0212": "Error renaming temporary output file",               // filename
 
 	// 0250 - Error closing file
 	"0251": "Error closing copy of file", // filename
@@ -123,27 +124,27 @@ var errMsgs = map[string]string{
 	"0801": "",
 
 	// 0900	- Problem generating something
-	"0901": "Problem creating TOML object",                      // err.Error
-	"0902": "Error creating new site.toml file",                 // Full custom error message
-	"0903": "Error writing to file",                             // Full custom error message
-	"0904": "Theme name taken",                                  // custom message
-	"0905": "Couldn't create directory for new theme",           // custom message
-	"0906": "Problem creating new theme files",                  // custom message
-	"0907": "Pagetype name taken",                               // custom message
-	"0908": "Problem creating TOML object",                      // runtime error
-	"0910": "Problem creating output file",                      // filename
-	"0911": "Unable to copy themes directory to site directory", // custom message
-	"0912": "Problem converting markdown file",                  //
-	"0913": "Unable to read project directory",                  //
-	"0914": "Error creating a temporary file",                   // filename
-	"0915": "Unable to copy scodes directory to site directory", // custom message
-	"0916": "Unable to copy a style sheet",                      // custom message
-	"0917": "Error creating ",                                   // filename, Golang message
-  "0918": "Can't copy a theme onto itself. That would be silly.", //
-  "0919": "Pagetype name is already taken",                     // custom message
+	"0901": "Problem creating TOML object",                         // err.Error
+	"0902": "Error creating new site.toml file",                    // Full custom error message
+	"0903": "Error writing to file",                                // Full custom error message
+	"0904": "Theme name taken",                                     // custom message
+	"0905": "Couldn't create directory for new theme",              // custom message
+	"0906": "Problem creating new theme files",                     // custom message
+	"0907": "Pagetype name taken",                                  // custom message
+	"0908": "Problem creating TOML object",                         // runtime error
+	"0910": "Problem creating output file",                         // filename
+	"0911": "Unable to copy themes directory to site directory",    // custom message
+	"0912": "Problem converting markdown file",                     //
+	"0913": "Unable to read project directory",                     //
+	"0914": "Error creating a temporary file",                      // filename
+	"0915": "Unable to copy scodes directory to site directory",    // custom message
+	"0916": "Unable to copy a style sheet",                         // custom message
+	"0917": "Error creating ",                                      // filename, Golang message
+	"0918": "Can't copy a theme onto itself. That would be silly.", //
+	"0919": "Pagetype name is already taken",                       // custom message
 
 	// 0950 - Something's already there
-  "0951": "Site already exists:", // sitename
+	"0951": "Site already exists:", // sitename
 
 	// 1000	- Something's missing that should be there
 	"1001": "Missing front matter and markdown", // filename
@@ -153,7 +154,7 @@ var errMsgs = map[string]string{
 	"1005": "PageType not found",                // full custom message
 	"1006": "PageType not found",                // full custom message
 	"1007": "Error reading theme",               // full custom message
-	"1008": "No theme file by the name",        // custom message
+	"1008": "No theme file by the name",         // custom message
 	"1009": "Not a project directory",           //  Dir name
 	"1010": "Not a theme file",                  // full custom message
 	"1011": "No Publish directory specified",    //
@@ -162,7 +163,8 @@ var errMsgs = map[string]string{
 	"1014": "Unable to determine application configuration data directory",
 	"1015": "Theme TOML specifies a file that can't be found", // filename
 	"1016": "Unable to read directory",                        // filename
-  "1017": "Missing name of the theme to create.",
+	"1017": "Missing name of the theme to create.",
+  "1018": "No path specified for the project",                // 
 
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name
