@@ -84,7 +84,7 @@ var errMsgs = map[string]string{
 	"0207": "Error copying and renaming TOML file for new theme", // custom message
 	"0208": "Error copying file to publish directory",            // Golang error, custom message
 	"0209": "Error creating file",                                // filename
-	"0210": "Error creating TOML file for new site",              // filename
+  "0210": "Error creating TOML file:",              // filename
 	"0211": "Error creating sample file",                         // filename
   "0212": "Error renaming temporary output file",               // filename
 
@@ -127,7 +127,7 @@ var errMsgs = map[string]string{
 	"0901": "Problem creating TOML object",                         // err.Error
 	"0902": "Error creating new site.toml file",                    // Full custom error message
 	"0903": "Error writing to file",                                // Full custom error message
-	"0904": "Theme name taken",                                     // custom message
+  "0904": "Theme name taken:",                                     // custom message
 	"0905": "Couldn't create directory for new theme",              // custom message
 	"0906": "Problem creating new theme files",                     // custom message
 	"0907": "Pagetype name taken",                                  // custom message

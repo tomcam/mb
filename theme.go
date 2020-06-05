@@ -324,6 +324,12 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	// the theme. If it's a new theme, it would be in something
 	// like /themes/mynewtheme/mynewtheme.toml. If it's a pagetype for an existing
 	// theme, it would be in something like /themes/mynewtheme/blog/blog.toml
+  fmt.Println("from: " + from)
+  fmt.Println("dest: " + dest)
+  fmt.Println("to: " + to)
+  fmt.Println("to: " + to)
+  fmt.Println("tomlFile: " + tomlFile)
+  fmt.Printf("isChild: +v\n", isChild)
 	tomlFilename := destFilename + "." + configFileDefaultExt
 	if !isChild {
 		// It's a new theme
@@ -332,8 +338,9 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 		// It's a pagetype of an existing theme
 		targetDir = filepath.Join(App.themesPath, from, destFilename)
 	}
-	targetTomlFile = filepath.Join(App.themesPath, targetDir, tomlFilename)
-
+	targetTomlFile = filepath.Join(App.themesPath, destFilename, tomlFilename)
+  //promptString(Println("targetTomlfile = ", targetTomlFile)
+  promptString("targetTomlfile = " + targetTomlFile)
 	// Obtain the contents of the original TOML file.
 	if _, err := toml.DecodeFile(tomlFile, &p); err != nil {
 		return errCode("0116",
@@ -357,6 +364,7 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 		if cssFile == sourceCSSFile {
 			// Found a matching stylesheet filename. Replace
 			// it with the new stylesheet name.
+      fmt.Println("Matched " + cssFile + " with " + sourceCSSFile)
 			newStylesheets = append(newStylesheets, targetCSSFile)
 		} else {
 			// It's a generic file like sizes.css or fonts.css,
@@ -365,6 +373,8 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 		}
 
 	}
+  fmt.Println("tomlFilename: " + tomlFilename)
+  fmt.Println(p)
 	// Search and replace completed.
 	// Replace the old list of stylesheets in the PageType struct.
 	p.Stylesheets = newStylesheets
@@ -372,7 +382,7 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	// Write out the new TOML file, with the search/replaced stylesheet name in the
 	// Stylesheets list.
 	if err := writeTomlFile(targetTomlFile, &p); err != nil {
-		return errCode("PREVIOUS", "")
+    App.QuitError(errCode("PREVIOUS", err.Error()))
 	}
 
 	// Now get rid of the previous .toml and .css files
