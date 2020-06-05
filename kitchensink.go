@@ -20,6 +20,7 @@ type embedded struct {
 /* SVG file of an exciting 100x100px gray box */
 var svgFile = `<?xml version="1.0" encoding="utf-8"?>
 <svg  xmlns="http://www.w3.org/2000/svg">
+  viewBox="0 0 100 100" 
   <rect x="0" y="0" width="100" height="100" style="fill: rgb(216, 216, 216);"/>
 </svg>
 `
