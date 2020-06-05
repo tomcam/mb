@@ -124,6 +124,8 @@ youtube = { filename="youtube.html", id = "dQw4w9WgXcQ" }
 {{ scode "youtube.html" "tcrTQUVkUe0" }}
 
 ## Things I need to test
+- new theme
+- new pagetyped:
 - Pub dir gets changed in configuration
 - Copy new theme onto itself
 - Copy nonexistent theme to a new one

@@ -1,10 +1,8 @@
 package main
 import(
-  "fmt"
+  //"fmt"
 )
 func main() {
-  fmt.Println("* Work on new pagetype next")
-
 	// Get the execution evironment ready.
 	App := newDefaultApp()
 	// Read configuration files, environment, and command line.

@@ -191,6 +191,12 @@ func (App *App) copyThemeDirectory(from, to string) error {
 	return nil
 }
 
+
+func (App *App) newPageType(theme, pageType string) error {
+  return App.createPageType(theme, pageType)
+}
+
+
 // createPageType() is very similar to copyTheme() but
 // it creates a new pagetype from an existing one and
 // puts it one subdirectory down from the original.
@@ -301,9 +307,13 @@ func (App *App) isTheme(dir, tomlFile string) bool {
 // another theme directory, renames the .css file with the theme's name,
 // then creates a TOML file.
 // from is the bare name of the theme, say, "default".
-// if isChild is true:
+// if isChild is true, meaning it's a new pagetype, so from a parent theme:
 //   -  to is the fully qualified name of the new theme directory,
 //      say, "/Users/tom/html/mysite/themes/mytheme".
+//  -   dest is the same as to.
+//      Yes, this needs to be refactored.
+// if isChild is false, meaning it's for a new theme:
+//   -   to is a bare name, such as "home"
 // tomlFile is the fully qualified name for the theme named from.
 func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bool) error {
 	// Create a toml file for the new theme
@@ -324,23 +334,17 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	// the theme. If it's a new theme, it would be in something
 	// like /themes/mynewtheme/mynewtheme.toml. If it's a pagetype for an existing
 	// theme, it would be in something like /themes/mynewtheme/blog/blog.toml
-  fmt.Println("from: " + from)
-  fmt.Println("dest: " + dest)
-  fmt.Println("to: " + to)
-  fmt.Println("to: " + to)
-  fmt.Println("tomlFile: " + tomlFile)
-  fmt.Printf("isChild: +v\n", isChild)
 	tomlFilename := destFilename + "." + configFileDefaultExt
 	if !isChild {
 		// It's a new theme
 		targetDir = filepath.Join(App.Site.themesPath, to)
+	  targetTomlFile = filepath.Join(App.themesPath, destFilename, tomlFilename)
 	} else {
 		// It's a pagetype of an existing theme
-		targetDir = filepath.Join(App.themesPath, from, destFilename)
+		targetDir = filepath.Join(App.Site.themesPath, to, from)
+		targetDir = dest
+    targetTomlFile = filepath.Join(dest, filepath.Base(dest) + "." + configFileDefaultExt)
 	}
-	targetTomlFile = filepath.Join(App.themesPath, destFilename, tomlFilename)
-  //promptString(Println("targetTomlfile = ", targetTomlFile)
-  promptString("targetTomlfile = " + targetTomlFile)
 	// Obtain the contents of the original TOML file.
 	if _, err := toml.DecodeFile(tomlFile, &p); err != nil {
 		return errCode("0116",
@@ -364,7 +368,6 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 		if cssFile == sourceCSSFile {
 			// Found a matching stylesheet filename. Replace
 			// it with the new stylesheet name.
-      fmt.Println("Matched " + cssFile + " with " + sourceCSSFile)
 			newStylesheets = append(newStylesheets, targetCSSFile)
 		} else {
 			// It's a generic file like sizes.css or fonts.css,
@@ -373,8 +376,6 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 		}
 
 	}
-  fmt.Println("tomlFilename: " + tomlFilename)
-  fmt.Println(p)
 	// Search and replace completed.
 	// Replace the old list of stylesheets in the PageType struct.
 	p.Stylesheets = newStylesheets

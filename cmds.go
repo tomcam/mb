@@ -27,6 +27,7 @@ var (
 	cmdCopyTo    = cmdCopyTheme.String("to", "", "name of new theme")
 
 	// Creates a new pageType for an existing theme
+  // xxx
 	cmdPageType     = flag.NewFlagSet("pagetype", flag.ExitOnError)
 	cmdPageTypeFrom = cmdPageType.String("from", "", "theme to start with")
 	cmdPageTypeTo   = cmdPageType.String("to", "", "name of new pagetype for that theme")
@@ -172,6 +173,41 @@ create theme based on an existing one.
 		}
 
 		/*****************************************************
+		    Subcommand: new pagetype 
+		*****************************************************/
+
+		cmdNewPageType = &cobra.Command{
+      Use:   "pagetype TODO: {sitename}",
+			Short: "pagetype",
+			Long: `pagetype
+
+      Where {sitename} is a valid directory name. For example, if your site is called basiclaptop.com, you would do this:
+
+      mb new site basiclaptop
+`,
+			Run: func(cmd *cobra.Command, args []string) {
+				// If there are arguments after build, then
+				// just convert these files one at at time.
+        var newPageType, fromTheme string
+				if len(args) > 0 {
+					newPageType = args[0]
+				} else {
+					// Them more likely case: it's build all by
+					// itself, so go through the whole directory
+					// tree and build as a complete site.
+					newPageType = promptString("Name of pagetype to create?")
+				}
+        fromTheme = promptString("Add this pagetype to which theme?")
+				err := App.newPageType(fromTheme, newPageType)
+				if err != nil {
+					App.QuitError(err)
+				} else {
+					fmt.Println("Created pagetype", newPageType)
+				}
+			},
+		}
+
+		/*****************************************************
 		    Subcommand: new site
 		*****************************************************/
 
@@ -298,6 +334,7 @@ create theme based on an existing one.
 	// Example command line:
 	// new site
 	cmdNew.AddCommand(cmdNewSite)
+	cmdNew.AddCommand(cmdNewPageType)
 
 	// Example command line:
 	// new
