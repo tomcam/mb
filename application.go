@@ -1,7 +1,7 @@
 package main
 
 import (
-	//"fmt"
+	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"path/filepath"
@@ -75,6 +75,8 @@ func (App *App) initConfig() {
 	if cfgString("configdir") != "" {
 	  App.configDir = cfgString("configdir")
   }
+  fmt.Println("App.initConfig(): about to run App.siteDefaults()")
+  App.siteDefaults()
 }
 
 // newDefaultApp() allocates an App runtime environment
