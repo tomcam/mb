@@ -404,8 +404,6 @@ func (App *App) publishAssets() {
 	for _, file := range p.Stylesheets {
 		// Add the stylesheet tag
 		// And copy the stylesheet itself
-		// If user has requested a dark theme, then don't copy theme-light.css
-		// to the target. Copy theme-dark.css instead.
 		file = App.getMode(file)
 		/*
 			if file == "theme-light.css" && App.FrontMatter.Mode == "dark" {
@@ -421,13 +419,21 @@ func (App *App) publishAssets() {
 		assetDir := filepath.Join(App.Site.Publish, relDir, themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
 		// Create a fully qualified filename for the published file
 		to := filepath.Join(assetDir, file)
-		// Create the full pathname for the link tag, say, "themes/reference/assets/reset.css"
-		pathname := filepath.Join(themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
+    var pathname string
+    if !strings.HasPrefix(file, "http") {
+      // Create the full pathname for the link tag, say, "themes/reference/assets/reset.css"
+      pathname = filepath.Join(themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
+    } else {
+      // If it's hosted elsewhere the filename is sufficient.
+      pathname= file
+    }
 		// Turn it into a "link" tag.
 		App.appendStr(stylesheetTag(pathname))
-		if err := Copy(from, to); err != nil {
-			App.QuitError(errCode("0125", "from '"+from+"' to '"+to+"'"))
-		}
+    if !strings.HasPrefix(file, "http") {
+      if err := Copy(from, to); err != nil {
+        App.QuitError(errCode("0125", "from '"+from+"' to '"+to+"'"))
+      }
+    }
 	}
 	// Copy other files in the theme directory to the target publish directory.
 	// This is whatever happens to be
