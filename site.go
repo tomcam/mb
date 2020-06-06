@@ -104,9 +104,21 @@ type Site struct {
 	// set, use the global factory themes directory. Otherwise, use local copy
 	themesPath string
 
+	// All the rendered pages on the site, plus meta information.
+	// Index by the fully qualified path name of the source .md file.
+	WebPages map[string]WebPage
+
 	// THIS ALWAYS GOES AT THE END OF THE FILE/DATA STRUCTURE
 	// User data.
 	List interface{}
+}
+
+// Everything relevant about the page to be published,
+// namely its rendered text and what's in the front matter, but
+// potentinally also other stuff like file create date.
+type WebPage struct {
+	// Rendered text, the HTML after going through templates
+	html []byte
 }
 
 // Indicates whether it's directory, a directory containing
@@ -226,7 +238,7 @@ func (App *App) newSite(sitename string) error {
 	if err := createDirStructure(&siteDirs); err != nil {
 		return errCode("PREVIOUS", err.Error())
 	}
-  App.siteDefaults()
+	App.siteDefaults()
 	// Create its site.toml file
 	if err := App.writeSiteConfig(); err != nil {
 		// Custom error message already generated
@@ -260,14 +272,13 @@ func (App *App) newSite(sitename string) error {
 // It must be called after command line flags, env
 // variables, and other application configuration has been done.
 func (App *App) siteDefaults() {
-  App.Site.path = currDir()
+	App.Site.path = currDir()
 	// Next read in the site configuration file, which may override things
 	// like AssetDir and Publish.
 	App.Site.siteFilePath = filepath.Join(App.Site.path, globalConfigurationDirName, siteConfigDir, siteConfigFilename)
 	if err := App.readSiteConfig(); err != nil {
 		displayError(errCode("PREVIOUS", ""))
 	}
-
 
 	// Unlike the other dot directories, Publish is only
 	// 1 level deep. It is not nested inside the .mb directory

@@ -1,7 +1,7 @@
 package main
 
 import (
-  //"fmt"
+	//"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"path/filepath"
@@ -105,6 +105,7 @@ func newDefaultApp() *App {
 			AssetDir: ".",
 			//configFile: filepath.Join(siteConfigDir, siteConfigFilename),
 			dirs:     map[string]mdOptions{},
+			WebPages: map[string]WebPage{},
 			Language: "en",
 			MarkdownOptions: MarkdownOptions{
 				hardWraps:      false,

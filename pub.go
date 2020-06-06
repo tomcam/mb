@@ -114,7 +114,7 @@ func (App *App) publishFile(filename string) error {
 	//App.appendStr(wrapTag("<article>", []byte(App.Page.Article), true))
 	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Header, "<header>"))
 	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Nav, "<nav>"))
-	App.appendStr(wrapTag("<article>", string(App.Page.Article), true))
+	App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Article, "<article>"))
 	sidebar := strings.ToLower(App.FrontMatter.Sidebar)
 	if sidebar == "left" || sidebar == "right" {
 		App.appendStr(App.pageRegionToHTML(&App.Page.Theme.PageType.Sidebar, "<aside>"))
@@ -419,21 +419,21 @@ func (App *App) publishAssets() {
 		assetDir := filepath.Join(App.Site.Publish, relDir, themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
 		// Create a fully qualified filename for the published file
 		to := filepath.Join(assetDir, file)
-    var pathname string
-    if !strings.HasPrefix(file, "http") {
-      // Create the full pathname for the link tag, say, "themes/reference/assets/reset.css"
-      pathname = filepath.Join(themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
-    } else {
-      // If it's hosted elsewhere the filename is sufficient.
-      pathname= file
-    }
+		var pathname string
+		if !strings.HasPrefix(file, "http") {
+			// Create the full pathname for the link tag, say, "themes/reference/assets/reset.css"
+			pathname = filepath.Join(themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
+		} else {
+			// If it's hosted elsewhere the filename is sufficient.
+			pathname = file
+		}
 		// Turn it into a "link" tag.
 		App.appendStr(stylesheetTag(pathname))
-    if !strings.HasPrefix(file, "http") {
-      if err := Copy(from, to); err != nil {
-        App.QuitError(errCode("0125", "from '"+from+"' to '"+to+"'"))
-      }
-    }
+		if !strings.HasPrefix(file, "http") {
+			if err := Copy(from, to); err != nil {
+				App.QuitError(errCode("0125", "from '"+from+"' to '"+to+"'"))
+			}
+		}
 	}
 	// Copy other files in the theme directory to the target publish directory.
 	// This is whatever happens to be
@@ -638,6 +638,10 @@ func (App *App) Article(filename string, input []byte) {
 	// Resolve any Go template variables before conversion to HTML.
 	interp := App.interps(filename, string(start))
 	App.Page.Article = App.markdownBufferToBytes([]byte(interp))
+	var w WebPage
+	w.html = App.Page.Article
+	App.Site.WebPages[App.Page.filePath] = w
+
 }
 
 // stripHeading() returns the string following a Markdown heading.

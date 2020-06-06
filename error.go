@@ -84,9 +84,9 @@ var errMsgs = map[string]string{
 	"0207": "Error copying and renaming TOML file for new theme", // custom message
 	"0208": "Error copying file to publish directory",            // Golang error, custom message
 	"0209": "Error creating file",                                // filename
-  "0210": "Error creating TOML file:",              // filename
+	"0210": "Error creating TOML file:",                          // filename
 	"0211": "Error creating sample file",                         // filename
-  "0212": "Error renaming temporary output file",               // filename
+	"0212": "Error renaming temporary output file",               // filename
 
 	// 0250 - Error closing file
 	"0251": "Error closing copy of file", // filename
@@ -127,7 +127,7 @@ var errMsgs = map[string]string{
 	"0901": "Problem creating TOML object",                         // err.Error
 	"0902": "Error creating new site.toml file",                    // Full custom error message
 	"0903": "Error writing to file",                                // Full custom error message
-  "0904": "Theme name taken:",                                     // custom message
+	"0904": "Theme name taken:",                                    // custom message
 	"0905": "Couldn't create directory for new theme",              // custom message
 	"0906": "Problem creating new theme files",                     // custom message
 	"0907": "Pagetype name taken",                                  // custom message
@@ -142,7 +142,7 @@ var errMsgs = map[string]string{
 	"0917": "Error creating ",                                      // filename, Golang message
 	"0918": "Can't copy a theme onto itself. That would be silly.", //
 	"0919": "Pagetype name is already taken",                       // custom message
-
+	"0920": "Error generating Markdown",                            //
 	// 0950 - Something's already there
 	"0951": "Site already exists:", // sitename
 
@@ -164,7 +164,7 @@ var errMsgs = map[string]string{
 	"1015": "Theme TOML specifies a file that can't be found", // filename
 	"1016": "Unable to read directory",                        // filename
 	"1017": "Missing name of the theme to create.",
-  "1018": "No path specified for the project",                // 
+	"1018": "No path specified for the project", //
 
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name

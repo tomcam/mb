@@ -9,15 +9,21 @@ import (
 	"time"
 )
 
-func (App *App) echo(params ...string) string {
+//func (App *App) article(params ...string) template.HTML {
+func (App *App) article(params ...string) string {
 	if len(params) < 1 {
-		return ""
+		return string(App.Site.WebPages[App.Page.filePath].html)
+	} else {
+		return string(App.Site.WebPages[App.Page.filePath].html)
+		//return string(App.Page.Article)
 	}
+	/*jj
 	var s, ret string
 	for _, s = range params {
 		ret = ret + s + " "
 	}
 	return ret
+	*/
 }
 
 // ftime() returns the current, local, formatted time.
@@ -159,7 +165,7 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 
 func (App *App) addTemplateFunctions() {
 	App.funcs = template.FuncMap{
-		"echo":     App.echo,
+		"article":  App.article,
 		"ftime":    App.ftime,
 		"hostname": App.hostname,
 		"inc":      App.inc,
