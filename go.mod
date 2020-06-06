@@ -1,4 +1,4 @@
-module github.com/tomcam/m2
+module github.com/tomcam/mb
 
 go 1.13
 
