@@ -1,0 +1,23 @@
+{{- if .Site.Company.HeaderLogo -}}
+![logo]({{- .Site.Company.HeaderLogo -}})
+{{- end -}}
+{{- if .FrontMatter.List.Title -}}
+{{ $name := .FrontMatter.List.Title }}
+* [{{ $name }}](/)
+{{- else if .Site.Company.Name }}
+{{ $name := .Site.Company.Name }}
+* [{{ $name }}](/)
+{{ else if .Site.Author.FullName }}
+{{ $name := .Site.Author.FullName }}
+* [{{ $name }}](/)
+{{- else }}
+* [debut](/)
+{{- end }} 
+# SIDEBAR
+
+
+![Screen shot of Default dark theme](theme-default-dark-200x250.png)
+
+![Screen shot of Default dark theme](theme-default-light-200x250.png)
+
+

@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/BurntSushi/toml v0.3.1
+	github.com/gohugoio/hugo v0.72.0
 	github.com/plus3it/gorecurcopy v0.0.1
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.7.0

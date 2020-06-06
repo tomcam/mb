@@ -1,0 +1,16 @@
+stylesheets = [ "sizes.css", "theme-light.css", "wide.css", "responsive.css"  ]
+rootstylesheets = [ "reset.css","fonts.css","layout.css" ]
+
+branding = "Wide Theme"
+
+[nav]
+file = "nav.md"
+
+[header]
+file = "header.md"
+
+[footer]
+file = "footer.md"
+
+[sidebar]
+file = "sidebar.md"

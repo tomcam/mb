@@ -1,0 +1,95 @@
+/* Default (paragraph) text is used for main branding in header */
+header > p {font-weight:700;display:inline;} 
+
+h2{ font-size:2em;margin-top:1.5rem; }
+h3{ font-size:1.25em;margin-top:1.5rem; }
+h4{ font-size:.9em;margin-top:1rem;}
+h5{ font-size:.8em; }
+h6{ font-size:0.9em; }
+
+table > thead > tr > th  {margin-top:4rem;}
+blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
+
+/* HEADER */
+header > img, header > p > img {display:inline;}
+header {padding:0;width:100%;margin-left:auto;margin-right:auto;text-align:center;margin-top:2%;margin-bottom:2%;}
+header > p > a,
+header > p > a:link,
+header > p > a:visited {font-family:'Kanit',var(--informal);display:block;margin-right:0;font-weight:700;line-height:1rem;font-size:var(--branding-height);margin-bottom:.5rem;margin:1.5rem;padding:0;text-decoration:none;}
+header > p > a:hover,
+header > p > a:active {text-decoration:underlinen;}
+
+/* NAV */
+nav > img {display:inline;}
+nav > ul > li {display:inline;list-style-type:none;font-size:1.25rem;margin-right:1rem;} 
+nav > ul > li > a,
+nav > ul > li > a:link,
+nav > ul > li > a:visited {display:inline;} 
+/* For accessibility purposes show visual distinction when hovering or active */
+nav > ul > li > a:hover,
+nav > ul > li > a:active {text-decoration:none;} 
+
+/* ARTICLE */
+article {padding:4rem 4rem 4rem 4rem}
+article > h1 {font-size:2.5rem;float:left;font-weight:700;padding-right:0%;width:80%;}
+article > h1 > strong {margin-left:1rem;font-weight:900;font-family:var(--informal);}
+article > h2, article > h1 + h2 {padding-left:1em;font-weight:bold;clear:left;}
+article > h1 + ul {margin:-bottom:4rem;list-style-type:none;}
+article > h1 + ul li {max-width:60%;width:60%;clear:left;}
+/* Leave some room on the right side of each image */
+article > h1 + ul li > img {margin-right:4%;margin-left:3%;width:90%;float:left;margin-bottom:3rem; box-shadow: rgb(128,128,128) 1px 1px 3px 0px;}
+/* H3 is to the right of the image. */
+article > h1 + ul > li > h2 {font-weight:700;padding-right:5%;margin-left:90%;width:70%;font-size:1.75rem;margin-top:0;}
+article > h1 + ul > li > h2 > strong {font-weight:700;}
+article > h1 + ul > li > h3 {margin-top:1rem;font-weight:bold;padding-right:5%;margin-left:90%;width:70%;}
+article > h1 + ul > li > h3 > strong {font-weight:900;font-size:2rem;}
+/* H4 under the H3 */
+article > h1 + ul > li > h4 {font-weight:bold;font-size:.8em;margin-left:90%;width:70%;margin-top:0;line-height:1.2em;margin-top:.5em;}
+/* Paragraph under the H3 */
+article > h1 + ul > li >  p{margin-left:90%;width:70%;display:block;margin-top:.5rem;line-height:1.5em;}
+article > h3 + ul > li > ul > li  {margin-left:90%;width:70%;display:block;margin-top:1rem;line-height:1.2em;}
+
+article > ul > li > p > a,
+article > ul > li > p > a:link,
+article > ul > li > p > a:visited {font-weight:bold;} 
+/* For accessibility purposes show visual distinction when hovering or active */
+article > ul > li > p > a:hover,
+article > ul > li > p > a:active {text-decoration:none;} 
+
+
+
+
+/* ASIDE */
+aside {padding:2rem;}
+aside {margin: 2rem;}
+aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2;}
+
+/* FOOTER */
+footer {margin-top:1rem;} 
+
+
+footer > p > a > img {padding-top:1rem;margin-right:.75rem;height:var(--branding-height);}
+footer > p > a,
+footer > p > a:link,
+footer > p > a:visited {font-family:'Kanit',var(--informal);font-size:var(--branding-height);font-weight:700;text-decoration:none;color:var(--nav-fg);} 
+/* For accessibility purposes show visual distinction when hovering or active */
+footer > p > a:hover,
+footer > p > a:active {text-decoration:underline;} 
+
+
+footer > h2 {text-align:center;}
+footer > table {font-size:calc(80%);}
+/* Give table columns to get some breathing room */
+footer > table > thead > tr > th {padding-right:2rem;} 
+footer > table > thead > tr > th {padding-top:1em;padding-right:2em;padding-bottom:1em;}
+footer > table > tbody > tr > td {padding-right:3em;}
+
+/* Color of links in main rows (body) of table */
+footer > table > tbody > tr > td > a:link,
+footer > table > tbody > tr > td > a:visited
+	{text-decoration:none;}
+footer > table > tbody > tr > td > a:hover,
+footer > table > tbody > tr > td > a:active
+	{text-decoration:underline;}
+
+

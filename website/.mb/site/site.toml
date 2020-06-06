@@ -1,0 +1,38 @@
+AssetDir = "."
+BaseDir = ""
+Branding = ""
+Ganalytics = ""
+Language = "en"
+Mode = ""
+Name = "s"
+Publish = "/Users/tom/code/m2/s/.pub"
+Theme = ""
+
+[Author]
+  FullName = ""
+  URL = ""
+  Role = ""
+
+[Company]
+  Name = ""
+  URL = ""
+  HeaderLogo = ""
+
+[MarkdownOptions]
+  HighlightStyle = "github"
+
+[Social]
+  DeviantArt = ""
+  Facebook = ""
+  Github = ""
+  Gitlab = ""
+  Instagram = ""
+  LinkedIn = ""
+  Pinterest = ""
+  Reddit = ""
+  Tumblr = ""
+  Twitter = ""
+  Weibo = ""
+  YouTube = ""
+
+[WebPages]

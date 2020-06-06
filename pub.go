@@ -777,7 +777,6 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		// See if there's a file with the same name as
 		// the root source file but with a .sidebar extension.
 		if tag == "<aside>" {
-			fmt.Println("** ASIDE **")
 			// Base it on the root Markdown filename and the
 			// extension .sidebar, so foo.md might also have
 			// a foo.sidebar.

@@ -1,0 +1,201 @@
+/* Default (paragraph) text is used for main branding in header */
+
+header > p {font-weight:700;display:inline;} 
+
+h1{ font-size:2.5em;margin-top:2rem; }
+h2{ font-size:2em;margin-top:1.5rem; }
+h3{ font-size:1.5em;margin-top:1.5rem; }
+h4{ font-size:2em;font-weight:bold;margin-top:1rem;}
+h5{ font-size:.8em; }
+h6{ font-size:0.9em; }
+
+table > thead > tr > th  {margin-top:4rem;}
+blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
+
+/* HEADER */
+
+/* Unordered lists show horizontally, not vertically, in the header */
+header > ul > li{display:inline;list-style-type:none;font-weight:bold;} 
+header > ul > li > a,
+header > ul > li > a:link,
+header > ul > li > a:visited
+	{text-decoration:none;line-height:2rem;margin-right:1.5rem;}
+header > ul > li > a:hover,
+header > ul > li > a:active
+	{text-decoration:underline;}
+header > ul > li:first-child > a {font-family:'Kanit',var(--informal);display:block;margin-right:0;font-size:4rem;font-weight:700;line-height:1rem;font-size:var(--branding-height);margin-bottom:2rem;margin-top:2rem;}
+
+/* NAV */
+nav > img {display:inline;}
+nav > ul > li {display:inline;list-style-type:none;font-size:1.25rem;margin-right:1rem;} 
+nav > ul > li > a,
+nav > ul > li > a:link,
+nav > ul > li > a:visited {display:inline;} 
+/* For accessibility purposes show visual distinction when hovering or active */
+nav > ul > li > a:hover,
+nav > ul > li > a:active {text-decoration:none;} 
+
+/* ARTICLE */
+article > h1 {font-weight:700;font-size:5rem;margin-bottom:1em;}
+article > h2 {font-weight:bold;font-size:3.5rem;line-height:1.25em;margin-bottom:1em;}
+article > h1 + h2 {font-size:4rem;}
+article {width:var(--max-article-width);}
+article > p,
+article > ul,
+article > ol,
+article > li,
+article > dd,
+article > dl,
+article > hr {
+	font-size:1.5rem;
+	line-height:2.25rem;
+	margin-bottom:2em;
+}     
+   
+article > p > code, article > code, article > pre, article > pre > code {
+	font-family:var(--code);
+	font-size:1em;
+	overflow:auto;
+	margin-bottom:1em;
+	line-height:1.5em;
+}
+
+article > pre {font-size:1.25rem;}
+
+article > a,
+/* For accessibility purposes show visual distinction when hovering or active */
+article > a:hover,
+article > a:active {text-decoration:none;} 
+
+/* For accessibility purposes show visual distinction when hovering or active */
+article > p > a:hover,
+article > p > a:active {text-decoration:none;} 
+
+
+/* Links in unordered lists */
+/* For accessibility purposes show visual distinction when hovering or active */
+article > ul > li > a:hover,
+article > ul > li > a:active {text-decoration:none;} 
+
+article >  table {width:var(--max-article-width);margin-top:2rem;margin-bottom:3rem;}
+article > table > thead > tr > th {font-size:1.5rem;}
+article > table > td,th {padding:1rem;}
+article > table > tbody > tr > td {padding:1rem;border-bottom:.1px solid gray;}
+
+article > p > img {width:80%;}
+
+/*
+   --------------------------------------------------
+   Special feature: h2 followed by li with img 
+   displays image to right of text.
+
+   Example markdown:
+ 
+   ## Title over image
+   * ![Describe img](imagename.png)
+     ### Follow with an h3
+     Then put text inder h3 
+   
+   --------------------------------------------------
+ */
+
+
+article > h2 {font-size:2.5rem;font-weight:bold;}
+article > h2 + ul {width:75%;padding:0;margin:0;list-style-type:none;}
+article > h2 + ul li {clear:left;}
+/* Leave some room on the right side of each image */
+article > h2 + ul li > img {width:75%;margin:0%;padding-right:2rem;padding-left:0;float:left;margin-bottom:4rem;}
+/* H3 is to the right of the image. */
+article > h2 + ul > li > h3 {font-weight:bold;margin-left:70%;padding-right:25%;padding-top:.5em;width:80%;}
+/* H4 under the H3 */
+article > h2 + ul > li > h4 {font-weight:bold;margin-left:70%;width:80%;margin-top:0;}
+/* Paragraph under the H3 */
+article > h2 + ul > li >  p{margin-left:70%;width:65%;padding-right:5%;display:block;}
+
+
+/*
+   --------------------------------------------------
+   Special feature: h3 followed by img 
+   displays image to right of text
+
+   Example markdown:
+ 
+   ### Title over image
+   ![Describe img](imagename.png)
+   Body text follows. 
+   
+   --------------------------------------------------
+ */
+
+article > h3 {font-weight:bold;font-size:3em;clear:left;}
+article > h3 + p > img, article > ul li > img {width:65%;margin-left:0%;margin-right:0;padding-left:2rem;float:right;margin-top:4rem;margin-bottom:4rem;}
+
+
+/*
+   --------------------------------------------------
+   Special feature: h4 followed by img 
+   
+   --------------------------------------------------
+ */
+
+
+article > h4 {margin-top:4rem;clear:left;}
+article > h4 + ul {
+	padding:0;
+	margin:0;
+	list-style-type:none;
+}
+
+/* Leave some room on the right side of each image */
+article > h4 + ul li > p > img, article > h4 + ul li > img {
+	width:95%;
+	margin-top:1em;margin-bottom:1em;
+	padding-left:0;
+	margin-left:0;
+	margin-right:0%;
+}
+
+/* Each li is half as wide as the container. */
+article > h4 + ul li {
+	font-family:var(--informal);
+	padding-top:.5rem;
+	margin-left:0;
+	max-width:50%;
+	width:50%;
+	float:left;
+	line-height:1em;
+}
+
+/* Start a new line after the 2nd column */
+article > h4 + ul li:nth-child(2) {
+	display:block;
+}
+
+
+
+
+
+
+/* ASIDE */
+aside {padding:2rem;}
+aside {margin: 2rem;}
+aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2;}
+
+/* FOOTER */
+footer {border-top: 1px solid var(--trim-fg);} 
+footer > h2 {text-align:center;}
+footer > table {font-size:calc(80%);}
+/* Give table columns to get some breathing room */
+footer > table > thead > tr > th {padding-right:2rem;} 
+footer > table > thead > tr > th {padding-top:1em;padding-right:2em;padding-bottom:1em;}
+footer > table > tbody > tr > td {padding-right:3em;}
+
+/* Links in main rows (body) of table */
+footer > table > tbody > tr > td > a:link,
+footer > table > tbody > tr > td > a:visited
+	{text-decoration:none;}
+footer > table > tbody > tr > td > a:hover,
+footer > table > tbody > tr > td > a:active
+	{text-decoration:underline;}
+
+

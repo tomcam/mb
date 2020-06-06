@@ -88,7 +88,10 @@ create theme based on an existing one.
 
 
 # Things to document
-
+* Not specifying an [article] in the theme TOML file is the equivalent
+of specifing {{ article }} in article.md or the HTML line 
+* Expects stylesheets to be either in the current directory or on a CDN. Deosnt nknow how to handle something like
+["css/foo.css"]
 * new site: Doesn't delete an existing directory. That lets you turn an existing directory into a site.
 OTOH when you publish, any existing .pub directory is deleted 
 
