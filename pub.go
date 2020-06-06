@@ -205,7 +205,7 @@ func (App *App) markdownBufferToBytes(input []byte) []byte {
 	var buf bytes.Buffer
 	if err := markdown.Convert(input, &buf); err != nil {
 		// TODO: Need something like displayErrCode("1010") or whatever
-		App.Warning("Error converting Xxx")
+    App.QuitError(errCode("0920", err.Error()))
 		return []byte{}
 	}
 	return buf.Bytes()
@@ -467,7 +467,6 @@ func (App *App) publishAssets() {
 		// TODO:
 		assetDir := filepath.Join(App.Site.Publish, relDir)
 		to := filepath.Join(assetDir, file)
-		// xxx
 		if err := Copy(from, to); err != nil {
 			App.QuitError(errCode("0124", "from '"+from+"' to '"+to+"'"))
 		}
