@@ -449,8 +449,6 @@ func (App *App) publishAssets() {
 	// icons. More on this situation below, but of course they are actually
 	// part of the page itself.
 
-	// xxx
-
 	for _, file := range App.Page.Theme.PageType.otherAssets {
 		from := filepath.Join(App.Page.Theme.PageType.PathName, file)
 		// Create a matching directory for assets
@@ -508,7 +506,6 @@ func (App *App) publishThemeAssets() {
 			if filename == (THEME_HELP_SUBDIRNAME) {
 				fmt.Println("Found special dir", filename)
 			}
-			// xxx
 		}
 	}
 }
@@ -780,6 +777,7 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		// See if there's a file with the same name as
 		// the root source file but with a .sidebar extension.
 		if tag == "<aside>" {
+			fmt.Println("** ASIDE **")
 			// Base it on the root Markdown filename and the
 			// extension .sidebar, so foo.md might also have
 			// a foo.sidebar.
@@ -793,6 +791,15 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 				return wrapTag(tag, string(App.MdFileToHTMLBuffer(sidebarfile, input)), true)
 			}
 		}
+
+		//fmt.Println(tag)
+		if tag == "<article>" {
+			/// xxxx
+			if App.Page.Theme.PageType.Article.File == "" && App.Page.Theme.PageType.Article.HTML == "" {
+				return wrapTag(tag, string(App.Page.Article), true)
+			}
+		}
+
 		// Inline HTML is the highest priority
 		if a.HTML != "" {
 			return a.HTML

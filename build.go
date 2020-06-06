@@ -17,7 +17,7 @@ func (App *App) build() error {
 	}
 
 	var err error
-  App.siteDefaults()
+	App.siteDefaults()
 	// Delete any existing publish dir
 	if err := os.RemoveAll(App.Site.Publish); err != nil {
 		return errCode("0302", App.Site.Publish)
@@ -28,9 +28,9 @@ func (App *App) build() error {
 		return errCode("0403", App.Site.Publish)
 	}
 
-  if App.Site.path == "" {
-    return errCode("1018", "")
-  }
+	if App.Site.path == "" {
+		return errCode("1018", "")
+	}
 
 	// Get a list of all files & directories in the site.
 	if _, err = App.getProjectTree(App.Site.path); err != nil {

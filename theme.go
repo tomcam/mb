@@ -191,11 +191,9 @@ func (App *App) copyThemeDirectory(from, to string) error {
 	return nil
 }
 
-
 func (App *App) newPageType(theme, pageType string) error {
-  return App.createPageType(theme, pageType)
+	return App.createPageType(theme, pageType)
 }
-
 
 // createPageType() is very similar to copyTheme() but
 // it creates a new pagetype from an existing one and
@@ -338,12 +336,12 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	if !isChild {
 		// It's a new theme
 		targetDir = filepath.Join(App.Site.themesPath, to)
-	  targetTomlFile = filepath.Join(App.themesPath, destFilename, tomlFilename)
+		targetTomlFile = filepath.Join(App.themesPath, destFilename, tomlFilename)
 	} else {
 		// It's a pagetype of an existing theme
 		targetDir = filepath.Join(App.Site.themesPath, to, from)
 		targetDir = dest
-    targetTomlFile = filepath.Join(dest, filepath.Base(dest) + "." + configFileDefaultExt)
+		targetTomlFile = filepath.Join(dest, filepath.Base(dest)+"."+configFileDefaultExt)
 	}
 	// Obtain the contents of the original TOML file.
 	if _, err := toml.DecodeFile(tomlFile, &p); err != nil {
@@ -383,7 +381,7 @@ func (App *App) updateThemeDirectory(from, dest, to, tomlFile string, isChild bo
 	// Write out the new TOML file, with the search/replaced stylesheet name in the
 	// Stylesheets list.
 	if err := writeTomlFile(targetTomlFile, &p); err != nil {
-    App.QuitError(errCode("PREVIOUS", err.Error()))
+		App.QuitError(errCode("PREVIOUS", err.Error()))
 	}
 
 	// Now get rid of the previous .toml and .css files
