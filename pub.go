@@ -763,9 +763,10 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 			}
 		}
 
-		//fmt.Println(tag)
+    // Exception: a theme without an article pagetype specified is equivalent
+    // to <article>{{ article }}</article>. So wrap the entire article in the
+    // appropriate tag.
 		if tag == "<article>" {
-			/// xxxx
 			if App.Page.Theme.PageType.Article.File == "" && App.Page.Theme.PageType.Article.HTML == "" {
 				return wrapTag(tag, string(App.Page.Article), true)
 			}
@@ -786,7 +787,11 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		}
 		if isMarkdownFile(path) {
 			input = fileToBuf(path)
-			return wrapTag(tag, string(App.MdFileToHTMLBuffer(path, input)), true)
+			if tag == "<article>" {
+			  return string(App.MdFileToHTMLBuffer(path, input))
+      } else {
+        return wrapTag(tag, string(App.MdFileToHTMLBuffer(path, input)), true)
+      }
 		}
 		return fileToString(path)
 	default:
