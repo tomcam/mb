@@ -205,7 +205,7 @@ func (App *App) markdownBufferToBytes(input []byte) []byte {
 	var buf bytes.Buffer
 	if err := markdown.Convert(input, &buf); err != nil {
 		// TODO: Need something like displayErrCode("1010") or whatever
-    App.QuitError(errCode("0920", err.Error()))
+		App.QuitError(errCode("0920", err.Error()))
 		return []byte{}
 	}
 	return buf.Bytes()
@@ -382,7 +382,7 @@ func (App *App) publishAssets() {
 		p.Stylesheets = append(p.Stylesheets, "sidebar-right.css")
 
 	}
-  App.copyStyleSheets(p)
+	App.copyStyleSheets(p)
 	// Copy other files in the theme directory to the target publish directory.
 	// This is whatever happens to be
 	// in the theme directory with sizes.css, fonts.css, etc. Since those files
@@ -421,7 +421,7 @@ func (App *App) publishAssets() {
 	}
 }
 
-func (App *App)copyStyleSheets(p PageType) {
+func (App *App) copyStyleSheets(p PageType) {
 	// Copy shared stylesheets first
 	for _, file := range App.Page.Theme.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
@@ -440,6 +440,7 @@ func (App *App)copyStyleSheets(p PageType) {
 		App.copyStylesheet(file)
 	}
 }
+
 // publishThemeAssets() obtains a list of non-stylesheet asset files in the current
 // PageType directory that should be published, so, anything but Markdown, toml, HTML, and a
 // few other excluded types. It writes these to App.Page.Theme.PageType.otherAssets
@@ -477,17 +478,22 @@ func (App *App) publishThemeAssets() {
 }
 
 func (App *App) copyStylesheet(file string) {
+	if strings.HasPrefix(strings.ToLower(file), "http") {
+		App.appendStr(stylesheetTag(file))
+		return
+	}
 	relDir := relDirFile(App.Site.path, App.Page.filePath)
-	//assetDir := filepath.Join(App.Site.AssetDir, relDir, themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
 	assetDir := filepath.Join(App.Site.AssetDir, relDir, themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
 	from := filepath.Join(App.Page.Theme.PageType.PathName, file)
 	to := filepath.Join(assetDir, file)
-	pathname := filepath.Join(themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
+	var pathname string
+	if strings.HasPrefix(strings.ToLower(file), "http") {
+		pathname = file
+		fmt.Println(pathname)
+	} else {
+		pathname = filepath.Join(themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
+	}
 	App.appendStr(stylesheetTag(pathname))
-	// assetDir only exists if there was at least 1
-	// markdown file in that directory. If it doesn't exist,
-	// there's no reason to copy this file
-	//to = filepath.Join(App.Site.Publish, relDir, themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
 	to = filepath.Join(App.Site.Publish, relDir, themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
 	if err := Copy(from, to); err != nil {
 		App.QuitError(errCode("0916", "from '"+from+"' to '"+to+"'"))
