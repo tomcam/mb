@@ -38,8 +38,8 @@
 		--header-bg: var(--bg);
 
 		/* Primary foreground (text) and background colors in navbar */
-		--nav-fg: var(--header-bg);
-		--nav-bg: var(--fg);
+		--nav-fg: var(--header-fg);
+		--nav-bg: var(--bg);
 
 		/* Secondary foreground (text) and background colors for accents. */
 		--trim-fg:#E56236;

@@ -2,7 +2,7 @@
         based on company branding, then name, then
         author name, then theme name, in descending
         order of importance.
-*/ -}}
+
 {{ if .Site.Company.Name }}
 {{- $name := .Site.Company.Name -}}
 {{ else if .Site.Author.FullName }}
@@ -11,8 +11,12 @@
 {{- $name := .FrontMatter.Theme -}}
 * [{{- $name -}}](/)
 {{ end }} * [Product](/)
+
+
+
+*/ -}}
+* [~~chill~~in'](/)
 * [Create](/)
 * [Pricing](/)
-* [Resources](/)
 * [Try it Free](/)
 

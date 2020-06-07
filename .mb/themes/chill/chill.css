@@ -1,7 +1,7 @@
 h1{ font-size:2.5em;margin-top:2rem; }
 h2{ font-size:2em;margin-top:1.5rem; }
 h3{ font-size:1.5em;margin-top:1.5rem; }
-h4{ font-size:.9em;margin-top:1rem;}
+h4{ font-size:.9em;margin-top:1rem;font-family:'Fredoka One';}
 h5{ font-size:.8em; }
 h6{ font-size:0.9em; }
 
@@ -30,13 +30,13 @@ header > p {color:var(--header-fg);background-color:var(--header-bg);font-size:v
  * looks like a button.
  * --------------------------------------------------
  */
-header > ul {line-height:var(--header-height);font-size:1.25rem;}
+header > ul {line-height:var(--header-height);font-size:var(--branding-height);}
 header > ul {margin-left:0;padding-left:0;list-style-type:none;display:inline;}
 header > ul > li{display:inline;padding-right:1.5rem;} 
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
-	{color:var(--header-fg);text-decoration:none;}
+	{font-size:1.25rem;color:var(--header-fg);text-decoration:none;}
 header > ul > li > a:hover,
 header > ul > li > a:active
 	{color:var(--header-fg);text-decoration:underline;}
@@ -47,9 +47,10 @@ header > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-header > ul > li:first-child > a {color:var(--header-fg);font-size:var(--branding-height);font-weight:700;padding-right:2em;}
-/* Make the last item look and act like a button */
-header > ul > li:last-child > a {border: 2px solid var(--header-fg);border-radius:.25rem;padding: .25rem;color: var(--header-fg);padding: 1em 1.5em;text-decoration: none;text-transform: uppercase;font-weight:bold;}
+header > ul > li:first-child > a {color:var(--header-fg);font-size:calc(120%);font-weight:900;padding-right:1rem;font-family:'Fredoka One';}
+header > ul > li:first-child > a > del  {text-decoration:non;color:var(--trim-fg);} 
+header > ul > li > a > del {text-decoration:none;}
+
 
 /*
  * --------------------------------------------------
@@ -60,36 +61,32 @@ header > ul > li:last-child > a {border: 2px solid var(--header-fg);border-radiu
  * these lines of CSS.)
  * --------------------------------------------------
  */
-header > ul > li:last-child > a:hover {color: var(--header-bg);background-color: var(--header-fg);cursor: pointer;}
-header > ul > li:last-child > a:active {}
+/* Last item of the unordered list is styled to look like a button and stays to the right */
+header > ul >  li:last-child {float:right;} 
+header > ul >  li:last-child > a {font-weight:bold;margin-right:4em; background-color: var(--trim-fg);color: white;padding: .5em 1em;text-decoration: none;text-transform: uppercase;webkit-border-radius:1em;-moz-border-radius: 1em;border-radius:1em;
+}
 
 /* ******************************/
 /*  NAVBAR                      */
 /* ******************************/
-
-nav > p > a {font-size:1.5em;margin-right:1em;font-weight:700;}
-nav > p {margin-top:0;line-height:var(--nav-height);}
+nav > p {margin-top:0;line-height:var(--nav-height);font-weight:bold;font-family:var(--informal);}
+nav > p > a,
+nav > p > a:link,
+nav > p > a:visited 
+  {color:var(--nav-fg);font-size:1.5em;margin-right:1em;font-weight:normal;text-decoration:none;}
 nav > p {background-color:var(--nav-bg); }
 nav > img {display:inline;}
-nav > p > a {color:var(--nav-fg);font-style:normal;}
-
-nav > ul > li {list-style-type:none;} 
-nav > ul > li > a,
-nav > ul > li > a:link,
-nav > ul > li > a:visited {display:inline;text-decoration:none;color:var(--nav-fg);} 
-/* For accessibility purposes show visual distinction when hovering or active */
-nav > ul > li > a:hover,
-nav > ul > li > a:active {text-decoration:underline;} 
-
-
 
 
 /* ******************************/
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
-article {background-color:white;box-shadow: rgb(128,128,128) 1px 1px 3px 0px;}
+article {font-family:'Lato';}
+article > hr {margin-left:0;margin-top:3rem;margin-bottom:2rem;border-top: .5rem solid var(--trim-fg);border-radius:1rem;}
+article {background-color:white;width:60%;margin-top:1rem;box-shadow:1px 1px 3px grey;min-height:60vh;}
 article {max-width:var(--full-page);}
-article > h1,article > h2 {font-weight:700;}
+article > h1,article > h2 {font-weight:700;color:var(--header-fg);}
+article > h1 {margin-bottom:2rem;}
 article > h2 {margin-top:4rem;}
 article > h2 {color:var(--header-bg);}
 article > h3 {color:var(--fg);}

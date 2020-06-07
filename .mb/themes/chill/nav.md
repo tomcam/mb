@@ -1,1 +1,1 @@
-[Specials](/) [Download the App](/) [Contact](/)  [Media](/)
+[Home](/) [News](/) [Opinion](/)  [About](/)
