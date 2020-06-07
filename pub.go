@@ -382,59 +382,7 @@ func (App *App) publishAssets() {
 		p.Stylesheets = append(p.Stylesheets, "sidebar-right.css")
 
 	}
-
-	// Copy shared stylesheets first
-	for _, file := range App.Page.Theme.RootStylesheets {
-		// If user has requested a dark theme, then don't copy skin.css
-		// to the target. Copy theme-dark.css instead.
-		// TODO: Decide whether this should be in root stylesheets and/or regular.
-		file = App.getMode(file)
-		/*
-			if file == "theme-light.css" && App.FrontMatter.Mode == "dark" {
-				file = "theme-dark.css"
-			}
-		*/
-		// If it's a child theme, then get its stylesheets from the parent
-		// directory.
-		if App.FrontMatter.isChild {
-			file = filepath.Join("..", file)
-		}
-		App.copyStylesheet(file)
-	}
-	for _, file := range p.Stylesheets {
-		// Add the stylesheet tag
-		// And copy the stylesheet itself
-		file = App.getMode(file)
-		/*
-			if file == "theme-light.css" && App.FrontMatter.Mode == "dark" {
-				file = "theme-dark.css"
-			}
-		*/
-		// Create a matching directory for assets
-		relDir := relDirFile(App.Site.path, App.Page.filePath)
-
-		// Get full path of stylesheet to copy from theme directory.
-		from := filepath.Join(App.Page.Theme.PageType.PathName, file)
-		// Get directory to which this file will be copied for publishing
-		assetDir := filepath.Join(App.Site.Publish, relDir, themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir)
-		// Create a fully qualified filename for the published file
-		to := filepath.Join(assetDir, file)
-		var pathname string
-		if !strings.HasPrefix(file, "http") {
-			// Create the full pathname for the link tag, say, "themes/reference/assets/reset.css"
-			pathname = filepath.Join(themeDir, App.FrontMatter.Theme, App.FrontMatter.PageType, App.Site.AssetDir, file)
-		} else {
-			// If it's hosted elsewhere the filename is sufficient.
-			pathname = file
-		}
-		// Turn it into a "link" tag.
-		App.appendStr(stylesheetTag(pathname))
-		if !strings.HasPrefix(file, "http") {
-			if err := Copy(from, to); err != nil {
-				App.QuitError(errCode("0125", "from '"+from+"' to '"+to+"'"))
-			}
-		}
-	}
+  App.copyStyleSheets(p)
 	// Copy other files in the theme directory to the target publish directory.
 	// This is whatever happens to be
 	// in the theme directory with sizes.css, fonts.css, etc. Since those files
@@ -473,6 +421,25 @@ func (App *App) publishAssets() {
 	}
 }
 
+func (App *App)copyStyleSheets(p PageType) {
+	// Copy shared stylesheets first
+	for _, file := range App.Page.Theme.RootStylesheets {
+		// If user has requested a dark theme, then don't copy skin.css
+		// to the target. Copy theme-dark.css instead.
+		// TODO: Decide whether this should be in root stylesheets and/or regular.
+		file = App.getMode(file)
+		// If it's a child theme, then copy its stylesheets from the parent
+		// directory.
+		if App.FrontMatter.isChild {
+			file = filepath.Join("..", file)
+		}
+		App.copyStylesheet(file)
+	}
+	for _, file := range p.Stylesheets {
+		file = App.getMode(file)
+		App.copyStylesheet(file)
+	}
+}
 // publishThemeAssets() obtains a list of non-stylesheet asset files in the current
 // PageType directory that should be published, so, anything but Markdown, toml, HTML, and a
 // few other excluded types. It writes these to App.Page.Theme.PageType.otherAssets
