@@ -13,11 +13,10 @@ import (
 // produces an accurate location of any
 // source file parsing errors that occur.
 func (App *App) interps(filename string, input string) string {
-	var s string
 	if strings.ToLower(App.FrontMatter.Templates) != "off" {
-		s = App.execute(filename, input, App.funcs)
+		return App.execute(filename, input, App.funcs)
 	}
-	return s
+	return  input
 }
 
 // execute() parses a Go template, then executes it against HTML/template source.
