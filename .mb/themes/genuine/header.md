@@ -6,6 +6,7 @@
         
 */ -}}
 * [~~tom~~.im](/)
-* [Events](/)
-* [Podcast](/)
+* [Blog](/)
+* [Articles](/)
+* [Contact](/)
 * 

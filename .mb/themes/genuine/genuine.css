@@ -110,8 +110,8 @@ article > p,
   article > dd, 
   article > dl,
   article > hr {
-		font-size:1.5rem;
-		line-height:2.25rem;
+		font-size:1.25rem;
+		line-height:1.75rem;
 		margin-top:1.5em;
     padding-right:var(--right-end);
 }
@@ -185,7 +185,7 @@ article > h2 + ul li:nth-child(2) {
 /*  SIDEBAR (ASIDE TAG)         */
 /* ******************************/
 
-aside {height:100vh;}
+aside {height:80vh;}
 aside > h3 {text-align:center;font-weight:bold;font-size:1.2rem;margin:.5rem auto 1rem auto;}
 /* Generous side margins for text */
 aside  > p + p {margin:1rem 3rem 0 3rem}
@@ -255,20 +255,4 @@ aside > ul > li > ul > li > ul > li:before  {
 /*  FOOTER                      */
 /* ******************************/
 
-/* FOOTER */
-footer {border-top: 1px solid var(--trim-fg);padding-bottom:1rem;} 
-footer > h2 {text-align:center;}
-footer > table {font-size:calc(80%);}
-/* Give table columns to get some breathing room */
-footer > table > thead > tr > th {padding-right:2rem;} 
-footer > table > thead > tr > th {padding-top:1em;padding-right:2em;padding-bottom:1em;}
-footer > table > tbody > tr > td {padding-right:3em;}
-
-footer > table > tbody > tr > td > a:link,
-footer > table > tbody > tr > td > a:visited
-	{text-decoration:none;}
-footer > table > tbody > tr > td > a:hover,
-footer > table > tbody > tr > td > a:active
-	{text-decoration:underline;}
-
-
+footer {padding-top:2em;padding-bottom:1em;} 
