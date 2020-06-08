@@ -56,6 +56,14 @@ article > ul > li > p > a:visited {font-weight:bold;}
 article > ul > li > p > a:hover,
 article > ul > li > p > a:active {text-decoration:none;} 
 
+article > ul > li > > a,
+article > ul > li > > a:link,
+article > ul > li > > a:visited {list-style-type:none;font-weight:bold;} 
+/* For accessibility purposes show visual distinction when hovering or active */
+article > ul > li > > a:hover,
+article > ul > li > > a:active {text-decoration:none;} 
+
+
 
 
 

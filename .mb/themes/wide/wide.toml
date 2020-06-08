@@ -1,5 +1,6 @@
 stylesheets = [ "sizes.css", "theme-light.css", "wide.css", "responsive.css"  ]
 rootstylesheets = [ "reset.css","fonts.css","layout.css" ]
+supported = [ "mode-dark", "mode-light", "sidebar-left", "sidebar-right", "header", "footer", "navbar", "android-4.4", "javascript-none" ]
 
 branding = "Wide Theme"
 

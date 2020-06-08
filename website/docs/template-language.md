@@ -5,7 +5,7 @@ templates="off"
 
 While Markdown and HTML can take you a long way, there are still some things they can't do. Metabuzz extends them with a "template" language, created as part of the [Go language](https://golang.org/pkg/text/template/) that Metabuzz is written in.
 
-TODO: a bit more intor matter
+TODO: a bit more intro matter
 
 ## Hands-off themes 
 

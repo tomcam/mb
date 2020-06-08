@@ -9,6 +9,7 @@ theme="reference"
 # Docs
 
 [Anatomy of a Metabuzz site](anatomy.html)  
+[Roadmap](roadmap.html)
 [Site file](site-file.html)  
 [FAQ](faq.html)  
 [Publish directory](publish-directory.html)  

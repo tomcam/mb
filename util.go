@@ -175,8 +175,7 @@ func createDirStructure(dirs *[][]string) (err error) {
 	return nil
 }
 
-/// curDir() returns the current directory name. Doesn't deal with errors because
-// it's for diagnostic purposes.
+// curDir() returns the current directory name. 
 func currDir() string {
 	if path, err := os.Getwd(); err != nil {
 		return "unknown directory"

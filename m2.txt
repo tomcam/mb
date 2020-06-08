@@ -1,4 +1,7 @@
+pagetypes = [ "home", "section" ]
 
+
+Output occurs after NewDefaultApp() and cmdNewSite and before build()j
 # Configuration
 - First order of businesses is Metabuzz global configuration. That's where Metabuzz-global info comes from, and it affects every site created by Metabuzz. It's passed through command line flags, environment variables, and metabuzz.toml. Currenlty viper does that stuff. Application configuration data (themes, shortcodes, etc.) is normally located in the metabuzz/.mb subdirectory of the system-specific application directory (see docs for os.UserConfigDir()). But you may want it to be elsewhere. For example, it makes sense to use a work directory so Git will manage it. To change that, you need a metabuzz.toml file either in ~ or in the current directory.
 - Second comes the Application object, which happens inside the site. Its initialization comes in initConfig(), which is called by Viper after processing the command line. intiConfig() in turn calls viper.ReadConfig().
@@ -88,6 +91,7 @@ create theme based on an existing one.
 
 
 # Things to document
+* template: you could put up a badge on the page that says osmething like "Deprecated" based on a word in the front matter.
 * Not specifying an [article] in the theme TOML file is the equivalent
 of specifing {{ article }} in article.md or the HTML line 
 * Expects stylesheets to be either in the current directory or on a CDN. Deosnt nknow how to handle something like

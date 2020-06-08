@@ -1,0 +1,6 @@
+#!/bin/zsh
+# Thank you, Sundeep!
+# https://stackoverflow.com/questions/62254934/zsh-on-macos-1-not-expanding-in-a-sed-script?noredirect=1#comment110102949_62254934
+sed -E 's/theme=\"(.*).*\"/\theme=\"'$1'\"/' < $2.md
+
+
