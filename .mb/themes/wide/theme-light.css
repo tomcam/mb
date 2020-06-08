@@ -34,12 +34,12 @@
 		--aside-bg: var(--bg);
 
 		/* Primary foreground (text) and background colors in header */
-		--header-fg: black;
+		--header-fg: darkblue;
 		--header-bg: white;
 
 		/* Primary foreground (text) and background colors in navbar */
-		--nav-fg: var(--header-bg);
-		--nav-bg: var(--header-fg);
+		--nav-fg: black;
+		--nav-bg: lightgray;
 
 		/* Secondary foreground (text) and background colors for accents. */
 		--trim-fg:red; /* cyan: #03DAC6; */
