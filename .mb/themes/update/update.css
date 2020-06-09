@@ -43,6 +43,8 @@ nav > ul > li > a > img {margin-right:1rem;margin-left:1rem;}
 /* ARTICLE */
 article {margin-bottom:4rem;}
 article {padding-right:0;margin-right:0;}
+article > p > img {width:95%;}
+article > p {margin-top:1em;} 
 article > h1 {font-weight:bold;}
 article > h2 {color:var(--fg);font-size:1.5rem;line-height:1.5em;}
 article > h3 {color:var(--fg);}
@@ -54,6 +56,7 @@ article > pre, article > p, article > ul, article > ol, article > li
 	{font-size:1.25rem;line-height:1.5em;padding-right:0;margin-right:0;}
 
 /* ASIDE */
+aside > p > img {margin-top:1em;}
 aside {padding-left:0;margin-left:0;}
 aside > h3 {color:var(--fg);font-size:1.2rem;font-family:var(--informal);font-weight:bold;margin-bottom:2;}
 

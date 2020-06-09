@@ -1,3 +1,4 @@
+
 pagetypes = [ "home", "section" ]
 
 
@@ -91,6 +92,8 @@ create theme based on an existing one.
 
 
 # Things to document
+* Theme creation: you dont need to make left and right sidebars identical. Journey does, but Wide doesn't
+* Genuine theme: You dont ned to supply a round image, or one at 150. It just endrounds it for you
 * template: you could put up a badge on the page that says osmething like "Deprecated" based on a word in the front matter.
 * Not specifying an [article] in the theme TOML file is the equivalent
 of specifing {{ article }} in article.md or the HTML line 

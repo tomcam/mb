@@ -42,7 +42,7 @@
 	--nav-bg: var(--header-fg);
 
 	/* Secondary foreground (text) and background colors for accents. */
-	--trim-fg:darkblue; /* #70877F; Grayish green? */
+	--trim-fg: red;
 	--trim-bg: white;
 	
 	/* Primary foreground (text) and background colors in footer */

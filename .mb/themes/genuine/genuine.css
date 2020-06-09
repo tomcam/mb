@@ -49,7 +49,7 @@ header > ul > li > a:active
  */
 header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;padding-right:1rem;}
 
-header > ul > li:first-child > a > del {color:red;text-decoration:none;}
+header > ul > li:first-child > a > del {color:var(--trim-fg);text-decoration:none;}
 
 /*
  * --------------------------------------------------
@@ -189,7 +189,7 @@ aside {height:80vh;}
 aside > h3 {text-align:center;font-weight:bold;font-size:1.2rem;margin:.5rem auto 1rem auto;}
 /* Generous side margins for text */
 aside  > p + p {margin:1rem 3rem 0 3rem}
-
+aside > p {color:green;margin-top:2rem;}
 
 /*
  * --------------------------------------------------
