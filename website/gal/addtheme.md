@@ -108,10 +108,13 @@ Your theme doesn't have to support sidebars. Or it can support just one side but
 
 Create the following images and name the exactly as shown, then put them in the demo root directory.
 
-| Name of screenshot file  |  What it shows       | Dimensions   |
-| ------------------------ |:--------------------:| --------------------------:|
-| theme-dark-1024x1280.png             | Row 1, Col 2         | Row 1, Col 3               |
-| Row 2, Col 1             | Row 2, Col 2         | Row 2, Col 3               |
+| Name of screenshot file            |  What it shows                            | Dimensions |
+| -----------------------------------|-------------------------------------------|------------|
+| theme-1280x1024.png                | Theme screenshot                          | 1280x1024  |
+| theme-light-left-1280x1024.png     | Light version of theme with left sidebar  | 1280x1024  |
+| theme-dark-right-1280x1024.png     | Dark version of theme with right sidebar  | 1280x1024  |
+| theme-dark-nosidebar-1280x1024.png | Dark version of theme with no sidebar     | 1280x1024  |
+| theme-light-nosidebar-1280x1024.png| LIght version of theme with no sidebar    | 1280x1024  |
 
 
 
