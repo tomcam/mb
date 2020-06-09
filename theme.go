@@ -107,7 +107,6 @@ func (App *App) loadTheme() {
 	// Generate the fully qualified name of the TOML file for this theme.
 	// TODO: App.themePath()?
 	themePath := pageTypePath(themeDir, themeName)
-	// xxx
 	// First get the parent theme shared assets
 	// Temp var because the goal is simply to get the
 	// shared assets.
@@ -118,12 +117,12 @@ func (App *App) loadTheme() {
 	App.Page.Theme.RootStylesheets = p.RootStylesheets
 	// See if a pagetype has been requested.
 	if App.FrontMatter.PageType != "" {
-		if App.FrontMatter.isChild {
+		//if App.FrontMatter.isChild {
 			// This is a child theme/page type, not a default/root theme
 			App.FrontMatter.isChild = true
 			themeDir = filepath.Join(themeDir, App.FrontMatter.PageType)
 			themePath = pageTypePath(themeDir, App.FrontMatter.PageType)
-		}
+		//}
 	} else {
 		// This is a default/root theme, not a child theme/page type
 		App.FrontMatter.isChild = false
@@ -276,7 +275,6 @@ func (App *App) themePath(theme string) string {
 	return filepath.Join(App.themesPath, theme)
 }
 
-// xxx
 
 // themeTOMLFilename() returns the fully qualified pathname
 // of the named theme's expected TOML filename.

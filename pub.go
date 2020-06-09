@@ -46,9 +46,8 @@ func (App *App) publishFile(filename string) error {
 	App.Page = &p
 	var f FrontMatter
 	App.FrontMatter = &f
-	// Probably belongs in build.go if anything
-	//App.siteDefaults()
 	App.Page.filePath = filename
+  App.Verbose(filename)
 	App.Page.filename = filepath.Base(filename)
 	App.Page.dir = currDir()
 	App.Verbose("%s", filename)
@@ -161,7 +160,7 @@ func (App *App) publishFile(filename string) error {
 	if !fileExists(outfile) {
 		App.QuitError(errCode("0910", outfile))
 	}
-	App.Verbose("\tCreated file %s", outfile)
+	App.Verbose("\tCreated file %s\n", outfile)
 	App.fileCount++
 	//
 	// Success
