@@ -1,3 +1,32 @@
+# Bugs
+
+# Todo
+- A reasonable MVP
+  - Embed assets and copy out on installation
+  - Gorelease
+  - A little more documentation
+  - Ugly gallery
+  - Only 5 themes
+  - PageTypes for several themes
+  - Leave TOC generator for the CEO review move
+
+- My ideal MVP
+  - Embed assets and copy out on installation
+  - Gorelease
+  - Unit tests
+  - Lots more documentation
+  - More attractive gallery
+  - Themes finished
+  - PageTypes for several themes
+  - TOC generator
+  - Concept of posts
+
+- Add a created by header file in code injection thingie
+- Collect in 1 file, then Minify https://github.com/tdewolff/minify stylesheets
+- Ensure default theme in site.toml works. I don't think it does
+- I thinkn the common dir should be in .site not in the global filespace. Example: the common files used in the gallery are not useful to most consumers
+- Enure naming config file on the command line works
+- Consider moving .FrontMatter into .Page? It does belong there logically
 
 pagetypes = [ "home", "section" ]
 
@@ -8,9 +37,6 @@ Output occurs after NewDefaultApp() and cmdNewSite and before build()j
 - Second comes the Application object, which happens inside the site. Its initialization comes in initConfig(), which is called by Viper after processing the command line. intiConfig() in turn calls viper.ReadConfig().
 - The Application object contains a Site object.Third to be initialized is the Site object, which reads a site configuration file in the site's .site/site.toml file. It's different for each site you create and has things like the site's name, branding, and so on.  
 
-# Todo
-- Ensure default theme in site.toml works. I don't think it does
-- Enure naming config file on the command line works
 # Adding a command
 
 Example using new them:
@@ -92,7 +118,20 @@ create theme based on an existing one.
 
 
 # Things to document
+* Theme architecture
+  - themename.css for a pagetype is copied from the parent type
+  - RootStylesheets should be things that remain the same form parent to child, like fonts.css
+  - Themes should ber loaded in this order
+="themes/debut/reset.css">
+<link rel="stylesheet" href="themes/debut/fonts.css">
+<link rel="stylesheet" href="themes/debut/gallery/sizes.css">
+<link rel="stylesheet" href="themes/debut/gallery/layout.css">
+<link rel="stylesheet" href="themes/debut/gallery/gallery.css">
+<link rel="stylesheet" href="themes/debut/gallery/theme-light.css">
+<link rel="stylesheet" href="themes/debut/gallery/responsive.css">
+
 * Theme creation: you dont need to make left and right sidebars identical. Journey does, but Wide doesn't
+* The Go template global context thing https://gohugo.io/templates/introduction/#2-use--to-access-the-global-context
 * Genuine theme: You dont ned to supply a round image, or one at 150. It just endrounds it for you
 * template: you could put up a badge on the page that says osmething like "Deprecated" based on a word in the front matter.
 * Not specifying an [article] in the theme TOML file is the equivalent

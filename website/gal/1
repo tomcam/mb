@@ -1,0 +1,30 @@
+#!/bin/zsh
+# Thank you, Sundeep!
+# https://stackoverflow.com/questions/62254934/zsh-on-macos-1-not-expanding-in-a-sed-script?noredirect=1#comment110102949_62254934
+
+[ ! $1 ] && echo "Please specify the new theme name" && exit 1
+
+echo "Copying the wide theme to ${1}" 
+cp -R wide/. $1
+[ ! -d $1 ] && echo "theme directory ${1} doesn't exist" && exit 1
+declare -a filenames=(
+	'dark.md'
+	'index.md'
+	'light-sidebar-left.md'
+	'light-sidebar-right.md'
+	'dark-sidebar-left.md'
+	'dark-sidebar-right.md'
+	)
+
+dest=$1/demo
+
+for file in "${filenames[@]}"
+do
+	# Display the commmand to execute...
+	echo "${file}"
+	# And execute the command
+  sed -E 's/theme=\"(.*).*\"/\theme=\"'$1'\"/' < $dest/$file
+done
+
+
+

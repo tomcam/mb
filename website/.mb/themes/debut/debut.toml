@@ -1,6 +1,6 @@
 Branding = "Debut theme"
-RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
-Stylesheets = ["sizes.css", "debut.css", "theme-light.css", "responsive.css"]
+RootStylesheets = ["reset.css", "fonts.css"]
+Stylesheets = ["sizes.css", "layout.css", "debut.css", "theme-light.css", "responsive.css"]
 PathName = ""
 
 [Nav]

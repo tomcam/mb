@@ -35,7 +35,7 @@
 
 		/* Default foreground (text) and background colors in article */
 		--article-fg: black; /* #EAD94C; */
-		--article-bg: whitesmoke; /* #03B3561; */
+		--article-bg: white; /* #03B3561; */
 				
 		/* Default foreground (text) and background colors in aside */
 		--aside-fg: var(--fg);
@@ -51,7 +51,7 @@
 
 		/* Secondary foreground (text) and background colors for accents. */
 		--trim-fg: #56008A; /* #E5E5E5; */
-		--trim-bg: #AACCD5; 
+		--trim-bg: whitesmoke; 
 		
 		/* Primary foreground (text) and background colors in footer */
 		--footer-fg: var(--header-fg);
@@ -71,7 +71,8 @@ nav > ul > li > a:visited {color:var(--nav-fg);}
 /* ARTICLE */
 article > h1 > strong {color:var(--trim-fg);}
 article > h1 + ul > li > h2 > strong {color:var(--trim-fg);}
-article > h1 + ul > li > h3 > strong {color:var(--trim-fg);}
+article > h1 + ul > li > h3 > strong {color:var(--nav-fg);}
+article > h3 {color:var(--trim-fg);}
 article > ul > li > p > a:visited {color:var(--trim-fg);} 
 
 /* ASIDE */

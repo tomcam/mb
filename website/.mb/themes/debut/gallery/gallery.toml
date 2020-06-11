@@ -1,7 +1,6 @@
 Branding = "Debut theme"
 Description = ""
-Stylesheets = ["sizes.css", "gallery.css", "theme-light.css", "responsive.css"]
-RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
+Stylesheets = ["sizes.css",  "layout.css", "gallery.css", "theme-light.css", "responsive.css"]
 PathName = ""
 
 [Nav]
@@ -10,7 +9,7 @@ PathName = ""
 
 [Header]
   HTML = ""
-  File = "header.md"
+  iFile = "header.md"
 
 [Article]
   HTML = ""
