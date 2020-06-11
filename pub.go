@@ -5,6 +5,7 @@ import (
 	"fmt"
 	//"github.com/gohugoio/hugo/markup/tableofcontents"
 	"io/ioutil"
+  //h "golang.org/x/net/html"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -18,6 +19,20 @@ import (
 )
 
 var (
+
+  // (?<=(?!h1|h2|h3|h4|h5|h6)\>)(?!\<)(.+?)(?=\<\/.+?(?=h1|h2|h3|h4|h5|h6))
+  // (?m)(?<=(?!h1|h2|h3|h4|h5|h6)\>)(?!\<)(.+?)(?=\<\/.+?(?=h1|h2|h3|h4|h5|h6))
+  // Adapted from:
+  //https://regex101.com/r/vM1rI0/1
+
+  // (?m)(?<=\>)(?!\<)(.*)(?=\<)(?<!\>)
+  // Adapted from: https://regex101.com/r/tF7tG7/1
+  // Runtime error anyH, _ = regexp.Compile("(?m)(?<=(?!h1|h2|h3|h4|h5|h6)\\>)(?!\\<)(.+?)(?=\\<\\/.+?(?=h1|h2|h3|h4|h5|h6))")
+
+  // Runtime error
+  //anyH, _ = regexp.Compile("(?m)(?<=\/>)(?!\<)(.*)(?=\<)(?<!\>)")
+
+
 	// Credit to anonymous user at:
 	// https://play.golang.org/p/OfQ91QadBCH
 	// Match an h1 in Markdown
@@ -56,9 +71,6 @@ func (App *App) publishFile(filename string) error {
 	if err != nil {
 		return errCode("0102", filename)
 	}
-	// TODO: Wrong. Setting default them properly means checking site.
-	App.FrontMatter.PageType = ""
-
 	// Extract front matter and parse.
 	// Obviously that includes an optional theme or pagetype designation.
 	// Starting at the Markdown, convert to HTML.
@@ -83,10 +95,9 @@ func (App *App) publishFile(filename string) error {
 	App.startHTML()
 
 	// If a title wasn't specified in the front matter,
-	// Generate title tag contents from headers. Find the first
-	// h1. If that fails, find the first h2-h6. If that
-	// fails, put up a self-aggrandizing error message.
+	// put up a self-aggrandizing error message.
 	App.titleTag()
+
 
 	App.descriptionTag()
 
@@ -579,18 +590,13 @@ func header2To6(s string) string {
 }
 
 func (App *App) titleTag() {
-	//App.appendStr("\n<title>" + title + "</title>\n")
 	var title string
 	if App.FrontMatter.Title != "" {
 		title = App.FrontMatter.Title
 	} else {
-		title = firstHeader(string(App.Page.markdownStart))
-	}
-	if title == "" {
 		title = productName + ": Title needed here, squib"
 	}
 	App.Page.titleTag = title
-
 }
 
 // Article() takes a document with optional front matter, parses
@@ -799,7 +805,7 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 	return ""
 }
 
-// Generates a meta tag
+// metatag(), well, generates a meta tag. It's complicated.
 func metatag(tag string, content string) string {
 	const quote = `"`
 	return ("\n<meta name=" + quote + tag + quote + " content=" + quote + content + quote + ">\n")
