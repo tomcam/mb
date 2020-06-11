@@ -6,7 +6,6 @@ h5{ font-family:var(--code);font-size:1rem;font-weight:bold;margin-top:1rem; }
 h6{ font-size:0.9rem; }
 
 table > thead > tr > th  {margin-top:4rem;}
-blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
 /* HEADER */
 /* Unordered lists show horizontally, not vertically, in the header */
@@ -47,7 +46,27 @@ article {max-width:var(--max-article-width);}
 article > h1 {font-size:4rem;font-weight:700;letter-spacing:-2px;line-height:1em;}
 article > h2 {font-weight:700;font-size:2.5rem;line-height:1em;}
 article > h3 {font-weight:700;}
+
+/*
+ * --------------------------------------------------
+ * Special feature: h4 has multiple formats to give 
+ * variety to subheads or higlights. Typical usage
+ * might look something like this
+ *
+ * #### By Tom Campbell *| Staff reporter |* **{{ ftime "Jan 2, 2006" }}**
+ * 
+ * This would show the name in bold sans-serif, 
+ * the job title in a normal-weight serif, and
+ * the date in normal weight sans-serif, with pipe
+ * characters separating them.
+ * --------------------------------------------------
+ */
+
 article > h4 {font-weight:700;font-size:1em;margin-bottom:1em; } /* Byline */
+article > h4 > em {font-family:var(--formal);font-weight:normal;}
+article > h4 > strong {font-family:var(--informal);font-weight:normal;color:gray;}
+
+article > p > strong {font-weight:bold;}
 article > p,
   article > ul,
   article > ol,
@@ -81,7 +100,9 @@ article > table > td,th {padding:1rem;}
 article > table > tbody > tr > td {padding-bottom:.5rem;padding-top:.5rem;}
 article > hr {margin-left:0;}
 
+article > blockquote {border-top:4px solid var(--header-fg);border-bottom:4px solid var(--header-fg); font-size:2em;font-style:italic;padding:4rem 2rem 4rem 2rem;margin:2rem;} 
 
+article > blockquote > p {font-family:var(--formal)}
 /* ASIDE */
 aside {margin: 10% 2rem 2rem 2rem;}
 aside > h2 {padding:1em;text-align:center;font-size:1.2rem;font-weight:700;}
@@ -95,9 +116,8 @@ aside > ul > li > a:visited {text-decoration:none;font-size:1rem;line-height:2.5
 aside > ul > li > a:hover,
 aside > ul > li > a:active {font-weight:bold;} 
 
-aside > p > img {margin-top:2rem;width:100%;padding:0;}
-aside > p {font-size:1.2rem;margin-bottom:2em;}
-aside > p > strong {padding-bottom:2em;}
+aside > p {font-size:1.2rem;margin-bottom:.25rem;margin-top:0;}
+aside > p > img {margin-top:.75rem;width:100%;padding:0;}
 
 /* FOOTER */
 footer > h2, footer > h2 > a {text-align:center;font-size:4rem;font-weight:900;float:left;margin-right:2rem;text-decoration:none;}

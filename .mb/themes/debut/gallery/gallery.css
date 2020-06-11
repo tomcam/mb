@@ -2,8 +2,8 @@
 header > p {font-weight:700;display:inline;} 
 
 h2{ font-size:2em;margin-top:1.5rem; }
-h3{ font-size:1.25em;margin-top:1.5rem; }
-h4{ font-size:.9em;margin-top:1rem;}
+h3{ font-size:1.75em;margin-top:1.5rem; }
+h4{ font-size:.8em;margin-top:1rem;font-weight:bold;}
 h5{ font-size:.8em; }
 h6{ font-size:0.9em; }
 
@@ -30,25 +30,15 @@ nav > ul > li > a:hover,
 nav > ul > li > a:active {text-decoration:none;} 
 
 /* ARTICLE */
-article {padding:4rem 4rem 4rem 4rem}
-article > h1 {font-size:2.5rem;float:left;font-weight:700;padding-right:0%;width:80%;}
+article {padding:2rem 4rem 4rem 4rem}
+article > p {padding-right:8rem;width:var(--text-width);font-family:var(--formal);margin-bottom:1rem;font-size:1.5rem;line-height:2rem;}
+article > p > img, article > p > a > img {padding-right:0;width:100%;;margin-bottom:2rem;border:4px solid var(--fg);}
+article > h1 {font-size:2.5rem;float:left;font-weight:700;padding-right:0%;width:80%;padding-bottom:2rem;}
 article > h1 > strong {margin-left:1rem;font-weight:900;font-family:var(--informal);}
-article > h2, article > h1 + h2 {padding-left:1em;font-weight:bold;clear:left;}
-article > h1 + ul {margin:-bottom:4rem;list-style-type:none;}
-article > h1 + ul li {max-width:60%;width:60%;clear:left;}
-/* Leave some room on the right side of each image */
-article > h1 + ul li > img {margin-right:4%;margin-left:3%;width:90%;float:left;margin-bottom:3rem; box-shadow: rgb(128,128,128) 1px 1px 3px 0px;}
-/* H3 is to the right of the image. */
-article > h1 + ul > li > h2 {font-weight:700;padding-right:5%;margin-left:90%;width:70%;font-size:1.75rem;margin-top:0;}
-article > h1 + ul > li > h2 > strong {font-weight:700;}
-article > h1 + ul > li > h3 {margin-top:1rem;font-weight:bold;padding-right:5%;margin-left:90%;width:70%;}
-article > h1 + ul > li > h3 > strong {font-weight:900;font-size:2rem;}
-/* H4 under the H3 */
-article > h1 + ul > li > h4 {font-weight:bold;font-size:.8em;margin-left:90%;width:70%;margin-top:0;line-height:1.2em;margin-top:.5em;}
-/* Paragraph under the H3 */
-article > h1 + ul > li >  p{margin-left:90%;width:70%;display:block;margin-top:.5rem;line-height:1.5em;}
-article > h3 + ul > li > ul > li  {margin-left:90%;width:70%;display:block;margin-top:1rem;line-height:1.2em;}
-
+article > h1 > del {font-weight:normal;color:gray;text-decoration:none;}
+article > h2, article > h1 + h2 {text-align:left;padding-left:1em;font-weight:bold;clear:left;}
+article > h2 {color:var(--trim-bg);}
+article > h3 {color:var(--trim-fg);font-weight:bold;}
 article > ul > li > p > a,
 article > ul > li > p > a:link,
 article > ul > li > p > a:visited {font-weight:bold;} 
@@ -64,19 +54,15 @@ article > ul > li > a:hover,
 article > ul > li > a:active {text-decoration:none;} 
 
 article > ul li > 
- {color:red;list-style-type:none;font-weight:bold;} 
-
-
-
-
+ {list-style-type:none;font-weight:bold;} 
 
 
 /* ASIDE */
 aside {padding:2rem;}
 aside {margin: 2rem;}
-aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2;}
+aside > h3 {font-size:.75em;font-weight:bold;}
 
-/* FOOTER */
+/* FOOTER from gallery.css */
 footer {margin-top:1rem;} 
 
 
@@ -89,19 +75,21 @@ footer > p > a:hover,
 footer > p > a:active {text-decoration:underline;} 
 
 
-footer > h2 {text-align:center;}
-footer > table {font-size:calc(80%);}
+article > table, footer > table {font-size:calc(120%);}
 /* Give table columns to get some breathing room */
-footer > table > thead > tr > th {padding-right:2rem;} 
-footer > table > thead > tr > th {padding-top:1em;padding-right:2em;padding-bottom:1em;}
-footer > table > tbody > tr > td {padding-right:3em;}
+article > table > thead > tr > th, footer > table > thead > tr > th {font-size:.75em;font-weight:normal;padding-top:1rem;padding-right:4rem;margin-top:2rem;} 
+footer > table > thead > tr > th {padding-top:1em;padding-right:0em;padding-bottom:1em;}
+article > table, footer > table > tbody > tr > td {font-size:1.75em;}
 
 /* Color of links in main rows (body) of table */
-footer > table > tbody > tr > td > a:link,
-footer > table > tbody > tr > td > a:visited
-	{text-decoration:none;}
-footer > table > tbody > tr > td > a:hover,
-footer > table > tbody > tr > td > a:active
+article > table > tbody > tr > td > a:link, footer > table > tbody > tr > td > a:link,
+article > table > tbody > tr > td > a:link, footer > table > tbody > tr > td > a:visited
 	{text-decoration:underline;}
+article > table > tbody > tr > td > a:hover, footer > table > tbody > tr > td > a:hover,
+article > table > tbody > tr > td > a:hover, footer > table > tbody > tr > td > a:active
+	{text-decoration:underline;}
+
+footer {text-align:center;}
+footer > h2 > a {font-family:'Kanit',var(--informal),sans-serif;font-weight:700;margin:2rem auto 4rem auto;}
 
 
