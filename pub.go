@@ -152,7 +152,7 @@ func (App *App) publishFile(filename string) error {
 	App.Page.Path = relDir
 	// If there's a README.md and no index.md, rename
 	// the output file to index.html
-	if App.Page.filename == "README.md" && !optionSet(App.Site.dirs[App.Page.dir], hasIndexMd) {
+	if App.Page.filename == "README.md" && !optionSet(App.Site.dirs[App.Page.dir].mdOptions, hasIndexMd) {
 		base = "index.html"
 	}
 
@@ -243,6 +243,20 @@ func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 	return App.markdownBufferToBytes([]byte(interp))
 }
 
+
+func (App *App) addMdOption(dir string, mdOption mdOptions) {
+		//App.Site.dirs[dir].mdOptions |= markdownDir
+    d := App.Site.dirs[dir]
+    d.mdOptions |= d.mdOptions
+    App.Site.dirs[dir] = d
+}
+
+func (App *App) setMdOption(dir string, mdOption mdOptions) {
+    d := App.Site.dirs[dir]
+    d.mdOptions = d.mdOptions
+    App.Site.dirs[dir] = d
+}
+
 // publishLocalFiles() get called for every markdown file
 // in the directory. It copies assets like image files & so forth
 // from the source file's current directory to the publish location,
@@ -264,13 +278,14 @@ func (App *App) publishLocalFiles(dir string) bool {
 	pubDir := filepath.Join(App.Site.Publish, relDir)
 
 	// If this directory hasn't been created, create it.
-	if !optionSet(App.Site.dirs[pubDir], markdownDir) {
+	if !optionSet(App.Site.dirs[pubDir].mdOptions, markdownDir) {
 		if err := os.MkdirAll(pubDir, PUBLIC_FILE_PERMISSIONS); err != nil {
 			App.QuitError(errCode("0404", pubDir, err.Error()))
 		}
 		// Mark that the directory has been created so this
 		// doesn't get repeated.
-		App.Site.dirs[dir] |= markdownDir
+		//App.Site.dirs[dir].mdOptions |= markdownDir
+		App.addMdOption(dir, markdownDir)
 	}
 	// Get the directory listing.
 	candidates, err := ioutil.ReadDir(dir)
@@ -296,10 +311,13 @@ func (App *App) publishLocalFiles(dir string) bool {
 		}
 
 		if filename == "README.md" {
-			App.Site.dirs[dir] |= hasReadmeMd
+			//App.Site.dirs[dir].mdOptions |= hasReadmeMd
+      App.addMdOption(dir, hasReadmeMd)
+
 		}
 		if strings.ToLower(filename) == "index.md" {
-			App.Site.dirs[dir] |= hasIndexMd
+			//App.Site.dirs[dir].mdOptions |= hasIndexMd
+		  App.addMdOption(dir, hasIndexMd)
 		}
 
 	}
@@ -307,7 +325,7 @@ func (App *App) publishLocalFiles(dir string) bool {
 	if hasMarkdown {
 		// Flag this as a directory that contains at least
 		// 1 markdown file.
-		App.Site.dirs[dir] |= markdownDir
+		App.addMdOption(dir, markdownDir)
 	} else {
 		// No markdown files found, so return
 		return false

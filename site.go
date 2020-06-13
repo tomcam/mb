@@ -39,7 +39,7 @@ type Site struct {
 	Company companyConfig
 
 	// List of all directories in the site
-	dirs map[string]mdOptions
+	dirs map[string]dirInfo
 
 	// List of directories in the source project directory that should be
 	// excluded, things like ".git" and "node_modules".
@@ -144,6 +144,10 @@ type OG struct {
 	Image_alt        string
 }
 
+
+type dirInfo struct {
+  mdOptions mdOptions
+}
 // Indicates whether it's directory, a directory containing
 // markdown files, or file, or a Markdown file.
 // Used for bit flags

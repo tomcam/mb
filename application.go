@@ -104,7 +104,8 @@ func newDefaultApp() *App {
 			// Assets just go into the publish directory
 			AssetDir: ".",
 			//configFile: filepath.Join(siteConfigDir, siteConfigFilename),
-			dirs:     map[string]mdOptions{},
+			//dirs:     map[string]mdOptions{},
+			dirs:     map[string]dirInfo{},
 			WebPages: map[string]WebPage{},
 			Language: "en",
 			MarkdownOptions: MarkdownOptions{
