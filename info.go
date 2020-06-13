@@ -30,7 +30,7 @@ func (App *App) info() {
 		exists("Site directory: ", App.Site.path)
 		exists("Publish directory", App.Site.Publish)
 		exists("Theme directory", App.Site.themesPath)
-		exists("Headers directory", App.Site.headersPath)
+		exists("Headers directory", App.Site.headTagsPath)
 		//:exists("Asset directory", App.assetDir())
 		exists("Shortcode directory: ", App.Site.sCodePath)
 	}

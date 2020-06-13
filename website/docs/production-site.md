@@ -8,9 +8,9 @@ headers or sidebar
 * Add favicons or whatever to the Header directory
 
 
-## Add header tags as appropriate
+## Add head tags as appropriate
 
-The [headers directory](headers-dir.html) 
+The [headers directory](headtag-dir.html) 
 
 ### Example: adding a header tag for favicon support
 

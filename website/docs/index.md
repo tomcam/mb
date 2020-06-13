@@ -60,7 +60,7 @@ theme="reference"
 
 ## Site
 [Site file](site-file.html)  
-[Headers directory](headers-dir.html)
+[Headtags directory](headtags-dir.html)
 
 ## Global configuration
 [Your config file (global configuration file)](config-file.html)  

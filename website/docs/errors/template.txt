@@ -1,4 +1,4 @@
-# ???? BE SURE TO ADD THIS TO ERROR-CODES.MD
+# ???? <- Just the 4 digit error code here BE SURE TO ADD THIS TO ERROR-CODES.MD
 
 ## Error message:  XXX
 

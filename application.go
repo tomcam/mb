@@ -27,8 +27,8 @@ type App struct {
 	// Fully qualfied directory name of application data directory
 	configDir string
 
-	// Fully qulaified directorhy name of the headers directory for "code injection"
-	headersPath string
+	// Fully qulaified directorhy name of the header tags directory for "code injection"
+	headTagsPath string
 
 	// Location of global themes directory
 	themesPath string

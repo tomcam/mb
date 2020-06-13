@@ -14,7 +14,7 @@ Welcome to %s
 	siteDirs = [][]string{
 		{publishDir},
 		{globalConfigurationDirName, commonDir},
-		{globalConfigurationDirName, headersDir},
+		{globalConfigurationDirName, headTagsDir},
 		{globalConfigurationDirName, sCodeDir},
 		{globalConfigurationDirName, siteConfigDir},
 		{globalConfigurationDirName, themeDir},
@@ -57,7 +57,7 @@ const (
 	// Name of the subdirectory containing files that get copied
 	// into the header of each HTML file rendered by the site
 	// Excluded from publishing.
-	headersDir = "headers"
+	headTagsDir = "headtags"
 
 	// Name of subdirectory containing shortcode files
 	// Excluded from publishing.
