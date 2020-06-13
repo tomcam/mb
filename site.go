@@ -56,10 +56,10 @@ type Site struct {
 
 	// All these files are copied into the HTML header.
 	// Example: favicon links.
-	Headers []string
+	HeadTags []string
 
-	// Full path of headers for "code injection"
-	headersPath string
+	// Full path of header tags for "code injection"
+	headTagsPath string
 
 	// for HTML header, as in "en" or "fr"
 	Language string
@@ -119,6 +119,29 @@ type Site struct {
 type WebPage struct {
 	// Rendered text, the HTML after going through templates
 	html []byte
+}
+
+// OpenGraph tags
+// https://ogp.me/
+type OG struct {
+	Title              string
+	Type               string
+	Image              string
+	Url                string
+	Audio              string
+	Description        string
+	Determiner         string
+	Locale             string
+	Locale_alternative string
+	Site_name          string
+	Video              string
+	// Structured properties
+	Image_url        string
+	Image_secure_url string
+	Image_type       string
+	Image_width      string
+	Image_height     string
+	Image_alt        string
 }
 
 // Indicates whether it's directory, a directory containing
@@ -288,12 +311,12 @@ func (App *App) siteDefaults() {
 	// TODO: Move to  NewDefaultApp() and change to AppDefaults I think
 	// scode path?
 	App.commonPath = filepath.Join(App.configDir, commonDir)
-	App.headersPath = filepath.Join(App.configDir, headersDir)
+	App.headTagsPath = filepath.Join(App.configDir, headTagsDir)
 	App.sCodePath = filepath.Join(App.configDir, sCodeDir)
 	App.themesPath = filepath.Join(App.configDir, themeDir)
 
 	App.Site.commonPath = filepath.Join(App.Site.path, globalConfigurationDirName, commonDir)
-	App.Site.headersPath = filepath.Join(App.Site.path, globalConfigurationDirName, headersDir)
+	App.Site.headTagsPath = filepath.Join(App.Site.path, globalConfigurationDirName, headTagsDir)
 	App.Site.sCodePath = filepath.Join(App.Site.path, globalConfigurationDirName, sCodeDir)
 	App.Site.themesPath = filepath.Join(App.Site.path, globalConfigurationDirName, themeDir)
 

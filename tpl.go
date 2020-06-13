@@ -16,7 +16,7 @@ func (App *App) interps(filename string, input string) string {
 	if strings.ToLower(App.FrontMatter.Templates) != "off" {
 		return App.execute(filename, input, App.funcs)
 	}
-	return  input
+	return input
 }
 
 // execute() parses a Go template, then executes it against HTML/template source.

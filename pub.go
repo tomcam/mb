@@ -5,7 +5,7 @@ import (
 	"fmt"
 	//"github.com/gohugoio/hugo/markup/tableofcontents"
 	"io/ioutil"
-  //h "golang.org/x/net/html"
+	//h "golang.org/x/net/html"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -20,18 +20,17 @@ import (
 
 var (
 
-  // (?<=(?!h1|h2|h3|h4|h5|h6)\>)(?!\<)(.+?)(?=\<\/.+?(?=h1|h2|h3|h4|h5|h6))
-  // (?m)(?<=(?!h1|h2|h3|h4|h5|h6)\>)(?!\<)(.+?)(?=\<\/.+?(?=h1|h2|h3|h4|h5|h6))
-  // Adapted from:
-  //https://regex101.com/r/vM1rI0/1
+	// (?<=(?!h1|h2|h3|h4|h5|h6)\>)(?!\<)(.+?)(?=\<\/.+?(?=h1|h2|h3|h4|h5|h6))
+	// (?m)(?<=(?!h1|h2|h3|h4|h5|h6)\>)(?!\<)(.+?)(?=\<\/.+?(?=h1|h2|h3|h4|h5|h6))
+	// Adapted from:
+	//https://regex101.com/r/vM1rI0/1
 
-  // (?m)(?<=\>)(?!\<)(.*)(?=\<)(?<!\>)
-  // Adapted from: https://regex101.com/r/tF7tG7/1
-  // Runtime error anyH, _ = regexp.Compile("(?m)(?<=(?!h1|h2|h3|h4|h5|h6)\\>)(?!\\<)(.+?)(?=\\<\\/.+?(?=h1|h2|h3|h4|h5|h6))")
+	// (?m)(?<=\>)(?!\<)(.*)(?=\<)(?<!\>)
+	// Adapted from: https://regex101.com/r/tF7tG7/1
+	// Runtime error anyH, _ = regexp.Compile("(?m)(?<=(?!h1|h2|h3|h4|h5|h6)\\>)(?!\\<)(.+?)(?=\\<\\/.+?(?=h1|h2|h3|h4|h5|h6))")
 
-  // Runtime error
-  //anyH, _ = regexp.Compile("(?m)(?<=\/>)(?!\<)(.*)(?=\<)(?<!\>)")
-
+	// Runtime error
+	//anyH, _ = regexp.Compile("(?m)(?<=\/>)(?!\<)(.*)(?=\<)(?<!\>)")
 
 	// Credit to anonymous user at:
 	// https://play.golang.org/p/OfQ91QadBCH
@@ -62,7 +61,7 @@ func (App *App) publishFile(filename string) error {
 	var f FrontMatter
 	App.FrontMatter = &f
 	App.Page.filePath = filename
-  App.Verbose(filename)
+	App.Verbose(filename)
 	App.Page.filename = filepath.Base(filename)
 	App.Page.dir = currDir()
 	App.Verbose("%s", filename)
@@ -97,7 +96,6 @@ func (App *App) publishFile(filename string) error {
 	// If a title wasn't specified in the front matter,
 	// put up a self-aggrandizing error message.
 	App.titleTag()
-
 
 	App.descriptionTag()
 
@@ -638,27 +636,27 @@ func stripHeading(heading string) string {
 // into the header before it's close.
 func (App *App) headTags() {
 	App.Page.headTags = App.headerFiles() +
-		App.headerTagGanalytics()
+		App.headTagGanalytics()
 }
 
 // headerFiles() finds all the files in the headers subdirectory
 // and copies them into the HMTL headers of every file on the site.
 func (App *App) headerFiles() string {
 	var h string
-	headers, err := ioutil.ReadDir(App.Site.headersPath)
+	headers, err := ioutil.ReadDir(App.Site.headTagsPath)
 	if err != nil {
-		App.QuitError(errCode("0706", App.Site.headersPath))
+		App.QuitError(errCode("0706", App.Site.headTagsPath))
 	}
 	for _, file := range headers {
-		h += fileToString(filepath.Join(App.Site.headersPath, file.Name()))
+		h += fileToString(filepath.Join(App.Site.headTagsPath, file.Name()))
 	}
 	return h
 }
 
-// headerTagGanalytics() generates a Google Analytics script, if a tracking
+// headTagGanalytics() generates a Google Analytics script, if a tracking
 // ID is available. If not it returns an empty string so it's always
 // safe to call.
-func (App *App) headerTagGanalytics() string {
+func (App *App) headTagGanalytics() string {
 	if App.Site.Ganalytics == "" {
 		return ""
 	}
@@ -768,9 +766,9 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 			}
 		}
 
-    // Exception: a theme without an article pagetype specified is equivalent
-    // to <article>{{ article }}</article>. So wrap the entire article in the
-    // appropriate tag.
+		// Exception: a theme without an article pagetype specified is equivalent
+		// to <article>{{ article }}</article>. So wrap the entire article in the
+		// appropriate tag.
 		if tag == "<article>" {
 			if App.Page.Theme.PageType.Article.File == "" && App.Page.Theme.PageType.Article.HTML == "" {
 				return wrapTag(tag, string(App.Page.Article), true)
@@ -793,10 +791,10 @@ func (App *App) pageRegionToHTML(a *pageRegion, tag string) string {
 		if isMarkdownFile(path) {
 			input = fileToBuf(path)
 			if tag == "<article>" {
-			  return string(App.MdFileToHTMLBuffer(path, input))
-      } else {
-        return wrapTag(tag, string(App.MdFileToHTMLBuffer(path, input)), true)
-      }
+				return string(App.MdFileToHTMLBuffer(path, input))
+			} else {
+				return wrapTag(tag, string(App.MdFileToHTMLBuffer(path, input)), true)
+			}
 		}
 		return fileToString(path)
 	default:

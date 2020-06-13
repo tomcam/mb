@@ -118,10 +118,10 @@ func (App *App) loadTheme() {
 	// See if a pagetype has been requested.
 	if App.FrontMatter.PageType != "" {
 		//if App.FrontMatter.isChild {
-			// This is a child theme/page type, not a default/root theme
-			App.FrontMatter.isChild = true
-			themeDir = filepath.Join(themeDir, App.FrontMatter.PageType)
-			themePath = pageTypePath(themeDir, App.FrontMatter.PageType)
+		// This is a child theme/page type, not a default/root theme
+		App.FrontMatter.isChild = true
+		themeDir = filepath.Join(themeDir, App.FrontMatter.PageType)
+		themePath = pageTypePath(themeDir, App.FrontMatter.PageType)
 		//}
 	} else {
 		// This is a default/root theme, not a child theme/page type
@@ -274,7 +274,6 @@ func (App *App) copyTheme(from, to string, isChild bool) error {
 func (App *App) themePath(theme string) string {
 	return filepath.Join(App.themesPath, theme)
 }
-
 
 // themeTOMLFilename() returns the fully qualified pathname
 // of the named theme's expected TOML filename.

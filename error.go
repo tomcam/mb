@@ -112,13 +112,13 @@ var errMsgs = map[string]string{
 	"0601": "",
 
 	// 0700	- Error reading directory
-	"0701": "Can't copy theme",                      // Custom msg
-	"0702": "Error copying directory",               // Go error + dir name
-	"0703": "Error reading directory",               // directory name
-	"0704": "Missing name of source directory",      // directory name to copy from
-	"0705": "Missing name of target directory",      // directory name to copy to
-	"0706": "Unable to read from headers directory", // Name of headers directory
-	"0707": "Directories are identical:",            // custom message
+	"0701": "Can't copy theme",                       // Custom msg
+	"0702": "Error copying directory",                // Go error + dir name
+	"0703": "Error reading directory",                // directory name
+	"0704": "Missing name of source directory",       // directory name to copy from
+	"0705": "Missing name of target directory",       // directory name to copy to
+	"0706": "Unable to read from headtags directory", // Expected pathname of headtags directory
+	"0707": "Directories are identical:",             // custom message
 
 	// 0800	- Can't determine the name of something
 	"0801": "",
@@ -143,7 +143,6 @@ var errMsgs = map[string]string{
 	"0918": "Can't copy a theme onto itself. That would be silly.", //
 	"0919": "Pagetype name is already taken",                       // custom message
 	"0920": "Error generating Markdown",                            //
-
 
 	// 0950 - Something's already there
 	"0951": "Site already exists:", // sitename
