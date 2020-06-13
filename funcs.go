@@ -27,6 +27,30 @@ func (App *App) article(params ...string) string {
 	*/
 }
 
+// dirNames() returns a directory listing of the specified
+// file names in the document's directory
+func (App *App) dirNames(params ...string) []string {
+  files, err := ioutil.ReadDir(App.Page.dir)
+	if err != nil {
+		return []string{}
+	}
+  var ret []string
+	for _, file := range files {
+    ret = append(ret, file.Name())
+	}
+  return ret
+}
+
+func (App *App) files(dir, suffix string) ([]string) {
+  files, err := filepath.Glob(filepath.Join(dir, suffix))
+  if err != nil {
+    return []string{}
+  } else {
+    return files
+  }
+}
+
+
 // ftime() returns the current, local, formatted time.
 // Can pass in a formatting string
 // https://golang.org/pkg/time/#Time.Format
@@ -167,6 +191,8 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 func (App *App) addTemplateFunctions() {
 	App.funcs = template.FuncMap{
 		"article":  App.article,
+    "dirnames":  App.dirNames,
+    "files":    App.files,
 		"ftime":    App.ftime,
 		"hostname": App.hostname,
 		"inc":      App.inc,
