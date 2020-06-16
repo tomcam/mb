@@ -3,6 +3,7 @@
 ## Live Gallery
 
 * IT'S UGLY
+* How do I present pagetypes?
 * How to present the links and/or buttons to encourage people to try the many different variations?
 
 ## Visual manual for themes

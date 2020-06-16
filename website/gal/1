@@ -18,6 +18,7 @@ declare -a filenames=(
 
 dest=$1/demo
 
+# Replace all "theme=" with the new theme name.
 for file in "${filenames[@]}"
 do
 	# Display the commmand to execute...

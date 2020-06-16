@@ -1,5 +1,12 @@
 
 
+# Simplest gallery
+
+{{ range files "." "*.jpg" }}![]({{ . }}){{ end }}
+
+
+
+
 You can specify a header logo using a URL, of course. 
 
 ```

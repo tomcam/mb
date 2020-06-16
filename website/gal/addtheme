@@ -8,19 +8,20 @@
 # Replace with your favorite command line editor, which is
 # of course nvim
 editor=nvim
+mkdir -p $1
 echo "Copying the wide theme to ${1}" 
-cp -R wide/. $1
+cp wide/*.md $1
 [ ! -d $1 ] && echo "theme directory ${1} doesn't exist" && exit 1
 declare -a filenames=(
 	'dark'
-	'index'
+	'light'
 	'light-sidebar-left'
 	'light-sidebar-right'
 	'dark-sidebar-left'
 	'dark-sidebar-right'
 	)
 
-dest=$1/demo
+dest=$1
 
 # Displays prompt, and waits for user to answer 
 # with either a Y or N. Repeats prompt until
@@ -72,7 +73,13 @@ echo "\tReplace ${dest}/left-sidebar-example.md with left sidebar content for th
 echo "\tReplace ${dest}/right-sidebar-example.md with right sidebar content for this theme"
 wait_for_yes "Run nvim on these files?"
 if [ $? == 0 ]; then
-$editor ${dest}/intro.md ${dest}/description.md ${dest}/left-sidebar-example.md ${dest}/right-sidebar-example.md 
+$editor ${dest}/index.md ${dest}/intro.md ${dest}/description.md ${dest}/left-sidebar-example.md ${dest}/right-sidebar-example.md 
+fi
+
+
+wait_for_yes "Delete the .bak files?"
+if [ $? == 0 ]; then
+rm $1/*.bak 
 fi
 
 exit 0
