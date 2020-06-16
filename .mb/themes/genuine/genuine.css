@@ -136,11 +136,71 @@ article > p >  a:hover,
 article > p >  a:active
 	{text-decoration:none;}
 
-article > img, article > p > img {
-  width:100%;
-  box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
-  display:block;
+
+
+article > ul:target {
+  opacity:1;
+  outline:none;
+  top:0;
 }
+
+
+article > ul { 
+     list-style-type:none;
+     position:relative;
+     z-index;9999;
+     width:100%;
+     height:100%;
+     left:0;
+     top:0;
+     color:#333;
+    -webkit-transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+    -o-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
+}
+
+
+article > ul > li > p > img {
+  width:200px;
+  position:absolute;
+  top:0;
+  left:0;
+  opacity:1;
+  height:200px;
+  overflow:hidden;
+  float:left
+  border:5px solid #333;
+  margin:5px;
+}
+
+
+article > ul > li > p > a > img {
+  height:100%;
+  align-self:center;
+}
+
+
+
+
+
+/*
+article > ul > li > p > img:nth-child(1) {
+  animation-delay: 12s;
+}
+
+article > ul > li > p > img:nth-child(2) {
+  animation-delay: 8s;
+}
+
+article > ul > li > p > img:nth-child(3) {
+  animation-delay: 4s;
+}
+
+article > ul > li > p > img:nth-child(4) {
+  animation-delay: 0s;
+}
+*/
 
 
 article > table {width:var(--full-page);margin-top:2rem;margin-bottom:3rem;}
@@ -151,35 +211,9 @@ article > table > tbody > tr > td {padding:1rem;}
 
 article > h2 {margin-top:4rem;clear:left;}
 article > h2 + ul {
-	padding:0;
-	margin:0;
-	list-style-type:none;
 }
 
-/* Leave some room on the right side of each image */
-article > h2 + ul li > img {
-	width:95%;
-  box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
-  margin-bottom:.75rem;
-}
-
-/* Each li is 1/2 as wide as the container. */
-article > h2 + ul li {
-	font-family:var(--informal);
-	max-width:50%;
-	width:50%;
-	float:left;
-	line-height:1em;
-  font-size:.8em;
-  margin-bottom:2rem;
-  margin-top:2rem;
-}
-
-/* Start a new line after the 2nd column */
-article > h2 + ul li:nth-child(2) {
-	display:block;
-}
-
+    
 
 /* ******************************/
 /*  SIDEBAR (ASIDE TAG)         */
