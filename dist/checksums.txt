@@ -1,0 +1,4 @@
+6a92c712bf0146cbc9533bd9ae9afdcc6b057e2b568caac9e8f20c15db5c393b  mb_v0.1.7-next_Linux_i386.tar.gz
+065af574872750d3be05db07b56357b7384d922dfe4bf96ea83421da1005b0b6  mb_v0.1.7-next_Darwin_i386.tar.gz
+ecc5aece83d7ec8711dea35798b68175d6fdaf906fda1e2665d700f146b20706  mb_v0.1.7-next_Linux_x86_64.tar.gz
+8e3b53fb5a3e6aee7a7f982747cabc4eaf18c5b3d2af01f18bec83f925fa335a  mb_v0.1.7-next_Darwin_x86_64.tar.gz
