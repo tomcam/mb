@@ -2,57 +2,50 @@ package main
 
 import (
 	"html/template"
-	//"github.com/Masterminds/sprig"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 )
 
-//func (App *App) article(params ...string) template.HTML {
+// article() returns the contents of the Markdown file itself.
+// It can only be used from one of the page regions, not inside
+// the markdown text, because that would cause a Markdown inception.
 func (App *App) article(params ...string) string {
 	if len(params) < 1 {
 		return string(App.Site.WebPages[App.Page.filePath].html)
 	} else {
 		return string(App.Site.WebPages[App.Page.filePath].html)
-		//return string(App.Page.Article)
 	}
-	/*jj
-	var s, ret string
-	for _, s = range params {
-		ret = ret + s + " "
-	}
-	return ret
-	*/
 }
 
 // dirNames() returns a directory listing of the specified
 // file names in the document's directory
 func (App *App) dirNames(params ...string) []string {
-  files, err := ioutil.ReadDir(App.Page.dir)
+	files, err := ioutil.ReadDir(App.Page.dir)
 	if err != nil {
 		return []string{}
 	}
-  var ret []string
+	var ret []string
 	for _, file := range files {
-    ret = append(ret, file.Name())
+		ret = append(ret, file.Name())
 	}
-  return ret
+	return ret
 }
 
 // files() obtains a slice of filenames in the specified
 // directory, using a wildcard specified in suffix.
 // Example: {{ files "." "*.jpg }}
-func (App *App) files(dir, suffix string) ([]string) {
-  files, err := filepath.Glob(filepath.Join(dir, suffix))
-  if err != nil {
-    return []string{}
-  } else {
-    return files
-  }
+func (App *App) files(dir, suffix string) []string {
+	files, err := filepath.Glob(filepath.Join(dir, suffix))
+	if err != nil {
+		return []string{}
+	} else {
+		return files
+	}
 }
-
 
 // ftime() returns the current, local, formatted time.
 // Can pass in a formatting string
@@ -191,15 +184,43 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 	return template.HTML(s)
 }
 
+// toc() generates a table of contents to the specified
+// level from 1-6.
+func (App *App) toc(level string) string {
+	l, err := strconv.Atoi(level)
+	// Please leave this error code as is
+	if err != nil {
+		App.QuitError(errCode("1205", level))
+	}
+	// Ditto
+	if l <= 0 || l > 6 {
+		App.QuitError(errCode("1206", level))
+	}
+	// The Markdown source is in App.Page.markdownStart
+	//fmt.Printf("Markdown source: %v\n", string(App.Page.markdownStart))
+
+	App.generateTOC(l)
+
+	var renderedTOC string
+	var s string
+	for i := 0; i < len(App.Page.TOC); i++ {
+		s = wrapTag("<li>", App.Page.TOC[i].header, true)
+		renderedTOC += wrapTag("<ul>", s, true)
+	}
+
+	return renderedTOC
+}
+
 func (App *App) addTemplateFunctions() {
 	App.funcs = template.FuncMap{
 		"article":  App.article,
-    "dirnames":  App.dirNames,
-    "files":    App.files,
+		"dirnames": App.dirNames,
+		"files":    App.files,
 		"ftime":    App.ftime,
 		"hostname": App.hostname,
 		"inc":      App.inc,
 		"path":     App.path,
 		"scode":    App.scode,
+		"toc":      App.toc,
 	}
 }

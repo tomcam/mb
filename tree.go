@@ -44,7 +44,7 @@ func (App *App) visit(files *[]string) filepath.WalkFunc {
 		}
 
 		if isDir {
-      App.setMdOption(path, normalDir)
+			App.setMdOption(path, normalDir)
 			//App.Site.dirs[path].mdOptions = normalDir
 		}
 

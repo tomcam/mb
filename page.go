@@ -1,10 +1,22 @@
 package main
 
+// The table of contents consists of an array of these
+// dudes.
+type TOCEntry struct {
+	// The text of the header
+	header string
+	// Its level 1-6 for h1-h6
+	level int
+}
+
 // type Page contains read-only information about the Markdown page currently
 // being processed.
 type Page struct {
 	// Currently loaded theme
 	Theme Theme
+
+	// Table of contents for this page
+	TOC []TOCEntry
 
 	// Name of theme used for code highlighting
 	// Currently using Chroma:

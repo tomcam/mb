@@ -3,34 +3,19 @@ package main
 import (
 	"bytes"
 	"fmt"
-	//"github.com/gohugoio/hugo/markup/tableofcontents"
-	"io/ioutil"
-	//h "golang.org/x/net/html"
-	"os"
-	"path/filepath"
-	"regexp"
-	"strings"
-	//"text/template"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"regexp"
+	"strings"
 )
 
 var (
-
-	// (?<=(?!h1|h2|h3|h4|h5|h6)\>)(?!\<)(.+?)(?=\<\/.+?(?=h1|h2|h3|h4|h5|h6))
-	// (?m)(?<=(?!h1|h2|h3|h4|h5|h6)\>)(?!\<)(.+?)(?=\<\/.+?(?=h1|h2|h3|h4|h5|h6))
-	// Adapted from:
-	//https://regex101.com/r/vM1rI0/1
-
-	// (?m)(?<=\>)(?!\<)(.*)(?=\<)(?<!\>)
-	// Adapted from: https://regex101.com/r/tF7tG7/1
-	// Runtime error anyH, _ = regexp.Compile("(?m)(?<=(?!h1|h2|h3|h4|h5|h6)\\>)(?!\\<)(.+?)(?=\\<\\/.+?(?=h1|h2|h3|h4|h5|h6))")
-
-	// Runtime error
-	//anyH, _ = regexp.Compile("(?m)(?<=\/>)(?!\<)(.*)(?=\<)(?<!\>)")
 
 	// Credit to anonymous user at:
 	// https://play.golang.org/p/OfQ91QadBCH
@@ -243,18 +228,16 @@ func (App *App) MdFileToHTMLBuffer(filename string, input []byte) []byte {
 	return App.markdownBufferToBytes([]byte(interp))
 }
 
-
 func (App *App) addMdOption(dir string, mdOption mdOptions) {
-		//App.Site.dirs[dir].mdOptions |= markdownDir
-    d := App.Site.dirs[dir]
-    d.mdOptions |= d.mdOptions
-    App.Site.dirs[dir] = d
+	d := App.Site.dirs[dir]
+	d.mdOptions |= d.mdOptions
+	App.Site.dirs[dir] = d
 }
 
 func (App *App) setMdOption(dir string, mdOption mdOptions) {
-    d := App.Site.dirs[dir]
-    d.mdOptions = d.mdOptions
-    App.Site.dirs[dir] = d
+	d := App.Site.dirs[dir]
+	d.mdOptions = d.mdOptions
+	App.Site.dirs[dir] = d
 }
 
 // publishLocalFiles() get called for every markdown file
@@ -312,12 +295,12 @@ func (App *App) publishLocalFiles(dir string) bool {
 
 		if filename == "README.md" {
 			//App.Site.dirs[dir].mdOptions |= hasReadmeMd
-      App.addMdOption(dir, hasReadmeMd)
+			App.addMdOption(dir, hasReadmeMd)
 
 		}
 		if strings.ToLower(filename) == "index.md" {
 			//App.Site.dirs[dir].mdOptions |= hasIndexMd
-		  App.addMdOption(dir, hasIndexMd)
+			App.addMdOption(dir, hasIndexMd)
 		}
 
 	}

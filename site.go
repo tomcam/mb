@@ -144,10 +144,10 @@ type OG struct {
 	Image_alt        string
 }
 
-
 type dirInfo struct {
-  mdOptions mdOptions
+	mdOptions mdOptions
 }
+
 // Indicates whether it's directory, a directory containing
 // markdown files, or file, or a Markdown file.
 // Used for bit flags
