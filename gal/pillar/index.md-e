@@ -1,7 +1,0 @@
-===
-theme="Pillar"
-===
-
-{{ inc "allfiles.md" }}
-
-
