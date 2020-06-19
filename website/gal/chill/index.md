@@ -5,7 +5,7 @@ sidebar="none"
 
 [List]
 Title="METABUZZ THEME GALLERY"
-DemoTheme="chill"
+DemoTheme="Chill"
 ===
 
 # **{{ .FrontMatter.List.DemoTheme }}** theme ~~| Metabuzz~~

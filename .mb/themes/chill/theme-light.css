@@ -42,7 +42,7 @@
 		--nav-bg: var(--bg);
 
 		/* Secondary foreground (text) and background colors for accents. */
-		--trim-fg:#E56236;
+		--trim-fg:#E56236; /* Orangey */
 		--trim-bg: white;
 		
 		/* Primary foreground (text) and background colors in footer */
@@ -51,4 +51,12 @@
 
 }
 
+hr {color:purple;}
+aside > ul > li > a,
+aside > ul > li > a:link,
+aside > ul > li > a:visited
+	{color:var(--trim-bg);text-decoration:none;}
+aside > ul > li > a:hover,
+aside > ul > li > a:active
+	{color:var(--trim-bg);text-decoration:underline;}
 

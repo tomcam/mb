@@ -1,9 +1,10 @@
 ===
-theme="Chill"
-mode="light"
+theme="Update"
+mode="dark"
 [List]
 Title="Metabuzz theme gallery"
 ===
 
 {{ inc "common|allfiles.md" }}
+
 

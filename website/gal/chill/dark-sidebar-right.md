@@ -1,5 +1,5 @@
 ===
-theme="chill"
+theme="Chill"
 mode="dark"
 sidebar="right"
 [List]

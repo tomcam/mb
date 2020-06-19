@@ -1,6 +1,7 @@
 ===
-theme="Chill"
-mode="light"
+theme="Update"
+mode="dark"
+sidebar="right"
 [List]
 Title="Metabuzz theme gallery"
 ===

@@ -13,12 +13,18 @@ echo "Copying the wide theme to ${1}"
 cp wide/*.md $1
 [ ! -d $1 ] && echo "theme directory ${1} doesn't exist" && exit 1
 declare -a filenames=(
-	'dark'
-	'light'
-	'light-sidebar-left'
-	'light-sidebar-right'
-	'dark-sidebar-left'
-	'dark-sidebar-right'
+	'dark.md'
+	'light.md'
+	'light-sidebar-left.md'
+	'light-sidebar-right.md'
+	'dark-sidebar-left.md'
+	'dark-sidebar-right.md'
+  'right-sidebar-example.md'
+  'left-sidebar-example.md'
+  'dark-sidebar-left.sidebar'
+  'dark-sidebar-right.sidebar'
+  'light-sidebar-left.sidebar'
+  'light-sidebar-right.sidebar'
 	)
 
 dest=$1
@@ -60,7 +66,7 @@ do
 	# And execute the command
   # Thank you, Sundeep!
   # https://stackoverflow.com/questions/62254934/zsh-on-macos-1-not-expanding-in-a-sed-script?noredirect=1#comment110102949_62254934
-  sed -i.bak -E 's/theme=\"(.*).*\"/\theme=\"'$1'\"/' $dest/$file.md > $dest/$file.bak
+  sed -i.bak -E 's/theme=\"(.*).*\"/\theme=\"'$1'\"/' $dest/$file > $dest/$file.bak
   #sed -E 's/theme=\"(.*).*\"/\theme=\"'$1'\"/' < $dest/$file 
 done
   sed -i.bak -E 's/DemoTheme=\"(.*).*\"/\DemoTheme=\"'$1'\"/' $1/index.md > $1/index.bak

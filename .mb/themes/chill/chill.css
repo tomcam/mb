@@ -138,12 +138,12 @@ article > table > tbody > tr > td {padding:1rem;border-bottom:.1px solid gray;}
 /*  SIDEBAR (ASIDE TAG)         */
 /* ******************************/
 
+aside {padding-top:3rem;}
 aside, aside > p, aside > h2, aside > h3, aside > h4 {margin-left:0;padding-left:1rem;padding-right:1rem;} 
-aside > h3 {color:var(--trim-fg);}
+aside > h3 {color:var(--trim-bg);}
 aside > h4 {color:var(--header-bg);background-color:var(--header-fg)}
-aside {padding:2rem;}
-aside {margin: 2rem;}
-aside h2 {margin-top: 1em;margin-bottom:.5em}
+aside {color:var(--trim-bg);background-color:var(--trim-fg);padding:2rem;margin: 2rem;}
+aside h2 {font-family:'Fredoka One';margin-top: 1em;margin-bottom:.5em}
 aside > p {margin-top:1rem;margin-bottom:1rem;}
 /*
  * --------------------------------------------------

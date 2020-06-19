@@ -1,5 +1,5 @@
 ===
-theme="Chill"
+theme="Update"
 mode="dark"
 sidebar="left"
 ===

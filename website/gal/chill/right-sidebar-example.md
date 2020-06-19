@@ -1,22 +1,17 @@
 ## LOOKING FORWARD
 
-![Picture of a joyful young lady](img-sample-hipster-joyful-400x267.jpg) 
+**Design tips for non-designers** Use this principles to make your portfolio look less awful
 
-**Not a care in the world** Shed your stress like autumn leaves
+**Speed up your workflow by scripting** Learn just enough programming to build your own footgun
 
-![Picture of a crystal ball on a bridge](img-sample-glass-ball-400x258.jpg)
+**Is this the right time to upgrade your video editing software?** We discuss the tradeoffs, segmenting the audience by experience level
 
-**You may not be able to see the future..** But you can build it
-
-![Picture of skateboard taken from vantage point of rider](img-sample-feet-on-skateboard-640x424.jpg)
-
-**Just how ready are you for alternative forms of transportation?** There are more options than most people think
-
-![Photo of action figures](img-sample-figurines-200x133.jpg)
-
-**Collect these?** See what it says about your personality
+---
 
 
-![Picture of an ox-driven merchant caravan in Inda](img-sample-india-merchant-200x133.jpg)
 
-**Holiday tip: rent a car early** Make sure you don't have to leave the airport in one of these
+
+
+
+
+
