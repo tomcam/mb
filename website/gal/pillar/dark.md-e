@@ -1,9 +1,0 @@
-===
-theme="CHANGEME"
-mode="dark"
-===
-
-{{ inc "allfiles.md" }}
-
-
-

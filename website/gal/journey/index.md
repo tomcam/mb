@@ -5,20 +5,28 @@ sidebar="none"
 
 [List]
 Title="METABUZZ THEME GALLERY"
-DemoTheme="JOURNEY"
-#DemoPageType="HOME"
+DemoTheme="Journey"
+Next="future"
 ===
 
-# **{{ .FrontMatter.List.DemoTheme }}** theme
-* ![Screen shot of Journey theme](theme-journey-right-1280x1024.png)
+# **{{ .FrontMatter.List.DemoTheme }}** theme ~~| Metabuzz~~
+[![Screen shot of theme](theme-1280x1024.png)](dark.html) 
   ## {{ if .FrontMatter.List.DemoPageType }} PageType: **{{ .FrontMatter.List.DemoPageType }}**{{ else }}## {{ end }}
-  Journey is an SEO-ready template for personal bloggers, with support for several kinds of image presentation.  
-  ### Modes
-  [Light theme](demo/index.html) 
-  ### Sidebar support
-  Light theme: [Left](demo/light-sidebar-left.html) [Right](demo/light-sidebar-right.html)  
-  #### CREATOR [Tom Campbell](https://metabuzz.com)
-  #### LICENSE [MIT](https://metabuzz.com)
-  ### Next: [Pillar](../pillar/index.html) 
+
+### About {{ .FrontMatter.List.DemoTheme }}
+{{ inc "description.md" }}
+
+### Live demos 
+
+| No sidebar                | Sidebar                         |      
+|:------------------------- |---------------------------------|
+| [Light theme](light.html) | [Left](light-sidebar-left.html) [Right](light-sidebar-right.html)|
+| [Dark theme](dark.html)   | [Left](dark-sidebar-left.html)  [Right](dark-sidebar-right.html) |
+
+### Creator 
+[Tom Campbell](https://metabuzz.com)
+
+### License 
+[MIT](https://metabuzz.com)
 
 

@@ -1,5 +1,5 @@
 ===
-theme="pillar"
+theme="future"
 mode="light"
 sidebar="left"
 ===

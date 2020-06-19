@@ -1,8 +1,7 @@
 ===
-theme="pillar"
+theme="future"
 mode="dark"
-[List]
-Title="Metabuzz theme gallery"
+sidebar="left"
 ===
 
 {{ inc "common|allfiles.md" }}

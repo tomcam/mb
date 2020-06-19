@@ -66,11 +66,12 @@ done
   sed -i.bak -E 's/DemoTheme=\"(.*).*\"/\DemoTheme=\"'$1'\"/' $1/index.md > $1/index.bak
 echo "Don't forget to fix Next in the front matter. That links to the next theme."
 echo "Now customize the following:"
-echo "\tReplace ${dest}/intro.md with any images, text or other material you"
-echo "\twould like to precede the kitchensink with"
-echo "\tReplace ${dest}/description.md with a pitch describing the theme"
-echo "\tReplace ${dest}/left-sidebar-example.md with left sidebar content for this theme"
-echo "\tReplace ${dest}/right-sidebar-example.md with right sidebar content for this theme"
+echo "* Replace ${dest}/intro.md with any images, text or other material you"
+echo "* would like to precede the kitchensink with"
+echo "* Replace ${dest}/description.md with a pitch describing the theme"
+echo "* Replace ${dest}/left-sidebar-example.md with left sidebar content for this theme"
+echo "* Replace ${dest}/right-sidebar-example.md with right sidebar content for this theme"
+echo "* Create a 1280x1024 PNG image of the best-looking version of the theme and save it as theme-1280x1024.png"
 wait_for_yes "Run nvim on these files?"
 if [ $? == 0 ]; then
 $editor ${dest}/index.md ${dest}/intro.md ${dest}/description.md ${dest}/left-sidebar-example.md ${dest}/right-sidebar-example.md 

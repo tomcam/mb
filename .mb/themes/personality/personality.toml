@@ -1,5 +1,11 @@
-Stylesheets = ["reset.css", "fonts.css", "layout.css", "theme-light.css", "personality.css"]
+stylesheets = [ "sizes.css", "theme-light.css", "personality.css", "responsive.css"  ]
+rootstylesheets = [ "reset.css","fonts.css","layout.css" ]
+
 PathName = ""
+
+[Supported]
+  dark="no"
+  left_sidebar="no"
 
 [Nav]
   HTML = ""

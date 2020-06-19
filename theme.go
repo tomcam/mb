@@ -8,10 +8,18 @@ import (
 	"strings"
 )
 
+type Supported struct {
+  Left_sidebar string
+  right_sidebar string
+  dark string
+  light string
+}
+
 type Theme struct {
 	// Parent root stylesheets get copied to the child automatically
 	RootStylesheets []string
 	PageType        PageType
+  Supported       Supported
 }
 
 type PageType struct {

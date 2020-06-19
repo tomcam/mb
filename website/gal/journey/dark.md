@@ -1,5 +1,5 @@
 ===
-theme="pillar"
+theme="journey"
 mode="dark"
 [List]
 Title="Metabuzz theme gallery"

@@ -23,19 +23,10 @@ Next="future"
 | [Light theme](light.html) | [Left](light-sidebar-left.html) [Right](light-sidebar-right.html)|
 | [Dark theme](dark.html)   | [Left](dark-sidebar-left.html)  [Right](dark-sidebar-right.html) |
 
-
-
 ### Creator 
 [Tom Campbell](https://metabuzz.com)
 
 ### License 
 [MIT](https://metabuzz.com)
-
-
-| No sidebar                | Sidebar                         |                                  |
-|:------------------------- |---------------------------------|----------------------------------|
-| [Light theme](light.html) | [Left](light-sidebar-left.html) | [Right](light-sidebar-right.html)|
-| [Dark theme](dark.html)   | [Left](dark-sidebar-left.html)  | [Right](dark-sidebar-right.html) |
-
 
 
