@@ -1,6 +1,6 @@
 Branding = "Default Theme"
 Description = ""
-Stylesheets = ["https://unpkg.com/papercss@1.6.1/dist/paper.min.css", "responsive.css"]
+Stylesheets = ["https://unpkg.com/papercss@1.6.1/dist/paper.min.css", "scribble.css", "theme-light.css", "responsive.css"]
 PathName = ""
 
 [Nav]
