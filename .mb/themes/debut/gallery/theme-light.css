@@ -30,8 +30,8 @@
 		 */
 	
 		/* Default foreground (text) and background colors  */
-		--fg: black; /* #E8EAEB; */
-		--bg: white; /*#201D34 #211D35; Dark purple */
+		--fg: black; 
+		--bg: white;
 
 		/* Default foreground (text) and background colors in article */
 		--article-fg: black; /* #EAD94C; */

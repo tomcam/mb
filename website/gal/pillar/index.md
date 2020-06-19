@@ -17,6 +17,8 @@ Next="future"
 ### About {{ .FrontMatter.List.DemoTheme }}
 {{ inc "description.md" }}
 
+{{ inc "variations.md" }}
+
 ### Live demos 
 
 | No sidebar                | Sidebar                         |      

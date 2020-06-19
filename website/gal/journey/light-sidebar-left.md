@@ -1,5 +1,5 @@
 ===
-theme="journey"
+theme="Journey"
 mode="light"
 sidebar="left"
 ===

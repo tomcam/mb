@@ -4,7 +4,7 @@
 
 {{ inc "description.md" }}
 
-{{ inc "common|variations.md" }}
+{{ inc "article|variations.md" }}
 
 {{ inc "common|mdemo.md" }}
 

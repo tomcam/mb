@@ -1,7 +1,7 @@
 h1{ font-size:2.5em;margin-top:2rem; }
 h2{ font-size:2em;margin-top:1.5rem; }
 h3{ font-size:1.5em;margin-top:1.5rem; }
-h4{ font-size:.9em;margin-top:1rem;font-family:'Fredoka One';}
+h4{ font-size:.9em;margin-top:1rem;}
 h5{ font-size:.8em; }
 h6{ font-size:0.9em; }
 
@@ -88,9 +88,9 @@ article {max-width:var(--full-page);}
 article > h1,article > h2 {font-weight:700;color:var(--header-fg);}
 article > h1 {margin-bottom:2rem;}
 article > h2 {margin-top:4rem;}
-article > h2 {color:var(--header-bg);}
+article > h2 {color:var(--trim-fg);}
 article > h3 {color:var(--fg);}
-article > h4 {font-weight:normal;font-size:1em;color:gray;margin-bottom:1em; } /* Byline */
+article > h4 {font-weight:light;font-size:1em;color:gray;margin-bottom:1em; } /* Byline */
 article > h4 > strong {font-weight:bold;color:black; } /* Byline */
 
 article > p, 
