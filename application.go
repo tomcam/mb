@@ -24,10 +24,10 @@ type App struct {
 	// Fully qualified directory name of the common files subdirectory
 	commonPath string
 
-	// Fully qualfied directory name of application data directory
+	// Fully qualified directory name of application data directory
 	configDir string
 
-	// Fully qulaified directorhy name of the header tags directory for "code injection"
+	// Fully qualified directory name of the header tags directory for "code injection"
 	headTagsPath string
 
 	// Location of global themes directory
@@ -51,7 +51,7 @@ func (App *App) initConfig() {
 	// to look for Metabuzz application data such as themes and shortcodes.
 	// So assume it's where the system likes it, under a "metabuzz/.mb" subdirectory.
 	App.configDir = configDir()
-	// Places to look for a metabuz.toml ponting to the global application config dir.
+	// Places to look for a metabuzz.toml pointing to the global application config dir.
 	// It can look in as many places as you want.
 	// Look in the local directory for a directory named just named ".mb".
 	//viper.AddConfigPath(filepath.Join(".", globalConfigurationDirName))
@@ -59,7 +59,7 @@ func (App *App) initConfig() {
 	// Location to look for metabuzz.toml
 	// Look in the ~/ directory for an ".mb" directory.
 	viper.AddConfigPath(filepath.Join(homeDir(), globalConfigurationDirName))
-	// Name of the config file is metabuz, dot..
+	// Name of the config file is metabuzz, dot..
 	viper.SetConfigName(productName)
 	// toml. viper likes to apply its own file extensions
 	viper.SetConfigType(configFileDefaultExt)
