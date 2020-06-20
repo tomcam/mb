@@ -204,7 +204,7 @@ func (App *App) toc(level string) string {
 	var renderedTOC string
 	var s string
 	for i := 0; i < len(App.Page.TOC); i++ {
-		s = wrapTag("<li>", App.Page.TOC[i].header, true)
+		s = wrapTag("<li>", App.Page.TOC[i].Header, true)
 		renderedTOC += wrapTag("<ul>", s, true)
 	}
 

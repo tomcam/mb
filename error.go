@@ -143,6 +143,7 @@ var errMsgs = map[string]string{
 	"0918": "Can't copy a theme onto itself. That would be silly.", //
 	"0919": "Pagetype name is already taken",                       // custom message
 	"0920": "Error generating Markdown",                            //
+	"0921": "Error generating TOC",                                 // custom message
 
 	// 0950 - Something's already there
 	"0951": "Site already exists:", // sitename
@@ -298,7 +299,7 @@ func displayError(e error) {
 
 // QuitError() displays the error passed to it and exits
 // to the operating system, returning a 1 (any nonzero
-// return means an error ocurred).
+// return means an error occurred).
 // Normally functions that can generate a runtime error
 // do so by returning an error. But sometimes there's a
 // constraint, for example, fulfilling an interface method

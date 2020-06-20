@@ -8,6 +8,7 @@ import (
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
+	"github.com/yuin/goldmark/text"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -175,13 +176,15 @@ func (App *App) markdownBufferToBytes(input []byte) []byte {
 		//hardWraps := html.WithHardWraps()
 	}
 
-	// TODO: Make the following option: Footnote,
-	markdown := goldmark.New(
+	// Store the goldmark object so we can use the parser and renderer on small
+	// pieces of the markdown AST, like the individual TOC headers.
+	App.goldmark = goldmark.New(
+		// TODO: Make the following option: Footnote,
 		goldmark.WithExtensions(extension.GFM, extension.DefinitionList, extension.Footnote,
 			highlighting.NewHighlighting(
 				highlighting.WithStyle(App.Site.MarkdownOptions.HighlightStyle),
 				highlighting.WithFormatOptions(
-				//highlighting.WithLineNumbers(),
+				// highlighting.WithLineNumbers(),
 				),
 			)),
 		goldmark.WithParserOptions(
@@ -195,12 +198,15 @@ func (App *App) markdownBufferToBytes(input []byte) []byte {
 		),
 	)
 
-	var buf bytes.Buffer
-	if err := markdown.Convert(input, &buf); err != nil {
+	buf := new(bytes.Buffer)
+	ctx := parser.NewContext()
+	App.Page.mdNode = App.goldmark.Parser().Parse(text.NewReader(input), parser.WithContext(ctx))
+	if err := App.goldmark.Renderer().Render(buf, input, App.Page.mdNode); err != nil {
 		// TODO: Need something like displayErrCode("1010") or whatever
 		App.QuitError(errCode("0920", err.Error()))
-		return []byte{}
+		return nil
 	}
+
 	return buf.Bytes()
 }
 
@@ -255,7 +261,7 @@ func (App *App) setMdOption(dir string, mdOption mdOptions) {
 // Keeps track of which directories have had their assets copied to
 // avoid redundant copies.
 // Returns true if there are any markdown files in the current directory.
-// Returns false if markdown files (or any files at all) are abset.
+// Returns false if markdown files (or any files at all) are absent.
 func (App *App) publishLocalFiles(dir string) bool {
 	relDir := relativeDirectory(App.Site.path, dir)
 	pubDir := filepath.Join(App.Site.Publish, relDir)

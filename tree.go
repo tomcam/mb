@@ -33,13 +33,13 @@ func (App *App) visit(files *[]string) filepath.WalkFunc {
 
 		// Exclude this directory if found on the, ah, exclusion list.
 		if exclude.Found(name) && isDir {
-			App.Verbose("Excluding directory", name)
+			App.Verbose("Excluding directory: %s", name)
 			return filepath.SkipDir
 
 		}
 
 		if exclude.Found(name) {
-			App.Verbose("Excluding", name)
+			App.Verbose("Excluding: %s", name)
 			return nil
 		}
 

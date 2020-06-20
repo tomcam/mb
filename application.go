@@ -1,9 +1,10 @@
 package main
 
 import (
-	//"fmt"
+	// "fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/yuin/goldmark"
 	"path/filepath"
 )
 
@@ -41,6 +42,9 @@ type App struct {
 	funcs map[string]interface{}
 	// Copy of funcs but without "scode"
 	fewerFuncs map[string]interface{}
+
+	// The goldmark parser and renderer.
+	goldmark goldmark.Markdown
 }
 
 // initConfig() determines where configuration file (and other

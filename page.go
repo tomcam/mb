@@ -1,12 +1,14 @@
 package main
 
+import "github.com/yuin/goldmark/ast"
+
 // The table of contents consists of an array of these
 // dudes.
 type TOCEntry struct {
 	// The text of the header
-	header string
+	Header string
 	// Its level 1-6 for h1-h6
-	level int
+	Level int
 }
 
 // type Page contains read-only information about the Markdown page currently
@@ -26,7 +28,7 @@ type Page struct {
 	// and opens the head tag
 	startHTML string
 
-	// Contennts of <title> tag
+	// Contents of <title> tag
 	titleTag string
 
 	// Optional <head> tags, like Google Analytics
@@ -35,7 +37,7 @@ type Page struct {
 	// Optional, additional header entries
 	headerFiles string
 
-	// Contents of <description> tage
+	// Contents of <description> tag
 	descriptionTag string
 
 	// Page being rendered
@@ -64,6 +66,9 @@ type Page struct {
 	// List of assets to be published; any graphics files, etc. in
 	// the local directory
 	assets []string
+
+	// The goldmark AST node representing the parsed markdown source
+	mdNode ast.Node
 }
 
 // Area could be, say, a header:
