@@ -6,7 +6,6 @@ sidebar="none"
 [List]
 Title="METABUZZ THEME GALLERY"
 DemoTheme="Wide"
-Next="future"
 ===
 
 # **{{ .FrontMatter.List.DemoTheme }}** theme ~~| Metabuzz~~

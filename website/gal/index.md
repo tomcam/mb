@@ -12,8 +12,8 @@
 [Reference](reference/index.html)  
 [Roma](roma/index.html)  
 [Sage](sage/index.html)  
-[Scribble](scribble/index.html)  (TODO)  
-[Update](update/index.html)  
+[Scribble](scribble/index.html)  
+[Update](update/index.html) (Sidebars fail. Needs dark version) 
 [Wide](wide/index.html)  
 [Zack](zack/index.html)  
 

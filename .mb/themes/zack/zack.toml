@@ -1,4 +1,5 @@
-Stylesheets = ["reset.css", "fonts.css", "layout.css", "theme-light.css", "zack.css"]
+stylesheets = [ "sizes.css", "theme-light.css", "zack.css", "responsive.css"  ]
+rootstylesheets = [ "reset.css","fonts.css","layout.css" ]
 PathName = ""
 
 [Nav]

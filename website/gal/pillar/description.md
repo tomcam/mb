@@ -1,3 +1,2 @@
-Wide is elastic---its header and footer stretch with the web page width. When you create a Markdown source file and don't specify a [theme](../../docs/themes.html#frontmatter), Wide is the one that's chosen. Likewise, when you create a new theme or pagetype, that new theme will be based on Wide if you don't choose otherwise.
-
+Pillar is the basis of about half of the Metabuzz themes. It gets its name from that fact that it stands in a column in the middle of the page, with gaps on the right and left sides.
 

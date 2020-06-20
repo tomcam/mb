@@ -1,17 +1,26 @@
 ===
-theme="zack"
+theme="debut"
+pagetype="gallery"
+sidebar="none"
+
+[List]
+Title="METABUZZ THEME GALLERY"
+DemoTheme="Zack"
 ===
 
-# Zack theme
+# **{{ .FrontMatter.List.DemoTheme }}** theme ~~| Metabuzz~~
+[![Screen shot of theme](theme-1280x1024.png)](dark.html) 
+  ## {{ if .FrontMatter.List.DemoPageType }} PageType: **{{ .FrontMatter.List.DemoPageType }}**{{ else }}## {{ end }}
 
-Need to create pagetypes for Zack
+### About {{ .FrontMatter.List.DemoTheme }}
+{{ inc "description.md" }}
 
-Time: {{ ftime }}
+{{ inc "variations.md" }}
 
-Look at a sample [blog page](blog.html).
+### Creator 
+[Tom Campbell](https://metabuzz.com)
 
-![Dramatic picture of graffiti with eye in center](graffiti-200x150.jpg)
-
-Publish directory is in {{ .Site.Publish }}
+### License 
+[MIT](https://metabuzz.com)
 
 

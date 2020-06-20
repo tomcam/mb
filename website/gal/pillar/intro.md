@@ -1,4 +1,4 @@
-![Screenshot of Pillar theme with right sidebar](pillar-theme-sidebar-right-1280x720.png)
+![Picture of a city on on a waterfront](architecture-1853632_640.jpg)
 
 Pillar is the basis of about half of the Metabuzz themes. It gets its name 
 from that fact that it stands in a column in the middle of the page, with 

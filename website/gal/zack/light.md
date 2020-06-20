@@ -1,7 +1,6 @@
 ===
-theme="Pillar"
-mode="dark"
-sidebar="right"
+theme="zack"
+mode="light"
 [List]
 Title="Metabuzz theme gallery"
 ===
