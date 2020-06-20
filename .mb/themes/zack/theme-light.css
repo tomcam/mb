@@ -53,4 +53,5 @@
 }
 
 header > p {color:var(--header-fg);background-color:var(--header-bg);} 
- 
+header > ul > li > a {color:white;} 
+footer > table > tbody > tr > td > a {color:white;}

@@ -1,5 +1,5 @@
 ===
-theme="zack"
+theme="Zack"
 mode="light"
 sidebar="left"
 ===
