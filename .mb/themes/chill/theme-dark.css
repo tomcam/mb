@@ -24,6 +24,12 @@
 		/* Default foreground (text) and background colors  */
 		--fg: black;
 		--bg: #F6F6F8;
+    /* Default link colors */
+    --a: white;
+    --a-link: white;
+    --a-visited: white;
+    --a-hover: white;
+    --a-active: white;
 
 		/* Default foreground (text) and background colors in article */
 		--article-fg: var(--fg);

@@ -24,6 +24,13 @@
 		/* Default foreground (text) and background colors  */
 		--fg:#121212;
 		--bg:white;
+    /* Default link colors */
+    --a: blue;
+    --a-link: blue;
+    --a-visited: blue;
+    --a-hover: blue;
+    --a-active: blue;
+
 
 		/* Default foreground (text) and background colors in article */
 		--article-fg: black;
@@ -36,10 +43,24 @@
 		/* Primary foreground (text) and background colors in header */
 		--header-fg: darkblue;
 		--header-bg: white;
+    /* Link colors specific to header*/
+    --a-header: var(--a); 
+    --a-header-link:  var(--a);
+    --a-header-visited:  var(--a);
+    --a-header-hover: var(--a); 
+    --a-header-active:  var(--a);
+
 
 		/* Primary foreground (text) and background colors in navbar */
 		--nav-fg: black;
 		--nav-bg: lightgray;
+    /* Link colors specific to navbar */
+    --a-nav: var(--a); 
+    --a-nav-link:  var(--a);
+    --a-nav-visited:  var(--a);
+    --a-nav-hover: var(--a); 
+    --a-nav-active:  var(--a);
+
 
 		/* Secondary foreground (text) and background colors for accents. */
 		--trim-fg:red; /* cyan: #03DAC6; */
@@ -48,6 +69,12 @@
 		/* Primary foreground (text) and background colors in footer */
 		--footer-fg: var(--header-fg);
 		--footer-bg: var(--header-bg);
+    /* Link colors specific to footer */
+    --a-footer: var(--a); 
+    --a-footer-link: var(--a);
+    --a-footer-visited: var(--a);
+    --a-footer-hover: var(--a); 
+    --a-footer-active: var(--a);
 }
 
 

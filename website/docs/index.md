@@ -9,7 +9,7 @@ theme="reference"
 # Docs
 
 [Anatomy of a Metabuzz site](anatomy.html)  
-[Roadmap](roadmap.html)
+[Roadmap](roadmap.html)  
 [Site file](site-file.html)  
 [FAQ](faq.html)  
 [Publish directory](publish-directory.html)  
@@ -45,7 +45,7 @@ theme="reference"
 [Mode](mode.html)  
 [Theme directory](theme-directory.html)  
 [Setting up your theme](setting-up-theme.html)  
-[Header](header.html)
+[Header](header.html)  
 
 ## Articles
 [Code highlighting](code-highlighting.html)  
@@ -66,7 +66,7 @@ theme="reference"
 [Your config file (global configuration file)](config-file.html)  
 
 ## Unsure
-[debut](debut.html) may not be necessary
+[debut](debut.html) may not be necessary  
 
 ## Where to find things
 
