@@ -10,7 +10,8 @@ import (
 // generateTOC reads the Markdown source and returns a string
 // array containing each header and its level in the document.
 func (App *App) generateTOC(level int) {
-	tocs, err := extractTOCs(App.goldmark.Renderer(), App.Page.mdNode, App.Page.markdownStart)
+	node := App.markdownAST(App.Page.markdownStart)
+	tocs, err := extractTOCs(App.newGoldmark().Renderer(), node, App.Page.markdownStart)
 	if err != nil {
 		App.QuitError(errCode("0901", err.Error()))
 	}

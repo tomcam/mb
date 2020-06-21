@@ -1,7 +1,5 @@
 package main
 
-import "github.com/yuin/goldmark/ast"
-
 // The table of contents consists of an array of these
 // dudes.
 type TOCEntry struct {
@@ -66,9 +64,6 @@ type Page struct {
 	// List of assets to be published; any graphics files, etc. in
 	// the local directory
 	assets []string
-
-	// The goldmark AST node representing the parsed markdown source
-	mdNode ast.Node
 }
 
 // Area could be, say, a header:
