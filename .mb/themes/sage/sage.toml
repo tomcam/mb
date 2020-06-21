@@ -1,12 +1,12 @@
-Branding = "Debut theme"
+Branding = ""
 Description = ""
-Stylesheets = ["tufte.min.css", "layout.css","skin.css", "sage.css" ]
-#Stylesheets = ["reset.css", "tufte.min.css", "fonts.css", "layout.css", "skin.css", "sage.css"]
+Stylesheets = ["sizes.css", "theme-light.css", "sage.css", "responsive.css"]
+RootStylesheets = ["fonts.css", "tufte.min.css", "layout.css"]
 PathName = ""
 
 [Nav]
   HTML = ""
-  File = "nav.md"
+  #File = "nav.md"
 
 [Header]
   HTML = ""

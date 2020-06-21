@@ -55,6 +55,11 @@ article > h5 > strong {color:black;}
 article > pre, article > p, article > ul, article > ol, article > li 
 	{font-size:1.25rem;line-height:1.5em;padding-right:0;margin-right:0;}
 
+article > table > thead > tr > th  {margin-top:4rem;}
+article > table {width:var(--full-page);margin-top:2rem;margin-bottom:3rem;}
+article > table > td,th {padding:1rem;}
+article > table > tbody > tr > td {padding:1rem;}
+
 /* ASIDE */
 aside > p > img {margin-top:1em;}
 aside {padding-left:0;margin-left:0;}

@@ -19,7 +19,7 @@ dd {margin-bottom:1em;}
 
 /* HEADER */
 header {width:var(--full-page);}
-header {height:var(--header-height);line-height:4rem;}
+header {height:var(--header-height);line-height:var(--header-height);}
 header {margin-left:var(--left-gap);margin-right:var(--right-gap);}
 header {padding-left:var(--left-start);}
 header {color:var(--header-fg);background-color:var(--header-bg);overflow:hidden;}
@@ -39,7 +39,7 @@ nav {white-space:nowrap;}
 /* ARTICLE */
 article {margin-left:var(--left-gap);margin-right:var(--right-gap);}
 article {padding-left:var(--left-start);}
-article {width:var(--max-article-width);}
+article {max-width:var(--max-article-width);}
 article {color:var(--article-fg);background-color:var(--article-bg);} 
 /* float and clear left means a right sidebar,and vice-versa */
 article {clear:left;}
@@ -57,10 +57,4 @@ footer {margin-left:var(--left-gap);margin-right:var(--right-gap);}
 footer {padding-left:var(--left-start);}
 footer {color:var(--footer-fg);background-color:var(--footer-bg);}
 
-/* RESPONSIVE SIZING */
-@media (max-width: 1024px) {
-header,nav,article {margin-left:0;margin-right:0;padding-left:1rem;padding-right:0}
-aside {display:none}
-footer {display:none}
-}
 

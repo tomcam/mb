@@ -1,5 +1,3 @@
-![Ship logo](ship-white-256x256.svg)
-
 | SECTIONS      | CONNECTIONS   | About Us       | Your rights              |
 | ------------- | ------------- | -------------- |:------------------------ |
 | [Sitemap](/)  | [Twitter](/)  | [About](/)     | [Privacy and cookies](/) | 

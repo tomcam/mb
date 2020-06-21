@@ -1,7 +1,7 @@
 ===
-theme="debut"
+theme="Debut"
 mode="light"
-pagetype="gallery"
+pagetype="home"
 ===
 
 [Gallery](gal/index.html)  

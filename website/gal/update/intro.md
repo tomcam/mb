@@ -6,8 +6,7 @@
 
 ##### File photo Courtesy **WIRED** magazine *({{ ftime "January 02" }})*
 
-**SPRINGFIELD** One of the biggest engineering projects in the history of the state
-has reached a milestone today. The juncture of lines A and K 
+**SPRINGFIELD** One of the biggest engineering projects in the history of the state has reached a milestone today. The juncture of lines A and K 
 was opened and crews immediately began reinforcing the aging line
 K. Weather concerns subsequently slowed down construction, which is already 
 18 months and $270 million over budget.
@@ -21,5 +20,6 @@ to improve the image of Springfield's subway drivers. That's a
 tough nut to crack, because Springfield's on-time record is dismal.
 Though mayor Ian Thomas demurs, most experts insist there was no
 other avenue to success.
+
 
 

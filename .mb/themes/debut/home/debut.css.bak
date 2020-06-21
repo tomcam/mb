@@ -12,8 +12,12 @@ table > thead > tr > th  {margin-top:4rem;}
 blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
 /* HEADER */
+header{font-family:var(--informal);}
+/* header > p, header > p > img, header > ul > li > p {display:inline;} */
+header > ul > li > a > img {padding-top:.20em;margin-right:.3rem;height:var(--branding-height);}
+iheader > ul > li > a > img {padding-top:0em;margin-right:.1em;height:var(--branding-height);}
 /* Unordered lists show horizontally, not vertically, in the header */
-header > ul > li{display:inline;list-style-type:none;font-weight:bold;} 
+header > ul > li{display:inline;list-style-type:none;font-weight:700;} 
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
@@ -21,7 +25,7 @@ header > ul > li > a:visited
 header > ul > li > a:hover,
 header > ul > li > a:active
 	{color:var(--trim-fg);text-decoration:underline;}
-header > ul > li:first-child > a {color:black;display:block;margin-right:0;font-size:4rem;font-weight:700;line-height:1rem;font-size:var(--branding-height);margin-bottom:2rem;margin-top:4rem;}
+header > ul > li:first-child > a {font-family:'Kanit',var(--informal);color:black;display:block;margin-right:0;font-size:4rem;font-weight:700;line-height:1rem;font-size:var(--branding-height);margin-bottom:2rem;margin-top:4rem;}
 
 /* NAV */
 nav > img {display:inline;}
@@ -39,11 +43,37 @@ article > h2 {color:var(--fg);font-size:1.5rem;line-height:1.5em;}
 article > h3 {color:var(--fg);}
 article > h4 {font-weight:normal;font-size:1em;color:gray;margin-bottom:1em; } /* Byline */
 aside > h4 {color:var(--trim-bg);background-color:var(--article-bg)}
+article {width:var(--max-article-width);}
+article > p,
+article > ul,
+article > ol,
+article > li,
+article > dd,
+article > dl,
+article > hr {
+	font-size:1.5rem;
+	line-height:2.25rem;
+	margin-bottom:2em;
+}     
+   
+article > p {color:var(--header-bg)}
+article > p > code, article > code, article > pre, article > pre > code {
+	font-family:var(--code);
+	font-size:1em;
+	overflow:auto;
+	margin-bottom:1em;
+	line-height:1.5em;
+}
 
-article > p {font-size:1.5rem;color:var(--header-bg);margin-bottom:2rem;}
-article > pre, article > p, article > ul, article > ol, article > li, article > dl
-	{font-size:1.5rem;line-height:1.5em; max-width:var(--max-article-width)}
 article > pre {font-size:1.25rem;}
+
+article > a,
+article > a:link,
+article > a:visited {color:var(--nav-fg);} 
+/* For accessibility purposes show visual distinction when hovering or active */
+article > a:hover,
+article > a:active {text-decoration:none;} 
+
 article > p > a,
 article > p > a:link,
 article > p > a:visited {color:var(--nav-fg);} 
@@ -52,12 +82,20 @@ article > p > a:hover,
 article > p > a:active {text-decoration:none;} 
 
 
+/* Links in unordered lists */
+article > ul > li > a,
+article > ul > li > a:link,
+article > ul > li > a:visited {color:var(--nav-fg);} 
+/* For accessibility purposes show visual distinction when hovering or active */
+article > ul > li > a:hover,
+article > ul > li > a:active {text-decoration:none;} 
+
+
 /* Article tables use colors same as header, but reversed in first row */
-article >  table {width:100%;margin-top:2rem;margin-bottom:3rem;}
+article >  table {width:var(--max-article-width);margin-top:2rem;margin-bottom:3rem;}
 article > table > thead > tr > th {font-size:1.5rem;}
 article > table > td,th {padding:1rem;}
 article > table > tbody > tr > td {padding:1rem;border-bottom:.1px solid gray;}
-
 
 
 /* ASIDE */
@@ -67,6 +105,17 @@ aside > h3 {color:var(--trim-bg);font-size:.75em;font-weight:bold;margin-bottom:
 
 /* FOOTER */
 footer {border-top: 1px solid var(--trim-fg);} 
+
+
+footer > p > a > img {padding-top:1rem;margin-right:.75rem;height:var(--branding-height);}
+footer > p > a,
+footer > p > a:link,
+footer > p > a:visited {font-size:var(--branding-height);font-weight:700;text-decoration:none;color:var(--nav-fg);} 
+/* For accessibility purposes show visual distinction when hovering or active */
+footer > p > a:hover,
+footer > p > a:active {text-decoration:underline;} 
+
+
 footer > h2 {text-align:center;}
 footer > table {font-size:calc(80%);}
 /* Give table columns to get some breathing room */

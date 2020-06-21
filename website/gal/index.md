@@ -1,3 +1,7 @@
+===
+theme="debut"
+pagetype="gallery"
+===
 # Theme Gallery
 
 [Aventurine](aventurine/index.html)  

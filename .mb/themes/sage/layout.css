@@ -2,10 +2,6 @@
 html {color:var(--fg);background-color:var(--bg);}
 html,body,nav,header,article,footer{float:left;height:auto;clear:both;display:block;max-width:100%;width:100%;overflow:auto;}
 
-/*
-#### ![DNA logo](https://icongr.am/clarity/helix.svg?size=48&color=448FA3) 
-*/ 
-
 
 /* INDENT LISTS TO 3 LEVELS */
 li li {margin-left:1rem;}
@@ -19,7 +15,7 @@ dd {margin-bottom:1em;}
 
 /* HEADER */
 header {width:var(--full-page);}
-header {height:var(--header-height);line-height:4rem;}
+header {height:var(--header-height);line-height:var(--header-height);}
 header {margin-left:var(--left-gap);margin-right:var(--right-gap);}
 header {padding-left:var(--left-start);}
 header {color:var(--header-fg);background-color:var(--header-bg);overflow:hidden;}
@@ -37,7 +33,8 @@ nav {white-space:nowrap;}
 
 
 /* ARTICLE */
-article {margin-left:var(--left-gap);margin-right:var(--right-gap);}
+article {margin-left:var(--left-gap);}
+iarticle {margin-left:var(--left-gap);margin-right:var(--right-gap);}
 article {padding-left:var(--left-start);}
 article {width:var(--max-article-width);}
 article {color:var(--article-fg);background-color:var(--article-bg);} 
@@ -45,7 +42,7 @@ article {color:var(--article-fg);background-color:var(--article-bg);}
 article {clear:left;}
 
 
-/* ASIDE */
+/* SIDEBAR */
 aside {border-bottom:none;}
 aside {width:var(--max-aside-width);}
 aside {color:var(--aside-fg);background-color:var(--aside-bg);}

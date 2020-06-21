@@ -57,7 +57,7 @@ Jump to the [tables](#tables) section.
 
 ### All headers are automatically bookmarks too
 
-**Automatically** Metabuzz has a couple of ways for you to create those links. One way is the easiest: Metabuzz automatically generates an `id` attribute for each header from h1 to h6 by taking the text of the link itself, reducing it to lowercase, and either replacing spaces and other non-letter characters with hyphens, or removing them altogether. If you look at the HTML for this page you'll see the `Tables` header looks like this:
+Metabuzz automatically generates an `id` attribute for each header from h1 to h6 by taking the text of the link itself, reducing it to lowercase, and either replacing spaces and other non-letter characters with hyphens, or removing them altogether. If you look at the HTML for this page you'll see the `Tables` header looks like this:
 
 ```html
 <h2 id="tables">Tables</h2>
@@ -134,43 +134,37 @@ You can also link to an anchor to other websites, if they have anchors. Here's a
 
 ## Coding styles
 
+You can format text inline as `code` by surrounding text with `` ` ``tick marks`` ` ``, or go block style by enclosing the lines of code in a "fenced code block", which begin and end with 3 tickmarks:
+
 ```
 You can format text inline as `code`, or go block style:
 ```
 
-You can format text inline as `code` by surrounding text with `` ` ``tick marks`` ` ``, or go block style by enclosing the lines of code in a "fenced code block", which begin and end with 3 tickmarks:
-
-#### You type:
-    ``` 
-    print ("This is a code block")
-    ```
-
-#### It shows as:
-``` 
-print ("This is a code block")
-```
-
-### Choosing the language
+### Choosing the programming language
 
 You can specify a color scheme for a particular programming language by including its name after the first 3 tick marks of the code block.
 
 #### You type:
-
-    ``` python
+    ```python
     print ("This is a code block")
     ```
 
 #### It shows as:
-
-``` python
+```python
 print ("This is a code block")
 ```
 
-``` go
+#### If you're a Go programmer, you type:
+
+    ```go
+    fmt.Println("This is a code block")
+    ```
+
+#### It shows as:
+
+```go
 fmt.Println("This is a code block")
 ```
-
-
 
 ## There are 2 or 3 kinds of list types
 
@@ -262,13 +256,6 @@ You can combine them to make a clickable image, like this:
 ```markdown
 [![Twitter logo](twitter-32x32-black.png)](https://twitter.com)
 ```
-
-
-#### You type:
-```
-[![Twitter logo](twitter-32x32-black.png)](https://twitter.com)
-```
-
 
 ## Tables
 

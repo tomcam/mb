@@ -8,13 +8,13 @@
 		--max-article-width: 80%; 
 
 		/* Widest the aside column should be */
-		--max-aside-width: 15%;    
+		--max-aside-width: 10%;    
 
 		/* Header, nav, and footer stretch all the way across
 		 * the screen at 100%. To see gaps (margins) on either side
 		 * reduce that number, then increase --left-gap
 		 * and --right-gap. */
-		--full-page:100%; 
+		--full-page:90%; 
 
 		/* Margin/background visible surrounding article. 
 		 * When --full-page is 100% these should be at 0.
