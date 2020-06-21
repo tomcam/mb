@@ -11,6 +11,7 @@ editor=nvim
 mkdir -p $1
 echo "Copying the wide theme to ${1}" 
 cp wide/*.md $1
+cp wide/*.sidebar $1
 [ ! -d $1 ] && echo "theme directory ${1} doesn't exist" && exit 1
 declare -a filenames=(
 	'dark.md'
