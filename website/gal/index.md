@@ -9,6 +9,7 @@ pagetype="gallery"
 [Debut](debut/index.html)   
 [Future](future/index.html)  
 [Genuine](genuine/index.html)  
+[Intro](intro/index.html)  
 [Journey](journey/index.html)  
 [Personality](personality/index.html)  
 [Pillar](pillar/index.html)  
