@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting"
+	"github.com/yuin/goldmark/ast"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
 	"github.com/yuin/goldmark/renderer/html"
@@ -166,6 +167,25 @@ func (App *App) publishFile(filename string) error {
 // and converts to HTML.
 // Doesn't know about front matter.
 func (App *App) markdownBufferToBytes(input []byte) []byte {
+	buf := new(bytes.Buffer)
+	node := App.markdownAST(input)
+	if err := App.newGoldmark().Renderer().Render(buf, input, node); err != nil {
+		// TODO: Need something like displayErrCode("1010") or whatever
+		App.QuitError(errCode("0920", err.Error()))
+		return nil
+	}
+	return buf.Bytes()
+}
+
+// markdownAST returns the goldmark AST for the input.
+func (App *App) markdownAST(input []byte) ast.Node {
+	ctx := parser.NewContext()
+	p := App.newGoldmark().Parser()
+	return p.Parse(text.NewReader(input), parser.WithContext(ctx))
+}
+
+// newGoldmark returns the a goldmark object with a parser and renderer.
+func (App *App) newGoldmark() goldmark.Markdown {
 	autoHeadings := parser.WithAttribute()
 	if App.Site.MarkdownOptions.headingIDs == true {
 		autoHeadings = parser.WithAutoHeadingID()
@@ -176,9 +196,7 @@ func (App *App) markdownBufferToBytes(input []byte) []byte {
 		//hardWraps := html.WithHardWraps()
 	}
 
-	// Store the goldmark object so we can use the parser and renderer on small
-	// pieces of the markdown AST, like the individual TOC headers.
-	App.goldmark = goldmark.New(
+	return goldmark.New(
 		// TODO: Make the following option: Footnote,
 		goldmark.WithExtensions(extension.GFM, extension.DefinitionList, extension.Footnote,
 			highlighting.NewHighlighting(
@@ -197,17 +215,6 @@ func (App *App) markdownBufferToBytes(input []byte) []byte {
 			html.WithXHTML(),
 		),
 	)
-
-	buf := new(bytes.Buffer)
-	ctx := parser.NewContext()
-	App.Page.mdNode = App.goldmark.Parser().Parse(text.NewReader(input), parser.WithContext(ctx))
-	if err := App.goldmark.Renderer().Render(buf, input, App.Page.mdNode); err != nil {
-		// TODO: Need something like displayErrCode("1010") or whatever
-		App.QuitError(errCode("0920", err.Error()))
-		return nil
-	}
-
-	return buf.Bytes()
 }
 
 // appendBytes() Appends a byte slice to the byte slice containing the rendered output
