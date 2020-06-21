@@ -1,2 +1,0 @@
-# hi from C dir
-
