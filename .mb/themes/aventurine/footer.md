@@ -1,13 +1,1 @@
-
-| SECTIONS      | CONNECTIONS   | About Us       | Your rights              |
-| ------------- | ------------- | -------------- |:------------------------ |
-| [Sitemap](/)  | [Twitter](/)  | [About](/)     | [Privacy and cookies](/) | 
-| [Articles](/) | [Instagram](/)| [Credits](/)   | [Terms of use ](/)       |
-| [Tutorials](/)| [LinkedIn](/) | [Media](/)     | [About our ads](/)       |
-| [Blog](/)     | [YouTube](/)  |                |                          | 
-| [Opinion](/)  | [Instagram](/)|                |                          | 
-| [Sitemap](/)  | [Twitter](/)  |                |                          | 
-|               | [LinkedIn](/) |                |                          | 
-|               | [Podcast](/)  |                |                          |
-|               | [RSS](/)      |                |                          |
-
+[mynamehere@example.com](mailto:mynamehere@example.com?subject=Metabuzz) · My name here · 12345 Main St. · Springfield · WA · 98052 · +1 555 1212 

@@ -89,6 +89,10 @@ article > pre > code {font-family:var(--code);overflow:auto;}
 article > code, article > pre{font-size:1em;}
 article > hr {margin-right:var(--right-gap);}
 article {margin-bottom:3rem;}
+article > table {width:var(--full-page);margin-top:2rem;margin-bottom:3rem;}
+article > table > td,th {padding:1rem;}
+article > table > tbody > tr > td {padding:1rem;}
+
 
 /* ******************************/
 /*  SIDEBAR (ASIDE TAG)         */

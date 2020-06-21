@@ -1,11 +1,13 @@
 Branding = "Aventurine"
 Description = ""
-Stylesheets = ["reset.css", "fonts.css", "layout.css", "sizes.css", "theme-light.css", "aventurine.css"]
+stylesheets = [ "sizes.css", "theme-light.css", "aventurine.css", "responsive.css"  ]
+rootstylesheets = [ "reset.css","fonts.css","layout.css" ]
+
 PathName = ""
 
 [Nav]
   HTML = ""
-  File = "nav.md"
+  #File = "nav.md"
 
 [Header]
   HTML = ""

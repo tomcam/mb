@@ -30,9 +30,6 @@
 
 /* Starting point from left where text (and by default headers) appears */
 --left-start:25%;
-/* Empty space between right end of text and article width. Normally padding-right. */
---text-end:0%;
-
 /* Adjusts header height and keeps it vertically centered */
 --header-height:20%;
 

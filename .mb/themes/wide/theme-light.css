@@ -15,10 +15,10 @@
 		 * background colors use fg. Sometimes they're
 		 * used to color non-text objects, which is why
 		 * they aren't called -text or -background.
+     *
+     * things starting with --a represent link colors, so
+     * --a-article-link would be for links in articles.
 		 *
-		 * --------------------------------------------------
-		 * Header style
-		 * --------------------------------------------------
 		 */
 	
 		/* Default foreground (text) and background colors  */
@@ -26,19 +26,16 @@
 		--bg:white;
     /* Default link colors */
     --a: blue;
-    --a-link: blue;
-    --a-visited: blue;
-    --a-hover: blue;
-    --a-active: blue;
+    --a-link: var(--a);
+    --a-visited: var(--a);
+    --a-hover: var(--a);
+    --a-active: var(--a);
 
 
-		/* Default foreground (text) and background colors in article */
-		--article-fg: black;
-		--article-bg: var(--bg);
-				
-		/* Default foreground (text) and background colors in aside */
-		--aside-fg: black;
-		--aside-bg: var(--bg);
+		/* Secondary foreground (text) and background colors for accents. */
+		--trim-fg:red; /* cyan: #03DAC6; */
+		--trim-bg: white;
+
 
 		/* Primary foreground (text) and background colors in header */
 		--header-fg: darkblue;
@@ -62,10 +59,17 @@
     --a-nav-active:  var(--a);
 
 
-		/* Secondary foreground (text) and background colors for accents. */
-		--trim-fg:red; /* cyan: #03DAC6; */
-		--trim-bg: white;
-		
+		/* Default foreground (text) and background colors in article */
+		--article-fg: black;
+		--article-bg: var(--bg);
+    /* Link colors specific to article */
+    --a-article: var(--a); 
+    --a-article-link:  var(--a);
+    --a-article-visited:  var(--a);
+    --a-article-hover: var(--a); 
+    --a-article-active:  var(--a);
+
+	
 		/* Primary foreground (text) and background colors in footer */
 		--footer-fg: var(--header-fg);
 		--footer-bg: var(--header-bg);

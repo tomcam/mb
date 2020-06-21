@@ -8,5 +8,5 @@
 article, aside {float:left}
 article {clear:left;}
 article {margin-right:var(--text-end);}
-aside {margin-left:0;padding-left:0;}
+aside {margin-top:12rem;margin-left:0;padding-left:0;}
 
