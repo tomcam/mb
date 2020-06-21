@@ -1,7 +1,6 @@
 # Theme Gallery
 
-[Aventurine](aventurine/index.html)  (TODO)  
-[CV](cv/index.html)  (TODO)  
+[Aventurine](aventurine/index.html)  
 [Chill](chill/index.html)  
 [Debut](debut/index.html)   
 [Future](future/index.html)  

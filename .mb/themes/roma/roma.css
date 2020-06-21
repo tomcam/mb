@@ -28,7 +28,7 @@ header {padding-left:0;width:100%;margin-left:auto;margin-right:auto;}
  */
 header > ul {line-height:var(--header-height);}
 header > ul > li{display:inline;} 
-header > ul > li > a {text-decoration:none;color:var(--header-fg);margin-right:2rem;} 
+header > ul > li > a {text-decoration:none;color:var(--header-fg);margin-right:auto;margin-left:auto;} 
 /* For accessibility purposes show visual distinction when hovering */
 header > ul > li > a:hover, header > ul > li > a:hover {text-decoration:underline;} 
 
