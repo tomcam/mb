@@ -154,7 +154,7 @@ article > h2 + ul {
 /*  SIDEBAR (ASIDE TAG)         */
 /* ******************************/
 
-aside {height:80vh;}
+aside {height:100vh;margin-left:4rem;}
 aside > h3 {text-align:center;font-weight:bold;font-size:1.2rem;margin:.5rem auto 1rem auto;}
 /* Generous side margins for text */
 aside  > p + p {margin:1rem 3rem 0 3rem}
