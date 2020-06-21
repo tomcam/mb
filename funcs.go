@@ -1,6 +1,7 @@
 package main
 
 import (
+  "fmt"
 	"html/template"
 	"io/ioutil"
 	"os"
@@ -196,19 +197,15 @@ func (App *App) toc(level string) string {
 	if l <= 0 || l > 6 {
 		App.QuitError(errCode("1206", level))
 	}
-	// The Markdown source is in App.Page.markdownStart
-	//fmt.Printf("Markdown source: %v\n", string(App.Page.markdownStart))
-
+	var toc string
 	App.generateTOC(l)
-
-	var renderedTOC string
-	var s string
-	for i := 0; i < len(App.Page.TOC); i++ {
-		s = wrapTag("<li>", App.Page.TOC[i].Header, true)
-		renderedTOC += wrapTag("<ul>", s, true)
+	for _, TOC := range App.Page.TOC {
+    fmt.Println(TOC.Header)
+		toc += wrapTag("<li>", TOC.Header, true)
 	}
-
-	return renderedTOC
+  toc = wrapTag("<ul>",toc,true)
+  fmt.Println("TOC: " + toc + "\n")
+	return toc
 }
 
 func (App *App) addTemplateFunctions() {
