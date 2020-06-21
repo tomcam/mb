@@ -33,7 +33,7 @@
 
 
 		/* Secondary foreground (text) and background colors for accents. */
-		--trim-fg:#F75957; /* cyan: #03DAC6; */
+		--trim-fg:palegreen; /* F75957; cyan: #03DAC6; */
 		--trim-bg: white;
 
 

@@ -16,7 +16,7 @@ pagetype="gallery"
 [Roma](roma/index.html)  
 [Sage](sage/index.html)  
 [Scribble](scribble/index.html)  
-[Update](update/index.html) (Sidebars fail. Needs dark version) 
+[Update](update/index.html)  
 [Wide](wide/index.html)  
 [Zack](zack/index.html)  
 
