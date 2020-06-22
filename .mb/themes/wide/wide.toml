@@ -1,17 +1,25 @@
-stylesheets = [ "sizes.css", "theme-light.css", "wide.css", "responsive.css"  ]
-rootstylesheets = [ "reset.css","fonts.css","layout.css" ]
-supported = [ "mode-dark", "mode-light", "sidebar-left", "sidebar-right", "header", "footer", "navbar", "android-4.4", "javascript-none" ]
+Branding = ""
+Description = ""
+Stylesheets = ["sizes.css", "theme-light.css", "wide.css", "responsive.css"]
+RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
+PathName = ""
 
-branding = "Wide Theme"
+[Nav]
+  HTML = ""
+  File = "nav.md"
 
-[nav]
-file = "nav.md"
+[Header]
+  HTML = ""
+  File = "header.md"
 
-[header]
-file = "header.md"
+[Article]
+  HTML = ""
+  File = ""
 
-[footer]
-file = "footer.md"
+[Footer]
+  HTML = ""
+  File = "footer.md"
 
-[sidebar]
-file = "sidebar.md"
+[Sidebar]
+  HTML = ""
+  File = "sidebar.md"

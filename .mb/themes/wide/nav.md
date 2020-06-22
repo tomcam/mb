@@ -1,7 +1,4 @@
-* [News](/)
-* [Specials](/)
-* [Privacy](/)
-* [Contact](/)
-* [![Twitter logo](twitter-32x32-white.svg)]({{ .Site.Social.Twitter }}) [![Facebook logo](facebook-32x32-white.svg)]({{ .Site.Social.Facebook }}) [![LinkedIn logo](linkedin-32x32-white.svg)]({{ .Site.Social.LinkedIn }}) [![YouTube logo](youtube-32x32-white.svg)]({{ .Site.Social.YouTube}})
+[Learn More](/) [Download the App](/) [Contact](/)  [Media](/) {{ if .Site.Social.Twitter }}[![Twitter logo](twitter-blue-30x30.svg)]({{ .Site.Social.Twitter }}){{ end -}} {{ if .Site.Social.Facebook }}[![Facebook logo](facebook-blue-30x30.svg)]({{ .Site.Social.Facebook }}){{ end -}}{{ if .Site.Social.LinkedIn }}[![LinkedIn logo](linkedin-blue-30x30.svg)]({{ .Site.Social.LinkedIn }}){{ end -}} {{ if .Site.Social.YouTube }}[![YouTube logo](youtube-red-30x30.svg)]({{ .Site.Social.YouTube}}){{ end -}} 
+
 
 
