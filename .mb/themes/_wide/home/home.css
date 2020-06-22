@@ -11,7 +11,6 @@ blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 /* HEADER */
 /* Unordered lists show horizontally, not vertically, in the header */
 
-header {width:100%;}
 header > ul {margin-left:0;padding-left:0;list-style-type:none;display:inline;}
 header > ul > li{display:inline;padding-right:1.5rem;font-size:1.5rem;font-weight:700;} 
 header > ul > li > a,
@@ -28,7 +27,7 @@ header > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:700;letter-spacing:-2px;padding-right:.5rem;}
+header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;padding-right:.5rem;}
 
 
 /* NAV */
@@ -45,7 +44,7 @@ nav > ul > li > a > img {height:1em;line-height:1em;}
 /* ARTICLE */
 article {max-width:var(--max-article-width);}
 article > h1 {font-size:4rem;font-weight:700;letter-spacing:-2px;line-height:1em;}
-article > h2 {font-weight:700;font-size:2.5rem;line-height:1em;}
+article > h2 {font-weight:700;font-size:2.5rem;line-height:2.5em;}
 article > h3 {font-weight:700;}
 article > h4 {font-weight:700;font-size:1em;margin-bottom:1em; } /* Byline */
 article > p,
@@ -59,6 +58,7 @@ article > p,
     font-size:1.5rem;
     line-height:2.25rem;
     margin-top:1.25em;
+    max-width:var(--max-article-width);
 }     
 
 article > ul, article > ol {margin-top:1rem;}
@@ -68,7 +68,7 @@ article > p > code, article > code, article > pre, article > pre > code {
   overflow:auto;
   margin-bottom:1em;
   line-height:1.5em;
-  max-width:100%;
+  max-width:var(--max-article-width);
 } 
 
 article > p > code{font-size:.8em;padding:.125em .25em .125em .25em;border-radius:.128em;}
@@ -76,18 +76,20 @@ article > pre  {padding:.5rem;border-radius:.128em;line-height:1em;}
 
 
 article > img, article > p > img {width:100%;}
-article > table {width:var(--max-article-width);margin-top:2rem;margin-bottom:3rem;}
+/* Article tables use colors same as header, but reversed in first row */
+article >  table {width:var(--max-article-width);margin-top:2rem;margin-bottom:3rem;}
 article > table > td,th {padding:1rem;}
 article > table > tbody > tr > td {padding-bottom:.5rem;padding-top:.5rem;}
+
 article > hr {margin-left:0;}
 
 
 /* ASIDE */
-aside {margin:1rem;}
-aside > h2 {padding:1em;text-align:center;font-size:1.2rem;font-weight:700;}
+aside {padding:2rem;}
+aside {margin: 10% 2rem 2rem 2rem;}
 aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2;}
 aside > ul {text-align:right;margin-right:1rem;line-height:1.5em;}
-aside > ul > li {list-style-type:none;} 
+aside > ul > li {list-style-type:none;border-bottom:} 
 aside > ul > li > a,
 aside > ul > li > a:link,
 aside > ul > li > a:visited {text-decoration:none;font-size:1rem;line-height:2.5rem;font-weight:normal;margin-right:1em;} 
@@ -95,8 +97,6 @@ aside > ul > li > a:visited {text-decoration:none;font-size:1rem;line-height:2.5
 aside > ul > li > a:hover,
 aside > ul > li > a:active {font-weight:bold;} 
 
-aside > p > img {margin-top:1rem;width:100%;padding:0;}
-aside > p {font-size:1.2rem;margin-bottom:.5em;}
 
 /* FOOTER */
 footer > h2, footer > h2 > a {text-align:center;font-size:4rem;font-weight:900;float:left;margin-right:2rem;text-decoration:none;}

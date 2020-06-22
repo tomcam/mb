@@ -1,5 +1,3 @@
-### ~~P~~
-
 * [About the Pillar theme](#Pillar)
   + [Sidebar versions](#sidebars)
     - [Outline](#outline)

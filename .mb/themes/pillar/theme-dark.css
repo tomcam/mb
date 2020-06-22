@@ -22,24 +22,24 @@
 	 */
 
 	/* Default foreground (text) and background colors  */
-	--fg:#FFF4D1;
+	--fg:white; /* Nice cream color: #FFF4D1; */
 	--bg:#000021;/* darker #071412;	darkest #040D0B; */
 
 	/* Default foreground (text) and background colors in article */
 	--article-fg: var(--fg);
-	--article-bg:#0f0f40;
+	--article-bg: var(--bg);
 			
 	/* Default foreground (text) and background colors in aside */
 	--aside-fg: var(--fg);
-	--aside-bg: #0f0f40;
+	--aside-bg: var(--bg);
 
 	/* Primary foreground (text) and background colors in header */
-	--header-fg:white;
-	--header-bg:black;
+	--header-fg:var(--fg);
+	--header-bg:var(--bg);
 
 	/* Primary foreground (text) and background colors in navbar */
-	--nav-fg:#F2F2F2;
-	--nav-bg: #0F0F40;
+	--nav-fg: var(--fg);
+	--nav-bg: var(--bg);
 
 	/* Secondary foreground (text) and background colors for accents. */
 	--trim-fg:#40FFC2; /* #70877F; Grayish green? */

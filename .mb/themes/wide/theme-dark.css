@@ -22,8 +22,8 @@
 	 */
 
     /* Default foreground (text) and background colors  */
-    --fg:#FFF4D1;
-    --bg:#000021;/* darker #071412;	darkest #040D0B; */
+    --fg:white;
+    --bg:#010536; /* Dark blue. darker #071412;	darkest #040D0B; */
     /* Default link colors */
     --a:cyan;
     --a-link: var(--a);
@@ -36,8 +36,8 @@
     --trim-bg: white;
  
     /* Primary foreground (text) and background colors in header */
-    --header-fg:white;
-    --header-bg:black;
+    --header-fg:var(--fg);
+    --header-bg:var(--bg); 
     /* Link colors specific to header */
     --a-header: var(--header-fg); 
     --a-header-link:  var(--header-fg);
@@ -47,8 +47,8 @@
 
 
     /* Primary foreground (text) and background colors in navbar */
-    --nav-fg:#F2F2F2;
-    --nav-bg: #0F0F40;
+    --nav-fg: var(--fg);
+    --nav-bg: var(--bg);
     /* Link colors specific to navbar */
     --a-nav: var(--a); 
     --a-nav-link:  var(--a);
