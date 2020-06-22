@@ -1,27 +1,61 @@
-# CSS Snippets
-
-article > h3:before { content: 'foo'; }
-
-See css-snippets.txt
-
-## Card
-
-See https://codepen.io/edeesims/pen/iGDzk
-
-```
 /* Features specific to this theme */
-h1:hover{opacity:0}
-h1:hover{transform:rotate(180eg);transition:transform 0.5s;}
+ibody {display:table;width:100%;height:100%;position:absolute;margin:0;}
+iworkedbody {idisplay:block;width:100%;height:100%;position:absolute;margin:0;}
+
+body {
+  position: absolute;
+  display:table;
+  text-align:center;
+  top: 40%;
+  left: 50%;
+  width: 20%;
+  height: 30%;
+  margin: -10%;
+  float: left;
+  perspective: 500px;
+}
+
 h1 {
+  display:cell;
+  position:absolute;
+  itop:50%;
+  width:100%;
+  height:100%;
+  background:whitesmoke;
+  padding:10% 10% 10% 10%;
+  border:1px solid lightgray;
+  box-shadow: 0 0 3px rgba(0,0,0,0.1);
+  itext-align:center;
+}
+h1:hover{opacity:0}
+h1:{transform:rotate(180eg);transition:transform 0.5s;}
+ih1 {
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:15rem;
+  text-align:center;
+  ivertical-align:middle;
+  height:20rem;
+  margin:-25%;
+  iperspective:50rem;
+  background:whitesmoke;
+  padding:15% 5% 5% 5%;
+  border:1px solid lightgray;
+  box-shadow: 0 0 3px rgba(0,0,0,0.1);
+  border-radius:1rem;
+  backface-visibility:hidden;
+}
+
+jh2 {
   position:absolute;
   top:50%;
   left:50%;
   width:15rem;
   height:20rem;
   margin:-25%;
-  float:left;
   perspective:50rem;
-  background-color:whitesmoke;
+  background:whitesmoke;
   padding:15% 5% 5% 5%;
   border:1px solid lightgray;
   box-shadow: 0 0 3px rgba(0,0,0,0.1);
@@ -30,7 +64,10 @@ h1 {
   backface-visibility:hidden;
 }
 
-h2 {
+
+
+
+ih2 {
   position:absolute;
   top:50%;
   left:50%;
@@ -48,7 +85,7 @@ h2 {
   backface-visibility:hidden;
 }
 
-h5 {
+ih5 {
   position:absolute;
   top:50%;
   left:50%;
@@ -67,7 +104,7 @@ h5 {
   backface-visibility:hidden;
 }
 
-h4 {
+ih4 {
   position:absolute;
   top:50%;
   left:50%;
@@ -85,5 +122,3 @@ h4 {
   border-radius:1rem;
   backface-visibility:hidden;
 }
-```
-

@@ -1,3 +1,4 @@
+html > a, body > a {color:var(--a);}
 h1{ font-size:2rem;margin-top:2rem; }
 h2{ font-size:1.5rem;margin-top:1.5rem; }
 h3{ font-size:1rem;margin-top:1.5rem; }
@@ -66,24 +67,80 @@ article > h1 {font-weight:700;letter-spacing:-2px;line-height:1em;}
 article > h2 {font-weight:700;line-height:1em;}
 article > h3 {font-weight:700;}
 
+/* like news-item */
+iarticle > h2 {clear:both;}
+
 /*
- * --------------------------------------------------
- * Special feature: h4 has multiple formats to give 
- * variety to subheads or higlights. Typical usage
- * might look something like this
- *
- * #### By Tom Campbell *| Staff reporter |* **{{ ftime "Jan 2, 2006" }}**
- * 
- * This would show the name in bold sans-serif, 
- * the job title in a normal-weight serif, and
- * the date in normal weight sans-serif, with pipe
- * characters separating them.
- * --------------------------------------------------
+article > p {margin-top:0;} 
+article > p > img {width:50%;}
+article > p:nth-child(odd) > img {
+  float:right;
+  display:block;
+}
+article > p:nth-child(odd)  {
+  float:left;
+}
+
+article > p:nth-child(even) >img {
+  imargin-left:50%;
+  float:left;
+}
+article > p:nth-child(even) {
+  float:right;
+}
+
  */
 
-article > h4 {font-weight:500;font-size:1em;margin-bottom:1em; } /* Byline */
-article > h4 > em {font-family:var(--formal);font-weight:normal;}
-article > h4 > strong {font-family:var(--informal);font-weight:normal;color:gray;}
+/*
+   --------------------------------------------------
+   Special feature: h2 followed by li with img 
+   displays image to left of text.
+
+   Example markdown:
+ 
+   ## This appears over the image on the left. The text itself can be omitted but preserve the ##
+   * ![Describe img](imagename.png)
+     ### This appears to the right of the image
+     This appears to the right of the image,
+     under the h3
+   
+   --------------------------------------------------
+ */
+
+
+article > h2 {font-size:2.5rem;font-weight:bold;clear:both;}
+article > h2 + ul {width:75%;padding:0;margin:0;list-style-type:none;}
+article > h2 + ul li {clear:left;}
+/* Leave some room on the right side of each image */
+article > h2 + ul li > img {width:70%;margin:0%;margin-right:2rem;padding-left:0;float:left;margin-bottom:4rem;margin-top:1.5rem;}
+/* H2 is to the right of the image. */
+article > h2 + ul > li > h3 {font-weight:bold;padding-right:25%;padding-top:.5em;line-height:1em;}
+/* Paragraph under the H3 */
+article > h2 + ul > li > p{padding-right:5%;display:block;line-height:1.5em;margin-top:1em;}
+
+
+/*
+   --------------------------------------------------
+   Special feature: h4 followed by li with img 
+   displays image to right of text.
+
+   Example markdown:
+ 
+   #### This appears over the image on the left. The text itself can be omitted but you still need the ####
+   * ![Describe img](imagename.png)
+     ##### This appears to the left of the image
+     This appears to the left of the image,
+     under the h4
+   
+   --------------------------------------------------
+ */
+
+
+article > h4 {clear:both;margin-left:50%;}
+article > h4 + ul {list-style-type:none;margin-left:10%;}
+article > h4 + ul li > img {width:55%;float:right;margin-left:2rem;}
+
+/*
 
 article > p > strong {font-weight:bold;}
 article > p,
@@ -112,7 +169,6 @@ article > p > code{font-size:.8em;padding:.125em .25em .125em .25em;border-radiu
 article > pre  {padding:.5rem;border-radius:.128em;line-height:1em;}
 
 
-article > img, article > p > img {width:100%;}
 article > table {width:var(--max-article-width);margin-top:2rem;margin-bottom:3rem;}
 article > table > td,th {padding:1rem;}
 article > table > tbody > tr > td {padding-bottom:.5rem;padding-top:.5rem;}
@@ -121,6 +177,7 @@ article > hr {margin-left:0;}
 article > blockquote {border-top:4px solid var(--header-fg);border-bottom:4px solid var(--header-fg); font-size:2em;font-style:italic;padding:2rem 1rem 2rem 1rem;margin:2rem;} 
 
 article > blockquote > p {font-family:var(--formal)}
+*/
 /* ASIDE */
 aside {margin: 10% 2rem 2rem 2rem;}
 aside > h2 {padding:1em;text-align:center;font-weight:700;}

@@ -90,27 +90,25 @@
 
 }
 
+header {color:var(--header-fg);background-color:var(--header-bg;}
 header > ul > li:first-child > a {color:var(--trim-bg);}
 
 
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
-	{color:var(--header-fg);}
+	{color:var(---a-header);}
 header > ul > li > a:hover,
 header > ul > li > a:active
-	{color:var(--header-fg);}
+	{color:var(--a-header);}
 
 
+nav {color:var(--nav-fg);background-color:var(--nav-bg;}
 nav > ul > li > a,
 nav > ul > li > a:link,
-nav > ul > li > a:visited {color:var(--fg);} 
-/* For accessibility purposes show visual distinction when hovering or active */
-/*
-nav > ul > li > a:hover,
-nav > ul > li > a:active {text-decoration:underline;} 
-*/
+nav > ul > li > a:visited {color:var(--a-nav);} 
 
+article {color:var(--article-fg);background-color:var(--article-bg;}
 article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
 
 article > h2 {color:var(--fg);}
@@ -119,48 +117,26 @@ article > h4 {color:white;}
 article > h4 > strong {color:white;} /* Byline */
 article > p > a,
 article > p > a:link,
-article > p > a:visited {color:var(--trim-bg);} 
-/* For accessibility purposes show visual distinction when hovering or active */
-/*
-article > p > a:hover,
-article > p > a:active {text-decoration:none;} 
-*/
+article > p > a:visited {color:var(--a);} 
 
 article > h4 > a,
 article > h4 > a:link,
-article > h4 > a:visited {color:var(--trim-bg);} 
-/* For accessibility purposes show visual distinction when hovering or active */
-/*
-article > h4 > a:hover,
-article > h4 > a:active {text-decoration:none;} 
-*/
-article > p > code{color:yellow;border:1px solid gray;background-color:black;}
-article > pre {color:yellow;border:1px solid gray;background-color:black;}
+article > h4 > a:visited {color:var(--a);} 
 
-
+aside {color:var(--aside-fg);background-color:var(--aside-bg;}
 aside > ul > li > a,
 aside > ul > li > a:link,
-aside > ul > li > a:visited {color:var(--trim-bg);} 
+aside > ul > li > a:visited {color:var(--a-aside);} 
 
+footer {color:var(--footer-fg);background-color:var(--footer-bg;}
 /* Color of links in main rows (body) of table */
 footer > table > tbody > tr > td > a:link,
 footer > table > tbody > tr > td > a:visited
-	{color:var(--fg);}
-/*
-footer > table > tbody > tr > td > a:hover,
-footer > table > tbody > tr > td > a:active
-	{text-decoration:underline;}
-*/
+	{color:var(--a-footer);}
 
 footer > table > thead > tr > th {color:var(--trim-bg);background-color:var(--footer-bg);}
 footer > h2,
 footer > h2 > a,
 footer > h2 > a:link,
-footer > h2 > a:visited {color:var(--trim-bg);} 
-/* For accessibility purposes show visual distinction when hovering or active */
-/*
-footer > h2 > a:hover,
-footer > h2  > a:active {font-weight:bold;} 
-*/
-
+footer > h2 > a:visited {color:var(--a-footer);} 
 

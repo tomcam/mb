@@ -10,7 +10,6 @@ table > thead > tr > th  {margin-top:4rem;}
 /* HEADER */
 /* Unordered lists show horizontally, not vertically, in the header */
 
-header {width:100%;}
 header > ul {margin-left:0;padding-left:0;list-style-type:none;display:inline;}
 header > ul > li{display:inline;padding-right:1.5rem;font-size:1.5rem;font-weight:700;} 
 header > ul > li > a,
@@ -27,7 +26,7 @@ header > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:700;letter-spacing:-2px;padding-right:.5rem;}
+header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;letter-spacing:-2px;padding-right:.5rem;}
 
 
 /* NAV */
@@ -64,7 +63,7 @@ article > h3 {font-weight:700;}
 
 article > h4 {font-weight:700;font-size:1em;margin-bottom:1em; } /* Byline */
 article > h4 > em {font-family:var(--formal);font-weight:normal;}
-article > h4 > strong {font-family:var(--informal);font-weight:normal;color:gray;}
+article > h4 > strong {font-family:var(--informal);font-weight:normal;}
 
 article > p > strong {font-weight:bold;}
 article > p,

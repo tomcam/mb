@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
+  fmt.Println("* Put something in the headtags directory")
 	// Get the execution environment ready.
 	App := newDefaultApp()
 	// Read configuration files, environment, and command line.
