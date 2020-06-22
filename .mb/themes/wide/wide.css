@@ -88,9 +88,6 @@ nav > p > a:hover,
 nav > p > a:active {text-decoration:underline;} 
 
 
-
-
-
 /* ******************************/
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
@@ -179,18 +176,14 @@ article > h2 + ul li:nth-child(2) {
 }
 
 
-
-
-
 /* ******************************/
 /*  SIDEBAR (ASIDE TAG)         */
 /* ******************************/
 
 aside {height:100vh;}
 
-iaside {margin: 5% 2rem 2rem 2rem;}
 aside > h2 {padding:1em;text-align:center;font-size:1.2rem;font-weight:700;}
-aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2;}
+aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2rem;}
 aside > ul {text-align:right;margin-right:1rem;line-height:1.5em;}
 aside > ul > li {list-style-type:none;} 
 aside > ul > li > a,
@@ -204,12 +197,10 @@ aside > p > img {margin-top:1rem;width:100%;padding:0;}
 aside > p {font-size:1.2rem;margin-bottom:0em;}
 
 
-
 /* ******************************/
 /*  FOOTER                      */
 /* ******************************/
 
-/* FOOTER */
 footer {border-top: 1px solid var(--trim-fg);padding-bottom:1rem;} 
 footer > h2 {text-align:center;}
 footer > table {font-size:calc(80%);}
@@ -217,7 +208,6 @@ footer > table {font-size:calc(80%);}
 footer > table > thead > tr > th {padding-right:2rem;} 
 footer > table > thead > tr > th {padding-top:1em;padding-right:2em;padding-bottom:1em;}
 footer > table > tbody > tr > td {padding-right:3em;}
-
 footer > table > tbody > tr > td > a:link,
 footer > table > tbody > tr > td > a:visited
 	{text-decoration:none;}
