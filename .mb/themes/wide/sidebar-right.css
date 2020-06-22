@@ -4,7 +4,6 @@
 {
 	--max-article-width:70%;
 	--max-aside-width:25%;
-  --left-start:5%;
 }
 article, aside {float:left}
 

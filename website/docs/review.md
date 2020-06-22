@@ -5,6 +5,7 @@
 * IT'S UGLY
 * How do I present pagetypes?
 * How to present the links and/or buttons to encourage people to try the many different variations?
+* Should I use my new version of Wide or the one in the gallery screenshot?
 
 ## Visual manual for themes
 
