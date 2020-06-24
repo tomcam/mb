@@ -71,6 +71,10 @@ func (App *App) publishFile(filename string) error {
 	if App.Site.Theme != "" && App.FrontMatter.Theme == "" {
 		App.FrontMatter.Theme = App.Site.Theme
 	}
+  // If no theme was specified at all, use the Metabuzz default.
+  if App.FrontMatter.Theme == "" {
+    App.FrontMatter.Theme = defaultThemeName
+  }
 	App.loadTheme()
 	// Parse front matter.
 	// Convert article to HTML

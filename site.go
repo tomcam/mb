@@ -288,6 +288,9 @@ func (App *App) newSite(sitename string) error {
 	App.Site.AssetDir = filepath.Join(App.Site.Publish, App.Site.AssetDir)
 
 	// Create a little home page
+  // The home page is based on the site name.
+  // Remove its path, leaving just the directory name.
+  sitename = filepath.Base(sitename)
 	indexMd = fmt.Sprintf(indexMd, sitename, sitename)
 	return writeTextFile("index.md", indexMd)
 
