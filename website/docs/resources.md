@@ -1,4 +1,7 @@
 
+## CSS validator
+* [Nu Html Checker](https://validator.w3.org/nu/#textarea) You have to manually insert style tags
+
 ## HTML
 
 * [HTML color codes](https://htmlcolorcodes.com/color-names/) There are

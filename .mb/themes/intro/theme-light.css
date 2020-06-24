@@ -91,7 +91,7 @@
     --a-footer-active: var(--a);
 }
 
-
+html {color:var(--fg);background-color:var(--bg);}
 header > ul > li{display:inline;padding-right:1.5rem;} 
 header > ul > li > a,
 header > ul > li > a:link,
@@ -114,6 +114,8 @@ article > table > thead > tr > th {color:var(--header-bg);background-color:var(-
 html, body, article, aside, header, nav, footer {background-color:black;}
 article > h1, article > h2, article > h3, article > h5, article > h6
   {color:var(--fg);}
+article > h1, article > h2, article > h3, article > h5, article > h6
+  
 article > h4 {color:gray;}
 article > h4 > strong {color:var(--fg);} /* Byline */
 article > p > a,
