@@ -7,7 +7,7 @@
 * Create a release with goreleaser
 * Embed the latest version of the theme directory
 * Manual steps
-  - [Validate CSS](https://validator.w3.org/nu/#textarea) for all themes. 
+  - [Validate CSS](https://validator.w3.org/nu/#textarea) for all themes (batch version [here](https://validator.github.io/validator/#usage)
   - Check gallery in old phone, looking for
     + Responsive screen version
     + Dark version with both sidebars, and none
