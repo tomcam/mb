@@ -11,4 +11,5 @@ func main() {
 	if err := App.Cmd.Execute(); err != nil {
 		App.QuitError(err)
 	}
+  fmt.Println("* Document the v validator. Write an article about it") }
   fmt.Println("* Put something in the headtags directory") }

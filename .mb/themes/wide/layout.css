@@ -36,9 +36,8 @@ nav {white-space:nowrap;}
 /* ARTICLE */
 article {margin-left:var(--left-gap);}
 article {margin-left:var(--left-gap);margin-right:var(--right-gap);}
-article {padding-left:var(--left-start);}
+article > p {padding-left:var(--left-start);padding-right:var(--right-end);}
 article {width:var(--max-article-width);}
-iarticle {width:var(--max-width);}
 article {color:var(--article-fg);background-color:var(--article-bg);} 
 /* float and clear left means a right sidebar,and vice-versa */
 article {clear:left;}
