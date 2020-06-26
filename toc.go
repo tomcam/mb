@@ -7,22 +7,24 @@ import (
 	"github.com/yuin/goldmark/renderer"
 )
 
-// generateTOC reads the Markdown source and returns a string
-// array containing each header and its level in the document.
-func (App *App) generateTOC(level int) {
+// generateTOC reads the Markdown source and returns a slice of TOC entries
+// corresponding to each header less than or equal to level.
+func (App *App) generateTOC(level int) []TOCEntry {
 	node := App.markdownAST(App.Page.markdownStart)
 	tocs, err := extractTOCs(App.newGoldmark().Renderer(), node, App.Page.markdownStart)
 	if err != nil {
 		App.QuitError(errCode("0901", err.Error()))
 	}
+	leveledTocs := make([]TOCEntry, 0, len(tocs))
 	for _, toc := range tocs {
 		if toc.Level <= level {
-			App.Page.TOC = append(App.Page.TOC, toc)
+			leveledTocs = append(leveledTocs, toc)
 		}
 	}
+	return leveledTocs
 }
 
-// extractTOCs parses returns TOC entries corresponding to each header in the
+// extractTOCs returns TOC entries corresponding to each header in the markdown
 // document ordered by appearance.
 func extractTOCs(rn renderer.Renderer, node ast.Node, mdSrc []byte) ([]TOCEntry, error) {
 	const numTocs = 8 // assume a reasonable amount of headers per md document
@@ -51,7 +53,12 @@ func extractTOCs(rn renderer.Renderer, node ast.Node, mdSrc []byte) ([]TOCEntry,
 				return nil, fmt.Errorf("extract TOC render: %w", err)
 			}
 		}
+		id := ""
+		if attr, ok := node.AttributeString("id"); ok {
+			id = string(attr.([]byte))
+		}
 		tocs[i] = TOCEntry{
+			ID:     id,
 			Header: buf.String(),
 			Level:  node.Level,
 		}
