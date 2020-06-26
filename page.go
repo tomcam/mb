@@ -3,6 +3,8 @@ package main
 // The table of contents consists of an array of these
 // dudes.
 type TOCEntry struct {
+	// The HTML ID of the source header or the empty string if the header had no ID.
+	ID string
 	// The text of the header
 	Header string
 	// Its level 1-6 for h1-h6
@@ -14,9 +16,6 @@ type TOCEntry struct {
 type Page struct {
 	// Currently loaded theme
 	Theme Theme
-
-	// Table of contents for this page
-	TOC []TOCEntry
 
 	// Name of theme used for code highlighting
 	// Currently using Chroma:

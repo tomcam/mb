@@ -8,6 +8,7 @@ import (
 	"github.com/yuin/goldmark/ast"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/renderer"
 	"github.com/yuin/goldmark/renderer/html"
 	"github.com/yuin/goldmark/text"
 	"io/ioutil"
@@ -71,10 +72,10 @@ func (App *App) publishFile(filename string) error {
 	if App.Site.Theme != "" && App.FrontMatter.Theme == "" {
 		App.FrontMatter.Theme = App.Site.Theme
 	}
-  // If no theme was specified at all, use the Metabuzz default.
-  if App.FrontMatter.Theme == "" {
-    App.FrontMatter.Theme = defaultThemeName
-  }
+	// If no theme was specified at all, use the Metabuzz default.
+	if App.FrontMatter.Theme == "" {
+		App.FrontMatter.Theme = defaultThemeName
+	}
 	App.loadTheme()
 	// Parse front matter.
 	// Convert article to HTML
@@ -190,34 +191,32 @@ func (App *App) markdownAST(input []byte) ast.Node {
 
 // newGoldmark returns the a goldmark object with a parser and renderer.
 func (App *App) newGoldmark() goldmark.Markdown {
-	autoHeadings := parser.WithAttribute()
-	if App.Site.MarkdownOptions.headingIDs == true {
-		autoHeadings = parser.WithAutoHeadingID()
+	exts := []goldmark.Extender{
+		extension.GFM,
+		extension.DefinitionList,
+		extension.Footnote,
+		highlighting.NewHighlighting(
+			highlighting.WithStyle(App.Site.MarkdownOptions.HighlightStyle),
+			highlighting.WithFormatOptions()),
 	}
 
-	if App.Site.MarkdownOptions.hardWraps == true {
-		// TODO: Figure out how to get this damn thing in as an option
-		//hardWraps := html.WithHardWraps()
+	parserOpts := []parser.Option{parser.WithAttribute()}
+	if App.Site.MarkdownOptions.headingIDs {
+		parserOpts = append(parserOpts, parser.WithAutoHeadingID())
+	}
+
+	renderOpts := []renderer.Option{
+		html.WithUnsafe(),
+		html.WithXHTML(),
+	}
+	if App.Site.MarkdownOptions.hardWraps {
+		renderOpts = append(renderOpts, html.WithHardWraps())
 	}
 
 	return goldmark.New(
-		// TODO: Make the following option: Footnote,
-		goldmark.WithExtensions(extension.GFM, extension.DefinitionList, extension.Footnote,
-			highlighting.NewHighlighting(
-				highlighting.WithStyle(App.Site.MarkdownOptions.HighlightStyle),
-				highlighting.WithFormatOptions(
-				// highlighting.WithLineNumbers(),
-				),
-			)),
-		goldmark.WithParserOptions(
-			autoHeadings, // parser.WithAutoHeadingID(),
-			parser.WithAttribute(),
-		),
-		goldmark.WithRendererOptions(
-			html.WithUnsafe(),
-			/* html.WithHardWraps(), */
-			html.WithXHTML(),
-		),
+		goldmark.WithExtensions(exts...),
+		goldmark.WithParserOptions(parserOpts...),
+		goldmark.WithRendererOptions(renderOpts...),
 	)
 }
 

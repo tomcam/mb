@@ -1,7 +1,8 @@
 package main
 
 import (
-  "fmt"
+	"bytes"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"os"
@@ -185,8 +186,8 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 	return template.HTML(s)
 }
 
-// toc() generates a table of contents to the specified
-// level from 1-6.
+// toc generates a table of contents and includes all headers with a level less
+// than or equal level. Level must be 1-6 inclusive.
 func (App *App) toc(level string) string {
 	l, err := strconv.Atoi(level)
 	// Please leave this error code as is
@@ -197,15 +198,19 @@ func (App *App) toc(level string) string {
 	if l <= 0 || l > 6 {
 		App.QuitError(errCode("1206", level))
 	}
-	var toc string
-	App.generateTOC(l)
-	for _, TOC := range App.Page.TOC {
-    fmt.Println(TOC.Header)
-		toc += wrapTag("<li>", TOC.Header, true)
+	b := new(bytes.Buffer)
+	b.Grow(256)
+	b.WriteString("<ul>")
+	tocs := App.generateTOC(l)
+	for _, t := range tocs {
+		b.WriteString("<li>")
+		_, _ = fmt.Fprintf(b, `<a href="#%s">`, t.ID)
+		b.WriteString(t.Header)
+		b.WriteString("</a>")
+		b.WriteString("</li>")
 	}
-  toc = wrapTag("<ul>",toc,true)
-  fmt.Println("TOC: " + toc + "\n")
-	return toc
+	b.WriteString("</ul>")
+	return b.String()
 }
 
 func (App *App) addTemplateFunctions() {
