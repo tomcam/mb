@@ -1,5 +1,5 @@
 html > a, body > a {color:var(--a);}
-h1{ font-size:2rem;margin-top:2rem; }
+h1{ font-size:2.5rem;margin-top:2rem; }
 h2{ font-size:1.5rem;margin-top:1.5rem; }
 h3{ font-size:1rem;margin-top:1.5rem; }
 h4{ font-size:.9rem;margin-top:1rem;}
@@ -62,34 +62,14 @@ nav > h2, nav > h3, nav > h4, nav > h5, nav h6
 
 
 /* ARTICLE */
-article {max-width:var(--max-article-width);}
-article > h1 {font-weight:700;letter-spacing:-2px;line-height:1em;}
+article {max-width:var(--max-article-width);font-size:1.4em;}
+article > h1 {font-weight:700;letter-spacing:-1px;line-height:1.2em;}
 article > h2 {font-weight:700;line-height:1em;}
 article > h3 {font-weight:bold;}
 
 /* like news-item */
 article > h2 {clear:both;}
 
-/*
-article > p {margin-top:0;} 
-article > p > img {width:50%;}
-article > p:nth-child(odd) > img {
-  float:right;
-  display:block;
-}
-article > p:nth-child(odd)  {
-  float:left;
-}
-
-article > p:nth-child(even) >img {
-  imargin-left:50%;
-  float:left;
-}
-article > p:nth-child(even) {
-  float:right;
-}
-
- */
 
 /*
    --------------------------------------------------
@@ -110,19 +90,6 @@ article > p:nth-child(even) {
 /* Leave some room on the right side of each image */
 article > ul {list-style-type:none;}
 article > ul li > img {width:50%;margin:0%;margin-right:2rem;padding-left:0;float:left;margin-bottom:4rem;margin-top:1.5rem;}
-/* FAIL */
-/*
-article + ul li + img + h3 {color:purple;}
-article > ul li > img + h3 {color:purple;}
-article  > ul > li > img > h3 {color:blue;}
-article ul li > img > h3 {color:green;}
-article ul li  img > h3 {color:green;}
-*/
-/*
-article > h2 {font-size:2.5rem;font-weight:bold;clear:both;}
-article > h2 + ul {width:75%;padding:0;margin:0;list-style-type:none;}
-article > h2 + ul li > img {width:70%;margin:0%;margin-right:2rem;padding-left:0;float:left;margin-bottom:4rem;margin-top:1.5rem;}
-*/
 
 /*
    --------------------------------------------------

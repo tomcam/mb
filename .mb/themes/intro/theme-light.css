@@ -22,10 +22,10 @@
 		 */
 	
 		/* Default foreground (text) and background colors  */
-		--fg:white;
-		--bg:black;
+		--fg:black;
+		--bg:white;
     /* Default link colors */
-    --a: whitesmoke;
+    --a:blue;
     --a-link: var(--a);
     --a-visited: var(--a);
     --a-hover: var(--a);
@@ -33,13 +33,13 @@
 
 
 		/* Secondary foreground (text) and background colors for accents. */
-		--trim-fg:palegreen; /* F75957; cyan: #03DAC6; */
-		--trim-bg: white;
+		--trim-fg:green;
+		--trim-bg:var(--bg);
 
 
 		/* Primary foreground (text) and background colors in header */
-		--header-fg:whitesmoke;
-		--header-bg:black;
+		--header-fg:var(--fg);
+		--header-bg:var(--bg);
     /* Link colors specific to header*/
     --a-header: var(--a); 
     --a-header-link:  var(--a);
@@ -49,10 +49,10 @@
 
 
 		/* Primary foreground (text) and background colors in navbar */
-		--nav-fg: white;
-		--nav-bg: #1B1B1B;
+		--nav-fg:var(--fg); 
+		--nav-bg:var(--bg);
     /* Link colors specific to navbar */
-    --a-nav: var(--a); 
+    --a-nav:var(--a); 
     --a-nav-link:  var(--a);
     --a-nav-visited:  var(--a);
     --a-nav-hover: var(--a); 
@@ -60,8 +60,8 @@
 
 
 		/* Default foreground (text) and background colors in article */
-		--article-fg: black;
-		--article-bg: var(--bg);
+		--article-fg:var(--fg); 
+		--article-bg:var(--bg);
     /* Link colors specific to article */
     --a-article: var(--a); 
     --a-article-link:  var(--a);
@@ -79,7 +79,6 @@
     --a-sidebar-hover: var(--a); 
     --a-sidebar-active:  var(--a);
 
-	
 		/* Primary foreground (text) and background colors in footer */
 		--footer-fg: var(--header-fg);
 		--footer-bg: var(--header-bg);
@@ -92,6 +91,7 @@
 }
 
 html {color:var(--fg);background-color:var(--bg);}
+header {color:var(--fg);background-color:var(--bg);}
 header > ul > li{display:inline;padding-right:1.5rem;} 
 header > ul > li > a,
 header > ul > li > a:link,
@@ -110,6 +110,7 @@ nav > ul > li > a:hover,
 nav > ul > li > a:active {text-decoration:underline;} 
 
 
+article {color:var(--article-fg);background-color:var(--article-bg);}
 article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
 html, body, article, aside, header, nav, footer {background-color:black;}
 article > h1, article > h2, article > h3, article > h5, article > h6
@@ -129,19 +130,11 @@ article > pre {border:1px solid gray;background-color:#FAFBFC;}
 article > p {color:var(--fg);}
 
 
+aside {color:var(--aside-fg);background-color:var(--aside-bg);}
 aside > h2 {color:white;background-color:black;}
 aside > h3 {color:var(--trim-bg);}
 
-
-
-/*
-aside > ul > li > a,
-aside > ul > li > a:link,
-aside > ul > li > a:visited {} 
-aside > ul > li > a:hover,
-aside > ul > li > a:active {} 
-*/
-
+footer {color:var(--footer-fg);background-color:var(--footer-bg);}
 footer > h2,
 footer > h2 > a,
 footer > h2 > a:link,

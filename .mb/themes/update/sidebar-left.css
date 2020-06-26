@@ -3,9 +3,9 @@
 {
   
 }
-header, nav, footer {padding-left:20%;}
+header, nav, footer {padding-left:5%;}
 article, aside {float:right}
-article {clear:right;}
+article {clear:right;padding-right:5%;}
 aside{margin-right:0;}
 
 

@@ -23,21 +23,21 @@
 	
 		/* Default foreground (text) and background colors  */
 		--fg:white;
-		--bg:#0D0630; /* #3700B36200EE; Darker blue ("Primary variant: #3700B3; */
+		--bg:black; /* #3700B36200EE; Darker blue ("Primary variant: #3700B3; */
     /* Default link colors */
-    --a: white;
+    --a:white;
     --a-link: --var(--a);
     --a-visited: --var(--a);
     --a-hover: --var(--a);
     --a-active: --var(--a);
 
 		/* Secondary foreground (text) and background colors for accents. */
-		--trim-fg: #201D3A;
-		--trim-bg:#03DAC6;
+		--trim-fg:palegreen;
+		--trim-bg:var(--bg);
 	
 		/* Primary foreground (text) and background colors in header */
-		--header-fg:var(--fg); /* cyan:#03DAC6; */
-		--header-bg:var(--bg); /* light purple: #6200EE; */ /* #BB86FC; */
+		--header-fg:var(--fg); 
+		--header-bg:var(--bg); 
     /* Link colors specific to header*/
     --a-header: var(--a); 
     --a-header-link:  var(--a);
@@ -47,7 +47,7 @@
 
 		/* Primary foreground (text) and background colors in navbar */
 		--nav-fg:var(--fg);
-		--nav-bg:black; /* #370B3; */
+		--nav-bg:var(--bg); 
     /* Link colors specific to navbar */
     --a-nav: var(--a); 
     --a-nav-link:  var(--a);
@@ -57,7 +57,7 @@
 
 
 		/* Default foreground (text) and background colors in article */
-		--article-fg:white;
+		--article-fg:var(--fg);
 		--article-bg:var(--bg);
     /* Link colors specific to article */
     --a-article: var(--a); 
@@ -89,30 +89,23 @@
     --a-footer-active: var(--a);
 
 }
-
+html {color:var(--fg);background-color:var(--bg);}
+header {color:var(--fg);background-color:var(--bg);}
 header > ul > li:first-child > a {color:var(--trim-bg);}
-
-
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
-	{color:var(--header-fg);}
+	{color:var(--a);}
 header > ul > li > a:hover,
 header > ul > li > a:active
-	{color:var(--header-fg);}
+	{color:var(--a);}
 
-
+nav {color:var(--nav-fg);background-color:var(--nav-bg);}
 nav > ul > li > a,
 nav > ul > li > a:link,
-nav > ul > li > a:visited {color:var(--fg);} 
-/* For accessibility purposes show visual distinction when hovering or active */
-/*
-nav > ul > li > a:hover,
-nav > ul > li > a:active {text-decoration:underline;} 
-*/
+nav > ul > li > a:visited {color:var(--a);} 
 
-article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
-
+article {color:var(--article-fg);background-color:var(--article-bg);}
 article > h2 {color:var(--fg);}
 article > h3 {color:var(--fg);}
 article > h4 {color:white;}
@@ -120,29 +113,20 @@ article > h4 > strong {color:white;} /* Byline */
 article > p > a,
 article > p > a:link,
 article > p > a:visited {color:var(--trim-bg);} 
-/* For accessibility purposes show visual distinction when hovering or active */
-/*
-article > p > a:hover,
-article > p > a:active {text-decoration:none;} 
-*/
-
 article > h4 > a,
 article > h4 > a:link,
 article > h4 > a:visited {color:var(--trim-bg);} 
-/* For accessibility purposes show visual distinction when hovering or active */
-/*
-article > h4 > a:hover,
-article > h4 > a:active {text-decoration:none;} 
-*/
 article > p > code{color:yellow;border:1px solid gray;background-color:black;}
 article > pre {color:yellow;border:1px solid gray;background-color:black;}
 
 
+aside {color:var(--aside-fg);background-color:var(--aside-bg);}
 aside > ul > li > a,
 aside > ul > li > a:link,
 aside > ul > li > a:visited {color:var(--trim-bg);} 
 
 /* Color of links in main rows (body) of table */
+footer {color:var(--footer-fg);background-color:var(--footer-bg);}
 footer > table > tbody > tr > td > a:link,
 footer > table > tbody > tr > td > a:visited
 	{color:var(--fg);}
