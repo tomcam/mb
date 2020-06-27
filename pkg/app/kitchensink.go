@@ -1,7 +1,8 @@
-package main
+package app
 
 import (
 	"fmt"
+	"github.com/tomcam/mb/pkg/errs"
 	"path/filepath"
 )
 
@@ -117,14 +118,14 @@ func writeSiteFromArray(sitename string, site []siteDescription) error {
 		path := filepath.Join(f.dir, f.filename)
 		err := writeTextFile(path, f.mdtext)
 		if err != nil {
-			return errCode("PREVIOUS", err.Error(), path)
+			return errs.ErrCode("PREVIOUS", err.Error(), path)
 		}
 		// If there's an embedded file, write it out
 		if f.embedded.filename != "" {
 			path := filepath.Join(f.dir, f.embedded.filename)
 			err := writeTextFile(path, f.embedded.contents)
 			if err != nil {
-				return errCode("PREVIOUS", err.Error(), path)
+				return errs.ErrCode("PREVIOUS", err.Error(), path)
 			}
 		}
 	}
@@ -135,10 +136,10 @@ func writeSiteFromArray(sitename string, site []siteDescription) error {
 // array of structures containing a filename,
 // a path to that filename, and the markdown
 // text itself.
-func (App *App) kitchenSink(sitename string) error {
-	err := App.newSite(sitename)
+func (a *App) kitchenSink(sitename string) error {
+	err := a.NewSite(sitename)
 	if err != nil {
-		App.QuitError(err)
+		a.QuitError(err)
 	}
 
 	// Create directory structure for test site
@@ -151,7 +152,7 @@ func (App *App) kitchenSink(sitename string) error {
 		return err
 	}
 
-	fmt.Println("Created site ", App.Site.Name)
+	fmt.Println("Created site ", a.Site.Name)
 	return nil
 
 }

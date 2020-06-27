@@ -1,9 +1,11 @@
-package main
+package app
 
 import (
 	// "fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/tomcam/mb/pkg/defaults"
+	"github.com/tomcam/mb/pkg/errs"
 	"github.com/yuin/goldmark"
 	"path/filepath"
 )
@@ -50,23 +52,23 @@ type App struct {
 // initConfig() determines where configuration file (and other
 // forms of configuration info) can be found, then reads in
 // all that info.
-func (App *App) initConfig() {
+func (a *App) initConfig() {
 	// There may or may not be a metabuzz.toml file around redirecting where
 	// to look for Metabuzz application data such as themes and shortcodes.
 	// So assume it's where the system likes it, under a "metabuzz/.mb" subdirectory.
-	App.configDir = configDir()
+	a.configDir = configDir()
 	// Places to look for a metabuzz.toml pointing to the global application config dir.
 	// It can look in as many places as you want.
 	// Look in the local directory for a directory named just named ".mb".
-	//viper.AddConfigPath(filepath.Join(".", globalConfigurationDirName))
+	// viper.AddConfigPath(filepath.Join(".", GlobalConfigurationDirName))
 	viper.AddConfigPath(filepath.Join("."))
 	// Location to look for metabuzz.toml
 	// Look in the ~/ directory for an ".mb" directory.
-	viper.AddConfigPath(filepath.Join(homeDir(), globalConfigurationDirName))
+	viper.AddConfigPath(filepath.Join(homeDir(), defaults.GlobalConfigurationDirName))
 	// Name of the config file is metabuzz, dot..
-	viper.SetConfigName(productName)
+	viper.SetConfigName(defaults.ProductName)
 	// toml. viper likes to apply its own file extensions
-	viper.SetConfigType(configFileDefaultExt)
+	viper.SetConfigType(defaults.ConfigFileDefaultExt)
 	// TODO: Get this right when I've nailed the other Viper stuff
 	viper.AutomaticEnv()
 	// Read in command line options, and get the
@@ -75,25 +77,25 @@ func (App *App) initConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		// Actually not an error if there's no config file
 		// so you have to be in Verbose mode
-		App.Verbose(errCode("0126", err.Error()).Error())
+		a.Verbose(errs.ErrCode("0126", err.Error()).Error())
 	}
 	// Are we going to look in the local directory for
 	// site assets, themes, etc., or are we going to
 	// use the standard application configuration directory?
 	// This determines its location.
 	if cfgString("configdir") != "" {
-		App.configDir = cfgString("configdir")
+		a.configDir = cfgString("configdir")
 	}
-	App.siteDefaults()
+	a.SiteDefaults()
 }
 
-// newDefaultApp() allocates an App runtime environment
+// NewDefaultApp() allocates an App runtime environment
 // No other config info has been read in.
-func newDefaultApp() *App {
+func NewDefaultApp() *App {
 	App := App{
 		Cmd: &cobra.Command{
 			// TODO: Don't hardcode this name
-			Use:   ProductShortName,
+			Use:   defaults.ProductShortName,
 			Short: "Create static sites",
 			Long:  `Headless CMS to create static sites`,
 		},
@@ -107,20 +109,20 @@ func newDefaultApp() *App {
 		Site: &Site{
 			// Assets just go into the publish directory
 			AssetDir: ".",
-			//configFile: filepath.Join(siteConfigDir, siteConfigFilename),
-			//dirs:     map[string]mdOptions{},
+			// configFile: filepath.Join(SiteConfigDir, SiteConfigFilename),
+			// dirs:     map[string]MdOptions{},
 			dirs:     map[string]dirInfo{},
 			WebPages: map[string]WebPage{},
 			Language: "en",
 			MarkdownOptions: MarkdownOptions{
 				hardWraps:      false,
 				HighlightStyle: "github",
-				headingIDs:     true,
+				HeadingIDs:     true,
 			},
 		},
 		FrontMatter: &FrontMatter{
 			// Name of default theme can overridden in a config file
-			Theme: defaultThemeName,
+			Theme: defaults.DefaultThemeName,
 		},
 	}
 	// Add config/env support from cobra and viper

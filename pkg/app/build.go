@@ -1,7 +1,9 @@
-package main
+package app
 
 import (
 	"fmt"
+	"github.com/tomcam/mb/pkg/defaults"
+	"github.com/tomcam/mb/pkg/errs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -11,55 +13,55 @@ import (
 // It assumes it is in the source directory.
 // Assets in the theme/pagetype directories are published, which
 // includes anything other than HTML or Markdown files.
-func (App *App) build() error {
+func (a *App) build() error {
 	if !isProject(".") {
-		return errCode("1009", currDir())
+		return errs.ErrCode("1009", currDir())
 	}
 
 	var err error
-	App.siteDefaults()
+	a.SiteDefaults()
 	// Delete any existing publish dir
-	if err := os.RemoveAll(App.Site.Publish); err != nil {
-		return errCode("0302", App.Site.Publish)
+	if err := os.RemoveAll(a.Site.Publish); err != nil {
+		return errs.ErrCode("0302", a.Site.Publish)
 	}
 	// Now create an empty publish dir
-	err = os.MkdirAll(App.Site.Publish, PUBLIC_FILE_PERMISSIONS)
+	err = os.MkdirAll(a.Site.Publish, defaults.PublicFilePermissions)
 	if err != nil {
-		return errCode("0403", App.Site.Publish)
+		return errs.ErrCode("0403", a.Site.Publish)
 	}
 
-	if App.Site.path == "" {
-		return errCode("1018", "")
+	if a.Site.path == "" {
+		return errs.ErrCode("1018", "")
 	}
 
 	// Get a list of all files & directories in the site.
-	if _, err = App.getProjectTree(App.Site.path); err != nil {
-		return errCode("0913", App.Site.path)
+	if _, err = a.getProjectTree(a.Site.path); err != nil {
+		return errs.ErrCode("0913", a.Site.path)
 	}
 
 	// Loop through the list of permitted directories for this site.
-	for dir, _ := range App.Site.dirs {
+	for dir := range a.Site.dirs {
 		// Change to each directory
 		if err := os.Chdir(dir); err != nil {
-			return errCode("1101", dir)
+			return errs.ErrCode("1101", dir)
 		}
 		// Get the files in just this directory
 		files, err := ioutil.ReadDir(".")
 		if err != nil {
-			return errCode("0703", dir)
+			return errs.ErrCode("0703", dir)
 		}
 
 		// Go through all the Markdown files and convert.
 		for _, file := range files {
 			if !file.IsDir() && isMarkdownFile(file.Name()) {
-				if err := App.publishFile(filepath.Join(dir, file.Name())); err != nil {
-					return errCode("PREVIOUS", err.Error())
+				if err := a.publishFile(filepath.Join(dir, file.Name())); err != nil {
+					return errs.ErrCode("PREVIOUS", err.Error())
 				}
 			}
 		}
 	}
-	fmt.Printf("%v ", App.fileCount)
-	if App.fileCount != 1 {
+	fmt.Printf("%v ", a.fileCount)
+	if a.fileCount != 1 {
 		fmt.Println("files")
 	} else {
 		fmt.Println("file")

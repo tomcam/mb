@@ -1,6 +1,9 @@
-package main
+package app
 
 import (
+	"github.com/tomcam/mb/pkg/defaults"
+	"github.com/tomcam/mb/pkg/errs"
+	"github.com/tomcam/mb/pkg/slices"
 	"os"
 	"path/filepath"
 	"strings"
@@ -9,12 +12,10 @@ import (
 // Called by  getProjectTree()
 // Builds a list all files and all directories in the project.
 // Excludes the assets directory and the publish directory.
-func (App *App) visit(files *[]string) filepath.WalkFunc {
+func (a *App) visit(files *[]string) filepath.WalkFunc {
 	return func(path string, info os.FileInfo, err error) error {
-		//fmt.Printf("visit(%s)\n", path)
-		var exclude searchInfo
 		// Find out what directories to exclude
-		exclude.list = App.excludeDirs()
+		exclude := slices.NewSearchInfo(a.excludeDirs())
 		if err != nil {
 			// Quietly fail if unable to access path.
 			return err
@@ -32,20 +33,20 @@ func (App *App) visit(files *[]string) filepath.WalkFunc {
 		}
 
 		// Exclude this directory if found on the, ah, exclusion list.
-		if exclude.Found(name) && isDir {
-			App.Verbose("Excluding directory: %s", name)
+		if exclude.Contains(name) && isDir {
+			a.Verbose("Excluding directory: %s", name)
 			return filepath.SkipDir
 
 		}
 
-		if exclude.Found(name) {
-			App.Verbose("Excluding: %s", name)
+		if exclude.Contains(name) {
+			a.Verbose("Excluding: %s", name)
 			return nil
 		}
 
 		if isDir {
-			App.setMdOption(path, normalDir)
-			//App.Site.dirs[path].mdOptions = normalDir
+			a.setMdOption(path, NormalDir)
+			// a.Site.dirs[path].MdOptions = NormalDir
 		}
 
 		*files = append(*files, path)
@@ -58,15 +59,15 @@ func (App *App) visit(files *[]string) filepath.WalkFunc {
 // at the root.
 // Ignore directories starting with a .
 // Ignore the assets directory
-func (App *App) getProjectTree(path string) (tree []string, err error) {
+func (a *App) getProjectTree(path string) (tree []string, err error) {
 	// This should only be called once so I imagine the
 	// following is unnecessary
 	var files []string
-	err = filepath.Walk(path, App.visit(&files))
+	err = filepath.Walk(path, a.visit(&files))
 	if err != nil {
-		return []string{}, errCode("0702", err.Error(), path)
+		return []string{}, errs.ErrCode("0702", err.Error(), path)
 	}
-	//fmt.Fprintf(os.Stdout, "Directory tree for %+v\n", files)
+	// fmt.Fprintf(os.Stdout, "Directory tree for %+v\n", files)
 	return files, nil
 }
 
@@ -74,14 +75,14 @@ func (App *App) getProjectTree(path string) (tree []string, err error) {
 // project is built. It's based on internal configuration (for example, it excludes the
 // publish directory) and any existing excludes (for example, Exclude=["pub", "node_modules"])
 // in the site config file.
-func (App *App) excludeDirs() []string {
-	//fmt.Println("Excluded in site.toml:", App.Site.ExcludeDirs)
+func (a *App) excludeDirs() []string {
+	// fmt.Println("Excluded in site.toml:", a.Site.ExcludeDirs)
 	// Add the publish directory if it isn't already there.
-	return append(App.Site.ExcludeDirs,
-		commonDir,
-		headTagsDir,
-		publishDir,
-		sCodeDir,
-		siteConfigDir,
-		themeDir)
+	return append(a.Site.ExcludeDirs,
+		defaults.CommonDir,
+		defaults.HeadTagsDir,
+		defaults.PublishDir,
+		defaults.SCodeDir,
+		defaults.SiteConfigDir,
+		defaults.ThemeDir)
 }

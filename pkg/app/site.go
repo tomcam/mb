@@ -1,7 +1,9 @@
-package main
+package app
 
 import (
 	"fmt"
+	"github.com/tomcam/mb/pkg/defaults"
+	"github.com/tomcam/mb/pkg/errs"
 	"os"
 	"path/filepath"
 )
@@ -20,15 +22,14 @@ type Site struct {
 	// List of authors with roles and websites in site.toml
 	Authors []author
 
-	// Base directory for URL root, which may be diffferent
+	// Base directory for URL root, which may be different
 	// from its actual root. For example, GitHub Pages prefers
 	// the blog to start in /docs instead of root, but
 	// a URL would omit it.
 	BaseDir string
 
-	// Site's branding, any string, that user specifies in site.toml
-	//. So, for example,
-	// if the Name is 'my-project' this might be
+	// Site's branding, any string, that user specifies in site.toml.
+	// So, for example, if the Name is 'my-project' this might be
 	// 'My Insanely Cool Project"
 	Branding string
 
@@ -43,9 +44,9 @@ type Site struct {
 
 	// List of directories in the source project directory that should be
 	// excluded, things like ".git" and "node_modules".
-	// Note that direcotory names starting with a "." are excluded too.
+	// Note that directory names starting with a "." are excluded too.
 	// DO NOT ACCESS DIRECTLY:
-	// Use excludedDirs() because it applies other information such as publishDir()
+	// Use excludedDirs() because it applies other information such as PublishDir()
 	ExcludeDirs []string
 
 	// List of file extensions to exclude. For example. [ ".css" ".go" ".php" ]
@@ -115,7 +116,7 @@ type Site struct {
 
 // Everything relevant about the page to be published,
 // namely its rendered text and what's in the front matter, but
-// potentinally also other stuff like file create date.
+// potentially also other stuff like file create date.
 type WebPage struct {
 	// Rendered text, the HTML after going through templates
 	html []byte
@@ -145,33 +146,38 @@ type OG struct {
 }
 
 type dirInfo struct {
-	mdOptions mdOptions
+	mdOptions MdOptions
 }
 
 // Indicates whether it's directory, a directory containing
 // markdown files, or file, or a Markdown file.
 // Used for bit flags
-type mdOptions uint8
+type MdOptions uint8
 
 const (
 	// Known to be a directory with at least 1 Markdown file
-	markdownDir mdOptions = 1 << iota
+	MarkdownDir MdOptions = 1 << iota
 
 	// Known to be a filename with a Markdown extension
-	markdownFile
+	MarkdownFile
 
 	// Directory. Don't know yet if it contains Markdown files.
-	normalDir
+	NormalDir
 
 	// File. Don't know if it's a markdown file.
-	normalFile
+	NormalFile
 
 	// Set if directory has a file named "index.md", forced to lowercase
-	hasIndexMd
+	HasIndexMd
 
 	// Set if directory has a file named "README.md", case sensitive
-	hasReadmeMd
+	HasReadmeMd
 )
+
+// IsOptionSet returns true if the opt bit is set.
+func (m MdOptions) IsOptionSet(opt MdOptions) bool {
+	return m&opt != 0
+}
 
 type socialConfig struct {
 	DeviantArt string
@@ -209,7 +215,7 @@ type authors struct {
 // MarkdownOptions consists of goldmark
 // options used when converting markdown to HTML.
 type MarkdownOptions struct {
-	// If true, line breaks are signficant
+	// If true, line breaks are significant
 	hardWraps bool
 
 	// Name of color scheme used for code highlighting,
@@ -221,7 +227,7 @@ type MarkdownOptions struct {
 	HighlightStyle string
 
 	// Create id= attributes for all headers automatically
-	headingIDs bool
+	HeadingIDs bool
 }
 
 // writeSiteConfig() writes the contents of App.Site
@@ -229,16 +235,16 @@ type MarkdownOptions struct {
 // and creates or replaces a TOML file in the
 // project's site subdirectory.
 // Assumes you're in the project directory.
-func (App *App) writeSiteConfig() error {
-	return writeTomlFile(App.Site.siteFilePath, App.Site)
+func (a *App) writeSiteConfig() error {
+	return writeTomlFile(a.Site.siteFilePath, a.Site)
 }
 
-// newSite() attempts to create an empty
+// NewSite() attempts to create an empty
 // project site using the
 // supplied directory name.
-func (App *App) newSite(sitename string) error {
+func (a *App) NewSite(sitename string) error {
 	if sitename == "" {
-		return errCode("1013", "")
+		return errs.ErrCode("1013", "")
 	}
 	// Do a simplistic, fallible check to see if there's
 	// already a site present and quit if so.
@@ -246,96 +252,101 @@ func (App *App) newSite(sitename string) error {
 	// testsite= in metabuzz.toml, and that site
 	// gets destroyed and replaced with the new one.
 	if isProject(sitename) && sitename != cfgString("testsite") {
-		return errCode("0951", sitename)
+		return errs.ErrCode("0951", sitename)
 	}
 
 	// Create the site subdirectory.
-	err := os.MkdirAll(sitename, PROJECT_FILE_PERMISSIONS)
+	err := os.MkdirAll(sitename, defaults.ProjectFilePermissions)
 	if err != nil {
-		return errCode("401", sitename)
+		return errs.ErrCode("401", sitename)
 	}
 
 	// Make it the current directory.
 	if err := os.Chdir(sitename); err != nil {
-		return errCode("1106", sitename)
+		return errs.ErrCode("1106", sitename)
 	}
 
 	// Create minimal directory structure: Publish directory
 	// .site directory, .themes, etc.
-	if err := createDirStructure(&siteDirs); err != nil {
-		return errCode("PREVIOUS", err.Error())
+	if err := createDirStructure(&defaults.SiteDirs); err != nil {
+		return errs.ErrCode("PREVIOUS", err.Error())
 	}
-	App.siteDefaults()
+	a.SiteDefaults()
 	// Create its site.toml file
-	if err := App.writeSiteConfig(); err != nil {
+	if err := a.writeSiteConfig(); err != nil {
 		// Custom error message already generated
-		return errCode("PREVIOUS", err.Error(), App.Site.siteFilePath)
+		return errs.ErrCode("PREVIOUS", err.Error(), a.Site.siteFilePath)
 	}
 
 	// Copy all themes from the application data directory
 	// to the site directory.
-	err = copyDirAll(App.themesPath, App.Site.themesPath)
+	err = copyDirAll(a.themesPath, a.Site.themesPath)
 	if err != nil {
-		App.QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
+		a.QuitError(errs.ErrCode("0911", "from '"+a.themesPath+"' to '"+a.Site.themesPath+"'"))
 	}
 
 	// Copy all scodes from the user application data directory
 	// to the project directory.
-	err = copyDirAll(App.sCodePath, App.Site.sCodePath)
+	err = copyDirAll(a.sCodePath, a.Site.sCodePath)
 	if err != nil {
-		App.QuitError(errCode("0915", "from '"+App.sCodePath+"' to '"+App.Site.sCodePath+"'"))
+		a.QuitError(errs.ErrCode("0915", "from '"+a.sCodePath+"' to '"+a.Site.sCodePath+"'"))
 	}
-	App.Site.AssetDir = filepath.Join(App.Site.Publish, App.Site.AssetDir)
+	a.Site.AssetDir = filepath.Join(a.Site.Publish, a.Site.AssetDir)
 
 	// Create a little home page
 	// The home page is based on the site name.
 	// Remove its path, leaving just the directory name.
 	sitename = filepath.Base(sitename)
-	indexMd = fmt.Sprintf(indexMd, sitename, sitename)
-	return writeTextFile("index.md", indexMd)
+	starterMd := fmt.Sprintf(defaults.IndexMd, sitename, sitename)
+	return writeTextFile("index.md", starterMd)
 
 }
 
-// siteDefaults() computes values for location of site
+// SiteDefaults() computes values for location of site
 // theme files, publish directory, etc.
 // Most of them are relative to the site directory.
 // It must be called after command line flags, env
 // variables, and other application configuration has been done.
-func (App *App) siteDefaults() {
-	App.Site.path = currDir()
+func (a *App) SiteDefaults() {
+	a.Site.path = currDir()
 	// Next read in the site configuration file, which may override things
 	// like AssetDir and Publish.
-	App.Site.siteFilePath = filepath.Join(App.Site.path, globalConfigurationDirName, siteConfigDir, siteConfigFilename)
-	if err := App.readSiteConfig(); err != nil {
-		displayError(errCode("PREVIOUS", ""))
+	a.Site.siteFilePath = filepath.Join(a.Site.path, defaults.GlobalConfigurationDirName,
+		defaults.SiteConfigDir, defaults.SiteConfigFilename)
+	if err := a.readSiteConfig(); err != nil {
+		displayError(errs.ErrCode("PREVIOUS", ""))
 	}
 
 	// Unlike the other dot directories, Publish is only
 	// 1 level deep. It is not nested inside the .mb directory
-	App.Site.Publish = filepath.Join(App.Site.path, publishDir)
-	App.Site.pubThemesPath = filepath.Join(App.Site.Publish, themeDir)
+	a.Site.Publish = filepath.Join(a.Site.path, defaults.PublishDir)
+	a.Site.pubThemesPath = filepath.Join(a.Site.Publish, defaults.ThemeDir)
 
 	// TODO: Move to  NewDefaultApp() and change to AppDefaults I think
 	// scode path?
-	App.commonPath = filepath.Join(App.configDir, commonDir)
-	App.headTagsPath = filepath.Join(App.configDir, headTagsDir)
-	App.sCodePath = filepath.Join(App.configDir, sCodeDir)
-	App.themesPath = filepath.Join(App.configDir, themeDir)
+	a.commonPath = filepath.Join(a.configDir, defaults.CommonDir)
+	a.headTagsPath = filepath.Join(a.configDir, defaults.HeadTagsDir)
+	a.sCodePath = filepath.Join(a.configDir, defaults.SCodeDir)
+	a.themesPath = filepath.Join(a.configDir, defaults.ThemeDir)
 
-	App.Site.commonPath = filepath.Join(App.Site.path, globalConfigurationDirName, commonDir)
-	App.Site.headTagsPath = filepath.Join(App.Site.path, globalConfigurationDirName, headTagsDir)
-	App.Site.sCodePath = filepath.Join(App.Site.path, globalConfigurationDirName, sCodeDir)
-	App.Site.themesPath = filepath.Join(App.Site.path, globalConfigurationDirName, themeDir)
+	a.Site.commonPath = filepath.Join(
+		a.Site.path, defaults.GlobalConfigurationDirName, defaults.CommonDir)
+	a.Site.headTagsPath = filepath.Join(
+		a.Site.path, defaults.GlobalConfigurationDirName, defaults.HeadTagsDir)
+	a.Site.sCodePath = filepath.Join(
+		a.Site.path, defaults.GlobalConfigurationDirName, defaults.SCodeDir)
+	a.Site.themesPath = filepath.Join(
+		a.Site.path, defaults.GlobalConfigurationDirName, defaults.ThemeDir)
 
-	if App.Flags.DontCopy {
+	if a.Flags.DontCopy {
 		fmt.Println("TODO: Finish the -d option here in site.go")
-		App.Site.themesPath = App.themesPath
-		App.Site.sCodePath = App.sCodePath
+		a.Site.themesPath = a.themesPath
+		a.Site.sCodePath = a.sCodePath
 	}
 }
 
 // readSiteConfig() opens the expected site.toml file, reads,
 // parses it, and assigns its values to App.Site.
-func (App *App) readSiteConfig() error {
-	return readTomlFile(App.Site.siteFilePath, &App.Site)
+func (a *App) readSiteConfig() error {
+	return readTomlFile(a.Site.siteFilePath, &a.Site)
 }

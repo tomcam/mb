@@ -17,9 +17,10 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.7.0
+	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/yuin/goldmark v1.1.31
 	github.com/yuin/goldmark-highlighting v0.0.0-20200307114337-60d527fdb691
-	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553
+	golang.org/x/net v0.0.0-20200202094626-16171245cfb2
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/ini.v1 v1.51.1 // indirect
 	gopkg.in/yaml.v2 v2.2.7 // indirect

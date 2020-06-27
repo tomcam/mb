@@ -1,26 +1,22 @@
-package main
+package defaults
+
+import "github.com/tomcam/mb/pkg/slices"
 
 var (
-	Version = productName + " version " +
+	Version = ProductName + " version " +
 		"0.45.0"
 
-	// Tiny starter file for index.md
-	indexMd = `
-# %s
-
-Welcome to %s
-`
 	// Directory configuration for a project--a new site.
-	siteDirs = [][]string{
-		{publishDir},
-		{globalConfigurationDirName, commonDir},
-		{globalConfigurationDirName, headTagsDir},
-		{globalConfigurationDirName, sCodeDir},
-		{globalConfigurationDirName, siteConfigDir},
-		{globalConfigurationDirName, themeDir},
+	SiteDirs = [][]string{
+		{PublishDir},
+		{GlobalConfigurationDirName, CommonDir},
+		{GlobalConfigurationDirName, HeadTagsDir},
+		{GlobalConfigurationDirName, SCodeDir},
+		{GlobalConfigurationDirName, SiteConfigDir},
+		{GlobalConfigurationDirName, ThemeDir},
 	}
 	// Markdown file extensions
-	markdownExtensions = searchInfo{list: []string{
+	MarkdownExtensions = slices.NewSearchInfo([]string{
 		".Rmd",
 		".md",
 		".mdown",
@@ -30,74 +26,81 @@ Welcome to %s
 		".mdwn",
 		".mkd",
 		".mkdn",
-		".text"}, sorted: false}
+		".text"})
 
-	// excludedAssetExtensions are the extensions of files in the asset
+	// ExcludedAssetExtensions are the extensions of files in the asset
 	// directory that should NOT be copied to the publish directory.
 	// The contents of a theme directory mix both things you want copied,
 	// like CSS files, and things you don't, like TOML or Markdown files.
-	excludedAssetExtensions = searchInfo{list: []string{
+	ExcludedAssetExtensions = slices.NewSearchInfo([]string{
 		".html",
 		".toml",
 		".bak",
-	}, sorted: false}
+	})
 )
 
 const (
 	// Name of the subdirectory that holds shared text.
 	// Excluded from publishing.
-	commonDir = "common"
+	CommonDir = "common"
+
+	// Tiny starter file for index.md
+	IndexMd = `
+# %s
+
+Welcome to %s
+`
 
 	// Name of the subdirectory the rendered files get rendered
 	// to. It can't be changed because it's used to determine
 	// whether a site is contained within its parent directory.
 	// Excluded from publishing.
-	publishDir = ".pub"
+	PublishDir = ".pub"
 
 	// Name of the subdirectory containing files that get copied
 	// into the header of each HTML file rendered by the site
 	// Excluded from publishing.
-	headTagsDir = "headtags"
+	HeadTagsDir = "headtags"
 
 	// Name of subdirectory containing shortcode files
 	// Excluded from publishing.
-	sCodeDir = "scodes"
+	SCodeDir = "scodes"
 
 	// Name of subdirectory within the theme that holds help & sample files
 	// for that theme.
-	THEME_HELP_SUBDIRNAME = ".help"
+	ThemeHelpSubdirname = ".help"
 
 	// Name of subdirectory under the publish directory for style sheet assets
 	// (Currently not well thought out nor in use, though assets directory is
 	// being used)
-	DEFAULT_PUBLISH_CSS_SUBDIRNAME = "css"
+	DefaultPublishCssSubdirname = "css"
 
 	// Name of subdirectory under the publish directory for image assets
 	// (Currently not well thought out nor in use, though assets directory is
 	// being used)
-	DEFAULT_PUBLISH_IMG_SUBDIRNAME = "img"
+	DefaultPublishImgSubdirname = "img"
 
 	// Name of theme used to create other themes, or theme to be
 	// used if for some reason no others are present
-	defaultThemeName = "wide"
+	DefaultThemeName = "wide"
 
 	// Name of the directory that holds items used by projects, such
 	// as themes and shortcodes.
 	// TODO: Change this when I settle on a product name
-	globalConfigurationDirName = ".mb"
+	GlobalConfigurationDirName = ".mb"
 
 	// Default file extension used by configuration files.
-	configFileDefaultExt = "toml"
+	ConfigFileDefaultExt = "toml"
 
 	// A configuration file passed to the command line.
-	CONFIG_FILENAME = productName + "." + configFileDefaultExt
+	ConfigFilename = ProductName + "." + ConfigFileDefaultExt
 
 	// The configuration file in the user's application
 	// data directory, without the path.
-	APP_DATA_CONFIG_FILENAME = productName + "." + configFileDefaultExt
+	AppDataConfigFilename = ProductName + "." + ConfigFileDefaultExt
 
 	// The local configuration file name without the path.
-	LOCAL_CONFIG_FILENAME = productName + "." + configFileDefaultExt
+	LocalConfigFilename = ProductName + "." + ConfigFileDefaultExt
 
 	// By default, the published site gets its theme from a local copy
 	// within the site directory. It then copies from that copy to
@@ -105,10 +108,10 @@ const (
 	// from being made to the originals, and makes it much easier to
 	// make theme changes, especially if you're a noob or just want to
 	// type less.
-	themeDir = "themes"
+	ThemeDir = "themes"
 
 	// Configuration file found in the current site source directory
-	SOURCE_DIR_CONFIG_FILENAME = productName + "." + configFileDefaultExt
+	SourceDirConfigFilename = ProductName + "." + ConfigFileDefaultExt
 
 	// Actual colloquial name for this product
 	// but used in directories & other
@@ -117,7 +120,7 @@ const (
 	// like docset or metabuzz.
 	// TODO: If this changes update GLOBAL_CONFIG_DIRNAME
 	// TODO: Change this when I settle on a product name, and also change PRODUCT_SHORT_NAME
-	productName = "metabuzz"
+	ProductName = "metabuzz"
 
 	// Abbreviation, used for name command line program.
 	ProductShortName = "mb"
@@ -127,34 +130,28 @@ const (
 	// A short version of the product name
 	// used as a prefix for environment variables.
 	// TODO: Change this when I settle on a product name
-	PRODUCT_ENV_PREFIX = "MBZ_"
+	ProductEnvPrefix = "MBZ_"
 	// Examples:
-	//PRODUCT_ENV_PREFIX+"DEFAULT_THEME"
-	//PRODUCT_ENV_PREFIX+"SC_DIR"
+	// PRODUCT_ENV_PREFIX+"DEFAULT_THEME"
+	// PRODUCT_ENV_PREFIX+"SC_DIR"
 
 	// The permissions given to output files, and also to
 	// configuration files.
 	// 0755 means the owner can read, write and execute (first 7)
 	// Other people can only read (5 and 5). That makes sense
-	// for a webserver
-	PUBLIC_FILE_PERMISSIONS = 0755
+	// for a web server
+	PublicFilePermissions = 0755
 
 	// Objects that must be visible to the project, but not the public
-	PROJECT_FILE_PERMISSIONS = 0700
+	ProjectFilePermissions = 0700
 
 	// Name of the subdirectory in the project where the site info is held.
-	// That incldes the site.toml file and also the publish directory.
-	siteConfigDir = "site"
+	// That includes the site.toml file and also the publish directory.
+	SiteConfigDir = "site"
 
 	// Name of the file that holds site configuration information
-	siteConfigFilename = "site" + "." + configFileDefaultExt
+	SiteConfigFilename = "site" + "." + ConfigFileDefaultExt
 
 	// String that precedes error codes
-	errorCodePrefix = "mbz"
+	ErrorCodePrefix = "mbz"
 )
-
-// optionSet() returns whether a particular bit is set in bitwise command parsing.
-// That's a bad description but I'm tired.
-func optionSet(b, options mdOptions) bool {
-	return b&options != 0
-}

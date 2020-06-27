@@ -1,4 +1,4 @@
-package main
+package app
 
 // Nicked with permission from:
 // https://minimalanalytics.com/
