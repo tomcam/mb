@@ -181,8 +181,8 @@ var errMsgs = map[string]string{
 	"1202": "scode: Couldn't execute template in",            // filename
 	"1203": "Unknown tag type",                               // Tag name
 	"1204": "Error executing",                                // filename, Go error message
-	"1205": "Couldn't convert TOC level to a number:",        // level as string
-	"1206": "Level needs to be a number from 1-6 inclusive:", // level as a string
+	"1205": "Couldn't convert TOC level to a number",
+  "1206": "Level needs to be a number from 1-6 inclusive:", // level as a string
 }
 
 type errMsg struct {

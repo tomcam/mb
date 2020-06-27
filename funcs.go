@@ -186,22 +186,72 @@ func (App *App) scode(params map[string]interface{}) template.HTML {
 	return template.HTML(s)
 }
 
+func (App *App) openList(listType string, level int) {
+  if level <= 0 {
+    return
+  }
+  fmt.Print("<" + listType + ">")
+  App.openList(listType, level-1)
+}
+func (App *App) closeList(listType string, level int) {
+  if level <= 0 {
+    return
+  }
+  fmt.Print("</" + listType + ">")
+  App.closeList(listType, level-1)
+}
+
+//func (App *App) indentItem(item string, level int, ordered bool) {
+func (App *App) indentItem(t TOCEntry, level int, listType string) {
+  App.openList(listType, t.Level)
+  fmt.Print("<li>" + t.Header + "</li>")
+  App.closeList(listType, t.Level)
+}
 // toc generates a table of contents and includes all headers with a level less
 // than or equal level. Level must be 1-6 inclusive.
-func (App *App) toc(level string) string {
-	l, err := strconv.Atoi(level)
+func (App *App) toc(params ...string) string {
+  pcount:=len(params)
+  var listType string
+  var level int
+  var err error
+  switch pcount {
+    case 0: {
+      level = 6
+      listType = "ul"
+    }
+    case 1: {
+      level, err = strconv.Atoi(params[0])
+      listType = "ul"
+    }
+    default: {
+      level, err = strconv.Atoi(params[0])
+      listType = params[1]
+      if strings.Contains(listType,"ol") {
+        listType = "ol"
+      } else {
+        listType = "ul"
+      }
+    }
+  }
+
 	// Please leave this error code as is
 	if err != nil {
-		App.QuitError(errCode("1205", level))
+		App.QuitError(errCode("1205",err.Error()))
 	}
 	// Ditto
-	if l <= 0 || l > 6 {
-		App.QuitError(errCode("1206", level))
+	if level <= 0 || level > 6 {
+		App.QuitError(errCode("1206", params[0]))
 	}
+	tocs := App.generateTOC(level)
+  for _, t :=range tocs {
+    App.indentItem(t, level, listType)
+  }
+  return ""
+
+
 	b := new(bytes.Buffer)
 	b.Grow(256)
 	b.WriteString("<ul>")
-	tocs := App.generateTOC(l)
 	for _, t := range tocs {
 		b.WriteString("<li>")
 		_, _ = fmt.Fprintf(b, `<a href="#%s">`, t.ID)
