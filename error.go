@@ -177,12 +177,12 @@ var errMsgs = map[string]string{
 	"1106": "Can't change to site directory",   // directory name
 
 	// 1200 - Syntax error!
-	"1201": "inc: Couldn't execute template in",              // filename
-	"1202": "scode: Couldn't execute template in",            // filename
-	"1203": "Unknown tag type",                               // Tag name
-	"1204": "Error executing",                                // filename, Go error message
+	"1201": "inc: Couldn't execute template in",   // filename
+	"1202": "scode: Couldn't execute template in", // filename
+	"1203": "Unknown tag type",                    // Tag name
+	"1204": "Error in",                            // filename, Go error message
 	"1205": "Couldn't convert TOC level to a number",
-  "1206": "Level needs to be a number from 1-6 inclusive:", // level as a string
+	"1206": "Level needs to be a number from 1-6 inclusive:", // level as a string
 }
 
 type errMsg struct {

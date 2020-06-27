@@ -1,8 +1,7 @@
 package main
- 
 
 import (
-  "os"
+	//"os"
 	"flag"
 	"fmt"
 	"github.com/spf13/cobra"
@@ -12,7 +11,7 @@ import (
 var (
 
 	// Temp command to extract config files
-  cmdCfgGen = flag.NewFlagSet("cfggen", flag.ExitOnError)
+	cmdCfgGen = flag.NewFlagSet("cfggen", flag.ExitOnError)
 
 	// Declare command-line subcommand to display config info
 	cmdInfo = flag.NewFlagSet("info", flag.ExitOnError)
@@ -64,26 +63,26 @@ type Flags struct {
 // from command line, environment, etc.
 func (App *App) addCommands() {
 	var (
- 		/*****************************************************
-		  TOP LEVEL COMMAND:cfggen 
+		/*****************************************************
+		  TOP LEVEL COMMAND:cfggen
 		 *****************************************************/
-     cmdCfgGen = &cobra.Command{
+		cmdCfgGen = &cobra.Command{
 			Use:   "cfggen",
 			Short: "TEMPORARY function to extract dirs",
 			Long: `cfggen: TODO: Long version
 `,
 			Run: func(cmd *cobra.Command, args []string) {
-        fs := FS(true)
-        _, err := fs.Open(".mb")
-        if (err !=nil) {
-          fmt.Println("ERROR: " + err.Error())
-          os.Exit(1)
-        }
+				/*
+				   fs := FS(true)
+				   _, err := fs.Open(".mb")
+				   if (err !=nil) {
+				     fmt.Println("ERROR: " + err.Error())
+				     os.Exit(1)
+				   }
+				*/
 
 			},
 		}
-
-
 
 		/*****************************************************
 		  TOP LEVEL COMMAND: info
@@ -370,8 +369,7 @@ create theme based on an existing one.
 	App.Cmd.AddCommand(cmdBuild)
 	App.Cmd.AddCommand(cmdKitchenSink)
 	App.Cmd.AddCommand(cmdInfo)
-  App.Cmd.AddCommand(cmdCfgGen)
-
+	App.Cmd.AddCommand(cmdCfgGen)
 
 	// Handle global flags such as Verbose
 	App.Cmd.PersistentFlags().BoolVarP(&App.Flags.Verbose, "verbose", "v", false, "verbose output")

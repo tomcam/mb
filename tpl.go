@@ -31,6 +31,7 @@ func (App *App) execute(templateName string, tpl string, funcMap template.FuncMa
 	err = t.ExecuteTemplate(&b, templateName, App)
 	if err != nil {
 		App.QuitError(errCode("1204", err.Error()))
+		//App.QuitError(errCode("PREVIOUS",""))
 	}
 	return b.String()
 }

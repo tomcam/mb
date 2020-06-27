@@ -1,3 +1,9 @@
+# Metabuzz Markdown quick reference
+
+**Table of contents** 
+{{ toc "6" }}
+
+
 ## Markdown syntax
 
 Here's how markdown appears in the **{{.FrontMatter.Theme }}** theme
