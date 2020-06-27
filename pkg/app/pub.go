@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
+	"github.com/tomcam/mb/pkg/mdext"
 	"github.com/tomcam/mb/pkg/slices"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting"
@@ -606,11 +607,16 @@ func header2To6(s string) string {
 }
 
 func (a *App) titleTag() {
-	var title string
-	if a.FrontMatter.Title != "" {
+	title := defaults.ProductName + ": Title needed here, squib"
+	switch {
+	case a.FrontMatter.Title != "":
 		title = a.FrontMatter.Title
-	} else {
-		title = defaults.ProductName + ": Title needed here, squib"
+	default:
+		node := a.markdownAST(a.Page.markdownStart)
+		t := mdext.InferTitle(node, a.Page.markdownStart)
+		if t != "" {
+			title = t
+		}
 	}
 	a.Page.titleTag = title
 }

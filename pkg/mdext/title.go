@@ -24,6 +24,7 @@ func InferTitle(root ast.Node, mdSrc []byte) string {
 		return ast.WalkSkipChildren, nil
 	})
 
+	// Pick the first header that exists by order.
 	for _, header := range headers {
 		if header == nil {
 			continue
