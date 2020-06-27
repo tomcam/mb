@@ -230,9 +230,7 @@ func (App *App) toc(params ...string) string {
 	for _, t := range tocs {
 		s += strings.Repeat("<"+listType+">", t.Level)
 		s += "<li>"
-		s += fmt.Sprintf(`<a href="#%s">`, t.ID)
-		s += t.Header
-		s += "</li>"
+		s += fmt.Sprintf(`<a href="#%s">%s</a></li>`, t.ID,t.Header)
 		s += strings.Repeat("</"+listType+">", t.Level)
 	}
 	return s
