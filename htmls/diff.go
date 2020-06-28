@@ -1,35 +1,33 @@
-// package htmls contains utilities for comparing and constructing HTML.
 package htmls
 
 import (
-	"bytes"
 	"io"
+	"sort"
 	"strings"
 
 	"github.com/google/go-cmp/cmp"
 	"golang.org/x/net/html"
 )
 
-// DiffStrings returns the diff between the two normalized HTML fragments.
 func DiffStrings(x, y string) (string, error) {
 	return Diff(strings.NewReader(x), strings.NewReader(y))
 }
 
-// Diff returns the diff between the two normalized HTML fragments.
-func Diff(got, want io.Reader) (string, error) {
-	frag1, err := parseFragment(want)
+// Diff returns the diff between the normalized HTML fragments.
+func Diff(r1, r2 io.Reader) (string, error) {
+	frag1, err := parseFragment(r1)
 	if err != nil {
 		return "", err
 	}
 
-	frag2, err := parseFragment(got)
+	frag2, err := parseFragment(r2)
 	if err != nil {
 		return "", err
 	}
 
-	dump1 := renderNodes(frag1)
-	dump2 := renderNodes(frag2)
-	return cmp.Diff(dump1, dump2), nil
+	n1 := RenderNodes(frag1)
+	n2 := RenderNodes(frag2)
+	return cmp.Diff(n1, n2), nil
 }
 
 // parseFragment parses a normalized version of an HTML node.
@@ -74,20 +72,22 @@ func normalizeNode(node *html.Node) {
 			cur = next
 		}
 	}
+	sort.Slice(node.Attr, func(i, j int) bool {
+		x := node.Attr[i]
+		y := node.Attr[j]
+		if !(x.Namespace < y.Namespace) {
+			return false
+		}
+		if !(x.Key < y.Key) {
+			return false
+		}
+		if !(x.Val < y.Val) {
+			return false
+		}
+		return true
+	})
 }
 
 func isEmptyNode(node *html.Node) bool {
 	return strings.TrimSpace(node.Data) == ""
-}
-
-// renderNodes prints a string representation of HTML nodes.
-func renderNodes(nodes []*html.Node) string {
-	b := new(bytes.Buffer)
-	for i, node := range nodes {
-		_ = html.Render(b, node)
-		if i < len(nodes)-1 {
-			b.WriteString("\n")
-		}
-	}
-	return b.String()
 }

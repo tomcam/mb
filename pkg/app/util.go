@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"bufio"
@@ -6,6 +6,9 @@ import (
 	"github.com/BurntSushi/toml"
 	"github.com/plus3it/gorecurcopy"
 	"github.com/spf13/viper"
+	"github.com/tomcam/mb/pkg/defaults"
+	"github.com/tomcam/mb/pkg/errs"
+	"github.com/tomcam/mb/pkg/slices"
 	"io"
 	"io/ioutil"
 	"os"
@@ -14,29 +17,29 @@ import (
 	"strings"
 )
 
-// cfgString() obtains a value set from a config file, environemnt
+// cfgString() obtains a value set from a config file, environment
 // variable, whatever. Simple abstraction over viper
 func cfgString(option string) string {
 	return viper.GetString(option)
 }
 
-// cfgBool() obtains a value set from a config file, environemnt
+// cfgBool() obtains a value set from a config file, environment
 // variable, whatever. Simple abstraction over viper
 func cfgBool(option string) bool {
 	return viper.GetBool(option)
 }
 
-// configDir() returns the user's application configuraion directory,
+// configDir() returns the user's application configuration directory,
 // or just "." for the current directory if it can't be
 // determined through system calls.
 // https://golang.org/pkg/os/#UserConfigDir
 func configDir() string {
 	if cfgDir, err := os.UserConfigDir(); err != nil {
 		// Can't determine from the OS, so just use the current directory.
-		return filepath.Join(".", globalConfigurationDirName)
+		return filepath.Join(".", defaults.GlobalConfigurationDirName)
 	} else {
 		// Got an actual valid global application data directory
-		return filepath.Join(cfgDir, productName, globalConfigurationDirName)
+		return filepath.Join(cfgDir, defaults.ProductName, defaults.GlobalConfigurationDirName)
 	}
 }
 
@@ -78,20 +81,20 @@ func copyDirOnly(source, dest string) error {
 // copyDirAll() does a recursive copy of the directory and its subdirectories
 func copyDirAll(source, dest string) error {
 	if source == "" {
-		return errCode("0704", source)
+		return errs.ErrCode("0704", source)
 	}
 	if dest == "" {
-		return errCode("0705", dest)
+		return errs.ErrCode("0705", dest)
 	}
 
 	if dest == source {
-		return errCode("0707", "from '"+source+"' to '"+dest+"'")
+		return errs.ErrCode("0707", "from '"+source+"' to '"+dest+"'")
 	}
 
 	err := gorecurcopy.CopyDirectory(source, dest)
-	//return errCode("0406","from '"+source+"' to '"+dest+"'",err.Error())
+	//return ErrCode("0406","from '"+source+"' to '"+dest+"'",err.Error())
 	if err != nil {
-		return errCode("0406", "from '"+source+"' to '"+dest+"'", "")
+		return errs.ErrCode("0406", "from '"+source+"' to '"+dest+"'", "")
 	}
 	return nil
 }
@@ -99,16 +102,16 @@ func copyDirAll(source, dest string) error {
 // copyNewName() copies file source to file target, then deletes source
 func copyNewName(source, target string) error {
 	if !fileExists(source) {
-		return errCode("PREVIOUS", "")
+		return errs.ErrCode("PREVIOUS", "")
 	}
 	if err := Copy(source, target); err != nil {
-		return errCode("0111", "trying to copy "+source+" to "+target)
+		return errs.ErrCode("0111", "trying to copy "+source+" to "+target)
 	}
 	if !fileExists(target) {
-		return errCode("0110", "tried to create "+target)
+		return errs.ErrCode("0110", "tried to create "+target)
 	}
 	if deleteFile(source) != nil {
-		return errCode("0301", source)
+		return errs.ErrCode("0301", source)
 	}
 	return nil
 }
@@ -126,24 +129,24 @@ func CopySymLink(source, dest string) error {
 func Copy(src, dest string) error {
 	sourceFileStat, err := os.Stat(src)
 	if err != nil {
-		return errCode("0112", src)
+		return errs.ErrCode("0112", src)
 	}
 
 	if !sourceFileStat.Mode().IsRegular() {
-		return errCode("0113", src)
+		return errs.ErrCode("0113", src)
 	}
 	source, err := os.Open(src)
 	if err != nil {
-		return errCode("0114", src)
+		return errs.ErrCode("0114", src)
 	}
 	destination, err := os.Create(dest)
 	if err != nil {
-		return errCode("0209", dest)
+		return errs.ErrCode("0209", dest)
 	}
 	defer destination.Close()
 	_, err = io.Copy(destination, source)
 	if err != nil {
-		return errCode("0251", dest)
+		return errs.ErrCode("0251", dest)
 	}
 	// Success
 	return nil
@@ -167,7 +170,7 @@ func createDirStructure(dirs *[][]string) (err error) {
 			// in a portable way
 			path = filepath.Join(path, subdir)
 		}
-		err := os.MkdirAll(path, PUBLIC_FILE_PERMISSIONS)
+		err := os.MkdirAll(path, defaults.PublicFilePermissions)
 		if err != nil {
 			return err
 		}
@@ -250,21 +253,21 @@ func hasExtension(filename, extension string) bool {
 
 // hasExtension() Returns true if the fully qualified filename
 // ends in any of the extensions listed in extensions.
-func hasExtensionFrom(path string, extensions searchInfo) bool {
-	return extensions.Found(filepath.Ext(path))
+func hasExtensionFrom(path string, extensions *slices.SearchInfo) bool {
+	return extensions.Contains(filepath.Ext(path))
 }
 
 /*
 // hasExcludedExtension() returns true if the supplied string
 // is on the list of excluded filetypes.
 func hasExcludedExtension(filename string) bool {
-	return hasExtensionFrom(filename, excludedAssetExtensions)
+	return hasExtensionFrom(filename, ExcludedAssetExtensions)
 }
 
 // hasMarkdownExtension() returns true if the supplied string
 // (presumably a filename) ends in ".md", ".markdown", etc.
 func hasMarkdownExtension(filename string) bool {
-	return hasExtensionFrom(filename, markdownExtensions)
+	return hasExtensionFrom(filename, MarkdownExtensions)
 }
 */
 
@@ -311,7 +314,7 @@ func isFile(pathName string) bool {
 // isMarkdownFile() returns true of the specified filename has one of
 // the extensions used for Markdown files.
 func isMarkdownFile(filename string) bool {
-	return hasExtensionFrom(filename, markdownExtensions)
+	return hasExtensionFrom(filename, defaults.MarkdownExtensions)
 }
 
 // isProject() looks at the structure of the specified directory
@@ -363,7 +366,7 @@ func promptStringDefault(prompt string, defaultValue string) string {
 func promptYes(prompt string) bool {
 	// See also inputString(), promptYes()
 	answer := promptString(prompt)
-	return (strings.HasPrefix(strings.ToLower(answer), "y"))
+	return strings.HasPrefix(strings.ToLower(answer), "y")
 }
 
 // relativeDirectory() takes a base directory,
@@ -421,7 +424,7 @@ func replaceExtension(filename string, newExtension string) string {
 // siteDir() returns the expected name of a site subdirectory  in
 // the given path.
 func siteDir(path string) string {
-	return filepath.Join(path, globalConfigurationDirName, siteConfigDir)
+	return filepath.Join(path, defaults.GlobalConfigurationDirName, defaults.SiteConfigDir)
 }
 
 // userName() returns the
@@ -449,10 +452,10 @@ func writeTextFile(filename, contents string) error {
 	var out *os.File
 	var err error
 	if out, err = os.Create(filename); err != nil {
-		return errCode("0204", "Problem creating file %v: %v\n", filename, err.Error())
+		return errs.ErrCode("0204", "Problem creating file %v: %v\n", filename, err.Error())
 	}
 	if _, err = out.WriteString(contents); err != nil {
-		return errCode("0903", "Problem writing to file %v: %v\n", filename, err.Error())
+		return errs.ErrCode("0903", "Problem writing to file %v: %v\n", filename, err.Error())
 	}
 	return nil
 }
@@ -476,13 +479,13 @@ func readTomlFile(filename string, target interface{}) (err error) {
 func writeTomlFile(filename string, target interface{}) error {
 	f, err := os.Create(filename)
 	if err != nil {
-		return errCode("0210", err.Error(), filename)
+		return errs.ErrCode("0210", err.Error(), filename)
 	}
 	if err = toml.NewEncoder(f).Encode(target); err != nil {
-		return errCode("0908", err.Error())
+		return errs.ErrCode("0908", err.Error())
 	}
 	if err := f.Close(); err != nil {
-		return errCode("0252", filename)
+		return errs.ErrCode("0252", filename)
 	}
 	return nil
 }

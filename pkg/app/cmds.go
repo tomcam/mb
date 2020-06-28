@@ -1,10 +1,12 @@
-package main
+package app
 
 import (
 	//"os"
 	"flag"
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/tomcam/mb/pkg/defaults"
+	"github.com/tomcam/mb/pkg/errs"
 	//"github.com/spf13/viper"
 )
 
@@ -61,7 +63,7 @@ type Flags struct {
 // commands, flags, and command-line options,
 // then calls initConfig which obotains those options
 // from command line, environment, etc.
-func (App *App) addCommands() {
+func (a *App) addCommands() {
 	var (
 		/*****************************************************
 		  TOP LEVEL COMMAND:cfggen
@@ -94,7 +96,7 @@ func (App *App) addCommands() {
 Show such information as where theme files can be found,
 whether the current directory is Metabuzz project, and so on`,
 			Run: func(cmd *cobra.Command, args []string) {
-				App.info()
+				a.info()
 			},
 		}
 
@@ -120,9 +122,9 @@ whether the current directory is Metabuzz project, and so on`,
       open .pub/index.html
 `,
 			Run: func(cmd *cobra.Command, args []string) {
-				err := App.build()
+				err := a.build()
 				if err != nil {
-					App.QuitError(err)
+					a.QuitError(err)
 				}
 			},
 		}
@@ -156,12 +158,12 @@ whether the current directory is Metabuzz project, and so on`,
 			Run: func(cmd *cobra.Command, args []string) {
 				var err error
 				if len(args) > 0 {
-					err = App.kitchenSink(args[0])
+					err = a.kitchenSink(args[0])
 				} else {
-					err = App.kitchenSink("")
+					err = a.kitchenSink("")
 				}
 				if err != nil {
-					App.QuitError(err)
+					a.QuitError(err)
 				}
 			},
 		}
@@ -222,9 +224,9 @@ create theme based on an existing one.
 					newPageType = promptString("Name of pagetype to create?")
 				}
 				fromTheme = promptString("Add this pagetype to which theme?")
-				err := App.newPageType(fromTheme, newPageType)
+				err := a.newPageType(fromTheme, newPageType)
 				if err != nil {
-					App.QuitError(err)
+					a.QuitError(err)
 				} else {
 					fmt.Println("Created pagetype", newPageType)
 				}
@@ -248,18 +250,18 @@ create theme based on an existing one.
 				// If there are arguments after build, then
 				// just convert these files one at at time.
 				if len(args) > 0 {
-					App.Site.Name = args[0]
+					a.Site.Name = args[0]
 				} else {
 					// Them more likely case: it's build all by
 					// itself, so go through the whole directory
 					// tree and build as a complete site.
-					App.Site.Name = promptString("Name of site to create?")
+					a.Site.Name = promptString("Name of site to create?")
 				}
-				err := App.newSite(App.Site.Name)
+				err := a.NewSite(a.Site.Name)
 				if err != nil {
-					App.QuitError(err)
+					a.QuitError(err)
 				} else {
-					fmt.Println("Created site ", App.Site.Name)
+					fmt.Println("Created site ", a.Site.Name)
 				}
 			},
 		}
@@ -273,7 +275,7 @@ create theme based on an existing one.
 		NewThemeName string
 		// the bar part of
 		// new theme foo from bar
-		NewThemeFrom = App.defaultTheme()
+		NewThemeFrom = a.defaultTheme()
 		cmdNewTheme  = &cobra.Command{
 			Use:   "theme {newtheme} | from {oldtheme} ",
 			Short: "new theme mytheme",
@@ -302,8 +304,8 @@ create theme based on an existing one.
 				// xxx
 				// Create a new theme from the default theme
 				NewThemeFrom = promptStringDefault("Name to copy it from?", NewThemeFrom)
-				if err := App.newTheme(NewThemeFrom, NewThemeName); err != nil {
-					App.QuitError(errCode("PREVIOUS", err.Error()))
+				if err := a.newTheme(NewThemeFrom, NewThemeName); err != nil {
+					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 				}
 				fmt.Println("Created theme", NewThemeName)
 			},
@@ -336,11 +338,11 @@ create theme based on an existing one.
 				// xxx
 				promptString("xxx Pretending to create new theme")
 				/*
-					err := App.newSite(App.Site.Name)
+					err := a.NewSite(a.Site.Name)
 					if err != nil {
-						App.QuitError(err)
+						a.QuitError(err)
 					} else {
-						fmt.Println("Created site ", App.Site.Name)
+						fmt.Println("Created site ", a.Site.Name)
 					}
 				*/
 			},
@@ -349,10 +351,10 @@ create theme based on an existing one.
 
 	// Example command line:
 	// new theme --from=pillar
-	//cmdNewTheme.Flags().StringVarP(&App.Args.NewThemeFrom, "from", "f", DEFAULT_THEME_NAME, "name of theme to copy from")
+	//cmdNewTheme.Flags().StringVarP(&a.Args.NewThemeFrom, "from", "f", DEFAULT_THEME_NAME, "name of theme to copy from")
 	// Example command line:
 	// new theme --to=mytheme
-	//cmdNewTheme.Flags().StringVarP(&App.Args.NewThemeTo, "to", "t", "", "name of theme to create (required)")
+	//cmdNewTheme.Flags().StringVarP(&a.Args.NewThemeTo, "to", "t", "", "name of theme to create (required)")
 	//cmdNewTheme.MarkFlagRequired("to")
 
 	// Example command line:
@@ -362,23 +364,24 @@ create theme based on an existing one.
 
 	// Example command line:
 	// new
-	App.Cmd.AddCommand(cmdNew)
+	a.Cmd.AddCommand(cmdNew)
 	cmdNew.AddCommand(cmdNewTheme)
 	cmdNewTheme.AddCommand(cmdNewThemeFrom)
 
-	App.Cmd.AddCommand(cmdBuild)
-	App.Cmd.AddCommand(cmdKitchenSink)
-	App.Cmd.AddCommand(cmdInfo)
-	App.Cmd.AddCommand(cmdCfgGen)
+	a.Cmd.AddCommand(cmdBuild)
+	a.Cmd.AddCommand(cmdKitchenSink)
+	a.Cmd.AddCommand(cmdInfo)
+	a.Cmd.AddCommand(cmdCfgGen)
 
 	// Handle global flags such as Verbose
-	App.Cmd.PersistentFlags().BoolVarP(&App.Flags.Verbose, "verbose", "v", false, "verbose output")
-	App.Cmd.PersistentFlags().BoolVarP(&App.Flags.DontCopy, "dontcopy", "d", false, "don't copy theme file; use global theme")
+	a.Cmd.PersistentFlags().BoolVarP(&a.Flags.Verbose, "verbose", "v", false, "verbose output")
+	a.Cmd.PersistentFlags().BoolVarP(&a.Flags.DontCopy, "dontcopy", "d", false, "don't copy theme file; use global theme")
 	// Code highlighting style to use
-	App.Cmd.PersistentFlags().StringVarP(&App.Site.MarkdownOptions.HighlightStyle, "highlight", "l", "github", "default code highlighting scheme")
+	a.Cmd.PersistentFlags().StringVarP(&a.Site.MarkdownOptions.HighlightStyle, "highlight", "l", "github", "default code highlighting scheme")
 
-	App.Cmd.PersistentFlags().StringVarP(&App.Args.config, "config", "c", APP_DATA_CONFIG_FILENAME, "configuration filename")
+	a.Cmd.PersistentFlags().StringVarP(&a.Args.config, "config", "c",
+		defaults.AppDataConfigFilename, "configuration filename")
 
 	// When cobra is ready to go call initConfig()
-	cobra.OnInitialize(App.initConfig)
+	cobra.OnInitialize(a.initConfig)
 }

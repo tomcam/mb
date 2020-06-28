@@ -1,15 +1,4 @@
-package main
-
-// The table of contents consists of an array of these
-// dudes.
-type TOCEntry struct {
-	// The HTML ID of the source header or the empty string if the header had no ID.
-	ID string
-	// The text of the header
-	Header string
-	// Its level 1-6 for h1-h6
-	Level int
-}
+package app
 
 // type Page contains read-only information about the Markdown page currently
 // being processed.

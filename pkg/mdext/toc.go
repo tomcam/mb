@@ -1,4 +1,4 @@
-package main
+package mdext
 
 import (
 	"bytes"
@@ -7,26 +7,19 @@ import (
 	"github.com/yuin/goldmark/renderer"
 )
 
-// generateTOC reads the Markdown source and returns a slice of TOC entries
-// corresponding to each header less than or equal to level.
-func (App *App) generateTOC(level int) []TOCEntry {
-	node := App.markdownAST(App.Page.markdownStart)
-	tocs, err := extractTOCs(App.newGoldmark().Renderer(), node, App.Page.markdownStart)
-	if err != nil {
-		App.QuitError(errCode("0901", err.Error()))
-	}
-	leveledTocs := make([]TOCEntry, 0, len(tocs))
-	for _, toc := range tocs {
-		if toc.Level <= level {
-			leveledTocs = append(leveledTocs, toc)
-		}
-	}
-	return leveledTocs
+// TOCEntry is an individual entry in the table of contents.
+type TOCEntry struct {
+	// The HTML ID of the source header or the empty string if the header had no ID.
+	ID string
+	// The text of the header
+	Header string
+	// Its level 1-6 for h1-h6
+	Level int
 }
 
-// extractTOCs returns TOC entries corresponding to each header in the markdown
+// ExtractTOCs returns TOC entries corresponding to each header in the markdown
 // document ordered by appearance.
-func extractTOCs(rn renderer.Renderer, node ast.Node, mdSrc []byte) ([]TOCEntry, error) {
+func ExtractTOCs(rn renderer.Renderer, node ast.Node, mdSrc []byte, level int) ([]TOCEntry, error) {
 	const numTocs = 8 // assume a reasonable amount of headers per md document
 	tocNodes := make([]*ast.Heading, 0, numTocs)
 	// Safe to ignore error because only our walk function can error and we don't
@@ -36,7 +29,9 @@ func extractTOCs(rn renderer.Renderer, node ast.Node, mdSrc []byte) ([]TOCEntry,
 			return ast.WalkContinue, nil
 		}
 		h := n.(*ast.Heading)
-		tocNodes = append(tocNodes, h)
+		if h.Level <= level {
+			tocNodes = append(tocNodes, h)
+		}
 		return ast.WalkContinue, nil
 	})
 

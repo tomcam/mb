@@ -1,12 +1,15 @@
-package main
+package mdext
 
 import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/tomcam/mb/pkg/texts"
+	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/text"
 	"testing"
 )
 
-func Test_generateTOC(t *testing.T) {
+func TestExtractTOCs(t *testing.T) {
 	tests := []struct {
 		mdSrc string
 		level int
@@ -32,11 +35,14 @@ func Test_generateTOC(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.mdSrc, func(t *testing.T) {
-			app := newApp(tt.mdSrc)
-			app.Site.MarkdownOptions.headingIDs = true
-			tocs := app.generateTOC(tt.level)
+			gm := goldmark.New(goldmark.WithParserOptions(parser.WithAutoHeadingID()))
+			root := gm.Parser().Parse(text.NewReader([]byte(tt.mdSrc)))
+			tocs, err := ExtractTOCs(gm.Renderer(), root, []byte(tt.mdSrc), tt.level)
+			if err != nil {
+				t.Fatal(err)
+			}
 			if diff := cmp.Diff(tt.want, tocs); diff != "" {
-				t.Errorf("extractTOCs() mismatch (-want +got):\n%s", diff)
+				t.Errorf("ExtractTOCs() mismatch (-want +got):\n%s", diff)
 			}
 		})
 	}

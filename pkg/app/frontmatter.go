@@ -1,10 +1,10 @@
-package main
+package app
 
 import (
 	"bytes"
-	//"fmt"
+
 	"github.com/BurntSushi/toml"
-	//"os"
+	"github.com/tomcam/mb/pkg/errs"
 )
 
 // Starts the (optional)front matter of  a markdown file
@@ -69,7 +69,7 @@ type FrontMatter struct {
 // as shown above. So first see if there's any front
 // matter. If there is, return positions needed to
 // make it a slice.
-func (Env *App) parseFrontMatter(filename string, input []byte) (markupStart []byte, err error) {
+func (a *App) parseFrontMatter(filename string, input []byte) (markupStart []byte, err error) {
 	// Obtain its front matter
 	// The front matter has a list of style sheets needed by
 	// the page. Their base directory is the page template's
@@ -88,11 +88,11 @@ func (Env *App) parseFrontMatter(filename string, input []byte) (markupStart []b
 	if start <= 0 && markup < 0 {
 		// Not even sure how this happens.
 		// No markdown AND no front matter.
-		return input, errCode("1001", filename)
+		return input, errs.ErrCode("1001", filename)
 	}
 	decode := string(input[start:stop])
-	if _, err := toml.Decode(decode, &Env.FrontMatter); err != nil {
-		return input[markup:], errCode("0101", filename)
+	if _, err := toml.Decode(decode, &a.FrontMatter); err != nil {
+		return input[markup:], errs.ErrCode("0101", filename)
 	}
 	return input[markup:], nil
 }
@@ -103,7 +103,7 @@ func (Env *App) parseFrontMatter(filename string, input []byte) (markupStart []b
 // description="foo"
 // ===
 // Where the "===" along with a newline is passed in as the
-// delimiter. (It's not hardcoded and could be anyting else,
+// delimiter. (It's not hardcoded and could be anything else,
 // like "++" or whatever).
 //
 // Given a byte slice containing an entire markup file, which
@@ -151,7 +151,7 @@ func getFrontMatter(body []byte, delimiter []byte) (fstart, fend, mstart int) {
 			//fmt.Println("Couldn't find front matter delimiter at beginning of file")
 			return -1, -1, 0
 		} else {
-			//fmt.Println("Found first Windows delimiter")
+			// fmt.Println("Found first Windows delimiter")
 			// Change the length of the delimiter once it's known
 			// this is a Windows-style file.
 			dl = wdl
@@ -162,7 +162,7 @@ func getFrontMatter(body []byte, delimiter []byte) (fstart, fend, mstart int) {
 	// It does start with a delimiter.
 	// Now look for 2nd one
 	secondDelim := bytes.Index(body[dl:], delimiter)
-	//fmt.Println("Found first delim. Looking for second start at pos ", dl)
+	// fmt.Println("Found first delim. Looking for second start at pos ", dl)
 	if secondDelim < 0 {
 		// Not found. Maybe it's a windows-style file.
 		secondDelim = bytes.Index(body[dl:], frontMatterDelimiterWin)

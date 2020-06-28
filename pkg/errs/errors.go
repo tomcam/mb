@@ -1,78 +1,64 @@
-package main
+package errs
 
 import (
 	"fmt"
-	"os"
+	"github.com/tomcam/mb/pkg/defaults"
 )
 
-/*
-	SECTIONS (this may not hold up)
-
-	0100	- Error reading file
-	0200	- Error creating file
-	0300	- Error deleting file
-	0400 	- Error creating directory
-	0500	- Error determining directory name
-	0600	- Error deleting directory
-	0700	- Error reading directory
-	0800	- Can't determine the name of something
-	0900	- Problem generating something
-	1000	- Something's missing that should be there
-	1100	- Problem changing to a directory
-  1200  - Syntax error!
-*/
-
-/* The reason many of these error codes have identical text is that
-   the same error occurs but in different places. Since the
-   Go lib returns identical error messages for each one, tracking
-   down the error code shows us where the error occurred even if the
-   executable is stripped of debug info
-
-	Sample usage: return errCode("0401", err.Error())
-	Sample usage: return errCode("0401", err.Error(), filename)
-	err = copyDirAll(App.themesPath, App.Site.themesPath)
-	if err != nil {
-		QuitError(errCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
-	}
-  if err := copyDirOnly(from, to); err != nil {
-	  msg := fmt.Sprintf("Unable to copy from pageType directory %s to new pageType directory %s", from, to)
-	  return errCode("0906", msg)
-
-		Sample usage:	 msg := fmt.Errorf("Error attempting to create project file %s: %v", projectFile, err.Error()).Error()
-*/
-
+//	SECTIONS (this may not hold up)
+//
+//	0100	- Error reading file
+//	0200	- Error creating file
+//	0300	- Error deleting file
+//	0400 	- Error creating directory
+//	0500	- Error determining directory name
+//	0600	- Error deleting directory
+//	0700	- Error reading directory
+//	0800	- Can't determine the name of something
+//	0900	- Problem generating something
+//	1000	- Something's missing that should be there
+//	1100	- Problem changing to a directory
+//  1200  - Syntax error!
+//
+// The reason many of these error codes have identical text is that
+// the same error occurs but in different places. Since the
+// Go lib returns identical error messages for each one, tracking
+// down the error code shows us where the error occurred even if the
+// executable is stripped of debug info
 var errMsgs = map[string]string{
 
 	// Just print the last error
 	"PREVIOUS": " ",
 
 	// 0100	- Error reading file
-	"0101": "Error reading front matter",                                            // filename
-	"0102": "Unable to open file",                                                   // filename
-	"0103": "Error reading front matter",                                            // filename
-	"0104": "TOML error reading theme file",                                         // custom message + err.Error()
-	"0105": "TOML error reading PageType file",                                      // custom message + err.Error()
-	"0106": "Error copying file to publish",                                         // custom message
-	"0107": "Error opening a file to publish",                                       // custom message + err.Error()
-	"0108": "Error reading theme file",                                              // custom message + err.Error()
-	"0109": "Unable to find theme TOML file",                                        // custom message
-	"0110": "Error copying CSS file for new theme",                                  // custom message
-	"0111": "Error copying file for new theme",                                      // custom message
-	"0112": "File doesn't seem to exist",                                            // Filename
-	"0113": "File isn't normal",                                                     // filename
-	"0114": "Error opening file",                                                    // filename
-	"0115": "Unable to find theme TOML file",                                        //  message
-	"0116": "TOML error reading theme file",                                         // custom message + err.Error()
-	"0117": "Unable to get shared stylesheets",                                      // Name of TOML file
-	"0118": "Error reading configuration",                                           //
-	"0119": "inc: unable to open location",                                          // location
-	"0120": "inc: unable to open file",                                              // filename
-	"0121": "inc: error reading file",                                               // filename
-	"0122": "scode: unable to find file",                                            // filename
-	"0123": "scode: error reading file",                                             // filename
-	"0124": "Error copying a page asset",                                            // custom message
-	"0125": "Error copying a style sheet",                                           // custom message
-	"0126": "Error reading config file " + productName + "." + configFileDefaultExt, // Viper runtime error
+	"0101": "Error reading front matter",           // filename
+	"0102": "Unable to open file",                  // filename
+	"0103": "Error reading front matter",           // filename
+	"0104": "TOML error reading theme file",        // custom message + err.Error()
+	"0105": "TOML error reading PageType file",     // custom message + err.Error()
+	"0106": "Error copying file to publish",        // custom message
+	"0107": "Error opening a file to publish",      // custom message + err.Error()
+	"0108": "Error reading theme file",             // custom message + err.Error()
+	"0109": "Unable to find theme TOML file",       // custom message
+	"0110": "Error copying CSS file for new theme", // custom message
+	"0111": "Error copying file for new theme",     // custom message
+	"0112": "File doesn't seem to exist",           // Filename
+	"0113": "File isn't normal",                    // filename
+	"0114": "Error opening file",                   // filename
+	"0115": "Unable to find theme TOML file",       //  message
+	"0116": "TOML error reading theme file",        // custom message + err.Error()
+	"0117": "Unable to get shared stylesheets",     // Name of TOML file
+	"0118": "Error reading configuration",          //
+	"0119": "inc: unable to open location",         // location
+	"0120": "inc: unable to open file",             // filename
+	"0121": "inc: error reading file",              // filename
+	"0122": "scode: unable to find file",           // filename
+	"0123": "scode: error reading file",            // filename
+	"0124": "Error copying a page asset",           // custom message
+	"0125": "Error copying a style sheet",          // custom message
+	"0126": "Error reading config file " + // Viper runtime error
+		defaults.ProductName + "." +
+		defaults.ConfigFileDefaultExt,
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -185,62 +171,62 @@ var errMsgs = map[string]string{
 	"1206": "Level needs to be a number from 1-6 inclusive:", // level as a string
 }
 
-type errMsg struct {
+type ErrMsg struct {
 	// Key to a map of error messages
-	key string
+	Key string
 
-	// If key is the word "PREVIOUS", this will contain an error
+	// If Key is the word "PREVIOUS", this will contain an error
 	// message from an earlier action, typically a return from the
 	// Go runtime.
-	previous string
-	extra    []string
+	Previous string
+	Extra    []string
 }
 
-// Error() looks up e.key, which is an error code expressed as
+// Error() looks up e.Key, which is an error code expressed as
 // a string (for example, "1001") and returns its associated map entry.
 // But there's likely much more happening:
-// -  If e.key is "PREVIOUS" it suggests that an error message
+// -  If e.Key is "PREVIOUS" it suggests that an error message
 //    that didn't get displayed probably
 //    should, and its contents in e.previous are returned.
-// -  If e.extra has something, say, a filename, it should be
+// -  If e.Extra has something, say, a filename, it should be
 //    used to customize the error message.
 // Why the fake number? Because it gets appended to "mbz" in an error message,
 // and I plan for Metabuzz to be so popular that people would be
 // looking up error codes search engines, e.g. mbz1001. And it's a
 // ghetto way of keeping error codes unique while being kind of sorted
 // in the source code.
-func (e *errMsg) Error() string {
+func (e *ErrMsg) Error() string {
 	var msg error
 	// Make sure the error code has documentation
-	if errMsgs[e.key] == "" {
+	if errMsgs[e.Key] == "" {
 		msg = fmt.Errorf("ERROR CODE %s UNTRACKED: please contact the developer\nMore info: %s\n",
-			errorCodePrefix+e.key, e.previous)
+			defaults.ErrorCodePrefix+e.Key, e.Previous)
 		return msg.Error()
 	}
 
 	// Error message from an earlier error return needs to be seen.
-	if e.key == "PREVIOUS" {
-		return fmt.Errorf("%s\n", e.previous).Error()
+	if e.Key == "PREVIOUS" {
+		return fmt.Errorf("%s\n", e.Previous).Error()
 	}
 
-	if e.previous != "" {
+	if e.Previous != "" {
 		msg = fmt.Errorf("%s %s (error code %s%s)\n",
 			// The most common case: an error code with customization
-			errMsgs[e.key], e.previous, errorCodePrefix, e.key)
+			errMsgs[e.Key], e.Previous, defaults.ErrorCodePrefix, e.Key)
 	} else {
 		msg = fmt.Errorf("%s (error code %s%s)\n",
-			// The slighly unusual case of an error code with no customization
-			errMsgs[e.key], errorCodePrefix, e.key)
+			// The slightly unusual case of an error code with no customization
+			errMsgs[e.Key], defaults.ErrorCodePrefix, e.Key)
 	}
 	return msg.Error()
 }
 
 // New() allocates a map entry for errMsgs.
 func New(key string, previous string, extra ...string) error {
-	return &errMsg{key, previous, extra}
+	return &ErrMsg{key, previous, extra}
 }
 
-// errCode() takes an error code, say "0110", and
+// ErrCode() takes an error code, say "0110", and
 // one or two optional strings. It adds the error code
 // to the error messages map so that message can be looked
 // up. The additional parameters give information such
@@ -250,14 +236,23 @@ func New(key string, previous string, extra ...string) error {
 // When calling a Go runtime routine that could return
 // an error message, make err.Error() the second
 // parameter so its contents are included, like this:
-/*
-	f, err := os.Create(filename)
-	if err != nil {
-		return errCode("0210", err.Error(), filename)
-	}
-*/
-
-func errCode(key string, previous string, extra ...string) error {
+//
+// Sample usages:
+//
+//   return ErrCode("0401", err.Error())
+//   return ErrCode("0401", err.Error(), filename)
+//   err = copyDirAll(App.themesPath, App.Site.themesPath)
+//   if err != nil {
+// 	   QuitError(ErrCode("0911", "from '"+App.themesPath+"' to '"+App.Site.themesPath+"'"))
+//   }
+//   if err := copyDirOnly(from, to); err != nil {
+//     msg := fmt.Sprintf("Unable to copy from pageType directory %s to new pageType directory %s", from, to)
+//     return ErrCode("0906", msg)
+//   }
+//
+//	 msg := fmt.Errorf("Error attempting to create project file %s: %v", projectFile, err.Error()).Error()
+//
+func ErrCode(key string, previous string, extra ...string) error {
 	var e error
 	if len(extra) > 0 {
 		e = New(key, previous, extra[0])
@@ -265,53 +260,4 @@ func errCode(key string, previous string, extra ...string) error {
 		e = New(key, previous)
 	}
 	return e
-}
-
-// App.Verbose() displays a message followed
-// by a newline to stdout
-// if the verbose flag was used. Formats it like Fprintf.
-func (App *App) Verbose(format string, a ...interface{}) {
-	if App.Flags.Verbose {
-		fmt.Println(App.fmtMsg(format, a...))
-	}
-}
-
-// App.Warning() displays a message followed by a newline
-// to stdout, preceded by the text "Warning: "
-// Overrides the verbose flag. Formats it like Fprintf.
-func (App *App) Warning(format string, a ...interface{}) {
-	fmt.Println("Warning: " + App.fmtMsg(format, a...))
-}
-
-// fmtMsg() formats string like Fprintf and writes to a string
-func (App *App) fmtMsg(format string, a ...interface{}) string {
-	return fmt.Sprintf(format, a...)
-}
-
-func displayErrCode(errCode string) {
-}
-
-// displayError() shows the specified error message
-// without exiting to the OS.
-func displayError(e error) {
-	fmt.Println(e.Error())
-}
-
-// QuitError() displays the error passed to it and exits
-// to the operating system, returning a 1 (any nonzero
-// return means an error occurred).
-// Normally functions that can generate a runtime error
-// do so by returning an error. But sometimes there's a
-// constraint, for example, fulfilling an interface method
-// that doesn't support this practice.
-func (App *App) QuitError(e error) {
-	if App.Page.filePath != "" {
-		fmt.Printf("%s ", App.Page.filePath)
-	}
-	displayError(e)
-	if e == nil {
-		os.Exit(0)
-	} else {
-		os.Exit(1)
-	}
 }

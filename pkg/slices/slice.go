@@ -1,4 +1,4 @@
-package main
+package slices
 
 import (
 	"sort"
@@ -8,19 +8,26 @@ import (
    This tracks whether the slice has been sorted
    and sorts it on first search.
 */
-type searchInfo struct {
+type SearchInfo struct {
 	list   []string
 	sorted bool
 }
 
-func (s *searchInfo) Sort() {
+func NewSearchInfo(s []string) *SearchInfo {
+	return &SearchInfo{
+		list:   s,
+		sorted: false,
+	}
+}
+
+func (s *SearchInfo) Sort() {
 	sort.Slice(s.list, func(i, j int) bool {
 		s.sorted = true
 		return s.list[i] <= s.list[j]
 	})
 }
 
-func (s *searchInfo) Found(searchFor string) bool {
+func (s *SearchInfo) Contains(searchFor string) bool {
 	if !s.sorted {
 		s.Sort()
 	}
