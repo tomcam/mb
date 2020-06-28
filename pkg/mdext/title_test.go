@@ -28,6 +28,9 @@ func TestInferTitle(t *testing.T) {
 		     ## h2.1
 		     # h1.1 *foo* bar
 		`), "h1.1 foo bar"},
+		{texts.Dedent(`
+		     ###### h6.1
+		`), "h6.1"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.mdSrc, func(t *testing.T) {

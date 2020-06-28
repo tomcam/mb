@@ -1,6 +1,9 @@
 package mdext
 
-import "github.com/yuin/goldmark/ast"
+import (
+	"github.com/yuin/goldmark/ast"
+	"strconv"
+)
 
 // InferTitle finds the most-likely title for the markdown document.
 // Returns the empty string if no headers exist in the document.
@@ -17,8 +20,12 @@ func InferTitle(root ast.Node, mdSrc []byte) string {
 		}
 
 		h := n.(*ast.Heading)
-		if headers[h.Level] == nil {
-			headers[h.Level] = h
+		if h.Level < 1 || 6 < h.Level {
+			panic("invalid heading level: " + strconv.Itoa(h.Level))
+		}
+		// Subtract 1 to convert from 1-based headers to 0-based slices.
+		if headers[h.Level-1] == nil {
+			headers[h.Level-1] = h
 		}
 		// Skip children because headings can't contain other headings.
 		return ast.WalkSkipChildren, nil
