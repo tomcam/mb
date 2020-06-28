@@ -94,6 +94,7 @@ nav > p > a:active {text-decoration:underline;}
 
 article > h1,article > h2 {font-weight:900;}
 article > h1 {font-size:4rem;margin-top:0;margin-bottom:3rem;}
+article > li {margin-left:1rem;}
 article > h2 {margin-top:4rem;}
 article > h4 {font-weight:normal;font-size:1em;margin-bottom:1rem; } /* Byline */
 article > h4 > strong {font-weight:bold;} /* Byline */

@@ -1,6 +1,7 @@
 ===
-theme="debut"
-pagetype="gallery"
+#theme="debut"
+theme="reference"
+#pagetype="gallery"
 ===
 # Theme Gallery
 
