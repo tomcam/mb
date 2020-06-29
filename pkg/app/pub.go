@@ -2,6 +2,7 @@ package app
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
@@ -15,8 +16,10 @@ import (
 	"github.com/yuin/goldmark/renderer"
 	"github.com/yuin/goldmark/renderer/html"
 	"github.com/yuin/goldmark/text"
+	"io"
 	"io/ioutil"
 	"os"
+	"path"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -89,25 +92,40 @@ func (a *App) publishFile(filename string) error {
 	// Open the <head> tag.
 	a.startHTML()
 
-	// If a title wasn't specified in the front matter,
-	// put up a self-aggrandizing error message.
-	a.titleTag()
+	// Output filename
+	outfile := replaceExtension(filename, "html")
+	relDir := relDirFile(a.Site.path, outfile)
+	// Strip out everything but the filename.
+	base := filepath.Base(outfile)
+
+	title := a.titleTag()
+
+	node := a.markdownAST(a.Page.markdownStart)
+	docPath := "/" + path.Join(relDir, strings.TrimSuffix(base, ".html"))
+	if strings.HasSuffix(docPath, "/index") {
+		docPath = strings.TrimSuffix(docPath, "index")
+	}
+	doc := mdext.Doc{
+		Path:  docPath,
+		Title: title,
+		Body:  mdext.BuildDocBody(node, a.Page.markdownStart),
+	}
+	indexOutFile := filepath.Join(a.Site.Publish, ".indexing", "docs.json")
+	if err := appendIndexDoc(indexOutFile, doc); err != nil {
+		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
+	}
 
 	a.descriptionTag()
 
 	a.headTags()
 
-	// Output filename
-	outfile := replaceExtension(filename, "html")
-	relDir := relDirFile(a.Site.path, outfile)
-
 	// START ASSEMBLING PAGE
 	a.appendStr(a.Page.startHTML)
-	a.appendStr(wrapTag("<title>", a.Page.titleTag, true))
+	a.appendStr(wrapTag("<title>", title, true))
 	a.appendStr(metatag("description", a.Page.descriptionTag))
 	a.appendStr(a.Page.headTags)
 
-	// Hoover up any miscellanous files lying around,
+	// Hoover up any miscellaneous files lying around,
 	// like other HTML files, graphic assets, etc.
 	a.localFiles(relDir)
 
@@ -127,9 +145,6 @@ func (a *App) publishFile(filename string) error {
 
 	// Complete the HTML document with closing <body> and <html> tags
 	a.appendStr(closingHTMLTags)
-
-	// Strip out everything but the filename.
-	base := filepath.Base(outfile)
 
 	// Write everything to a temp file so in case there was an error, the
 	// previous HTML file is preserved.
@@ -169,6 +184,27 @@ func (a *App) publishFile(filename string) error {
 	a.fileCount++
 	//
 	// Success
+	return nil
+}
+
+// appendIndexDoc appends doc as newline-delimited JSON to file.
+func appendIndexDoc(file string, doc mdext.Doc) error {
+	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		return err
+	}
+	b, err := json.Marshal(doc)
+	b = append(b, '\n') // use newline delimited JSON; 1 line per file
+	if err != nil {
+		return err
+	}
+	n, err := f.Write(b)
+	if err != nil {
+		return err
+	}
+	if n < len(b) {
+		return io.ErrShortWrite
+	}
 	return nil
 }
 
@@ -606,19 +642,17 @@ func header2To6(s string) string {
 	}
 }
 
-func (a *App) titleTag() {
-	title := defaults.ProductName + ": Title needed here, squib"
-	switch {
-	case a.FrontMatter.Title != "":
-		title = a.FrontMatter.Title
-	default:
-		node := a.markdownAST(a.Page.markdownStart)
-		t := mdext.InferTitle(node, a.Page.markdownStart)
-		if t != "" {
-			title = t
-		}
+func (a *App) titleTag() string {
+	if a.FrontMatter.Title != "" {
+		return a.FrontMatter.Title
 	}
-	a.Page.titleTag = title
+
+	node := a.markdownAST(a.Page.markdownStart)
+	if t := mdext.InferTitle(node, a.Page.markdownStart); t != "" {
+		return t
+	}
+
+	return defaults.ProductName + ": Title needed here, squib"
 }
 
 // Article() takes a document with optional front matter, parses

@@ -445,9 +445,8 @@ func pressEnter(prompt string) {
 	_ = inputString()
 }
 
-// WriteTextFile creates a file called filename
-// without checking to see if it exists,
-// then writes contents to it.
+// WriteTextFile creates a file called filename without checking to see if it
+// exists, then writes contents to it.
 func writeTextFile(filename, contents string) error {
 	var out *os.File
 	var err error

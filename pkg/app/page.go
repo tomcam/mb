@@ -14,9 +14,6 @@ type Page struct {
 	// and opens the head tag
 	startHTML string
 
-	// Contents of <title> tag
-	titleTag string
-
 	// Optional <head> tags, like Google Analytics
 	headTags string
 
