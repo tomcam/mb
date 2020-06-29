@@ -25,8 +25,14 @@ func (a *App) build() error {
 		return errs.ErrCode("0302", a.Site.Publish)
 	}
 	// Now create an empty publish dir
-	err = os.MkdirAll(a.Site.Publish, defaults.PublicFilePermissions)
-	if err != nil {
+
+	if err := os.MkdirAll(a.Site.Publish, defaults.PublicFilePermissions); err != nil {
+		return errs.ErrCode("0403", a.Site.Publish)
+	}
+
+	// Create the indexing directory
+	indexingDir := filepath.Join(a.Site.Publish, ".indexing")
+	if err := os.MkdirAll(indexingDir, defaults.PublicFilePermissions); err != nil {
 		return errs.ErrCode("0403", a.Site.Publish)
 	}
 
