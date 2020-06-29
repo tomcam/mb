@@ -21,7 +21,7 @@ func (a *App) info() {
 	fmt.Println("a.Flags.Verbose", a.Flags.Verbose)
 	exists("Default config directory", configDir())
 	exists("Actual config directory", a.configDir)
-	exists("Config file: ", a.Site.siteFilePath)
+	exists("Site file: ", a.Site.siteFilePath)
 	exists("Theme directory", a.themesPath)
 	fmt.Println("Code highlighting style: ", a.Site.MarkdownOptions.HighlightStyle)
 	fmt.Println("Default theme: ", a.defaultTheme())
