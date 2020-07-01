@@ -648,7 +648,10 @@ func (a *App) titleTag() string {
 	}
 
 	node := a.markdownAST(a.Page.markdownStart)
-	if t := mdext.InferTitle(node, a.Page.markdownStart); t != "" {
+	if t, err := mdext.InferTitle(node, a.Page.markdownStart); err != nil {
+		a.QuitError(errs.ErrCode("0922", err.Error()))
+		return ""
+	} else if t != "" {
 		return t
 	}
 

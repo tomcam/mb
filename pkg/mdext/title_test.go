@@ -36,7 +36,7 @@ func TestInferTitle(t *testing.T) {
 		t.Run(tt.mdSrc, func(t *testing.T) {
 			gm := goldmark.New(goldmark.WithParserOptions(parser.WithAutoHeadingID()))
 			root := gm.Parser().Parse(text.NewReader([]byte(tt.mdSrc)))
-			title := InferTitle(root, []byte(tt.mdSrc))
+			title, _ := InferTitle(root, []byte(tt.mdSrc))
 			if diff := cmp.Diff(tt.want, title); diff != "" {
 				t.Errorf("InferTitle() mismatch (-want +got):\n%s", diff)
 			}
