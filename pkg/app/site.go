@@ -308,6 +308,8 @@ func (a *App) NewSite(sitename string) error {
 // It must be called after command line flags, env
 // variables, and other application configuration has been done.
 func (a *App) SiteDefaults() {
+  // Initial defaults. Some values may immediately be overridden
+  // when a.readSiteConfig() is called.
 	a.Site.path = currDir()
 	// Next read in the site configuration file, which may override things
 	// like AssetDir and Publish.
