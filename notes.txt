@@ -1,5 +1,1 @@
-.stylelintrc.json
-
-For an NPM CSS linter
-https://stylelint.io/user-guide/get-started
 

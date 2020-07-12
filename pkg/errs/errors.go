@@ -90,6 +90,7 @@ var errMsgs = map[string]string{
 	"0405": "Error recreating publish directory", // dir name
 	"0406": "Error copying directory",            // custom msg with both dirs, Golang error,
 	"0407": "Error creating site directory",      // dir name
+	"0408": "Error creating index directory",
 
 	// 0500	- Error determining directory name
 	"0501": "",

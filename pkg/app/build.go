@@ -24,8 +24,8 @@ func (a *App) build() error {
 	if err := os.RemoveAll(a.Site.Publish); err != nil {
 		return errs.ErrCode("0302", a.Site.Publish)
 	}
-	// Now create an empty publish dir
 
+	// Create an empty publish dir
 	if err := os.MkdirAll(a.Site.Publish, defaults.PublicFilePermissions); err != nil {
 		return errs.ErrCode("0403", a.Site.Publish)
 	}
@@ -33,7 +33,7 @@ func (a *App) build() error {
 	// Create the indexing directory
 	indexingDir := filepath.Join(a.Site.Publish, ".indexing")
 	if err := os.MkdirAll(indexingDir, defaults.PublicFilePermissions); err != nil {
-		return errs.ErrCode("0403", a.Site.Publish)
+		return errs.ErrCode("0408", indexingDir)
 	}
 
 	if a.Site.path == "" {
