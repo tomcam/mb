@@ -29,10 +29,25 @@
 
   /* Text-size of the item title on the right */
   --timeline-item-title-size:1.5em;
+
   /* Interior color of the dot-symbol thing */
   --timeline-symbol-background-color:blue;
+
   /* Border color of the dot-symbol thing */
-  --timeline-symbol-border-color:red;
+  --timeline-symbol-border-color:blue;
+
+  /* Thickness of outer ring on timeline dot */
+  --timeline-symbol-border-thickness: 0;
+
+  /* Diameter of dot/symbol thing on timeline  */
+  --timeline-symbol-diameter:1em;
+
+  /* 50% makes the dot round. Lower to make it square. */
+  --timeline-symbol-radius:50%;
+
+  /* Horizontal tweak to symbol position. 
+     Distance from item title */
+  --timeline-symbol-x-alignment:-3.1rem;
 
   /* Color of the actual vertical line itself */
   --timeline-color:black;
@@ -42,18 +57,11 @@
   --timeline-year-color:gray;
 
   /* All text in the timeline is based on this size */
-  --timeline-font-size: 1.2em;
+  --timeline-font-size: 1em;
 
   /* Text-size of the (optional) item subtitle 
      on the right, normally used for a month or time */
   --timeline-item-subtitle-size: .75em;
-
-  /* Diameter of dot/symbol thing on timeline  */
-  --timeline-symbol-diameter:1em;
-  /* 50% makes the dot round. Lower to make it square. */
-  --timeline-symbol-radius:50%;
-  /* Thickness of outer ring on timeline dot */
-  --timeline-symbol-border-thickness: 0;
 
 
   /* Thickness of vertical timeline */
@@ -176,7 +184,11 @@ nav > p > a:active {text-decoration:underline;}
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
 
-  /* Suggestions on use
+/*
+ * --------------------------------------------------
+ * Special feature: Timeline formed via a ul list 
+ *
+ * Suggestions for modifications 
     To change all text sizes while keeping their proportions,
     adjust  --timeline-font-size
 
@@ -185,87 +197,9 @@ nav > p > a:active {text-decoration:underline;}
   
     To change the symbol from round to square set this to 0:
     --timeline-symbol-radius
-  */
 
-
-  /* Color of border that appears after all item text
-     (on right column) */
-  --timeline-bottom-border-color:gray;
-  /* Padding at bottom of the timeline. 
-     Item background color preserved */
-  --timeline-gap-bottom:2rem;
-  /* Padding at top of timeline 
-     Item background color preserved */
-  --timeline-gap-top:2rem;
-
-
-  /* Text color of the (optional) item subtitle, 
-     say for month or time */
-  --timeline-item-subtitle-color:dimgray; 
-
-  /* Background color of right "column" (item title/description) */
-  --timeline-item-background-color: whitesmoke;
-
-  /* Text color of the item body/description */
-  --timeline-item-description-color:blue;
-
-  /* Pads the whole right side of the timeline,
-     including its border */
-  --timeline-item-right-gap:2em;
-
-  /* Text color of the main item title */
-  --timeline-item-title-color: black;
-
-  /* Text-size of the item title on the right */
-  --timeline-item-title-size:1.5em;
-  /* Interior color of the dot-symbol thing */
-  --timeline-symbol-background-color:blue;
-  /* Border color of the dot-symbol thing */
-  --timeline-symbol-border-color:red;
-
-  /* Color of the actual vertical line itself */
-  --timeline-color:black;
-
-  /* Color of text used on the right side of the colum,
-     presumably the year */
-  --timeline-year-color:gray;
-
-  /* All text in the timeline is based on this size */
-  --timeline-font-size: 1.2em;
-
-  /* Text-size of the (optional) item subtitle 
-     on the right, normally used for a month or time */
-  --timeline-item-subtitle-size: .75em;
-
-  /* Diameter of dot/symbol thing on timeline  */
-  --timeline-symbol-diameter:1em;
-  /* 50% makes the dot round. Lower to make it square. */
-  --timeline-symbol-radius:50%;
-  /* Thickness of outer ring on timeline dot */
-  --timeline-symbol-border-thickness: 0;
-
-
-  /* Thickness of vertical timeline */
-  --timeline-thickness: .2em;
-
-  /* Line height of text on right of timeline */
-  --timeline-height:1.4em;
-
-  /* Positions the dot/symbol thing horizontally
-     on the timeline. */
-  --timeline-symbol-alignment: 2.90rem; 
-
-  /* Width of the cell on the right of the timeline
-     that contains descriptive text */
-  --timeline-max-width: 50%;
-  --title-font-size:2.4em;
-  --title-letter-spacing: 1.5px;
-
-  /* Position of the year (left side) column */
-  --year-pull-left: -15rem;
-
-  /* Width of the left "column" (year side) */
-  --year-width:8rem;
+ * --------------------------------------------------
+ */
 
 
 /* Format for these headers inside the ul */
@@ -277,7 +211,8 @@ article > ul li > h2 {
 article > ul li > h3 {
   color:var(--timeline-item-subtitle-color);
   font-size:var(--timeline-item-subtitle-size);
-  margin-bottom:.5rem;
+  margin-top:.5rem;
+  margin-bottom:0rem;
 }
 
 /* Body text of the item; can be as long as neeeded */
@@ -286,13 +221,13 @@ article > ul li > p {
 }
 
 article > ul {
+  /* Vertical timeline itself */
   border-left: var(--timeline-thickness) solid var(--timeline-color);
   background: var(--timeline-item-background-color); 
   margin: 0  0 0 var(--timeline-year-width); 
   position:relative;
   line-height: var(--timeline-height);
   font-size: var(--timeline-font-size);
-  padding-left: var(--timeline-symbol-alignment);
   padding-right:var(--timeline-item-right-gap);
   padding-top:var(--timeline-gap-top);
   padding-bottom:var(--timeline-gap-bottom); 
@@ -302,7 +237,7 @@ article > ul {
 }
 
 article > ul li {
-  border-bottom: 1px dashed var(--timeline-bottom-border-color);
+  /* border-bottom: 1px dashed var(--timeline-bottom-border-color); */
   position:relative;
 }
 
@@ -321,7 +256,7 @@ article > ul li:after {
   /* dot/symbol thing outline */
   box-shadow: 0 0 0 var(--timeline-symbol-border-thickness) var(--timeline-symbol-border-color);
   /* Center dot/symbol thing on timeline */
-  left:-3.6rem;
+  left:var(--timeline-symbol-x-alignment);
 
   /* Color inside dot/symbol thing */
   background: var(--timeline-symbol-background-color); 
@@ -395,43 +330,6 @@ article > img, article > p > img {
 article > table {width:var(--full-page);margin-top:2rem;margin-bottom:3rem;}
 article > table > td,th {padding:1rem;}
 article > table > tbody > tr > td {padding:1rem;}
-
-
-
-iarticle > h2 {margin-top:4rem;clear:left;}
-iarticle > h2 + ul {
-	padding:0;
-	margin:0;
-	list-style-type:none;
-}
-
-/* Leave some room on the right side of each image */
-iarticle > h2 + ul li > img {
-	width:95%;
-  box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
-  margin-bottom:.75rem;
-}
-
-/* Each li is 1/2 as wide as the container. */
-iiarticle > h2 + ul li {
-	font-family:var(--informal);
-	max-width:50%;
-	width:50%;
-	float:left;
-	line-height:1em;
-  font-size:.8em;
-  margin-bottom:2rem;
-  margin-top:2rem;
-}
-
-/* Start a new line after the 2nd column */
-airticle > h2 + ul li:nth-child(2) {
-	display:block;
-}
-
-
-
-
 
 /* ******************************/
 /*  SIDEBAR (ASIDE TAG)         */
