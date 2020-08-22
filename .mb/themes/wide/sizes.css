@@ -28,7 +28,7 @@
 	--left-start:10%;
 
 	/* Only for Pillar-style themes: Space between the right edge of the article and the right edge of text */
-	--right-end:45%;
+	--right-end:5%;
 
 	/* Adjusts header height and keeps it vertically centered */
 	--header-height:8rem;

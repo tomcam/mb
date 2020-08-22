@@ -8,9 +8,8 @@
 
 Here's how markdown appears in the **{{.FrontMatter.Theme }}** theme
 {{- if .FrontMatter.PageType }}
-with the PageType **{{ .FrontMatter.PageType }}**.
-{{ end }}
-
+with the PageType **{{ .FrontMatter.PageType }}**
+{{ end }}:
 ## Common text formatting
 
 #### You type:
@@ -69,7 +68,7 @@ Metabuzz automatically generates an `id` attribute for each header from h1 to h6
 <h2 id="tables">Tables</h2>
 ```
 
-And the `Coding styles` header uses a hyphen to replace the space:
+The `Coding styles` header uses a hyphen to replace the space:
 
 ```html
 <h2 id="coding-styles">Coding styles</h2>
@@ -87,7 +86,7 @@ The `id` attribute must be unique within a document. Notice how on this page the
 
 ### How to create bookmarks manually
 
-Suppose you want a bookmark that's not a header? You can insert one anywhere by starting a Markdown line with the pure HTML code for anchors. (HTML is [allowed in Markdown with a few restrictions](https://spec.commonmark.org/0.29/#html-blocks).
+Suppose you want a bookmark that's not a header? You can insert one anywhere by starting a Markdown line with the pure HTML code for anchors. (HTML is [allowed in Markdown with a few restrictions](https://spec.commonmark.org/0.29/#html-blocks)).
 
 
 You type:
