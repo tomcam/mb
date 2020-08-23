@@ -77,8 +77,6 @@
     --a-sidebar-hover: var(--a); 
     --a-sidebar-active:  var(--a);
 
-
-
    
     /* Primary foreground (text) and background colors in footer */
     --footer-fg: var(--header-fg);
@@ -91,8 +89,6 @@
     --a-footer-active: var(--a);
 
 }
-
-/* #F2F2F2 */
 
 /* HEADER colors */
 header > p {color:var(--header-fg);background-color:var(--header-bg);} 
@@ -124,7 +120,7 @@ nav > p > a:visited {color:var(--nav-fg);}
 article > p > a,
 article > p > a:link,
 article > p >  a:visited
-	{color:#7cbefc;} /* 46AC7A */
+	{color:#7cbefc;} 
 article > p >  a:hover,
 article > p >  a:active
 	{background-color:var(--trim-fg);}

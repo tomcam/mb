@@ -188,6 +188,17 @@ nav > p > a:active {text-decoration:underline;}
  * --------------------------------------------------
  * Special feature: Timeline formed via a ul list 
  *
+ Example usage:
+ * #### 2001
+  ## Item title
+  ### March 31
+  Descriptive text.
+ 
+* #### 2002
+  ## Item title
+  ### April 2
+  More descriptive text
+
  * Suggestions for modifications 
     To change all text sizes while keeping their proportions,
     adjust  --timeline-font-size
