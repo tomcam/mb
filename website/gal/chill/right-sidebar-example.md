@@ -1,6 +1,6 @@
-## LOOKING FORWARD
+## HOW TO CRUSH IT 
 
-**Design tips for non-designers** Use this principles to make your portfolio look less awful
+**Design tips for non-designers** Use these principles to make your portfolio look less awful
 
 **Speed up your workflow by scripting** Learn just enough programming to build your own footgun
 

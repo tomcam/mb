@@ -62,8 +62,7 @@ header > ul > li > a > del {text-decoration:none;}
  * --------------------------------------------------
  */
 /* Last item of the unordered list is styled to look like a button and stays to the right */
-header > ul >  li:last-child {float:right;} 
-header > ul >  li:last-child > a {font-weight:bold;margin-right:4em; background-color: var(--trim-fg);color: white;padding: .5em 1em;text-decoration: none;text-transform: uppercase;webkit-border-radius:1em;-moz-border-radius: 1em;border-radius:1em;
+header > ul >  li:last-child > a {font-weight:bold;padding-right:4em; background-color: var(--trim-fg);color: white;padding: .5em 1em;text-decoration: none;text-transform: uppercase;webkit-border-radius:1em;-moz-border-radius: 1em;border-radius:1em;
 }
 
 /* ******************************/
