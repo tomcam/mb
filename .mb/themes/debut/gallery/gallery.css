@@ -30,6 +30,50 @@ nav > ul > li > a:hover,
 nav > ul > li > a:active {text-decoration:none;} 
 
 /* ARTICLE */
+/*
+ * --------------------------------------------------
+ * Special feature: show a row of up to 6 images 
+ * (meant to be over the main screenshot)
+ * Start with an h3 
+ * then a ul with 1 ul for each image
+ * --------------------------------------------------
+ */
+
+article > h3 {margin-top:4rem;clear:left}
+article > h3 + ul {
+	padding:0;
+	margin:0;
+	list-style-type:none;
+}
+
+/* Leave some room on the right side of each image */
+article > h3 + ul li > img {
+	width:90%;
+	margin-right:10%;
+  margin-bottom:10%;
+}
+article > h3 + ul li > img:hover {
+  border: 4px solid red;
+}
+
+/* Each li is 1/6 as wide as the container. */
+article > h3 + ul li {
+	font-family:var(--informal);
+	padding-top:.5rem;
+	max-width:15.5%;
+	width:15.5%;
+	float:left;
+	line-height:1em;
+}
+
+/* Start a new line after the last column */
+article > h3 + ul li:last-child {
+	display:block;
+}
+
+
+
+
 article {padding:2rem 4rem 4rem 4rem}
 article > p {padding-right:8rem;width:var(--text-width);font-family:var(--formal);margin-bottom:1rem;font-size:1.5rem;line-height:2rem;}
 article > p > img, article > p > a > img {padding-right:0;width:100%;;margin-bottom:2rem;border:4px solid var(--fg);}

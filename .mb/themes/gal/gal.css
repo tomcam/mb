@@ -149,6 +149,11 @@ nav > p >  a:active
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
 
+
+
+
+
+
 article > h1 {font-family:'Heebo',var(--informal);font-weight:bold;letter-spacing:-.1rem;font-size:4rem;margin-top:4rem;margin-bottom:1rem;}
 article > h2 {margin-top:2em;}
 article > h4 {font-weight:normal;font-size:1em;margin-bottom:1em; } /* Byline */
