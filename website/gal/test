@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# There are up to 6 possible thumbnail filenames.
+# Create an array with those filenames. 
+declare -a thumbnails=(
+  'light-sidebar-left'
+  'light-sidebar-right-256x256.png'
+  'light-sidebar-none-256x256.png'                                              
+  'dark-sidebar-left-256x256.png'
+  'dark-sidebar-right-256x256.png'
+  'dark-sidebar-none-256x256.png'
+  )
+
+filelist=""
+for thumbnail in "${thumbnails[@]}"
+do
+  file=""
+  if [ -f "${thumbnail}-256x256.png" ]; then
+    file="![Thumbnail preview](${thumbnail}-256x256.png)"
+    echo "${file}"
+    filelist="${filelist} ${file}"
+  fi
+done
+echo "File list: ${filelist}"
+
+
+
+
+
