@@ -80,16 +80,7 @@ echo "* Replace ${dest}/left-sidebar-example.md with left sidebar content for th
 echo "* Replace ${dest}/right-sidebar-example.md with right sidebar content for this theme"
 echo "* Create a 1280x1280 PNG image of the best-looking version of the theme and save it as theme-1280x1024.png"
 echo "* Create a 1280x1280 PNG image of the best-looking version of the theme and save it as theme-1280x1280.png"
-echo "* Create 6 thumbnails (ideally 3 light, 3 dark) of themes and name them as needed:"
-echo "  light-sidebar-left-256x256.png"
-echo " light-sidebar-right-256x256.png)                               
-* ![Thumbnail screenshot of ](light-sidebar-none-256x256.png)                                
-* ![Thumbnail screenshot of ](dark-sidebar-left-256x256.png)                                 
-* ![Thumbnail screenshot of ](dark-sidebar-right-256x256.png)                                
-* ![Thumbnail screenshot of ](dark-sidebar-none-256x256.png)                                 
-      
-4
-
+     
 wait_for_yes "Run nvim on these files?"
 if [ $? == 0 ]; then
 $editor ${dest}/index.md ${dest}/intro.md ${dest}/description.md ${dest}/left-sidebar-example.md ${dest}/right-sidebar-example.md 
@@ -101,6 +92,14 @@ if [ $? == 0 ]; then
 rm $1/*.bak 
 fi
 
+echo "* Create 6 thumbnails (ideally 3 light, 3 dark) of themes and name them as needed:"
+echo "  light-sidebar-left-256x256.png"
+echo "  light-sidebar-right-256x256.png"
+echo "  light-sidebar-none-256x256.png"
+echo "  dark-sidebar-left-256x256.png"
+echo "  dark-sidebar-right-256x256.png"
+echo "  dark-sidebar-none-256x256.png"
+ 
 exit 0
 
 
