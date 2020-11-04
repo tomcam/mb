@@ -5,10 +5,10 @@ The site configuration named `site.toml` holds settings used by your whole site,
 Metabuzz does some things for you automatically if you've filled out the site file settings. Depending on the theme you're using, just doing that may completely eliminate any need to touch the header, footer, and navbar files.
 
 
-[[[Authors]] section: The document creators and maintainers](#author)  
-[Branding: the site's full name](#branding)  
-[[Company] section: Your Organization name and logo](#company)  
-[ExcludeExtensions: Prevent types of files from being copied to the publish directory](#exclude-extensions)
+[[[Authors]]](#author): The document creators and maintainers  
+[Branding](#branding): the site's full name  
+[[Company]](#company): Your Organization name and logo  
+[ExcludeExtensions](#exclude-extensions): Prevent types of files from being copied to the publish directory
 
 
 [[Social] section: Social media URLs](#social)  

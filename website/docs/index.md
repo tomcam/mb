@@ -1,75 +1,53 @@
-===
-sidebar="none"
-excludedfiles = ["all3","boilerplate.txt"]
-theme="reference"
-===
+* [About Metabuzz](about.html)
+* [Adding a theme to the Metabuzz gallery](add-theme.html), the [Gallery directory](gallery-dir.html)
+* [Anatomy of a Metabuzz site](anatomy.html)
+* [Using the command line](cli.html)
+* [Code highlighting](code-highlighting.html)
+* [Code snippets](code-snippets.html)
+* CSS snippets ([Markdown](css-snippets.html), [text](css-snippets.txt))
+* [Custom themes](custom-themes.html)
+* [Documentation conventions](documentation-conventions.html)
+* [Error codes](error-codes.html)
+* [FAQ](faq.html)
+* [Front Matter](front-matter.html)
+* [Functions](functions.html)
+* [Glossary](glossary.html)
+* [Header](header.html)
+* [Head Tags Directory](headtags-dir.html)
+* [Internal documentation notes](documenting.html)
+* Markdown
+  * [Lists](lists.html)
+  * [Anchors](markdown-anchors.html)
+  * [Task Lists](markdown-task-lists.html)
+  * [Checklists](markdown-checklists.html)
+* [.md Directory](md-directory.html)
+* [Mode](mode.html)
+* [New Site](new-site.html)
+* [Production site](production-site.html)
+* [Publish directory](publish-directory.html)
+* [Release](release.html)
+* [Resources](resources.html)
+* [Review](review.html)
+* [Roadmap](roadmap.html)
+* [Scodes (shortcodes)](scode.html)
+* [Setting up theme](setting-up-theme.html)
+* [Site directory](site-directory.html)
+* [Site file](site-file.html)
+* Template examples ([Markdown](template-examples.html), [Text](template-examples.txt))
+* [Theme architecture](theme-architecture.html)
+* [Theme directory](theme-directory.html)
+* [Themes](themes)
+* [To do](todo.html)
+* [Tutorial](tutorial.html)
+* [Tutorial01](tutorial01.html)
+* [Tutorial: Creating a custom Metabuzz theme](tutorial-custom-theme.html)
+* [Useful Unicode symbols](unicode-symbols.html)
 
-#### Theme: {{ .FrontMatter.Theme }}
 
-# Docs
-[To Do](todo.html)  
-[Anatomy of a Metabuzz site](anatomy.html)  
-[Roadmap](roadmap.html)  
-[Site file](site-file.html)  
-[FAQ](faq.html)  
-[Publish directory](publish-directory.html)  
-[Template language](template-language.html)  
-[Markdown anchors](markdown-anchors.html)  
-[Documentation notes](documenting.html)  
-[Documentation conventions](documentation-conventions.html)  
-[Review](review.html) Things I'd like feedback on   
-[Command-line interface (cli)](cli.html)  
-[Creating a production site](production-site.html)  
-[General code snippets](code-snippets.html)  
-[Things this doc should cover](cover.html)          
-[Resources](resources.html)   
-[Unicode symbols](unicode-symbols.html)  
-[Articles directory](articles/index.html)  
-[Credits](credits.html)  
-[Error codes](error-codes.html)  
-[Glossary](glossary.html)  
 
-## Templates
-[Template language](template-language.html)  
-[Template notes (text file)](template-examples.txt)   
-[Scode](scode.html)  
-[Functions](functions.html)  
 
-## Themes
-[Custom themes](custom-themes.html)  
-[Themes](themes.html)  
-[Theme architecture](theme-architecture.html)  
-[Tutorial: Creating a custom theme for Metabuzz](tutorial-custom-theme.html)  
-[Pillar-style themes](pillar-style.html)  
-[Creating the Pillar theme (should delete)](product-tutorial-make-pillar.html)  
-[Mode](mode.html)  
-[Theme directory](theme-directory.html)  
-[Setting up your theme](setting-up-theme.html)  
-[Header](header.html)  
 
-## Articles
-[Code highlighting](code-highlighting.html)  
-[Markdown anchors](markdown-anchors.html)  
-[Markdown checklists](markdown-checklists.html)  
-[Markdown task lists](markdown-tasklists.html)  
-[Front matter](front-matter.html)  
-[Code highlighter](product-code-highlighter.html)    
 
-### CSS
-[CSS snippets](css-snippets.html)  
 
-## Site
-[Site file](site-file.html)  
-[Headtags directory](headtags-dir.html)
-
-## Global configuration
-[Your config file (global configuration file)](config-file.html)  
-
-## Unsure
-[debut](debut.html) may not be necessary  
-
-## Where to find things
-
-* `/docs/img` for sample images, logos, etc.
 
 
