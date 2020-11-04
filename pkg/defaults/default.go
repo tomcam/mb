@@ -102,6 +102,10 @@ Welcome to %s
 	// The local configuration file name without the path.
 	LocalConfigFilename = ProductName + "." + ConfigFileDefaultExt
 
+  // Name of file containing .JSON database of text used for
+  // search purposes.
+  SearchJSONFilename = ProductName + "-" + "search" + ".json"
+
 	// By default, the published site gets its theme from a local copy
 	// within the site directory. It then copies from that copy to
 	// generate pages in the Publish directory. Helps prevent unintended changes
