@@ -91,6 +91,11 @@ type Site struct {
 	// at runtime using SCodeDir, also in this struct.
 	sCodePath string
 
+	// Full path of file containing JSON version of site text
+	// to be indexed
+	// xxx
+	SearchJSONFilePath string
+
 	// Full path to site config file
 	siteFilePath string
 
@@ -291,6 +296,8 @@ func (a *App) NewSite(sitename string) error {
 	if err != nil {
 		a.QuitError(errs.ErrCode("0915", "from '"+a.sCodePath+"' to '"+a.Site.sCodePath+"'"))
 	}
+
+	// xxx Shouldn'tt his go below the sitn that creates a.Site.Publish
 	a.Site.AssetDir = filepath.Join(a.Site.Publish, a.Site.AssetDir)
 
 	// Create a little home page
@@ -308,8 +315,8 @@ func (a *App) NewSite(sitename string) error {
 // It must be called after command line flags, env
 // variables, and other application configuration has been done.
 func (a *App) SiteDefaults() {
-  // Initial defaults. Some values may immediately be overridden
-  // when a.readSiteConfig() is called.
+	// Initial defaults. Some values may immediately be overridden
+	// when a.readSiteConfig() is called.
 	a.Site.path = currDir()
 	// Next read in the site configuration file, which may override things
 	// like AssetDir and Publish.
@@ -323,6 +330,9 @@ func (a *App) SiteDefaults() {
 	// 1 level deep. It is not nested inside the .mb directory
 	a.Site.Publish = filepath.Join(a.Site.path, defaults.PublishDir)
 	a.Site.pubThemesPath = filepath.Join(a.Site.Publish, defaults.ThemeDir)
+
+	// xxx
+	a.Site.SearchJSONFilePath = filepath.Join(a.Site.Publish, defaults.SearchJSONFilename)
 
 	// TODO: Move to  NewDefaultApp() and change to AppDefaults I think
 	// scode path?

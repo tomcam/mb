@@ -30,12 +30,6 @@ func (a *App) build() error {
 		return errs.ErrCode("0403", a.Site.Publish)
 	}
 
-	// Create the indexing directory
-	indexingDir := filepath.Join(a.Site.Publish, ".indexing")
-	if err := os.MkdirAll(indexingDir, defaults.PublicFilePermissions); err != nil {
-		return errs.ErrCode("0408", indexingDir)
-	}
-
 	if a.Site.path == "" {
 		return errs.ErrCode("1018", "")
 	}
@@ -58,13 +52,28 @@ func (a *App) build() error {
 		}
 
 		// Go through all the Markdown files and convert.
+		// xxx
+		// Start search index JSON file with opening '['
+		a.DelimitIndexJSON(a.Site.SearchJSONFilePath, true)
+		commaNeeded := false
 		for _, file := range files {
 			if !file.IsDir() && isMarkdownFile(file.Name()) {
-				if err := a.publishFile(filepath.Join(dir, file.Name())); err != nil {
+				// It's a Markdown file, not a dir or anything else.
+				if commaNeeded {
+
+					// TODO: Add error checking
+					a.AddCommaToSearchIndex(a.Site.SearchJSONFilePath)
+					commaNeeded = false
+				}
+				if err = a.publishFile(filepath.Join(dir, file.Name())); err != nil {
 					return errs.ErrCode("PREVIOUS", err.Error())
 				}
+        commaNeeded = true
 			}
 		}
+    // Close search index JSON file with ']'
+    a.DelimitIndexJSON(a.Site.SearchJSONFilePath, false)
+
 	}
 	fmt.Printf("%v ", a.fileCount)
 	if a.fileCount != 1 {

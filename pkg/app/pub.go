@@ -42,6 +42,44 @@ var (
 `
 )
 
+// xxx
+// TODO: Document this function
+// TODO: Add proper error checking
+// TODO: Just hold a file descripter in *App?
+func (a *App) AddCommaToSearchIndex(file string) error {
+	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		return err
+	}
+	if _, err = f.Write([]byte(",\n")); err != nil {
+		f.Close()
+		return err
+	}
+	return nil
+}
+
+// xxx
+// TODO: Just hold a file descripter in *App?
+// TODO: Document this function
+func (a *App) DelimitIndexJSON(file string, opening bool) error {
+	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		return err
+	}
+	if opening == true {
+		if _, err = f.Write([]byte("[\n")); err != nil {
+			f.Close()
+			return err
+		}
+		return nil
+	}
+	if _, err = f.Write([]byte("]\n")); err != nil {
+		f.Close()
+		return err
+	}
+	return nil
+}
+
 // publishFile() is the heart of this program. It converts
 // a Markdown document (with optional TOML at the beginning)
 // to HTML.
@@ -87,7 +125,6 @@ func (a *App) publishFile(filename string) error {
 	// Parse front matter.
 	// Convert article to HTML
 	a.Article(filename, input)
-	// xxx
 	// Begin HTML document.
 	// Open the <head> tag.
 	a.startHTML()
@@ -100,6 +137,9 @@ func (a *App) publishFile(filename string) error {
 
 	title := a.titleTag()
 
+	// Extract the title and body from this page.
+	// Convert to JSON, and add as a record to the
+	// search index file.
 	node := a.markdownAST(a.Page.markdownStart)
 	docPath := "/" + path.Join(relDir, strings.TrimSuffix(base, ".html"))
 	if strings.HasSuffix(docPath, "/index") {
@@ -110,8 +150,8 @@ func (a *App) publishFile(filename string) error {
 		Title: title,
 		Body:  mdext.BuildDocBody(node, a.Page.markdownStart),
 	}
-	indexOutFile := filepath.Join(a.Site.Publish, ".indexing", "docs.json")
-	if err := appendIndexDoc(indexOutFile, doc); err != nil {
+	// xxx
+	if err := appendIndexDoc(a.Site.SearchJSONFilePath, doc); err != nil {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 	}
 
@@ -188,6 +228,7 @@ func (a *App) publishFile(filename string) error {
 }
 
 // appendIndexDoc appends doc as newline-delimited JSON to file.
+// Called for each source .md file
 func appendIndexDoc(file string, doc mdext.Doc) error {
 	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
