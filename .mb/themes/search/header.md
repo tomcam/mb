@@ -19,8 +19,7 @@
 <span id="demo">x</span>
 <script>
 
-//url = '/.pub/.indexing/docs.json'; 
-url = 'metabuzz-search.json'
+searchIndex = 'metabuzz-search.json'
 //https://stackoverflow.com/questions/7346563/loading-local-json-file
 // https://stackoverflow.com/questions/48594581/asynchronous-callback-in-javascript
 
@@ -30,7 +29,7 @@ function loadJSON(ex) {
   xobj = new XMLHttpRequest()
   xobj.addEventListener("load", reqListener)
   xobj.overrideMimeType("application/json")
-  xobj.open('GET', url,true)
+  xobj.open('GET', searchIndex,true)
   alert('loadJSON(): xobj = ' + xobj)
   xobj.onreadystatechange = function() {
     if (xobj.readyState === 4 && xobj.status === 200) {
@@ -56,7 +55,7 @@ function loadJson(ex) {
     }
   };
   XmlHttpRequest.overrideMimeType("application/json");
-  XmlHttpRequest.open('GET', 'docs.json', true);
+  XmlHttpRequest.open('GET', searchIndex, true);
   XmlHttpRequest.send(null);
   //alert('I hope it is: ' + XmlHttpRequest.response)
   return (XmlHttpRequest.responseText)
@@ -98,7 +97,7 @@ function callback(){
           document.getElementById("demo").innerHTML = myObj.name;
       }
   };
-  xmlhttp.open("GET", "docs.json", true);
+  xmlhttp.open("GET", searchIndex, true);
   xmlhttp.send();
 }
 
