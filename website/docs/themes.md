@@ -1,4 +1,13 @@
 # TODO
+* [Customizing a Metabuzz theme](customizing-theme.html)
+* [Creating a Metabuzz theme from scratch](theme-from-scratch.html)
+* [Theme architecture](theme-architecture.html)
+* [Theme directory](theme-directory.html)
+* [Setting up theme](setting-up-theme.html)
+* [Adding a theme to the Metabuzz gallery](add-theme.html)
+* [Gallery directory](gallery-dir.html)
+
+
 ## Explain
   * That everytheme has an "anonymous" version
 

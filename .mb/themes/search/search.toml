@@ -14,7 +14,7 @@ PathName = ""
 
 [Article]
   HTML = ""
-  File = ""
+  File = "article.md"
 
 [Footer]
   HTML = ""

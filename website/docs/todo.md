@@ -1,4 +1,6 @@
 # Before first release
+## Video ideas
+* Create a theme from scratch in under a minute (using tufte or a classless CSS framework)
 
 ## Theme Todos
 * Aventurine: light version has wrong header title color

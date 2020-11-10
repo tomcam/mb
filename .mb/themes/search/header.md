@@ -1,22 +1,4 @@
-{{- /*  Automatically name first item in header    
-        based on company name, author name name
-        if no company was specified, or just 
-        the name of the theme if neither of those
-        was specified.
-        
-*/ -}}
-{{- if .Site.Company.Name -}}
-{{- $name := .Site.Company.Name -}}
-* [{{ $name -}}](/)
-{{- else if .Site.Author.FullName -}}
-{{- $name := .Site.Author.FullName -}}
-* [{{ $name -}}](/)
-{{- else }}
-* [{{.FrontMatter.Theme}}](/)
-{{- end }} 
-* [Events](/)
-* [Subscribe](/)
-<span id="demo">x</span>
+* Search v0747
 <script>
 
 searchIndex = 'metabuzz-search.json'
@@ -58,6 +40,7 @@ function loadJson(ex) {
   XmlHttpRequest.open('GET', searchIndex, true);
   XmlHttpRequest.send(null);
   //alert('I hope it is: ' + XmlHttpRequest.response)
+  alert(XmlHttpRequest.responseText)
   return (XmlHttpRequest.responseText)
 }
 
@@ -85,16 +68,16 @@ function readTextFile(file, cb) {
     rawFile.send(null);
 }
 
-function callback(){
-  console.log('1')
+function loadSearchIndex(){
+  alert('loadSearchIndex()')
   document.getElementById("demo").innerHTML = 'y';
-  //alert('callback()')
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
       console.log('this.readyState: ' + this.readyState + '. this.status: ' + this.status)
       if (this.readyState == 4 && this.status == 200) {
-          var myObj = JSON.parse(this.responseText);
-          document.getElementById("demo").innerHTML = myObj.name;
+          alert('this.responseText: ' + this.responseText)
+          //var myObj = JSON.parse(this.responseText);
+          document.getElementById("demo").innerHTML = this.responseText;
       }
   };
   xmlhttp.open("GET", searchIndex, true);
@@ -117,10 +100,10 @@ if (
     document.readyState === "complete" ||
     (document.readyState !== "loading" && !document.documentElement.doScroll)
 ) {
-  callback()
+  loadSearchIndex()
 } else {
 
-  document.addEventListener("DOMContentLoaded", callback);
+  document.addEventListener("DOMContentLoaded", loadSearchIndex);
 }
 </script>
 <form name="searchForm" onSubmit="lsearch()"><input type="text" id="search" name="search"><span class='icn icn-find'> </span>
