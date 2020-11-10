@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+  file:///Users/tom/code/mb/foobar/./loadjson.html
+-->
+<html lang=en>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Load JSON file from Javascript</title>
+
+</head>
+<body>
+  <form onsubmit="return doSearch();">
+    <input type="text" id="search" name="search"> 
+    <label  value="Search" for="search">Search</label>
+  </form>
+
+
+<!-- <script src="fuse.min.js"></script>
+-->
+<script src="https://cdn.jsdelivr.net/npm/fuse.js"></script>
+var list = {}
+<script>
+// Ensure document's loaded before running Javascript
+if (
+    document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)
+) {
+  go()
+} else {
+  // When the HTML file is completely read in,
+  // call this function. Can be called anything;
+  // here it's just called go()
+  document.addEventListener("DOMContentLoaded", go);
+}
+
+// Gets called when the HTML document has finally
+// been loaded. Function doesn't need to be named go().
+function go() {
+  loadFile('metabuzz-search.json','demo')
+}
+
+
+// Read in the file specified by the path filename,
+// into the div whose ID is specified in divID.
+// Example:
+//   loadFile('testfile.json','demo')
+function loadFile(filename, divID){
+  var req = new XMLHttpRequest();
+  req.onreadystatechange = function() {
+    console.log('readyState: ' + 
+      this.readyState + 
+      '. status: ' + 
+       this.status);
+    if (this.readyState == 4 && this.status == 200) {
+      // Copy contents of file into the specified div
+      console.log('reading ' + this.responseText + ' into list, I hope')
+      document.getElementById(divID).innerHTML = this.responseText;
+      list = JSON.parse(this.responseText)
+    }
+  }
+  req.open("GET", filename, true);
+  req.send(null);
+}
+
+options = {
+  keys: ['body']
+}
+
+
+function doSearch() {
+  str = document.getElementById("search").value 
+  const options = {
+    keys: ['body']
+  }
+  const _fuse = new Fuse(list, options)
+  console.log("Result of searching for '" + str + "': " + _fuse.search(str))
+  return false
+}
+
+</script>
+
+</header>
+<h1>Read a JSON file with Javascript</h1>
+<p>11:18am This has to be run on a server. The easiest way is:</p>
+<pre>python -m SimpleHTTPServer</pre>
+<p>Then navigate to:</p><pre>
+<script>
+document.write('0.0.0.0:8000/' + window.location.pathname.split("/").pop())
+</script>
+</pre>
+<!-- This div is filled with the file contents on startup -->
+<div id="demo"></div>
+</body>
+</html>
