@@ -8,7 +8,7 @@
 
 	/* Maximum characters on a line in an article. 
 	 * Has no effect on the width of the column itself. */
-	--max-article-width: 80%; 
+	--max-article-width: 70%; 
 
 	/* Widest the aside column should be */
 	--max-aside-width: 20%;    
