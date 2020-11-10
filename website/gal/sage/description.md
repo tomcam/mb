@@ -1,10 +1,9 @@
 # Sage, for Unmatched Clarity
 
-**Either** Thanks kindly to the  [Edward Tufte people](https://github.com/edwardtufte) for 
+Thanks kindly to the  [Edward Tufte people](https://github.com/edwardtufte) for 
 [Tufte CSS](https://github.com/edwardtufte/tufte-css) and 
 [Osmo Salomaa](https://github.com/otsaloma) for
 his faithful adaptaion of [tufte.css.org](https://github.com/otsaloma/markdown-css/blob/master/tufte.css.orig).
-
 
 Visit the full [explanation](https://edwardtufte.github.io/tufte-css/) of this mesmerizingly
 elegant style sheet.

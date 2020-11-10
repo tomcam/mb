@@ -65,7 +65,8 @@ Suppose you want to link to a particular location inside a page. As long as ther
 
 ### Linking inside a document
 
-We'll loosely call them anchors or bookmarks, although the HTML simply calls it the [id attribute](https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute).
+We'll loosely call them anchors or bookmarks, 
+although the HTML specification simply calls it the [id attribute](https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute).
 
 Here's a demonstration. If you type:
 

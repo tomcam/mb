@@ -4,8 +4,6 @@
 {
 
 	/* ****************/
-	/* COLORS         */
-	/* ****************/
 	/*
 	 * Most but not all colors used by a theme appear
 	 * in this CSS file as CSS variables, so that you
@@ -20,24 +18,20 @@
 	 */
 
     /* Default foreground (text) and background colors  */
-    --fg: whitesmoke;
-    --bg: black;
+    --fg: #FFFFF8;
+    --bg: #111;
     /* Default link colors */
-    --a: black;
+    --a: #111;
     --a-link: --var(--a);
     --a-visited: --var(--a);
     --a-hover: --var(--a);
     --a-active: --var(--a);
 
     
-    /* Secondary foreground (text) and background colors for accents. */
-    --trim-fg:black; 
-    --trim-bg:white;
-
     
     /* Primary foreground (text) and background colors in header */
-    --header-fg: black;
-    --header-bg: white;
+    --header-fg: --var(--fg);
+    --header-bg: --var(--bg);
     /* Link colors specific to header */
     --a-header: var(--header-fg); 
     --a-header-link:  var(--header-fg);
@@ -47,7 +41,7 @@
 
 
     /* Primary foreground (text) and background colors in navbar */
-    --nav-fg:black;
+    --nav-fg:var(--fg);
     --nav-bg: var(--bg);
     /* Link colors specific to navbar */
     --a-nav: var(--a); 
@@ -88,7 +82,7 @@
     --a-footer-visited: var(--a);
     --a-footer-hover: var(--a); 
     --a-footer-active: var(--a);
-
 }
-
+/* No time! Brutal solution to fuzzy-looking links */
+a:link {text-shadow:none;}
 
