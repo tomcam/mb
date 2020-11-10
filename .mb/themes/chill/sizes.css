@@ -30,7 +30,7 @@
 		--right-gap:0%;
 
 		/* Starting point from left where text (and by default headers) appears */
-		--left-start:0%;
+		--left-start:5%;
 
 		/* Adjusts header height and keeps it vertically centered */
 		--header-height:6rem;
