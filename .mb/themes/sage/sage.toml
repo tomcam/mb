@@ -10,7 +10,7 @@ PathName = ""
 
 [Header]
   HTML = ""
-  File = "header.md"
+  #File = "header.md"
 
 [Article]
   HTML = ""
@@ -18,8 +18,8 @@ PathName = ""
 
 [Footer]
   HTML = ""
-  File = "footer.md"
+  #File = "footer.md"
 
 [Sidebar]
   HTML = ""
-  File = "sidebar.md"
+  #File = "sidebar.md"

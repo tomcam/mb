@@ -1,7 +1,25 @@
 # Metabuzz Markdown quick reference
 
 **Table of contents** 
-{{ toc "6" }}
+
+* [Common text formatting](#common-text-formatting)
+* [Links](#links)
+* [Bookmarks](#bookmarks)
+  - [Linking inside a document](#linking-inside-a-document)
+  - [All headers are automatically bookmarks](#automatic-bookmarks)
+  - [Bookmarks must be unique in an HTML document](#bookmarks-unique)
+  - [How to create bookmarks manually](#how-to-create-bookmarks-manually)
+  - [Linking to bookmarks on other webstes](#linking-other-websites)
+* [Header styles](#header-styles)
+* [Coding styles](#coding-styles)
+  - [Choosing the programming language](#choose-pl)
+* [Ordered lists](#ordered-lists)
+* [Unordered, or bullet lists](#unordered-lists)
+* [The "third" list type: definition lists](#def-lists)
+* [Creating clickable image links in Markdown](#clickable-images)
+* [Tables](#tables)
+* [Block quote](#block-quote)
+
 
 
 ## Markdown syntax
@@ -59,6 +77,7 @@ The result will be this (click the link, then use your browser's Back button to 
 
 Jump to the [tables](#tables) section.
 
+<a name="automatic-bookmarks"></a>
 
 ### All headers are automatically bookmarks too
 
@@ -79,7 +98,7 @@ And the more complicated example of the header named `The "third" list type: def
 ```html
 <h3 id="the-third-list-type-definition-lists">The "third" list type: definition lists</h3>
 ```
-
+<a name="bookmarks-unique"></a>
 ### Bookmarks must be unique in an HTML document
 
 The `id` attribute must be unique within a document. Notice how on this page there are many headers simply called `You type:`? Metabuzz keeps track of them and turns each of them into unique IDs by naming them `you-type-1`, `you-type-2`, and so forth.
@@ -103,7 +122,8 @@ Then you create a link to it by adding the `#jump-here` portion to a link, which
 
 Try it now: [Learn about blockquotes](#jump-here)
 
-### Linking to bookmarks on other webistes
+<a name=linking-other-websites></a>
+### Linking to bookmarks on other websites
 
 You can also link to an anchor to other websites, if they have anchors. Here's a link to the history of futbol on Wikipedia:
 
@@ -144,7 +164,7 @@ You can format text inline as `code` by surrounding text with `` ` ``tick marks`
 ```
 You can format text inline as `code`, or go block style:
 ```
-
+<a name="choose-pl"></a>
 ### Choosing the programming language
 
 You can specify a color scheme for a particular programming language by including its name after the first 3 tick marks of the code block.
@@ -191,6 +211,7 @@ fmt.Println("This is a code block")
 1. The numbers display properly on output
 
 
+<a name="unordered-lists"><a/>
 ### Unordered, or bullet lists
 
 #### You type:
@@ -217,6 +238,7 @@ Reasons people hate bullet lists
     - Most Metabuzz themes go up to 3 visible levels
     - Any more levels than 3 makes it hard for the reader
 
+<a name="def-lists"></a>
 ### The "third" list type: definition lists
 
 A definition list lets you display things like an item
@@ -242,7 +264,8 @@ Markdown
 : A convention for generating HTML from a more human-readable 
 source format.
 
-### Markdown trick: Creating clickable image links in Markdown
+<a name="clickable-images"></a>
+### Creating clickable image links in Markdown
 
 Remember that a Markdown link looks like this:
 
