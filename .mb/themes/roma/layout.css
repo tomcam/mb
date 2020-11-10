@@ -1,5 +1,5 @@
 /* STANDARD LAYOUT */
-html,body,nav,header,article,footer{float:left;height:auto;clear:both;display:block;max-width:100%;width:100%;overflow:auto;color:var(--fg);background-color:var(--bg);}
+html,body,nav,header,article,footer{float:left;height:auto;clear:both;overflow:auto;color:var(--fg);background-color:var(--bg);}
 
 
 /* INDENT LISTS TO 3 LEVELS */
