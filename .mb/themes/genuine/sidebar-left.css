@@ -2,9 +2,8 @@
 :root 
 {
 	--max-article-width:50%;
-  --full-width:60%;
-  --right-gap:15%;
-  --max-aside-width:25%;
+  --right-gap:5%;
+  --max-aside-width:35%;
 }
 article, aside {float:right}
 article {padding-left:0;margin-left:0;}

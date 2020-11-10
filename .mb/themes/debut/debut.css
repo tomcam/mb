@@ -99,7 +99,7 @@ article > p > a:active {text-decoration:none;}
 article >  table {width:var(--max-article-width);margin-top:2rem;margin-bottom:3rem;}
 article > table > thead > tr > th {font-size:1.5rem;}
 article > table > td,th {padding:1rem;}
-article > p > img {width:80%;}
+article > p > img {width:100%;}
 
 /*
    --------------------------------------------------

@@ -15,7 +15,6 @@ figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
-  
 	padding: 0;
 	border: 0;
 	font-size: 100%;
@@ -36,21 +35,9 @@ footer, header, hgroup, menu, nav, pre, section {
 	display: block;
 }
 
-/* TODO: Decide on whether to restore this 
-blockquote, q {
-	quotes: none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-*/
-
 table {
+  /* Cells in a table share borders */
 	border-collapse: collapse;
-	border-spacing: 0;
 }
 
 

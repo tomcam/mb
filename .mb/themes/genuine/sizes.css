@@ -22,7 +22,7 @@
 	 * When --full-page is less than 100% then these
 	 * two should add up to the difference. */
 	--left-gap:10%;
-	--right-gap:10%;
+	--right-gap:0%;
 
 	/* Starting point from left where text (and by default headers) appears */
 	--left-start:5%;

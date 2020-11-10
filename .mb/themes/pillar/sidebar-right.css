@@ -2,7 +2,9 @@
 :root 
 {
 	--max-article-width:55%;
-	--max-aside-width:20%;
+	--max-aside-width:15%;
+  --right-gap: 5%;
+  --right-end: 0%;
 	--full-page:75%;
 }
 article, aside {float:left}
