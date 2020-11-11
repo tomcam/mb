@@ -1,0 +1,21 @@
+html,body,nav,header,article,footer{float:left;height:auto;clear:both;overflow:auto;color:var(--fg);background-color:var(--bg);}
+
+header {color:var(--header-fg);background-color:var(--header-bg);overflow:hidden;}
+/* Prevent word wrap. Looks bad on smaller screens. */
+header {white-space:nowrap;}
+
+nav {color:var(--nav-fg);background-color:var(--nav-bg);overflow:hidden;}
+/* Prevent word wrap. Looks bad on smaller screens. */
+nav {white-space:nowrap;}
+
+/* Article on left */
+article {width:var(--max-article-width);}                       
+
+
+/* Sidebar on right */
+aside{color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
+aside{width:var(--max-sidebar-width);}                            
+aside{float:left;}                                          
+
+footer{clear:both;}    
+
