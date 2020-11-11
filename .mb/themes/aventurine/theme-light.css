@@ -33,7 +33,7 @@
 
 
 		/* Primary foreground (text) and background colors in header */
-		--header-fg: darkblue;
+		--header-fg: white;
 		--header-bg: white;
     /* Link colors specific to header*/
     --a-header: var(--a); 
