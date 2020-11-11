@@ -12,10 +12,15 @@
 	--article-width:60%; 
 	--sidebar-width:20%;    
 
+  /* Usually you want the header and the footer to
+   * match. This makes them the same width.
+   */
+  --header-footer-width:70%;
+
   /* Normally --center-column-width
    * is the sum of 
    * --article-width and --sidebar-width */
-  --center-column-width:80%;
+  --center-column-width:50%;
 
   /* Sort of specialized. You can use this to
    * ensure that the header, nav, article, and footer
