@@ -15,7 +15,7 @@ article {width:var(--max-article-width);}
 /* Sidebar on right */
 aside{color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
 aside{width:var(--max-sidebar-width);}                            
-aside{float:left;}                                          
+iaside{float:left;}                                          
 
 footer{clear:both;}    
 
