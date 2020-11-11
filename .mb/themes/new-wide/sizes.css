@@ -1,34 +1,15 @@
 :root 
 {
 
-	--max-article-width:75%; 
+	--center-column-width:75%; 
+	--sidebar-width:25%;    
 
-	--max-sidebar-width:25%;    
-
-	/* Header, nav, and footer stretch all the way across
-	 * the screen at 100%. To create a pillar-style theme
-	 * (wth gaps aka margins on either side)
-	 * reduce that number, then increase --left-gap
-	 * and --right-gap. 
-	--full-page:100%; 
-  */
-	/* Making these larger than 0 and --full-page < 100% creates
-	 * a pillar theme, or one that doesn't stretch the header
-	 * and footer all the way across the page.
-	 * When --full-page is 100% these should be at 0.
-	 * When --full-page is less than 100% then these
-	 * two should add up to the difference. 
-	--left-gap:0%;
-	--right-gap:0%;
-  */
-
-	/* Starting point from left where text (and by default headers) appears 
-	--left-start:10%;
-  */
-
-	/* Only for Pillar-style themes: Space between the right edge of the article and the right edge of text 
-	--right-end:5%;
-  */
+  /* Sort of specialized. You can use this to
+   * ensure that the header, nav, article, and footer
+   * all start text at the same position so
+   * they line up properly. Don't have to assign
+   * it to all of them.*/
+  --text-start: 4rem;
 
 	/* Adjusts header height and keeps it vertically centered */
 	--header-height:8rem;

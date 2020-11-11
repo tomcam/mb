@@ -1,21 +1,35 @@
-html,body,nav,header,article,footer{float:left;height:auto;clear:both;overflow:auto;color:var(--fg);background-color:var(--bg);}
+html,body,nav,header,article,footer{float:left;clear:both;overflow:auto;}
+html,body,nav,header,article,aside,footer{color:var(--fg);background-color:var(--bg);height:auto;}
+
 
 header {color:var(--header-fg);background-color:var(--header-bg);overflow:hidden;}
+header {padding-left:var(--text-start);}
 /* Prevent word wrap. Looks bad on smaller screens. */
 header {white-space:nowrap;}
 
+
+
+
+
 nav {color:var(--nav-fg);background-color:var(--nav-bg);overflow:hidden;}
+nav {padding-left:var(--text-start);}
 /* Prevent word wrap. Looks bad on smaller screens. */
 nav {white-space:nowrap;}
 
-/* Article on left */
-article {width:var(--max-article-width);}                       
 
 
-/* Sidebar on right */
-aside{color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
-aside{width:var(--max-sidebar-width);}                            
-iaside{float:left;}                                          
 
-footer{clear:both;}    
+article {color:var(--article-fg);background-color:var(--article-bg);}
+article {width:var(--center-column-width);}                       
+article {padding-left:var(--text-start);}
+
+
+
+aside {color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
+aside {width:var(--sidebar-width);}                            
+
+
+footer {color:var(--footer-fg);background-color:var(--footer-bg);}
+footer {padding-left:var(--text-start);}
+footer {clear:both;}    
 

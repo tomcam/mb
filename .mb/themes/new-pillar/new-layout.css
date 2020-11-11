@@ -1,36 +1,43 @@
-html,body,nav,header,article,footer{float:left;height:auto;clear:both;overflow:auto;color:var(--fg);background-color:var(--bg);}
+html,body,nav,header,article,footer{float:left;clear:both;overflow:auto;}
+html,body,nav,header,article,aside,footer{color:var(--fg);background-color:var(--bg);height:auto;}
 
-/* Indent list up to 3 levels */
-li li {margin-left:1rem;}
-li li li {margin-left:1rem;}
 
 header {color:var(--header-fg);background-color:var(--header-bg);overflow:hidden;}
+header {padding-left:var(--text-start);}
 /* Prevent word wrap. Looks bad on smaller screens. */
 header {white-space:nowrap;}
 header {width:var(--header-footer-width);}
 /* Blank space on each side of client area */
 header {margin-right:var(--right-margin);margin-left:var(--left-margin);}
-header {padding-left:var(--text-start);}
 
 
-nav {width:var(--header-footer-width);}
 nav {color:var(--nav-fg);background-color:var(--nav-bg);overflow:hidden;}
+nav {padding-left:var(--text-start);}
 /* Prevent word wrap. Looks bad on smaller screens. */
 nav {white-space:nowrap;}
+nav {width:var(--header-footer-width);}
 nav {margin-right:var(--right-margin);margin-left:var(--left-margin);}
-nav {padding-left:var(--text-start);}
 
 
+article {color:var(--article-fg);background-color:var(--article-bg);}
 article {width:var(--center-column-width);}                       
 article {padding-left:var(--text-start);}
 article {margin-left:var(--right-margin);}
 
+
 aside {color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
 aside {width:var(--sidebar-width);}                            
 
+
 footer {color:var(--footer-fg);background-color:var(--footer-bg);} 
-footer{width:var(--header-footer-width);} 
-footer{margin-right:var(--right-margin);margin-left:var(--left-margin);}
 footer {padding-left:var(--text-start);}
-footer{clear:both;}    
+footer {clear:both;}    
+footer {width:var(--header-footer-width);} 
+footer {margin-right:var(--right-margin);margin-left:var(--left-margin);}
+
+
+/* Indent list up to 3 levels */
+li li {margin-left:1rem;}
+li li li {margin-left:1rem;}
+
 
