@@ -1,9 +1,14 @@
 :root 
 {
 
-	--max-article-width:75%; 
-
-	--max-sidebar-width:25%;    
+	--article-width:60%; 
+	--sidebar-width:20%;    
+  /* Normally --center-column-width
+   * is the sum of 
+   * --article-width and --sidebar-width */
+  --center-column-width:80%;
+  --left-margin:10%;
+  --right-margin:10%;
 
 	/* Header, nav, and footer stretch all the way across
 	 * the screen at 100%. To create a pillar-style theme

@@ -20,7 +20,7 @@
 
     /* Default foreground (text) and background colors  */
     --fg: black;
-    --bg: lightgray;
+    --bg: white;
     /* Default link colors */
     --a: darkblue;
     --a-link: var(--a);
@@ -79,10 +79,10 @@
 
 
     /* Primary foreground (text) and background colors in footer */
-    --footer-fg: var(--header-fg);
-    --footer-bg: var(--header-bg);
+    --footer-fg: white;
+    --footer-bg: blue;
     /* Link colors specific to footer */
-    --a-footer: var(--a); 
+    --a-footer: white;
     --a-footer-link: var(--a);
     --a-footer-visited: var(--a);
     --a-footer-hover: var(--a); 

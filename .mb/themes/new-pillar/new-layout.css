@@ -3,19 +3,25 @@ html,body,nav,header,article,footer{float:left;height:auto;clear:both;overflow:a
 header {color:var(--header-fg);background-color:var(--header-bg);overflow:hidden;}
 /* Prevent word wrap. Looks bad on smaller screens. */
 header {white-space:nowrap;}
+header{width:var(--center-column-width);}
+header{margin-right:var(--right-margin);margin-left:var(--left-margin);}
 
+nav{width:var(--center-column-width);}
 nav {color:var(--nav-fg);background-color:var(--nav-bg);overflow:hidden;}
 /* Prevent word wrap. Looks bad on smaller screens. */
 nav {white-space:nowrap;}
+nav{margin-right:var(--right-margin);margin-left:var(--left-margin);}
 
 /* Article on left */
-article {width:var(--max-article-width);}                       
+article {width:var(--article-width);}                       
 
 
 /* Sidebar on right */
 aside{color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
-aside{width:var(--max-sidebar-width);}                            
-aside{float:left;}                                          
+aside{width:var(--sidebar-width);}                            
+iaside{float:left;}                                          
 
+footer{width:var(--center-column-width);} 
 footer{clear:both;}    
+footer{margin-right:var(--right-margin);margin-left:var(--left-margin);}
 
