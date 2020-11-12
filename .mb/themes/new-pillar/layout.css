@@ -16,7 +16,7 @@ dd {margin-bottom:1em;}
 header {width:var(--full-page);}
 header {height:var(--header-height);line-height:var(--header-height);}
 header {margin-left:var(--left-gap);margin-right:var(--right-gap);}
-header {padding-left:var(--left-start);}
+header {padding-left:var(--text-start);}
 header {color:var(--header-fg);background-color:var(--header-bg);overflow:hidden;}
 /* Prevent word wrap. Looks bad on smaller screens. */
 header {white-space:nowrap;}
@@ -26,7 +26,7 @@ header {white-space:nowrap;}
 nav {width:var(--full-page);}
 nav {height:var(--nav-height);line-height:var(--nav-height);}
 nav {margin-left:var(--left-gap);margin-right:var(--right-gap);}
-nav {padding-left:var(--left-start);}
+nav {padding-left:var(--text-start);}
 nav {color:var(--nav-fg);background-color:var(--nav-bg);overflow:hidden;}
 /* Prevent word wrap. Looks bad on smaller screens. */
 nav {white-space:nowrap;}
@@ -34,8 +34,8 @@ nav {white-space:nowrap;}
 
 /* ARTICLE */
 article {margin-left:var(--left-gap);margin-right:var(--right-gap);}
-article {padding-left:var(--left-start);padding-right:var(--right-end);}
-article {width:var(--max-article-width);}
+article {padding-left:var(--text-start);padding-right:var(--right-end);}
+article {width:var(--center-column-width);}
 article {color:var(--article-fg);background-color:var(--article-bg);} 
 /* float and clear left means a right sidebar,and vice-versa */
 article {float:left;clear:left;}
@@ -50,7 +50,7 @@ aside {color:var(--aside-fg);background-color:var(--aside-bg);}
 /* FOOTER */
 footer {width:var(--full-page);}
 footer {margin-left:var(--left-gap);margin-right:var(--right-gap);}
-footer {padding-left:var(--left-start);}
+footer {padding-left:var(--text-start);}
 footer {color:var(--footer-fg);background-color:var(--footer-bg);}
 
 /* RESPONSIVE SIZING */

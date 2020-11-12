@@ -7,9 +7,17 @@
    * --left-margin
    * --right-margin
    */
+
+  /* Blank column to left of client area */
   --left-margin:10%;
+
+  /* Blank column to left of right of area */
   --right-margin:10%;
+
+  /* Width of main part of client area, the article */
 	--article-width:60%; 
+
+  /* Sidebar width */
 	--sidebar-width:20%;    
 
   /* Usually you want the header and the footer to
@@ -19,7 +27,9 @@
 
   /* Normally --center-column-width
    * is the sum of 
-   * --article-width and --sidebar-width */
+   * --article-width and --sidebar-width 
+   * Helps determine dimensions of header
+   * and footer. */
   --center-column-width:50%;
 
   /* Sort of specialized. You can use this to

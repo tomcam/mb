@@ -1,11 +1,17 @@
 :root 
 {
 
+  /* Width of the article--the main portion 
+   * of the client area.
+   * Helps determine dimensions of header
+   * and footer. */
 	--center-column-width:75%; 
+
+  /* Sidebar width */
 	--sidebar-width:25%;    
 
-  /* Sort of specialized. You can use this to
-   * ensure that the header, nav, article, and footer
+  /* Use this to ensure that the
+   * that the header, nav, article, and footer
    * all start text at the same position so
    * they line up properly. Don't have to assign
    * it to all of them.*/
