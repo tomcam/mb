@@ -1,5 +1,5 @@
 html,body,nav,header,article,footer{float:left;clear:both;overflow:auto;}
-html,body,nav,header,article,aside,footer{color:var(--fg);background-color:var(--bg);height:auto;}
+html,body,nav,header,article,aside,footer{color:var(--fg);background-color:var(--bg);}
 
 
 header {color:var(--header-fg);background-color:var(--header-bg);overflow:hidden;}
