@@ -1,0 +1,8 @@
+article{float:right;}
+aside{float:left;}
+
+aside{margin-left:var(--left-margin);}
+article{margin-right:var(--right-margin);}
+iarticle{margin-left:var(--left-margin);}
+article{margin-left:0;}
+
