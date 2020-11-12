@@ -36,18 +36,21 @@
   --text-start: 5%;
    */
 
-  /* Blank column to left of client area */
+  /* Blank column to left of client area 
   --left-margin:0%;
+   * */
 
-  /* Blank column to left of right of area */
+  /* Blank column to left of right of area 
   --right-margin:0%;
+  */
 
-  /* Width of main part of client area, the article */
+  /* Width of main part of client area, the article
 	--center-column-width:60%; 
+  */
 
-  /* Sidebar width */
+  /* Sidebar width 
 	--sidebar-width:20%;    
-
+  */
   /* Usually you want the header and the footer to
    * match. This makes them the same width.
    */
@@ -70,13 +73,13 @@
 	--nav-height:5rem;
 
   /* Pillar - works
-  */
   --center-column-width:65%;
 	--sidebar-width:15%;    
   --left-margin:10%; 
   --right-margin:10%;
   --header-footer-width:80%;
   --text-start: 5%;
+  */
 
 
   /* Wide 
@@ -99,9 +102,6 @@
   --header-footer-width:80%;
   --text-start: 5%;
    */
-
-
-
 
 
 }
