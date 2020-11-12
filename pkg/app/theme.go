@@ -178,7 +178,7 @@ func (a *App) newTheme(from, to string) error {
 	if to == "" {
 		a.QuitError(errs.ErrCode("1017", ""))
 	}
-	return a.copyTheme(from, to, false)
+  return a.copyTheme(from, to, false)
 }
 
 // copyThemeDirectory() copies the directory specified by the fully qualified directory name
@@ -248,6 +248,9 @@ func (a *App) createPageType(theme, pageType string) error {
 func (a *App) copyTheme(from, to string, isChild bool) error {
 	// Obtain the fully qualified name of the source
 	// theme directory to copy
+  //fmt.Println("Create theme " + from)
+  //fmt.Fprintf(os.Stdout, "Created theme %s from %s",to, from); // xxx
+  // xxx
 	source := a.themePath(from)
 	// Generate name of TOML file expected to be there
 	tomlFile := a.themeTOMLFilename(from, source)
@@ -265,6 +268,7 @@ func (a *App) copyTheme(from, to string, isChild bool) error {
 	if dirExists(dest) {
 		return errs.ErrCode("0904", "directory "+dest+" already exists")
 	}
+	a.Verbose("Creating theme " + dest + to)
 
 	if err := a.copyThemeDirectory(source, dest); err != nil {
 		return errs.ErrCode("PREVIOUS", "")
@@ -274,8 +278,8 @@ func (a *App) copyTheme(from, to string, isChild bool) error {
 		return errs.ErrCode("PREVIOUS", err.Error())
 	}
 	// Success
-	// copyPageType
-	a.Verbose("Created theme " + filepath.Base(dest))
+	//a.Verbose("Created theme " + filepath.Base(dest))
+  fmt.Println("Created theme " + to + " from " + from + " in " + dest)
 	return nil
 }
 
