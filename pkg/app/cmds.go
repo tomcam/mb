@@ -301,13 +301,12 @@ create theme based on an existing one.
 					// tree and build as a complete site.
 					NewThemeName = promptString("Name of theme to create?")
 				}
-				// xxx
 				// Create a new theme from the default theme
 				NewThemeFrom = promptStringDefault("Name to copy it from?", NewThemeFrom)
 				if err := a.newTheme(NewThemeFrom, NewThemeName); err != nil {
 					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 				}
-				fmt.Println("Created theme", NewThemeName)
+				// Could put a message that it was created
 			},
 		}
 
