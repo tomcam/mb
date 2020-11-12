@@ -92,7 +92,7 @@ article > table > tbody > tr > td > a:active
 
 
 /* ASIDE */
-aside {padding-top:8rem;padding:2rem;}
+aside {rem;padding:10rem 2rem 2rem 2rem;}
 aside {margin: 2rem;}
 aside > h3 {color:var(--trim-bg);font-size:.75em;font-weight:bold;margin-bottom:2;}
 aside > ul > li > a {color:var(--a);}
