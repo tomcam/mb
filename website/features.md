@@ -14,6 +14,8 @@ information into many themes.
 * Metabuzz themes have a simple, one-level
 inheritance feature that gives a child theme
 access to the parent theme features.
+* Built-in code highlighting for dozens
+of computer languages using Alec Thomas's [chroma](https://github.com/alecthomas/chroma#supported-languages) 
 
 ## Metabuzz Theme Framework (MTF)
 * You can create new themes without

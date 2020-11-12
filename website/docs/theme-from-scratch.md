@@ -13,8 +13,23 @@ Metabuzz assumes your theme follows the same convention as a domain name. Simply
 ```
 :: Create a new theme called mytheme.
 :: Base it on the existing theme named empty.
-mb new theme mytheme from empty
+:: Change mytheme to your own theme name if you wish.
+mb new theme mytheme 
 ```
+* You're asked what theme to use as its basis. Popular choices
+include `wide` or `pillar`, but you're going to use a 
+special template for making themes from scratch.
+
+```
+Theme to copy it from? [wide]
+```
+
+* Enter the word `empty` at the prompt:
+
+```
+Theme to copy it from? [wide] empty
+```
+
 
 A set of files gets created in the theme directory. Here's how to find it.
 
@@ -72,5 +87,5 @@ to create an HTML output file in the [publish directory](publish-directory.html)
 
 
 
-
+https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.7.2/tufte.min.css
 
