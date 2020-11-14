@@ -9,6 +9,29 @@
 	/* Adjusts navbar height and keeps it vertically centered */
 	--nav-height:2rem;
 
+  /* ******************************
+   *  Make theme pillar style     *
+   * ******************************/
+
+  --article-column-width:65%;
+	--sidebar-width:15%;    
+  --left-margin:10%; 
+  --right-margin:10%;
+  --header-footer-width:80%;
+  --text-start: 5%; 
+
+  /* ******************************
+   *  Make theme wide style       *
+   * ******************************/
+
+  /*
+  --article-column-width:80%;
+	--sidebar-width:20%;    
+  --left-margin:0%;
+  --right-margin:0%;
+  --header-footer-width:100%; 
+  */
+
 }
 
  

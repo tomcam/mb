@@ -5,7 +5,7 @@
         was specified.
         
 */ -}}
-![logo](square-image-32x32.png){{- if .Site.Company.Name -}}
+{{- if .Site.Company.Name -}}
 {{- $name := .Site.Company.Name -}}
 * [{{ $name -}}](/)
 {{- else if .Site.Author.FullName -}}
