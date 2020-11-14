@@ -1,18 +1,32 @@
-# Glossary
+# Metabuzz Glossary and definitions
 
 ## Commonmark
 
-See [Markdown](#markdown)
+The term *CommonMark* is the name of a community standard for
+for the [Markdown](#markdown) text formatting
+conventions used to generate your web pages. 
+In these help pages it is synonomous with 
+Markdown and markup.
 
 ## Global configuration file
 
-The [global configuration file](config-file.html) is a file named `metabuzz.toml` normally stored in a subdirectory named `.mb` that contains information that applies to all projects you create with Metabuzz---for example, where the theme files are stored.
+The [global configuration file](config-file.html) is a file named `metabuzz.toml` normally stored in a subdirectory named `.mb` that contains information that applies to all projects you create with Metabuzz---for example, where the tvbheme files are stored.
 
 ## Layout element
 
+The structure of a  
+[complete HTML document](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure#HTML_layout_elements_in_more_detail) 
+is based on these tags: `<header>`, `<nav>`, `<aside>`, `<article>`, and `<footer>`. They are also known as *layout elements*.
+Metabuzz takes their corresponding tags from the [theme TOML file](#theme-toml-file#)
+and uses those rules to generate the contents of each tag.
+
+See also [layout elements](layout-elements.html)
+
 ## Markdown
 
-Markdown is a sensible way to represent text files so that they read easily as plain text if printed out, but also carry enough semantic meaning that they can be converted into HTML. 
+Markdown is a sensible way to represent text files so that they read easily as plain text if printed out, but also carry enough semantic meaning that they can be converted into HTML. Markdown is technically known as a [markup langauge](https://en.wikipedia.org/wiki/Markup_language), which means that it contains both text, e.g. `hello, world`, and easily distinguishable annotations about how the text is used, e.g. marking up `*hello*` to
+emphasize the word in italics--its *markup*. The name *markdown* is a play on the term *markup*. The name *markdown* is a play on the term *markup*. The name *markdown* is a play on the term *markup*. 
+
 The closest thing to an industry standard for Markdown is [CommonMark](https://commonmark.org). Metabuzz converts all CommonMark text according to specification, and includes extensions for things like tables, strikethrough, and autolinks. See the source to [Goldmark](https://github.com/yuin/goldmark) for more information on extensions.
 
 Take this example of Markdown you might use in a document:
@@ -34,6 +48,16 @@ That means the `# Introduction` actually represents the HTML heading type `h1`, 
 
 The asterisk characters are replaced by the `<em>` tag pair, which means they have the semantic power of emphasis. This is represented by HTML as italics, although you could override it in CSS.
 
+In these help pages Markdown is synonomous with 
+[markup](#markup) and [CommonMark](#commonmark).
+
+## Markup 
+
+The term *markup* generally refers to the [Markdown](#markdown) text formatting
+conventions used to generate your web pages. In these help pages it is synonomous with 
+Markdown, markup, and [CommonMark](#commonmark).
+
+Technically speaking HTML is also a markup language(https://en.wikipedia.org/wiki/Markup_language) but in the context of Metabuzz the term normally refers to Markdown.
 
 ## Pagetype
 
@@ -72,21 +96,37 @@ The [template language](template-language.html) doesn't refer to themes, which i
 
 ## Theme
 
-Every Metabuzz site has a [theme](themes.md), which is a collection of stylesheets and graphic images structured in a particular way. A theme has its own folder, which is used as the name of the theme, and a confguration file listing what files comprise the theme. If you haven't specified a theme in your [site file](#site-configuration-file) or page [front matter](#front-matter) then the theme named Default is used.
+Every Metabuzz site has a [theme](themes.md), which is a collection of stylesheets, text, and graphic images structured in a particular way. A theme has its own folder, which is used as the name of the theme, and a confguration file listing what files comprise the theme. If you haven't specified a theme in your [site file](#site-configuration-file) or page [front matter](#front-matter) then the theme named `wide` is used.
 
 A theme is technically a [pagetype](#pagetype). The only difference between the two is that the theme may contain other pagetypes. For example, a blog-oriented theme might have a home pagetype and a blog pagetype.
+
+A theme is assembled from components described in its [theme TOML file](#theme-toml-file).
 
 See also [pagetype](#pagetype)
 
 ## Theme TOML file
 
-Each Markdown file
+Each HTML file Metabuzz generates is assembled from one or more of the following HTML [layout elements](#layout-element): 
+`<header>`, `<nav>`, `<aside>`, `<article>`, and `<footer>`. 
 
-[layout elements](#layout-element)
+The theme TOML file directs how files are generated for each tag. For example,
+the  `<header>` tag is generated from a source listed under `[Header]` and the
+`<aside>` tag (normally called a sidebar) is generated from a source listed
+under `[Sidebar]`. Here's a complete list of the layout elements in a 
+theme TOML file and what rules generate them:
+
+| Layout element  | Theme TOML  | Function   |
+| :-------------- | :--------   |:-----------|
+| `<header>`      | `[header]`  | Header     |
+| `<nav>`         | `[nav]`     | Navbar     |
+| `<aside>`       | `[sidebar]` | One sidebar (an HTML document can only have 1 `article` tag) |
+| `<article>`    | `[article]`  | Body of document |
+| `<footer>`     | `[footer]`  | Footer     |
+
 
 ```
 [Header]
-  HTML = ""
+  HTML = "<header>News of the Day</header>"
   File = "header.md"
 
 [Nav] 
@@ -106,6 +146,7 @@ Each Markdown file
   File = "footer.md"
 ```
 
+See also [Theme TOML file](theme-toml-file.html)
 
 
 

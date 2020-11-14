@@ -1,11 +1,12 @@
 # Layout elements
 
-Metabuzz follows [standard layout for HTML content](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure#HTML_layout_elements_in_more_detail) 
+Metabuzz follows 
+[standard layout conventions for HTML content](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Document_and_website_structure#HTML_layout_elements_in_more_detail) 
 as described by MDN, and as implied by the format of an HTML document.
 The standard format has a site broken up into sections, based on the HTML tags
 `<header>`, `<nav>`, `<aside>`, `<article>`, and `<footer>`.
 
-These sections are called *layout elements* because the directly affect
+These sections are called *layout elements* because they directly affect
 both the physical look of the page and the semantic menaing of each
 layout element.
 
@@ -47,7 +48,7 @@ Here's a simple example.
 ```
 
 
-## Layout elements defined in the them TOML file
+## Layout elements defined in the theme TOML file
 
 The relevant parts of your theme TOML file for 
 creating web content look like this:
@@ -74,4 +75,6 @@ creating web content look like this:
   file = "footer.md"
 ```
 
+### file can be either HTML or Markdown
 
+While most of the examples shown use Markdown files

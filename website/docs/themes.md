@@ -2,6 +2,7 @@
 * [Customizing a Metabuzz theme](customizing-theme.html)
 * [Creating a Metabuzz theme from scratch](theme-from-scratch.html)
 * [Theme architecture](theme-architecture.html)
+* [Theme TOML file](theme-toml-file.html)
 * [Theme directory](theme-directory.html)
 * [Setting up theme](setting-up-theme.html)
 * [Adding a theme to the Metabuzz gallery](add-theme.html)
