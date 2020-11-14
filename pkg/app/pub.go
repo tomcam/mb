@@ -173,16 +173,17 @@ func (a *App) publishFile(filename string) error {
 	// body tag
 	a.closeHeadOpenBody()
 
-	//a.appendStr(wrapTag("<article>", []byte(a.Page.Article), true))
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Header, "<header>"))
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Nav, "<nav>"))
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Article, "<article>"))
 	sidebar := strings.ToLower(a.FrontMatter.Sidebar)
-  //fmt.Printf("a.FrontMatter.Sidebar:\n%v\n", a.FrontMatter.Sidebar)
-  fmt.Printf("a.FrontMatter:\n%v\n\n", a.FrontMatter)
 	if sidebar == "left" || sidebar == "right" {
 		a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Sidebar, "<aside>"))
-	}
+	} else {
+    // TODO: If you have sidebar="ight" for example and/or the word "sidebar"
+    // appears in the main Markdown, you get a bonus error message
+		///a.QuitError(errs.ErrCode("1019", filename))
+  }
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Footer, "<footer>"))
 
 	// Complete the HTML document with closing <body> and <html> tags
@@ -843,6 +844,8 @@ func wrapTagBytes(tag string, html []byte, block bool) string {
 
 // layoutElementOverride() now has direction from the theme TOML to generate HTML
 // for layout elements such as header, aside, etc.
+// replaceWith is the extension to search for, for example,
+// "sidebar" or "header".
 // Look for a file in the current directory 
 // sharing the name of the Markdown page, so a page
 // named contact.md might have an optional contact.sidebar page, for
@@ -887,7 +890,7 @@ func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
   html = ""
   pathname := filepath.Join(a.Page.Theme.PageType.PathName, pr.File)
   //fmt.Printf("pageRegiontToHTML(%v,%v)\n%v\n\n",pr.File,tag,fileToBuf(sidebarfile))
-  fmt.Printf("layoutElementToHTML(%v,%v)\n",pr.File,tag)
+  //fmt.Printf("layoutElementToHTML(%v,%v)\n",pr.File,tag)
 	switch tag {
 	//case "<header>", "<nav>", "<article>", "<aside>", "<footer>":
   case "<header>":
@@ -898,13 +901,28 @@ func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
     html = a.layoutElementOverride(pr,tag,"sidebar")
   case "<nav>":
     html = a.layoutElementOverride(pr,tag,"navbar")
+  case "<iarticle>":
+    html = a.layoutElementOverride(pr,tag,"article")
 	case "<article>":
-		// Exception: a theme without an article pagetype specified is equivalent
-		// to <article>{{ article }}</article>. So wrap the entire article in the
+		// Exception: the theme TOML file doesnt have any entries under
+    // "[article]" but there is markdown on the page. This might be
+    // the most common case. Doing this allows the user to create a
+    // website just be typing in Markdown. It differs from all the other
+    // layout elements in the theme TOML file, which require you to
+    // specify something in HTMLFile, File, or HTML in order for them
+    // to appear in the HTML output.
+    // A theme TOML without an "[article]" layout element specified 
+    // is equivalent to <article>{{ article }}</article>. 
+    // So wrap the entire article in the
 		// appropriate tag.
 			if a.Page.Theme.PageType.Article.File == "" && a.Page.Theme.PageType.Article.HTML == "" {
+        // NO article.md specified
 				return wrapTag(tag, string(a.Page.Article), true)
-			}
+			} else {
+       // article.md specified 
+        html = a.layoutElementOverride(pr,tag,"article")
+				//return wrapTag(tag, string(a.Page.Article), true)
+     }
 	default:
 		a.QuitError(errs.ErrCode("1203", tag))
 	}
@@ -915,36 +933,35 @@ func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
     return html
   }
 
+  // Inline HTML is the highest priority
+  if pr.HTML != "" {
+    return pr.HTML
+  }
 
-		// Inline HTML is the highest priority
-		if pr.HTML != "" {
-			return pr.HTML
-		}
-		// Skip if there's no file specified
-		if pr.File == "" {
-			return ""
-		}
- 		var input []byte
-		// Error if the specified file can't be found.
-		if !fileExists(pathname) {
-			a.QuitError(errs.ErrCode("1015", pathname))
-		}
-		if isMarkdownFile(pathname) {
-			input = fileToBuf(pathname)
-			if tag == "<article>" {
-				return string(a.MdFileToHTMLBuffer(pathname, input))
-			} else {
-				return wrapTag(tag, string(a.MdFileToHTMLBuffer(pathname, input)), true)
-			}
-		}
-		return fileToString(pathname)
+  // Skip if there's no file specified
+  if pr.File == "" {
+    return ""
+  }
 
-
-
-
-
-
-
+  // Pretty common case. Convert a page layout element from the
+  // theme TOML file (e.g. header.md or aside.md) 
+  // into HTML.
+  var input []byte
+  // Error if the specified file can't be found.
+  if !fileExists(pathname) {
+    a.QuitError(errs.ErrCode("1015", pathname))
+  }
+  if isMarkdownFile(pathname) {
+    input = fileToBuf(pathname)
+    if tag == "<article>" {
+      return wrapTag(tag, string(a.MdFileToHTMLBuffer(pathname, input)), true)
+    } else {
+      return wrapTag(tag, string(a.MdFileToHTMLBuffer(pathname, input)), true)
+    }
+  }
+	return fileToString(pathname)
+  
+  fmt.Println("Well")
 	return ""
 }
 
