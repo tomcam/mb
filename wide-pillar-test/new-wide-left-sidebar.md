@@ -8,20 +8,7 @@ mode="light"
 # hello, world.
 
 This is what the empty theme looks like.
-# Wide
-* [Wide Left sidebar](wide-left-sidebar.html)
-* [Wide No sidebar](wide-index.html)
-* [Wide Right sidebar](wide-right-sidebar.html)
-
-[Home](index.html)
-
-# Pillar
-* [Pillar Left sidebar](pillar-left-sidebar.html)
-* [Pillar No sidebar](pillar-index.html)
-* [Pillar Right sidebar](pillar-right-sidebar.html)
-
-
-[Home](./index.html)
+{{ inc "theme-and-variations.md" }}
 
 # Metabuzz Markdown quick reference
 
