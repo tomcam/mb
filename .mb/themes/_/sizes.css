@@ -1,10 +1,18 @@
 :root 
 {
+  /* ******************************
+   *  Header dimensions           *
+   * ******************************/
+
 	/* Adjusts header height and keeps it vertically centered */
 	--header-height:3rem;
 
 	/* Size of the main text in the header. */
 	--branding-height:2rem;
+
+  /* ******************************
+   *  Navbar dimensions           *
+   * ******************************/
 
 	/* Adjusts navbar height and keeps it vertically centered */
 	--nav-height:2rem;
@@ -31,6 +39,14 @@
   --right-margin:0%;
   --header-footer-width:100%; 
   */
+
+  /* The following should add up to 100% for both
+   * wide and pillar theme styles:
+   * --article-column-width
+   * --sidebar-width
+   * --left-margin
+   * --right-margin
+   */                                                                            
 
 }
 
