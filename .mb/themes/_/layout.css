@@ -21,7 +21,6 @@ nav {margin-right:var(--right-margin);margin-left:var(--left-margin);}
 
 article {color:var(--article-fg);background-color:var(--article-bg);}
 article {width:var(--article-column-width);}                       
-article {max-width:var(--article-column-width);}                       
 article {padding-left:var(--text-start);}
 article {margin-left:var(--left-margin);}
 

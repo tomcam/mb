@@ -1,15 +1,15 @@
 Branding = ""
 Description = ""
-Stylesheets = ["sizes.css", "page-wide.css", "theme-light.css", "new-wide.css", "responsive.css"]
+Stylesheets = ["sizes.css", "theme-light.css", "new-wide.css", "responsive.css"]
 RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
 PathName = ""
 
 [Nav]
   HTML = ""
-  #File = "nav.md"
+  File = "nav.md"
 
 [Header]
-  HTML = "<header>PURE HTML HEADER, YO</header>"
+  HTML = ""
   File = "header.md"
 
 [Article]
@@ -17,7 +17,7 @@ PathName = ""
   File = "article.md"
 
 [Footer]
-  HTML = "<footer>YASS PURE HTML FOOTER!</footer>"
+  HTML = ""
   File = "footer.md"
 
 [Sidebar]

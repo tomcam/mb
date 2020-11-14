@@ -1,1 +1,2 @@
-This is article.md babies
+Precedes the article
+{{ article }}
