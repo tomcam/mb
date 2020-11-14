@@ -4,6 +4,40 @@ article > h3:before { content: 'foo'; }
 
 See css-snippets.txt
 
+## Gallery thingie
+
+article > h2 {margin-top:4rem;clear:left;}
+article > h2 + ul {
+	padding:0;
+	margin:0;
+	list-style-type:none;
+}
+
+/* Leave some room on the right side of each image */
+article > h2 + ul li > img {
+	width:95%;
+  box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
+  margin-bottom:.75rem;
+}
+
+/* Each li is 1/2 as wide as the container. */
+article > h2 + ul li {
+	font-family:var(--informal);
+	max-width:50%;
+	width:50%;
+	float:left;
+	line-height:1em;
+  font-size:.8em;
+  margin-bottom:2rem;
+  margin-top:2rem;
+}
+
+/* Start a new line after the 2nd column */
+article > h2 + ul li:nth-child(2) {
+	display:block;
+}
+
+
 ## Card
 
 See https://codepen.io/edeesims/pen/iGDzk

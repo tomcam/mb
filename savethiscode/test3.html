@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+  <title>Load text file from Javascript, old-school</title>
+</head>
+<body>
+  <div id="demo"></div>
+<script>
+go()
+
+// Returns true if tag is an HTML block element.
+function isHTMLBlockElement(tag) {
+  regex = RegExp(/<[a-z][\s\S]*>/i)  
+  return regex.test(tag)
+}
+
+// Returns tag type of blockElement, for 
+// example, "p" if blockElement is
+// "<p>hello, world</p>".
+// Assumes blockElement is a valid HTML block
+// element such as <p> or <h2>.
+function getTag(blockElement) {
+  // opening tag
+  //return blockElement.match(/<\w+>/)
+  return blockElement.match(/\w+/)
+}
+
+function test() {
+  tag =" " 
+  while (tag != "") {
+    tag = prompt("HTML to test: ", "<h2>hello, world</h2>")
+    if (isHTMLBlockElement(tag)) {
+      alert(getTag(tag) + ' is a valid block element') 
+    } else {
+      alert('Please supply a valid block element, you joker')
+    }
+  }
+}
+// Arbitrary code can be executed here. Its name is go()
+// but you can name it anything. Just make sure you replace
+// the name of the function in the call to
+// document.addEventListener()
+function go() {
+  //test()
+   // /<\s*a[^>]*>(.*?)<\s*/\s*a>/g
+  appender("<h1>Dynamically add to div</h1>", "demo")
+  appender("<p>Still Uses high performance code</p>", "demo")
+  appender("<strong>Kick arse and take names!</strong>", "demo")
+}
+
+// Pass the HTML you want append to a div, along
+// with the name of that div, and the HTML is
+// added at high speed.
+function appender(htmlText, div) {
+  if (!isHTMLBlockElement(htmlText)) {
+    return
+  }
+  target = document.getElementById(div)
+  tag = getTag(htmlText)
+  p = document.createElement(tag[0])
+  p.innerHTML = htmlText
+  div = document.createElement('div');
+  div.appendChild(p);
+  fragment = document.createDocumentFragment();
+  fragment.appendChild(div);
+  target.appendChild(fragment);
+}
+
+
+// Pass the HTML you want append to a div, along
+// with the name of that div, and the HTML is
+// added at high speed.
+function appendDiv(htmlText, div) {
+  /*
+  target = document.getElementById(div)
+  el = document.createElement(htmlText)
+  el.innerHTML = htmlText
+  div = document.createElement('div');
+  div.appendChild(el);
+  fragment = document.createDocumentFragment();
+  fragment.appendChild(div);
+  target.appendChild(fragment);
+  */
+
+
+  target = document.getElementById(div)
+  p = document.createElement('p')
+  p.innerHTML = htmlText
+  div = document.createElement('div');
+  div.appendChild(p);
+  fragment = document.createDocumentFragment();
+  fragment.appendChild(div);
+  target.appendChild(fragment);
+}
+
+</script>
+</body>
+</html>

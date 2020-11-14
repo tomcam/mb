@@ -154,6 +154,7 @@ var errMsgs = map[string]string{
 	"1016": "Unable to read directory",                        // filename
 	"1017": "Missing name of the theme to create.",
 	"1018": "No path specified for the project", //
+  "1019": "Only possible sidebar types are \"right\" and \"left\"", /// filename
 
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+  <title>Load text file from Javascript, old-school</title>
+</head>
+<body>
+  <div id="demo"></div>
+<script>
+
+// Ensure document's loaded before running Javascript
+if (
+    document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)
+) {
+  // When the document's been loaded, call this function:
+  go()
+} else {
+  // Causes the function go() to be executed 
+  // when the document is ready.
+  document.addEventListener("DOMContentLoaded", go);
+}
+
+// Returns true if tag is an HTML block element.
+function isHTMLBlockElement(tag) {
+  regex = RegExp(/<[a-z][\s\S]*>/i)  
+  return regex.test(tag)
+}
+
+// Returns tag type of blockElement, for 
+// example, "<p>" if blockElement is
+// "<p>hello, world</p>".
+// Assumes blockElement is a valid HTML block
+// element such as <p> or <h2>.
+function getTag(blockElement) {
+  // opening tag
+  return blockElement.match(/<\w+>/)
+}
+function test() {
+  tag =" " 
+  while (tag != "") {
+    tag = prompt("HTML to test: ", "<h2>hello, world</h2>")
+    if (isHTMLBlockElement(tag)) {
+      alert('hey, ' + getTag(tag) + ' is a valid block element') 
+    } else {
+      alert('NOT a valid block element')
+    }
+  }
+}
+// Arbitrary code can be executed here. Its name is go()
+// but you can name it anything. Just make sure you replace
+// the name of the function in the call to
+// document.addEventListener()
+function go() {
+  test()
+  // /<\s*a[^>]*>(.*?)<\s*/\s*a>/g
+  regex = RegExp('<\s*a[^>]*>(.*?)<\s*/\s*a>/')
+  globalRegex = RegExp('<\s*a[^>]*>(.*?)<\s*/\s*a>/','g') 
+  regex = RegExp(/<[a-z][\s\S]*>/i)
+  s ="Dynamically add to div</h1>" 
+  s ="<p>Dynamically add to div</p>" 
+  s ="<h1>Dynamically add to div</h1>" 
+  s ="<p>Dynamically add to div</p>" 
+  r = regex.test(s)
+  // closing tag
+  re = /<\/\w+>/
+  // opening tag
+  re = /<\w+>/
+  result = s.match(re)
+  t = s.match(re)
+  if (r == true) {
+    //t = RegExp((<\/)\w+(>))
+    re = /<(\w+)\s+\w+.*?>/ 
+    t = s.match(re)
+    //t = re.toString(s)
+    //t = s.match("<h1>Dynamically add to div</h1>")
+    t = s.replace(re)
+    alert('result is ' + result) 
+    alert(t + ' is an HTML tag') 
+  } else {
+    alert(s + ' is NOT an HTML tag') 
+  }
+  //www.regextester.com/27540/ 
+  // Match HTML tage
+  //www.regextester.com/27540/
+  appendDiv("<h1>Dynamically add to div</h1>", "demo")
+  appendDiv("<p>Uses high performance code</p>", "demo")
+  appendDiv("<strong>Kick arse and take names!</strong>", "demo")
+}
+
+// Pass the HTML you want append to a div, along
+// with the name of that div, and the HTML is
+// added at high speed.
+function appendDiv(htmlText, div) {
+  /*
+  target = document.getElementById(div)
+  el = document.createElement(htmlText)
+  el.innerHTML = htmlText
+  div = document.createElement('div');
+  div.appendChild(el);
+  fragment = document.createDocumentFragment();
+  fragment.appendChild(div);
+  target.appendChild(fragment);
+  */
+
+
+  target = document.getElementById(div)
+  p = document.createElement('p')
+  p.innerHTML = htmlText
+  div = document.createElement('div');
+  div.appendChild(p);
+  fragment = document.createDocumentFragment();
+  fragment.appendChild(div);
+  target.appendChild(fragment);
+}
+
+</script>
+</body>
+</html>

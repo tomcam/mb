@@ -8,6 +8,8 @@ See [Markdown](#markdown)
 
 The [global configuration file](config-file.html) is a file named `metabuzz.toml` normally stored in a subdirectory named `.mb` that contains information that applies to all projects you create with Metabuzz---for example, where the theme files are stored.
 
+## Layout element
+
 ## Markdown
 
 Markdown is a sensible way to represent text files so that they read easily as plain text if printed out, but also carry enough semantic meaning that they can be converted into HTML. 
@@ -75,4 +77,35 @@ Every Metabuzz site has a [theme](themes.md), which is a collection of styleshee
 A theme is technically a [pagetype](#pagetype). The only difference between the two is that the theme may contain other pagetypes. For example, a blog-oriented theme might have a home pagetype and a blog pagetype.
 
 See also [pagetype](#pagetype)
+
+## Theme TOML file
+
+Each Markdown file
+
+[layout elements](#layout-element)
+
+```
+[Header]
+  HTML = ""
+  File = "header.md"
+
+[Nav] 
+  HTML = ""
+  File = "nav.md"
+
+[Article]
+  HTML = ""
+  File = ""
+
+[Sidebar]
+  HTML = ""
+  File = "sidebar.md"
+
+[Footer]
+  HTML = ""
+  File = "footer.md"
+```
+
+
+
 

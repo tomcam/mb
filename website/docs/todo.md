@@ -1,6 +1,8 @@
 # Before first release
+
 ## Video ideas
 * Create a theme from scratch in under a minute (using tufte or a classless CSS framework)
+* Create a mini video for every relevant point in features.md
 
 ## Theme Todos
 * Aventurine: light version has wrong header title color

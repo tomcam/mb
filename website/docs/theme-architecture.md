@@ -1,5 +1,8 @@
 # Metabuzz theme architecture
 
+## TODO: Things to cover
+* If you want an image in a header,nav,sidebar,or footer,put them in the either the theme directory or the article directory. Either way they will be copied to the article directory.
+
 If you just want a tutorial on how to create your own theme, visit the [Tutorial: Creating a custom theme for Metabuzz](tutorial-custom-theme.html) page.
 
 Metabuzz is designed to let you create attractive, full-featured websites as soon as you've installed the software. All you need to know is the basics of Markdown, and even that's optional, because any text at all is valid Markdown. (See the [CommonMark spec](https://spec.commonmark.org#characters-and-lines) if you're interested).

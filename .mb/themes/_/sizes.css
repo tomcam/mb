@@ -1,0 +1,14 @@
+:root 
+{
+	/* Adjusts header height and keeps it vertically centered */
+	--header-height:3rem;
+
+	/* Size of the main text in the header. */
+	--branding-height:2rem;
+
+	/* Adjusts navbar height and keeps it vertically centered */
+	--nav-height:2rem;
+
+}
+
+ 

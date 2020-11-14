@@ -174,14 +174,16 @@ func (a *App) publishFile(filename string) error {
 	a.closeHeadOpenBody()
 
 	//a.appendStr(wrapTag("<article>", []byte(a.Page.Article), true))
-	a.appendStr(a.pageRegionToHTML(&a.Page.Theme.PageType.Header, "<header>"))
-	a.appendStr(a.pageRegionToHTML(&a.Page.Theme.PageType.Nav, "<nav>"))
-	a.appendStr(a.pageRegionToHTML(&a.Page.Theme.PageType.Article, "<article>"))
+	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Header, "<header>"))
+	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Nav, "<nav>"))
+	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Article, "<article>"))
 	sidebar := strings.ToLower(a.FrontMatter.Sidebar)
+  //fmt.Printf("a.FrontMatter.Sidebar:\n%v\n", a.FrontMatter.Sidebar)
+  fmt.Printf("a.FrontMatter:\n%v\n\n", a.FrontMatter)
 	if sidebar == "left" || sidebar == "right" {
-		a.appendStr(a.pageRegionToHTML(&a.Page.Theme.PageType.Sidebar, "<aside>"))
+		a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Sidebar, "<aside>"))
 	}
-	a.appendStr(a.pageRegionToHTML(&a.Page.Theme.PageType.Footer, "<footer>"))
+	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Footer, "<footer>"))
 
 	// Complete the HTML document with closing <body> and <html> tags
 	a.appendStr(closingHTMLTags)
@@ -839,41 +841,80 @@ func wrapTagBytes(tag string, html []byte, block bool) string {
 	return ""
 }
 
-// pageRegionToHTML() takes an page region (header, nav, article, sidebar, or footer)
-// and converts it to HTML. All we know is that it's been specified
-// but we don't know whether's a Markdown file, inline HTML, whatever.
-func (a *App) pageRegionToHTML(pr *pageRegion, tag string) string {
-	switch tag {
-	case "<header>", "<nav>", "<article>", "<aside>", "<footer>":
-		var path string
-		path = filepath.Join(a.Page.Theme.PageType.PathName, pr.File)
+// layoutElementOverride() now has direction from the theme TOML to generate HTML
+// for layout elements such as header, aside, etc.
+// Look for a file in the current directory 
+// sharing the name of the Markdown page, so a page
+// named contact.md might have an optional contact.sidebar page, for
+// example. If that file is found, it takes precedence over everything
+// else in the theme TOML file. For example, suppose the theme.toml
+// file has this section:
+//
+//  [Sidebar]
+//    HTML = ""
+//    File = "sidebar.md"
+//
+// If replaceWith is "sidebar", then look (in this example) for a
+// file named contact.sidebar. If that file exists, it takes
+// precedents over all contents of the Sidebar part of the
+// theme TOML file.
+// 
+// Returns the contents of that file as pure HTML ready to be
+// inserted into the output, or "".
+func (a *App) layoutElementOverride(pr *layoutElement, tag string, replaceWith string) string {
 
-		// A .sidebar file trumps all else.
-		// See if there's a file with the same name as
-		// the root source file but with a .sidebar extension.
-		if tag == "<aside>" {
-			// Base it on the root Markdown filename and the
-			// extension .sidebar, so foo.md might also have
-			// a foo.sidebar.
-			// Construct a path to possible .sidebar file.
-			sidebarfile := replaceExtension(a.Page.filePath, "sidebar")
-			if fileExists(sidebarfile) {
+      // Look for the matching file, so if the source Markdown
+      // file is contact.md, look for a contact.sidebar file.
+			elFile := replaceExtension(a.Page.filePath, replaceWith)
+			if fileExists(elFile) {
 				// If that .sidebar file exists, immediately
 				// insert into the stream and leave,
 				// because it's the highest priority.
-				input := fileToBuf(sidebarfile)
-				return wrapTag(tag, string(a.MdFileToHTMLBuffer(sidebarfile, input)), true)
+				input := fileToBuf(elFile)
+        // Generate HTML from the Markdown contents of this file.
+				return wrapTag(tag, string(a.MdFileToHTMLBuffer(elFile, input)), true)
 			}
-		}
+ return ""
+}
 
+
+// layoutElementToHTML() takes an page region (header, nav, article, sidebar, or footer)
+// and converts it to HTML. All we know is that it's been specified
+// but we don't know whether's a Markdown file, inline HTML, whatever.
+func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
+  var html string
+  // TODO: Unnecessary now, I htink
+  html = ""
+  pathname := filepath.Join(a.Page.Theme.PageType.PathName, pr.File)
+  //fmt.Printf("pageRegiontToHTML(%v,%v)\n%v\n\n",pr.File,tag,fileToBuf(sidebarfile))
+  fmt.Printf("layoutElementToHTML(%v,%v)\n",pr.File,tag)
+	switch tag {
+	//case "<header>", "<nav>", "<article>", "<aside>", "<footer>":
+  case "<header>":
+   html = a.layoutElementOverride(pr,tag,"header")
+  case "<footer>":
+    html = a.layoutElementOverride(pr,tag,"footer")
+  case "<aside>":
+    html = a.layoutElementOverride(pr,tag,"sidebar")
+  case "<nav>":
+    html = a.layoutElementOverride(pr,tag,"navbar")
+	case "<article>":
 		// Exception: a theme without an article pagetype specified is equivalent
 		// to <article>{{ article }}</article>. So wrap the entire article in the
 		// appropriate tag.
-		if tag == "<article>" {
 			if a.Page.Theme.PageType.Article.File == "" && a.Page.Theme.PageType.Article.HTML == "" {
 				return wrapTag(tag, string(a.Page.Article), true)
 			}
-		}
+	default:
+		a.QuitError(errs.ErrCode("1203", tag))
+	}
+
+  // If nonempty, the sidebar or whatever was generated
+  // from a file.
+  if html != "" {
+    return html
+  }
+
 
 		// Inline HTML is the highest priority
 		if pr.HTML != "" {
@@ -883,23 +924,27 @@ func (a *App) pageRegionToHTML(pr *pageRegion, tag string) string {
 		if pr.File == "" {
 			return ""
 		}
-		var input []byte
+ 		var input []byte
 		// Error if the specified file can't be found.
-		if !fileExists(path) {
-			a.QuitError(errs.ErrCode("1015", path))
+		if !fileExists(pathname) {
+			a.QuitError(errs.ErrCode("1015", pathname))
 		}
-		if isMarkdownFile(path) {
-			input = fileToBuf(path)
+		if isMarkdownFile(pathname) {
+			input = fileToBuf(pathname)
 			if tag == "<article>" {
-				return string(a.MdFileToHTMLBuffer(path, input))
+				return string(a.MdFileToHTMLBuffer(pathname, input))
 			} else {
-				return wrapTag(tag, string(a.MdFileToHTMLBuffer(path, input)), true)
+				return wrapTag(tag, string(a.MdFileToHTMLBuffer(pathname, input)), true)
 			}
 		}
-		return fileToString(path)
-	default:
-		a.QuitError(errs.ErrCode("1203", tag))
-	}
+		return fileToString(pathname)
+
+
+
+
+
+
+
 	return ""
 }
 

@@ -2,6 +2,7 @@
 
 [mbz0103 Error reading front matter](errors/0103.html)  
 [mbz0108 Error reading theme file](errors/0108.html)  
+[mbz1019 Only possible sidebar types are "right" and "left"](errors/1019.html)
 [mbz0126 Error reading config file](errors/0126.html)
 [mbz0917 Unterminated quote string](errors/0917.html)  
 [mbz0951 Site already exists](errors/0951.html)  

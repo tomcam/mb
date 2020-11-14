@@ -5,9 +5,10 @@
   /* Padding at bottom of the timeline. 
      Item background color preserved */
   --timeline-gap-bottom:2rem;
-  /* Padding at top of timeline 
-     Item background color preserved */
-  --timeline-gap-top:2rem;
+  /* How much you want the vertical line 
+   * at top of timeline to stick up 
+   * through the symbol. */
+  --timeline-gap-top:-.5rem;
 
 
   /* Text color of the (optional) item subtitle, 
@@ -22,7 +23,7 @@
 
   /* Pads the whole right side of the timeline,
      including its border */
-  --timeline-item-right-gap:2em;
+  --timeline-item-right-gap:4em;
 
   /* Text color of the main item title */
   --timeline-item-title-color: black;
@@ -33,7 +34,8 @@
   /* Interior color of the dot-symbol thing */
   --timeline-symbol-background-color:blue;
 
-  /* Border color of the dot-symbol thing */
+  /* Border color of the dot-symbol thing 
+   * Not convinced this works */
   --timeline-symbol-border-color:blue;
 
   /* Thickness of outer ring on timeline dot */
@@ -51,6 +53,12 @@
 
   /* Color of the actual vertical line itself */
   --timeline-color:black;
+  /* X Position of the vertical line. 
+   * Increasing moves it to the left
+   * of the symbol. Decreasing moves it
+   * to the rigiht. */
+  --timeline-throughline-position:2.55em;
+
 
   /* Color of text used on the right side of the colum,
      presumably the year */
@@ -63,16 +71,11 @@
      on the right, normally used for a month or time */
   --timeline-item-subtitle-size: .75em;
 
-
   /* Thickness of vertical timeline */
-  --timeline-thickness: .2em;
+  --timeline-thickness: .1em;
 
   /* Line height of text on right of timeline */
   --timeline-height:1.4em;
-
-  /* Positions the dot/symbol thing horizontally
-     on the timeline. */
-  --timeline-symbol-alignment: 2.90rem; 
 
   /* Width of the cell on the right of the timeline
      that contains descriptive text */
@@ -239,6 +242,7 @@ article > ul {
   position:relative;
   line-height: var(--timeline-height);
   font-size: var(--timeline-font-size);
+  padding-left:var(--timeline-throughline-position);
   padding-right:var(--timeline-item-right-gap);
   padding-top:var(--timeline-gap-top);
   padding-bottom:var(--timeline-gap-bottom); 
@@ -248,7 +252,6 @@ article > ul {
 }
 
 article > ul li {
-  /* border-bottom: 1px dashed var(--timeline-bottom-border-color); */
   position:relative;
 }
 

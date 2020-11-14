@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang=en>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Load text file from Javascript, old-school</title>
+
+</head>
+<body>
+
+<script>
+searchIndex = 'metabuzz-search.json'   
+// Ensure document's loaded before running Javascript
+if (
+    document.readyState === "complete" ||
+    (document.readyState !== "loading" && !document.documentElement.doScroll)
+) {
+  cb()
+} else {
+  //document.addEventListener("DOMContentLoaded", loadSearchIndex);
+  //document.addEventListener("DOMContentLoaded", readTextFile);
+  document.addEventListener("DOMContentLoaded", cb);
+}
+
+function cb() {
+  appendDiv("<h1>File contents</h1>", "demo")
+  appendDiv("test", "demo")
+  readTextFile()
+}
+function readTextFile() {
+    var rawFile = new XMLHttpRequest();
+    rawFile.overrideMimeType("application/json");
+    rawFile.open("GET", searchIndex, true);
+    rawFile.onreadystatechange = function() {
+        if (rawFile.readyState == 4 && rawFile.status == "200") {
+            appendDiv(rawFile.responseText,"demo")
+        }
+    }
+    rawFile.send(null);
+}
+
+function appendDiv(text, div) {
+  var target = document.getElementById(div)
+  var p = document.createElement('p')
+  p.innerHTML = text
+  var div = document.createElement('div');
+  div.appendChild(p);
+  var fragment = document.createDocumentFragment();
+  fragment.appendChild(div);
+  target.appendChild(fragment);
+}
+
+
+
+
+</script>
+<!--
+<form name="searchForm" onSubmit="lsearch()"><input type="text" id="search" name="search"><span class='icn icn-find'> </span>
+</form>
+</header>
+-->
+<div id="demo"></div>
+
+</body>
+</html>

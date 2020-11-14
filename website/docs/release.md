@@ -8,8 +8,10 @@
 * Embed the latest version of the theme directory
 * Manual steps
   - [Validate CSS](https://validator.w3.org/nu/#textarea) for all themes (batch version [here](https://validator.github.io/validator/#usage)
+  - Get rid of VNU_CHECK.HTML files
   - Check gallery in old phone, looking for
     + Responsive screen version
     + Dark version with both sidebars, and none
     + Light version with both sidebars, and none
     + Look at all pagetypes
+  - Ideally, remove all unused files from each theme directory

@@ -1,0 +1,4 @@
+rm -rf ~/code/mb/foobar/.mb
+mb new site .
+cp ./index.bak ~/code/mb/foobar/index.md
+mb build

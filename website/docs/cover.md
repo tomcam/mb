@@ -1,5 +1,30 @@
 # Things to cover in the documentation
 
+## Front matter
+
+You get random weird results if you don't start
+a file with front matter (if needed). This is good:
+```
+mode="light"
+```
+This can produce unpredictable results, likely the front
+matter being rendered into the HTML:
+
+```
+
+mode="light"
+```
+
+## Document this error: what happens with 2 conflicting entries in front matter
+
+
+E.g.
+
+```
+mode="light"
+mode="dark"
+```
+
 ## Extensions
 
 Explain goldmark extensions

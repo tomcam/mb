@@ -31,7 +31,7 @@
 * [Site directory](site-directory.html)
 * [Site file](site-file.html)
 * Template examples ([Markdown](template-examples.html), [Text](template-examples.txt))
-* [Themes](themes.imd)
+* [Themes](themes.html)
 * [To do](todo.html)
 * [Tutorial](tutorial.html)
 * [Tutorial01](tutorial01.html)

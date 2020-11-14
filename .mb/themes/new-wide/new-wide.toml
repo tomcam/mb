@@ -6,18 +6,18 @@ PathName = ""
 
 [Nav]
   HTML = ""
-  File = "nav.md"
+  #File = "nav.md"
 
 [Header]
-  HTML = ""
+  HTML = "<header>PURE HTML HEADER, YO</header>"
   File = "header.md"
 
 [Article]
   HTML = ""
-  File = ""
+  File = "article.md"
 
 [Footer]
-  HTML = ""
+  HTML = "<footer>YASS PURE HTML FOOTER!</footer>"
   File = "footer.md"
 
 [Sidebar]

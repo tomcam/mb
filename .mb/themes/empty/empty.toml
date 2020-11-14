@@ -1,7 +1,7 @@
-Branding = "Default Theme"
-Description = ""
-Stylesheets = ["sizes.css", "theme-light.css", "empty.css", "responsive.css"]
-RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
+Branding = "empty"
+Description = "Use to build themes from scratch"
+Stylesheets = ["theme-light.css", "empty.css"]
+RootStylesheets = ["reset.css", "fonts.css"]
 PathName = ""
 
 [Nav]

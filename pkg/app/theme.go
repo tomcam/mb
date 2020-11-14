@@ -69,19 +69,19 @@ type PageType struct {
 	Exclude []string
 
 	// All parts of the page
-	Nav     pageRegion
-	Header  pageRegion
-	Article pageRegion
-	Footer  pageRegion
-	Sidebar pageRegion
+	Nav     layoutElement
+	Header  layoutElement
+	Article layoutElement
+	Footer  layoutElement
+	Sidebar layoutElement
 }
 
-// pageRegion could be, say, a header:
+// layoutElement could be, say, a header:
 // html is inline html. filename would be a pathname containing the HTML.
 // It defaults to the name of the component, so if it's a nav and
 // no filename is specified it assumes nav.html
 // Inline HTML would override File if both are specified.
-type pageRegion struct {
+type layoutElement struct {
 	// Inline HTML
 	HTML string
 
