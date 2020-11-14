@@ -52,11 +52,11 @@ Horizontal rule:
 
 #### You type:
 ```
-[link text](https://appscripting.com)
+[HTML color names](https://htmlcolorcodes.com/color-names/)
 ```
 
 #### It shows as:
-[link text](https://appscripting.com)
+[HTML color names](https://htmlcolorcodes.com/color-names/)
 
 ## Bookmarks
 
