@@ -24,7 +24,6 @@ article {width:var(--article-column-width);}
 article {padding-left:var(--text-start);}
 article {margin-left:var(--left-margin);}
 
-
 aside {color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
 aside {width:var(--sidebar-width);}                            
 

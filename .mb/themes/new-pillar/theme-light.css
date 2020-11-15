@@ -20,13 +20,13 @@
 
     /* Default foreground (text) and background colors  */
     --fg: black;
-    --bg: white;
+    --bg: whitesmoke;
     /* Default link colors */
     --a: darkblue;
-    --a-link: var(--a);
-    --a-visited: var(--a);
-    --a-hover: var(--a);
-    --a-active: var(--a);
+    --a-link: --var(--a);
+    --a-visited: --var(--a);
+    --a-hover: --var(--a);
+    --a-active: --var(--a);
 
     
     /* Secondary foreground (text) and background colors for accents. */
@@ -47,7 +47,7 @@
 
     /* Primary foreground (text) and background colors in navbar */
     --nav-fg:black;
-    --nav-bg: lightblue; /* var(--bg); */
+    --nav-bg: var(--bg);
     /* Link colors specific to navbar */
     --a-nav: var(--a); 
     --a-nav-link:  var(--a);
@@ -68,8 +68,8 @@
 
         
     /* Default foreground (text) and background colors in aside */
-    --sidebar-fg: white;
-    --sidebar-bg: gray;
+    --aside-fg: var(--fg);
+    --aside-bg: var(--bg);
     /* Link colors specific to sidebar */
     --a-sidebar: var(--a); 
     --a-sidebar-link:  var(--a);
@@ -79,10 +79,10 @@
 
 
     /* Primary foreground (text) and background colors in footer */
-    --footer-fg: white;
-    --footer-bg: blue;
+    --footer-fg: var(--header-fg);
+    --footer-bg: var(--header-bg);
     /* Link colors specific to footer */
-    --a-footer: white;
+    --a-footer: var(--a); 
     --a-footer-link: var(--a);
     --a-footer-visited: var(--a);
     --a-footer-hover: var(--a); 
@@ -90,16 +90,13 @@
 
 }
 
-
-/* ******************************/
-/*  HEADER                      */
-/* ******************************/
-
+/* HEADER colors */
 header > p {color:var(--header-fg);background-color:var(--header-bg);} 
+
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
-	{color:var(--header-fg);}
+	{color:white;}
 header > ul > li > a:hover,
 header > ul > li > a:active
 	{color:var(--header-fg);}
@@ -108,11 +105,7 @@ header > ul > li:first-child > a {color:var(--header-fg);}
 header > ul > li:last-child > a {border: 2px solid var(--header-fg);color:var(--header-fg);}
 header > ul > li:last-child > a:hover {color: var(--header-bg);background-color: var(--header-fg);}
 
-
-/* ******************************/
-/*  NAVBAR                      */
-/* ******************************/
-
+/* NAVBAR */
 nav > p {background-color:var(--nav-bg); }
 nav > ul > li > a,
 nav > ul > li > a:link,
@@ -123,10 +116,7 @@ nav > p > a:link,
 nav > p > a:visited {color:var(--nav-fg);} 
 
 
-/* ******************************/
-/*  ARTICLE                     */
-/* ******************************/
-
+/* ARTICLE */
 article > p > a,
 article > p > a:link,
 article > p >  a:visited
@@ -144,22 +134,15 @@ article > h4 > strong {color:black; }
 article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
 
-
-/* ******************************/
-/*  SIDEBAR (ASIDE TAG)         */
-/* ******************************/
+/* SIDEBAR */
 
 aside > h2 {color:black;background-color:var(--article-bg);}
 aside > h3 {color:var(--trim-fg);}
 aside > h4 {color:var(--header-bg);background-color:var(--header-fg)}
 aside > h3 > del {color:var(--header-bg);} 
-
-
-/* ******************************/
-/*  FOOTER                      */
-/* ******************************/
-
-footer > table > thead > tr > th {color:var(--footer-fg);background-color:var(--footer-bg);}
+aside > h5 {color:red;}
+/* FOOTER */
+footer > table > thead > tr > th {color:var(--trim-fg);background-color:var(--footer-bg);}
 /* Color of links in main rows (body) of table */
 footer > table > tbody > tr > td > a:link,
 footer > table > tbody > tr > td > a:visited
