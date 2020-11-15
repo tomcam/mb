@@ -1,0 +1,101 @@
+#!/bin/zsh
+# themevars generates lots of permutations of a theme file
+# to test things like light vs dark, sidebar vs none, etc.
+# It creates Markdown code so you can click each version and see
+# what it looks like
+
+# l = sidebar-left
+# n = sidebar-none
+# r = sidebar-right
+#   d = dark
+#   g = light
+declare -a lines=(
+  )
+
+
+if [ $# -ne 1 ]; then
+  echo "Need the name of a theme"
+  exit 2
+fi
+
+# The actual Markdown is the same for all test files
+read -r -d '' BODY << EOM
+{{ inc "theme-and-variations.md }}
+{{ inc "mdemo.md" }}
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_LEFT=$1-light-mode-sidebar-left.md
+read -r -d '' LIGHT_MODE_SIDEBAR_LEFT << EOM
+===
+theme="$1"
+mode="light"
+sidebar="left"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_LEFT=$1-dark-mode-sidebar-left.md
+read -r -d '' DARK_MODE_SIDEBAR_LEFT << EOM
+===
+theme="$1"
+mode="dark"
+sidebar="left"
+===
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_RIGHT=$1-light-mode-sidebar-right.md
+read -r -d '' LIGHT_MODE_SIDEBAR_RIGHT << EOM
+===
+theme="$1"
+mode="light"
+sidebar="right"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_RIGHT=$1-dark-mode-sidebar-right.md
+read -r -d '' DARK_MODE_SIDEBAR_RIGHT << EOM
+===
+theme="$1"
+mode="dark"
+sidebar="right"
+===
+EOM
+
+
+
+# Create an array of files
+declare -a files=(
+  $LIGHT_MODE_SIDEBAR_LEFT 
+  $DARK_MODE_SIDEBAR_LEFT
+  $LIGHT_MODE_SIDEBAR_RIGHT
+  $DARK_MODE_SIDEBAR_RIGHT 
+	)
+
+declare -a filenames=(
+  $FILE_LIGHT_MODE_SIDEBAR_LEFT 
+  $FILE_DARK_MODE_SIDEBAR_LEFT 
+  $FILE_LIGHT_MODE_SIDEBAR_RIGHT
+  $FILE_DARK_MODE_SIDEBAR_RIGHT
+	)
+
+declare -a test=(
+  "one",1
+  "two",2
+  "three",3
+  "four",4
+  )
+
+str_2d_arr=()
+str_2d_arr+=('abc' '200' 'xyz')
+str_2d_arr+=('def' '300' 'ccc')
+str_2d_arr+=('aaa' '400' 'ddd')
+
+
+for ((idx=1; idx<=${#filenames[@]}; idx++)); do
+  f=${filenames[idx]}
+  echo "${filenames[idx]}"
+  echo "${files[idx]}" > $f
+  echo $BODY >> $f
+  echo "${test[idx[1]]}"
+done
+
+
