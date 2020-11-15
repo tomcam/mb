@@ -1,47 +1,53 @@
 :root 
 {
+  /* ******************************
+   *  Header dimensions           *
+   * ******************************/
 
-		/* ****************/
-		/* DIMENSIONS      */
-		/* ****************/
-	
-		/* Maximum characters on a line in an article. */
-		--max-article-width:90%; 
+	/* Adjusts header height and keeps it vertically centered */
+	--header-height:3rem;
 
-		/* Widest the aside column should be */
-		--max-aside-width: 25%;    
+	/* Size of the main text in the header. */
+	--branding-height:2rem;
 
-		/* Header, nav, and footer stretch all the way across
-		 * the screen at 100%. To see gaps (margins) on either side
-		 * reduce that number, then increase --left-gap
-		 * and --right-gap. */
-		--full-page:100%; 
+  /* ******************************
+   *  Navbar dimensions           *
+   * ******************************/
 
-		/* Margin/background visible surrounding article. 
-		 * Header, nav, and footer stretch all the way across
-		 * the screen at 100%. To create a pillar-style theme
-		 * (wth gaps aka margins on either side)
-		 * reduce that number, then increase --left-gap
-		 * and --right-gap. 
-		 * When --full-page is 100% these should be at 0.
-		 * When --full-page is less than 100% then these
-		 * two should add up to the difference. */
-		--left-gap:0%;
-		--right-gap:0%;
+	/* Adjusts navbar height and keeps it vertically centered */
+	--nav-height:2rem;
 
-		/* Starting point from left where text (and by default headers) appears */
-		--left-start:10%;
+  /* ******************************
+   *  Make theme pillar style     *
+   * ******************************/
 
-		/* Empty space between right end of text and article width. Normally padding-right. */
-		--text-end:0%;
-    
-		/* Adjusts header height and keeps it vertically centered */
-		--header-height:5rem;
+  --article-column-width:65%;
+	--sidebar-width:15%;    
+  --left-margin:10%; 
+  --right-margin:10%;
+  --header-footer-width:80%;
+  --text-start: 5%; 
 
-		/* Size of the main text in the header. */
-		--branding-height:4rem;
+  /* ******************************
+   *  Make theme wide style       *
+   * ******************************/
 
-		/* Adjusts navbar height and keeps it vertically centered */
-		--nav-height:4rem;
+  /*
+  --article-column-width:80%;
+	--sidebar-width:20%;    
+  --left-margin:0%;
+  --right-margin:0%;
+  --header-footer-width:100%; 
+  */
+
+  /* The following should add up to 100% for both
+   * wide and pillar theme styles:
+   * --article-column-width
+   * --sidebar-width
+   * --left-margin
+   * --right-margin
+   */                                                                            
 
 }
+
+ 
