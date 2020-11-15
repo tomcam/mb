@@ -2,7 +2,7 @@ There are many issues to tackle before the first release, and they're familiar o
 [Home](index.html)
 
 # Bugs
-* new-pillar, left sidebar, loses text on left when collapsed under mobile media threshold
+* new-pillar, left sidebar, has no left margin 
 * _, left sidebar, loses text on left when collapsed under mobile media threshold
   
 ## new-wide 
