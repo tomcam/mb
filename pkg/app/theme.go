@@ -37,12 +37,6 @@ type PageType struct {
 	// and why it will make their lives better.
 	Description string
 
-	// List of stylesheets used by this theme. There may be others
-	// found in the PageType directory; they aren't included unless
-	// listed here.
-	// Example [ "foo.css", "bar.css" ]
-	Stylesheets []string
-
 	// "Root" stylesheets available to all pagetypes. In the
 	// default/root theme directory this list is used for "inheritance"
 	// to child pagetypes.
@@ -54,6 +48,12 @@ type PageType struct {
 	// copied by default unless this value is nonempty, in which
 	// case only the named stylesheets will be copied over.
 	RootStylesheets []string
+
+	// List of stylesheets used by this theme. There may be others
+	// found in the PageType directory; they aren't included unless
+	// listed here.
+	// Example [ "foo.css", "bar.css" ]
+	Stylesheets []string
 
 	// List of assets found in the PageType directory that are not
 	// stylesheets

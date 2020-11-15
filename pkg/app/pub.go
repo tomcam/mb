@@ -546,6 +546,8 @@ func (a *App) copyStyleSheets(p PageType) {
 		file = a.getMode(file)
 		a.copyStylesheet(file)
 	}
+  // responsive.css is always last
+  a.copyStylesheet("responsive.css")
 }
 
 // publishThemeAssets() obtains a list of non-stylesheet asset files in the current
