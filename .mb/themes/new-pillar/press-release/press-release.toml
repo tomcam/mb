@@ -1,0 +1,15 @@
+Branding = "_"
+Description = "The ur-theme, complete but stripped-down starting point"
+RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
+Stylesheets = ["sizes.css", "theme-light.css", "press-release.css"]
+PathName = ""
+
+[Header]
+  HTML = ""
+  File = "header.md"
+
+[Article]
+  HTML = ""
+  File = ""
+
+

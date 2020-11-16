@@ -1,5 +1,5 @@
-Branding = "_"
-Description = "The ur-theme, complete but stripped-down starting point"
+Branding = ""
+Description = ""
 RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
 Stylesheets = ["sizes.css", "theme-light.css", "new-pillar.css"]
 PathName = ""
