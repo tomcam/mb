@@ -7,6 +7,7 @@ theme="reference"
 
 [Aventurine](aventurine/index.html)  
 [Chill](chill/index.html)  
+[CV](cv/index.html)  
 [Debut](debut/index.html)   
 [Future](future/index.html)  
 [Genuine](genuine/index.html)  
