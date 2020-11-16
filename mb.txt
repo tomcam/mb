@@ -118,6 +118,13 @@ create theme based on an existing one.
 
 
 # Things to document
+* allthemes
+  Contains the beginning of a way to create demos for all
+  permutations of them: dark, light, sidebar, no sidebar, etc. 
+  To generate files containing everything you need, run
+  it with a theme name.
+  ./themevars lanyon
+
 * Theme architecture
   - themename.css for a pagetype is copied from the parent type
   - RootStylesheets should be things that remain the same form parent to child, like fonts.css
