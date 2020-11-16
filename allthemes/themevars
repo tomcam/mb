@@ -1,0 +1,132 @@
+#!/bin/zsh
+echo "Warning: doesn't work on pagetypes yet"
+# A theme can have many variation: no sidebar, left sidebar,
+# dark mode, light mode, etc. This generates
+# a tiny test Markdown file for each variation (See BODY below)
+# then generates a file named $OUTFILE. It also tries to
+# run pbcopy, which on a Mac copies the contents of a file
+# to the clipboard.
+# $OUTFILE contains all of those variations and a header, so the contents
+# can be copied into a document allowing you to test each version
+# of each theme.
+if [ $# -ne 1 ]; then
+  echo "Need the name of a theme"
+  exit 2
+fi
+
+# The actual Markdown is the same for all test files
+read -r -d '' BODY << EOM
+{{ inc "theme-and-variations.md" }}
+{{ inc "mdemo.md" }}
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_LEFT=$1-light-mode-sidebar-left
+read -r -d '' LIGHT_MODE_SIDEBAR_LEFT << EOM
+===
+theme="$1"
+mode="light"
+sidebar="left"
+===
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_NONE=$1-light-mode-sidebar-none
+read -r -d '' LIGHT_MODE_SIDEBAR_NONE << EOM
+===
+theme="$1"
+mode="light"
+sidebar="none"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_LEFT=$1-dark-mode-sidebar-left
+read -r -d '' DARK_MODE_SIDEBAR_LEFT << EOM
+===
+theme="$1"
+mode="dark"
+sidebar="left"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_NONE=$1-dark-mode-sidebar-none
+read -r -d '' DARK_MODE_SIDEBAR_NONE << EOM
+===
+theme="$1"
+mode="dark"
+sidebar="none"
+===
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_RIGHT=$1-light-mode-sidebar-right
+read -r -d '' LIGHT_MODE_SIDEBAR_RIGHT << EOM
+===
+theme="$1"
+mode="light"
+sidebar="right"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_RIGHT=$1-dark-mode-sidebar-right
+read -r -d '' DARK_MODE_SIDEBAR_RIGHT << EOM
+===
+theme="$1"
+mode="dark"
+sidebar="right"
+===
+EOM
+
+
+
+# Create an array of files
+# The contents of the files themeselves.
+declare -a files=(
+  $LIGHT_MODE_SIDEBAR_LEFT 
+  $LIGHT_MODE_SIDEBAR_RIGHT
+  $LIGHT_MODE_SIDEBAR_NONE
+  $DARK_MODE_SIDEBAR_LEFT
+  $DARK_MODE_SIDEBAR_RIGHT 
+  $DARK_MODE_SIDEBAR_NONE
+	)
+
+# The matching filenames
+declare -a filenames=(
+  $FILE_LIGHT_MODE_SIDEBAR_LEFT 
+  $FILE_LIGHT_MODE_SIDEBAR_RIGHT
+  $FILE_LIGHT_MODE_SIDEBAR_NONE
+  $FILE_DARK_MODE_SIDEBAR_LEFT 
+  $FILE_DARK_MODE_SIDEBAR_RIGHT
+  $FILE_DARK_MODE_SIDEBAR_NONE
+	)
+
+# The matching descriptions (anchor text) 
+declare -a descriptions=(
+  "Light theme with left sidebar" 
+  "Light theme with right sidebar" 
+  "Light theme with no sidebar" 
+  "Dark theme with left sidebar" 
+  "Dark theme with right sidebar" 
+  "Dark theme with no sidebar" 
+	)
+
+# Use this in case the generate files are bunk.
+# Once it's understood they work, remove it.
+# That way it's easy to clear out the text files
+TEST="test"
+OUTFILE="DELETE-$1.md"
+echo "## ${1}" > $OUTFILE
+for ((idx=1; idx<=${#filenames[@]}; idx++)); do
+  filename=$TEST${filenames[idx]}
+  md=$filename.md
+  anchortext=${descriptions[idx]}
+  echo "${files[idx]}" > $md
+  echo $BODY >> $md
+  echo "* [${anchortext}](${filename}.html)" >> $OUTFILE
+done
+echo "Created file ${OUTFILE}. "
+cat $OUTFILE
+if command -v pbcopy &> /dev/null
+then
+  pbcopy < $OUTFILE
+  echo "Contents of ${OUTFILE} have been copied to the Clipboard\n"
+fi
+
+

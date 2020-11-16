@@ -1,9 +1,9 @@
 ===
 #theme="new-wide"
-#theme="new-pillar"
+theme="new-pillar"
 #theme="_"
-theme="new-chill"
-sidebar="right"
+pagetype="ipress-release"
+sidebar="none"
 #mode="dark"
 mode="light"
 ===

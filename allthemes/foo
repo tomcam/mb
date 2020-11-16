@@ -1,0 +1,122 @@
+#!/bin/zsh
+
+if [ $# -ne 1 ]; then
+  echo "Need the name of a theme"
+  exit 2
+fi
+
+# The actual Markdown is the same for all test files
+read -r -d '' BODY << EOM
+{{ inc "theme-and-variations.md" }}
+{{ inc "mdemo.md" }}
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_LEFT=$1-light-mode-sidebar-left
+read -r -d '' LIGHT_MODE_SIDEBAR_LEFT << EOM
+===
+theme="$1"
+mode="light"
+sidebar="left"
+===
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_NONE=$1-light-mode-sidebar-none
+read -r -d '' LIGHT_MODE_SIDEBAR_NONE << EOM
+===
+theme="$1"
+mode="light"
+sidebar="none"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_LEFT=$1-dark-mode-sidebar-left
+read -r -d '' DARK_MODE_SIDEBAR_LEFT << EOM
+===
+theme="$1"
+mode="dark"
+sidebar="left"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_NONE=$1-dark-mode-sidebar-none
+read -r -d '' DARK_MODE_SIDEBAR_NONE << EOM
+===
+theme="$1"
+mode="dark"
+sidebar="none"
+===
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_RIGHT=$1-light-mode-sidebar-right
+read -r -d '' LIGHT_MODE_SIDEBAR_RIGHT << EOM
+===
+theme="$1"
+mode="light"
+sidebar="right"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_RIGHT=$1-dark-mode-sidebar-right
+read -r -d '' DARK_MODE_SIDEBAR_RIGHT << EOM
+===
+theme="$1"
+mode="dark"
+sidebar="right"
+===
+EOM
+
+
+
+# Create an array of files
+# The contents of the files themeselves.
+declare -a files=(
+  $LIGHT_MODE_SIDEBAR_LEFT 
+  $LIGHT_MODE_SIDEBAR_RIGHT
+  $LIGHT_MODE_SIDEBAR_NONE
+  $DARK_MODE_SIDEBAR_LEFT
+  $DARK_MODE_SIDEBAR_RIGHT 
+  $DARK_MODE_SIDEBAR_NONE
+	)
+
+# The matching filenames
+declare -a filenames=(
+  $FILE_LIGHT_MODE_SIDEBAR_LEFT 
+  $FILE_LIGHT_MODE_SIDEBAR_RIGHT
+  $FILE_LIGHT_MODE_SIDEBAR_NONE
+  $FILE_DARK_MODE_SIDEBAR_LEFT 
+  $FILE_DARK_MODE_SIDEBAR_RIGHT
+  $FILE_DARK_MODE_SIDEBAR_NONE
+	)
+
+# The matching descriptions (anchor text) 
+declare -a descriptions=(
+  "Light theme with left sidebar" 
+  "Light theme with right sidebar" 
+  "Light theme with no sidebar" 
+  "Dark theme with left sidebar" 
+  "Dark theme with right sidebar" 
+  "Dark theme with no sidebar" 
+	)
+
+# Use this in case the generate files are bunk.
+# Once it's understood they work, remove it.
+# That way it's easy to clear out the text files
+TEST="test"
+OUTFILE="DELETE-$1.md"
+echo "## ${1}" > $OUTFILE
+for ((idx=1; idx<=${#filenames[@]}; idx++)); do
+  filename=$TEST${filenames[idx]}
+  md=$filename.md
+  anchortext=${descriptions[idx]}
+  echo "${files[idx]}" > $md
+  #echo "${filename}" > $md
+  echo $BODY >> $md
+  #echo "* ${filenames[idx]}.html\n" >> $OUTFILE
+  #echo "Description: ${anchortext}"
+  echo "* [${anchortext}](${filename}.html)" >> $OUTFILE
+  echo 
+done
+echo "Created file ${OUTFILE}:\n"
+cat $OUTFILE
+
+

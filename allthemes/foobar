@@ -24,7 +24,6 @@ read -r -d '' BODY << EOM
 {{ inc "mdemo.md" }}
 EOM
 
-FILE_LIGHT_MODE_SIDEBAR_LEFT=$1-light-mode-sidebar-left.md
 read -r -d '' LIGHT_MODE_SIDEBAR_LEFT << EOM
 ===
 theme="$1"
@@ -77,25 +76,25 @@ declare -a filenames=(
   $FILE_DARK_MODE_SIDEBAR_RIGHT
 	)
 
-declare -a test=(
-  "one",1
-  "two",2
-  "three",3
-  "four",4
-  )
-
-str_2d_arr=()
-str_2d_arr+=('abc' '200' 'xyz')
-str_2d_arr+=('def' '300' 'ccc')
-str_2d_arr+=('aaa' '400' 'ddd')
-
 
 for ((idx=1; idx<=${#filenames[@]}; idx++)); do
+  echo "Previously...."
   f=${filenames[idx]}
   echo "${filenames[idx]}"
-  echo "${files[idx]}" > $f
-  echo $BODY >> $f
-  echo "${test[idx[1]]}"
+  #echo "${files[idx]}" > $f
+  #echo $BODY >> $f
+  #echo "${test[idx[1]]}"
 done
 
+for ((idx=1; idx<=${#list[@]}; idx++)); do
+  f=${list[idx]}
+  echo $f
+  echo ""
+done
 
+echo " TRY 3"
+for e in ${list[@]}; do
+  echo -e "${1}${e}\c"
+  echo ""
+done
+echo $list

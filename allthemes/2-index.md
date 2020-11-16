@@ -1,7 +1,7 @@
 ===
 theme="2"
 sidebar="none"
-mode="light"
+mode="dark"
 ===
 
 {{ inc "theme-and-variations.md" }}

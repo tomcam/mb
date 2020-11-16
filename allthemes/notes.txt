@@ -1,0 +1,10 @@
+
+When a new theme is created, run themevars to create 
+all permutations. 
+
+./themvars the-new-theme 
+
+It generates a bunch of small 
+Markdown files, plus a hub Markdown file ($OUTFILE in the themevars script) linking to all of theme 
+versions under the name of the theme. Feel free to delete variations that don't make sense, for example, if the theme doesn't support sidebars.
+
