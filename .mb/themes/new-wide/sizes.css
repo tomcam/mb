@@ -1,22 +1,21 @@
 :root 
 {
-
   /* ******************************
    *  Header dimensions           *
    * ******************************/
 
-	/* Adjusts header height and keeps it vertically centered */
-	--header-height:8rem;
+  /* Adjusts header height and keeps it vertically centered */
+  --header-height:3rem;
 
-	/* Size of the main text in the header. */
-	--branding-height:4rem;
+  /* Size of the main text in the header. */
+  --branding-height:2rem;
 
   /* ******************************
    *  Navbar dimensions           *
    * ******************************/
 
-	/* Adjusts navbar height and keeps it vertically centered */
-	--nav-height:5rem;
+  /* Adjusts navbar height and keeps it vertically centered */
+  --nav-height:2rem;
 
   /* ******************************
    *  Make theme wide style       *

@@ -1,2 +1,0 @@
-Precedes the article
-{{ article }}

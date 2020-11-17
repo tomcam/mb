@@ -4,25 +4,25 @@
    *  Header dimensions           *
    * ******************************/
 
-	/* Adjusts header height and keeps it vertically centered */
-	--header-height:3rem;
+  /* Adjusts header height and keeps it vertically centered */
+  --header-height:3rem;
 
-	/* Size of the main text in the header. */
-	--branding-height:2rem;
+  /* Size of the main text in the header. */
+  --branding-height:2rem;
 
   /* ******************************
    *  Navbar dimensions           *
    * ******************************/
 
-	/* Adjusts navbar height and keeps it vertically centered */
-	--nav-height:2rem;
+  /* Adjusts navbar height and keeps it vertically centered */
+  --nav-height:2rem;
 
   /* ******************************
    *  Make theme pillar style     *
    * ******************************/
 
   --article-column-width:65%;
-	--sidebar-width:15%;    
+  --sidebar-width:15%;    
   --left-margin:10%; 
   --right-margin:10%;
   --header-footer-width:80%;
@@ -34,7 +34,7 @@
 
   /*
   --article-column-width:80%;
-	--sidebar-width:20%;    
+  --sidebar-width:20%;    
   --left-margin:0%;
   --right-margin:0%;
   --header-footer-width:100%; 
