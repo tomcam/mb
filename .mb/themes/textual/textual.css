@@ -192,7 +192,51 @@ aside > p {padding:1em;font-size:1.2rem;margin-bottom:0em;}
 /*  FOOTER                      */
 /* ******************************/
 
-footer {border-top: 1px solid var(--trim-fg);padding-bottom:1rem;} 
+footer {border-bottom:1px solid var(--trim-fg);}
+
+/* ****************************/
+/*  FOOTER BRANDING AND LINKS */
+/* ****************************/
+
+
+/*
+ * --------------------------------------------------
+ * Simplest case: Branded name, nothing else
+ * Doesn't act like a link.
+ * --------------------------------------------------
+ */
+footer > p {font-size:var(footer-branding-height);font-weight:900;display:inline;} 
+
+ 
+/*
+ * --------------------------------------------------
+ * If you have more than one item, use an unordered list. 
+ * These styles show the first item with branding applied,
+ * any number of links following, still slightly
+ * larger than body text, and a last link that
+ * looks like a button.
+ * --------------------------------------------------
+ */
+footer > ul {line-height:var(--footer-height);}
+footer > ul {margin-left:0;list-style-type:none;display:inline;}
+footer > ul > li{display:inline;padding-right:1rem;font-size:1.25rem;} 
+footer > ul > li > a,
+footer > ul > li > a:link,
+footer > ul > li > a:visited
+	{font-weight:400;text-decoration:none;color:var(--trim-fg);}
+footer > ul > li > a:hover,
+footer > ul > li > a:active
+	{text-decoration:underline;}
+
+/*
+ * --------------------------------------------------
+ * Special feature: First item in list has biggest
+ * branding
+ * --------------------------------------------------
+ */
+footer > ul > li:first-child > a {font-size:var(--footer-branding-height);font-weight:900;color:var(--trim-fg);}
+
+footer {border-top: 1px solid var(--trim-fg);} 
 footer > h2 {text-align:center;}
 footer > table {font-size:calc(80%);}
 /* Give table columns to get some breathing room */
