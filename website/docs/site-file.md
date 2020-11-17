@@ -4,6 +4,8 @@ The site configuration named `site.toml` holds settings used by your whole site,
 
 Metabuzz does some things for you automatically if you've filled out the site file settings. Depending on the theme you're using, just doing that may completely eliminate any need to touch the header, footer, and navbar files.
 
+It's explained below but you can see an example site file
+at [Example site file](site-file-example.html)
 
 [[[Authors]]](#author): The document creators and maintainers  
 [Branding](#branding): the site's full name  
