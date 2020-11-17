@@ -1,6 +1,24 @@
 ===
 templates="off"
 ===
+## Documentation examples
+
+Here's how to do Metabuzz documentation that mentions template functions.:
+
+**Note** Make sure `templates="off"` for this source page
+
+Inline mention: `{{"{{"}} ftime "3:04pm" {{"}}"}}` 
+
+Code fence:
+
+
+```
+{{"{{"}} ftime "3:04pm" {{"}}"}}
+``` 
+
+#
+
+
 [List]
 logomode = { light="metabuzz-red.svg", dark="card-bulleted-outline-40x40.svg" }
 

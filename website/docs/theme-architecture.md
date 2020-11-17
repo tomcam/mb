@@ -1,8 +1,10 @@
 # Metabuzz theme architecture
 
 ## TODO: Things to cover
+* Changing `--fg` and `--bg` propagates  `--header-fg`, `--navg-fg`, etc. because they're all based on the first one by default. Of course you're welcome to change that behavior by setting `--header-fg` etc.
 * If you want an image in a header,nav,sidebar,or footer,put them in the either the theme directory or the article directory. Either way they will be copied to the article directory.
-
+* A theme TOML without an "[article]" layout element specified is equivalent to <article>{{ article }}</article>. 
+* Setting rem/em size, now with more @media queries. https://css-tricks.com/rems-ems/
 If you just want a tutorial on how to create your own theme, visit the [Tutorial: Creating a custom theme for Metabuzz](tutorial-custom-theme.html) page.
 
 Metabuzz is designed to let you create attractive, full-featured websites as soon as you've installed the software. All you need to know is the basics of Markdown, and even that's optional, because any text at all is valid Markdown. (See the [CommonMark spec](https://spec.commonmark.org#characters-and-lines) if you're interested).
@@ -13,9 +15,9 @@ There is also a directory holding the output of the site--the rendered HTML. Thi
 
 ## Creating a Metabuzz site 
 
-Here's what it looks like to build your first site after installing Metabuzz. 
+First, a quick review showing the steps to build a typical first site after installing Metabuzz. 
 
-###  Run mb new [sitename]
+###  Run mb new site
 
 Once per website, you need to create the site's directory and starter files.
 In this example, the site is creatively named `foo`.
@@ -40,16 +42,22 @@ cd foo
 
 ## Metabuzz translates Markdown (.md) files into .html files
 
-In general, Metabuzz expects as its input Markdown files, which use the extension `.md`, and asset files such as graphic images in the current directory, then translates the Markdown files into HTML versions and copies everying into a publication directory. The file `index.md` gets translated into `index.html`, the file `contact.md` is translated into `contact.html`, and so on.
+In general, Metabuzz Markdown files as its input. They are text files that use the extension `.md`. 
+Along with the text files there may be asset files such as graphic images in the same directory.
+Metabuz then translates the Markdown files into HTML and copies everying into a publication directory. The file `index.md` gets translated into `index.html`, the file `contact.md` is translated into `contact.html`, and so on.
+The publication directory is in the root of the same directory as your main source document. It's
+called `.pub` by default, and it contains the HTML files web browsers will use to present your site
+to the world. (Normally they're copied to a remote site such as Netlify.)
 
 Other files in the same directory as the Markdown file also get copied. HTML files are copied unchanged, as are graphics, sound files, text files, and anything else that might be there. The [site configuration file](site-file.html) lets you specify files to exclude.
 
-## Note on Markdown file extensions
+### Note on Markdown file extensions
 
 Metabuzz accepts all common filename extensions for the Markdown source files: 
 
 `.md`,`.md`, `.mdown`, `.mdtext`, `.mdtxt`, `.markdown`, `.mdwn`, `.mkd`, `.mkdn`, and `.text`
-### Create the markdown file index.md
+
+## Create the markdown file index.md
 
 You need only a single line of Markdown to create a Metabuzz website. *No additional files are necessary, and no other text is necessary in your Markdown file.*
 
@@ -58,7 +66,7 @@ You need only a single line of Markdown to create a Metabuzz website. *No additi
 ```
 Welcome to foo
 ```
-
+ 
 Users of some Markdown-based sites such as GitHub expect to use `README.md` instead of `index.md`. That's fine too. And because of the prevalance of such systems, if you have both `README.md` and `index.md` in the same directory then `index.md` is ignored and `README.md` gets converted into `index.html`.
 
 * Save your file and exit the editor.
@@ -72,13 +80,20 @@ All right. You have your source saved. Time to turn it into a website. You do th
 mb build
 ```
 
-You are informed that the site has been built:
+You are informed that the site has been built with this simple message. 
+The reason it doesn't say more is because just displaying those messages
+slows the Metabuzz output significantly.
 
 ```
-Created site foo 
+1 file
 ```
 
-The file `index.md` you just created got converted into a web page named `index.html` and copied into a directory named `.pub`. Let's load that page into a web browser.
+### What just happened
+
+* The file `index.md` you just created got converted into a web page named `index.html` 
+* It was copied into a directory named `.pub`. 
+
+Let's load that page into a web browser.
 
 ### Load the web page into a browser: Windows users
 
@@ -98,7 +113,7 @@ open .pub/index.hml
 
 The result is a full-featured page:
 
-![](default-page-1280x1024.png)
+![Screen shot of a default site page](default-page-1280x1024.png)
 
 ## Change to a dark theme
 
@@ -108,7 +123,7 @@ Let's see how to use a dark theme instead.
 
 ```
 ===
-mode = "dark
+mode = "dark"
 ===
 ```
 
@@ -116,7 +131,7 @@ The entire file should look like this:
 
 ```
 ===
-mode = "dark
+mode = "dark"
 ===
 Welcome to foo
 ```
@@ -127,10 +142,15 @@ As you've probably guessed, if a file starts with the `===` line, everything unt
 
 ```
 mb build
-Created site foo 
 ```
 
-* And refresh the page in your web browser to view the changes. 
+And you're told:
+
+```
+1 file
+```
+
+* Refresh the page in your web browser to view the changes. 
 
 You'll see the page in a color scheme more suited to working 
 in low-light conditions. 
@@ -147,7 +167,7 @@ The 5 parts of a page generated by Metabuzz are:
 * Sidebar
 * Footer
 
-They are all generated from templates written in Markdown or HTML, and combined with a set of CSS files to create the output HTML file. All files are optional, and they're all assembled based on instructions in the theme's TOML file, discussed next.
+They're called [page elements](glossary.html#page-elments). They are all generated from templates written in Markdown or HTML, and combined with a set of CSS files, graphics, and perhaps other Markdown files to create the output HTML file. All files are optional, and they're all assembled based on instructions in the theme's TOML file, discussed next.
 
 ## Files that make up a Metabuzz theme
 
@@ -193,12 +213,12 @@ Metabuzz distinguishes between what it calls "root stylesheets" and "stylesheets
 
 **reset.css** creates a consistent look across all browsers for a blank HTML document.
 
-
+```
 stylesheets = [ "sizes.css", "theme-light.css", 
-  "default.css", "responsive.css"  ]
+  "wide.css", "responsive.css"  ]
 
 rootstylesheets = [ "reset.css", "fonts.css", "layout.css" ]
-
+```
 
 ### Note
 
@@ -208,32 +228,28 @@ force theme to be split into two lines in the example below.
 
 ```
 stylesheets = [ "sizes.css", "theme-light.css", 
-  "default.css", "responsive.css"  ]
+  "wide.css", "responsive.css"  ]
 
 rootstylesheets = [ "reset.css", "fonts.css", "layout.css" ]
 
-branding = "Default Theme"
+branding = "Wide Theme"
 
 [nav]
-file = "nav.md"
+HTML = ""
+File = "nav.md"
 
 [header]
-file = "header.md"
+HTML = ""
+File = "header.md"
 
 [footer]
-file = "footer.md"
+HTML = ""
+File = "footer.md"
 
 [sidebar]
-file = "sidebar.md"
+HTML = ""
+File = "sidebar.md"
 ```
-
-
-
-
-
-
-
-
 
 
 A minimal web page generated by Metabuzz employing the world's

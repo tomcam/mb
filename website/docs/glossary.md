@@ -88,6 +88,20 @@ The [site configuration file](site-file.html), also called simply the *site file
 
 You can have as many site files as you want. They are completely independent, so you can create all the websites you want as long as the Markdown and other files go in different directories.
 
+## Template function 
+
+Metabuzz has a set of special *template functions* which execute a program and insert its output
+into your document in place of the function. For example, if your Markdown includes this: 
+
+```
+Publication time: {{"{{"}} ftime "3:04pm" {{"}}"}}` 
+```
+
+It will display text something like this (depends on the time you created the site): 
+**Publication time: 5:10pm**
+
+
+See also [template language](template-language.html)
 
 ## Template language
 

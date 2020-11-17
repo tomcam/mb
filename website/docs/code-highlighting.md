@@ -1,4 +1,18 @@
+# Code highlighting
 
+## To change code highlighting styles for the site
+
+You can see live demos of the Chroma highlighting styles 
+at the [Chroma style gallery](https://xyproto.github.io/splash/docs/)
+
+* Open the [site file](site-file.html) for editing. Under `[MarkdownOptions]
+change `HighlightStyle` to the appropriate theme (list below).
+For example, this changes it to `friendly`.
+
+```
+[MarkdownOptions]                                                               
+  HighlightStyle = "friendly"    
+```
 ## Color list 
 
 [Chroma Style Gallery](https://xyproto.github.io/splash/docs/)

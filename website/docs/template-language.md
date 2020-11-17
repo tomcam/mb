@@ -1,6 +1,17 @@
 ===
 templates="off"
 ===
+# TODO: Check these code samples in the Markdown source
+
+Inline mention: `{{"{{"}} ftime "3:04pm" {{"}}"}}` 
+
+Code fence:
+
+
+```
+{{"{{"}} ftime "3:04pm" {{"}}"}}
+``` 
+
 # Template language
 
 While Markdown and HTML can take you a long way, there are still some things they can't do. Metabuzz extends them with a "template" language, created as part of the [Go language](https://golang.org/pkg/text/template/) that Metabuzz is written in.
