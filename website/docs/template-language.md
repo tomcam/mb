@@ -3,6 +3,18 @@ templates="off"
 ===
 # TODO: Check these code samples in the Markdown source
 
+
+## Show clickable icon only if you have the appropriate entry in the Site file
+
+```
+{{ if .Site.Social.Twitter }}[![Twitter logo](twitter-gray-30x30.svg)]({{ .Site.Social.Twitter }}){{ end -}}
+```
+More complicated:
+
+```
+[Learn More](/) [Download the App](/) [Contact](/)  [Media](/) {{ if .Site.Social.Twitter }}[![Twitter logo](twitter-blue-30x30.svg)]({{ .Site.Social.Twitter }}){{ end -}} {{ if .Site.Social.Facebook }}[![Facebook logo](facebook-blue-30x30.svg)]({{ .Site.Social.Facebook }}){{ end -}}{{ if .Site.Social.LinkedIn }}[![LinkedIn logo](linkedin-blue-30x30.svg)]({{ .Site.Social.LinkedIn }}){{ end -}} {{ if .Site.Social.YouTube }}[![YouTube logo](youtube-red-30x30.svg)]({{ .Site.Social.YouTube}}){{ end -}} 
+```
+
 Inline mention: `{{"{{"}} ftime "3:04pm" {{"}}"}}` 
 
 Code fence:
