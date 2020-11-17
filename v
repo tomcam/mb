@@ -8,6 +8,7 @@
 # original CSS file.
 # The stub HTML file, given in $OUTFILE 
 # below, remains.
+vnu=html5validator
 OUTFILE="VNU_CHECK.HTML"
 # Read the file named on the command line, which is $1, 
 # into the variable $INFILE.
@@ -22,6 +23,6 @@ EOM
 ## Copy all of this to the output file
 echo "$CONTENTS" > $OUTFILE
 echo $1:
-vnu $OUTFILE
+$vnu $OUTFILE
 
 
