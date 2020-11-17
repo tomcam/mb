@@ -23,10 +23,10 @@
     --bg: whitesmoke;
     /* Default link colors */
     --a: darkblue;
-    --a-link: --var(--a);
-    --a-visited: --var(--a);
-    --a-hover: --var(--a);
-    --a-active: --var(--a);
+    --a-link: var(--a);
+    --a-visited: var(--a);
+    --a-hover: var(--a);
+    --a-active: var(--a);
 
     
     /* Secondary foreground (text) and background colors for accents. */

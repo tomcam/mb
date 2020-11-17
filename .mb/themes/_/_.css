@@ -1,3 +1,8 @@
+/* System fonts always look best so it's a good default */
+html,body,p {font-family:var(--informal),sans-serif;}
+/* OTOH Courier is a lousy code font by default */
+code,pre{font-family:var(--code),monospace;}
+
 /* ****************************/
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/

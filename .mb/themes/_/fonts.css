@@ -7,8 +7,9 @@
 		/* improved appearance per operating system.  */
 
 		--informal:
-			/* Good resource for common system fonts: 
-			 * https://www.cssfontstack.com */
+			/* Good resources for common system fonts: 
+			 * https://systemfontstack.com 
+       * https://www.cssfontstack.com */
 			"system-ui",
 			"-apple-system",
 			"LucidaGrandeUI",
@@ -31,6 +32,9 @@
 			"monospace";
 
 		--formal:
+			"Iowan Old Style",
+			"Apple Garamond",
+      "Baskerville",
 			"Palatino Linotype",
 			"Palatino",
       "Georgia",
@@ -38,11 +42,17 @@
 			"Times New Roman",
       "New York",
 			"serif";
-}
 
-/* System fonts always look best so it's a good default */
-html,body,p {font-family:var(--informal),sans-serif;}
-/* OTOH Courier is a lousy code font by default */
-code,pre{font-family:var(--code),monospace;}
+		--times:
+      "Times New Roman",
+      "Times",
+      "Droid Serif", 
+      "Source Serif Pro",
+      "serif",
+      "Apple Color Emoji", 
+      "Segoe UI Emoji",
+      "Segoe UI Symbol", 
+      "New York";
+}
 
 
