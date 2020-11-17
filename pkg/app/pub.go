@@ -888,13 +888,8 @@ func (a *App) layoutElementOverride(pr *layoutElement, tag string, replaceWith s
 // but we don't know whether's a Markdown file, inline HTML, whatever.
 func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
   var html string
-  // TODO: Unnecessary now, I htink
-  html = ""
   pathname := filepath.Join(a.Page.Theme.PageType.PathName, pr.File)
-  //fmt.Printf("pageRegiontToHTML(%v,%v)\n%v\n\n",pr.File,tag,fileToBuf(sidebarfile))
-  //fmt.Printf("layoutElementToHTML(%v,%v)\n",pr.File,tag)
 	switch tag {
-	//case "<header>", "<nav>", "<article>", "<aside>", "<footer>":
   case "<header>":
    html = a.layoutElementOverride(pr,tag,"header")
   case "<footer>":
@@ -903,39 +898,47 @@ func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
     html = a.layoutElementOverride(pr,tag,"sidebar")
   case "<nav>":
     html = a.layoutElementOverride(pr,tag,"navbar")
-  case "<iarticle>":
-    html = a.layoutElementOverride(pr,tag,"article")
 	case "<article>":
 		// Exception: the theme TOML file doesnt have any entries under
     // "[article]" but there is markdown on the page. This might be
     // the most common case. Doing this allows the user to create a
-    // website just be typing in Markdown. It differs from all the other
+    // website simply by creating a file named 
+    // index.md or README.md in Markdown. 
+
+    // This differs from all the other
     // layout elements in the theme TOML file, which require you to
-    // specify something in HTMLFile, File, or HTML in order for them
+    // specify something in File or HTML in order for them
     // to appear in the HTML output.
     // A theme TOML without an "[article]" layout element specified 
     // is equivalent to <article>{{ article }}</article>. 
     // So wrap the entire article in the
 		// appropriate tag.
-			if a.Page.Theme.PageType.Article.File == "" && a.Page.Theme.PageType.Article.HTML == "" {
-        // NO article.md specified
-				return wrapTag(tag, string(a.Page.Article), true)
-			} else {
-       // article.md specified 
-        html = a.layoutElementOverride(pr,tag,"article")
-				//return wrapTag(tag, string(a.Page.Article), true)
-     }
+    if a.Page.Theme.PageType.Article.File == "" && a.Page.Theme.PageType.Article.HTML == "" {
+      // NO article.md specified
+      return wrapTag(tag, string(a.Page.Article), true)
+    } else {
+      // article.md specified 
+      html = a.layoutElementOverride(pr,tag,"article")
+    }
 	default:
 		a.QuitError(errs.ErrCode("1203", tag))
 	}
 
-  // If nonempty, the sidebar or whatever was generated
-  // from a file.
+  // If nonempty, the header or whatever was generated
+  // from a file in case something like this:
+  //   [header]
+  //   File = "header.md"
   if html != "" {
     return html
   }
 
-  // Inline HTML is the highest priority
+  // If nonempty, the header or other page element 
+  // was generated from a file in case something like this:
+  //   [header]
+  //   HTML = "<header>Super simple header</header>"
+  // Note that in this case Metabuzz doesn't supply
+  // the tage, so you have to add the <header> or <nav>
+  // or whatever.
   if pr.HTML != "" {
     return pr.HTML
   }
@@ -962,9 +965,6 @@ func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
     }
   }
 	return fileToString(pathname)
-  
-  fmt.Println("Well")
-	return ""
 }
 
 // metatag generates a meta tag. It's complicated.
