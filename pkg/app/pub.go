@@ -3,7 +3,6 @@ package app
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
 	"github.com/tomcam/mb/pkg/mdext"
@@ -63,8 +62,10 @@ func (a *App) publishFile(filename string) error {
 		return errs.ErrCode("0103", filename)
 	}
 
-	a.loadParentTheme()
-	a.loadChildTheme() // aka PageType
+  /* True means load parent theme */
+  a.loadTheme(true)
+  /* False means load pagetype, if any (aka child theme */
+  a.loadTheme(false)
 	// Convert article to HTML
 	a.Article(filename, input)
 	// Begin HTML document.
@@ -144,7 +145,6 @@ func (a *App) publishFile(filename string) error {
 	// Ensure the file gets closed before exiting
 	defer os.Remove(tmpFile.Name())
 	// Get the relative directory.
-	// relDir = relDirFile(a.Site.path, outfile)
 	a.Page.Path = relDir
 	// If there's a README.md and no index.md, rename
 	// the output file to index.html
@@ -581,28 +581,7 @@ func (a *App) copyStyleSheets(p PageType) {
 	a.copyStyleSheet("responsive.css")
 }
 
-func (a *App) oldcopyStyleSheets(p PageType) {
-	// Copy shared stylesheets first
-	//kjjfor _, file := range a.Page.Theme.RootStylesheets {
-	for _, file := range a.Page.Theme.PageType.RootStylesheets {
-		// If user has requested a dark theme, then don't copy skin.css
-		// to the target. Copy theme-dark.css instead.
-		// TODO: Decide whether this should be in root stylesheets and/or regular.
-		file = a.getMode(file)
-		// If it's a child theme, then copy its stylesheets from the parent
-		// directory.
-		if a.FrontMatter.isChild {
-			file = filepath.Join("..", file)
-		}
-		a.copyStyleSheet(file)
-	}
-	for _, file := range p.Stylesheets {
-		file = a.getMode(file)
-		a.copyStyleSheet(file)
-	}
-	// responsive.css is always last
-	a.copyStyleSheet("responsive.css")
-}
+
 
 // findThemeAsets() obtains a list of all non-source files.
 // XXX I think I can merge this with findPageAssets()
@@ -637,66 +616,6 @@ func (a *App) findThemeAssets() {
 	}
 }
 
-// publishThemeAssets() obtains a list of non-stylesheet asset files in the current
-// PageType directory that should be published, so, anything but Markdown, toml, HTML, and a
-// few other excluded types. It writes these to App.Page.Theme.PageType.otherAssets
-// It writes stylesheets to App.Page.Theme.currPageType.stylesheets.
-// That because the otherAssets files can just get copied over, by the stylesheets
-// file list needs to be turned into stylesheet links
-func (a *App) oldpublishThemeAssets() {
-	// First get the list of stylesheets specified for this PageType.
-	// Get a directory listing of all the non-source files
-	dir := a.Page.Theme.PageType.PathName
-	// Get the full directory listing.
-	candidates, err := ioutil.ReadDir(dir)
-	if err != nil {
-		return
-	}
-	for _, file := range candidates {
-		filename := file.Name()
-		// If it's a file...
-		if !file.IsDir() {
-			if !hasExtensionFrom(filename, defaults.MarkdownExtensions) &&
-				!hasExtensionFrom(filename, defaults.ExcludedAssetExtensions) {
-				// If it's a stylesheet, add to the private list
-				if hasExtension(filename, ".css") {
-				} else {
-					a.Page.Theme.PageType.otherAssets = append(a.Page.Theme.PageType.otherAssets, filename)
-				}
-			}
-		} else {
-			// Special case for :
-			if filename == (defaults.ThemeHelpSubdirname) {
-				// Ignore it by design. This is help for the
-				// user at design time. Don't want it cluttering
-				// up the directory at publish time.
-			}
-		}
-	}
-}
-
-func (a *App) oldcopyStylesheet(file string) {
-	if strings.HasPrefix(strings.ToLower(file), "http") {
-		a.appendStr(stylesheetTag(file))
-		return
-	}
-	relDir := relDirFile(a.Site.path, a.Page.filePath)
-	assetDir := filepath.Join(a.Site.AssetDir, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir)
-	from := filepath.Join(a.Page.Theme.PageType.PathName, file)
-	to := filepath.Join(assetDir, file)
-	var pathname string
-	if strings.HasPrefix(strings.ToLower(file), "http") {
-		pathname = file
-		fmt.Println(pathname)
-	} else {
-		pathname = filepath.Join(defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir, file)
-	}
-	a.appendStr(stylesheetTag(pathname))
-	to = filepath.Join(a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir, file)
-	if err := Copy(from, to); err != nil {
-		a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
-	}
-}
 
 // Look alongside the current file to assets to publish
 // for example, it's a news article and it has an image.

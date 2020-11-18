@@ -134,93 +134,35 @@ func (a *App) loadDefaultTheme() {
 
 }
 
-// loadChildTheme() assumes loadParentTheme()
-// has already been called.
-func (a *App) loadChildTheme() {
+
+func (a *App) loadTheme(parent bool) {
   // xxx necessary?
   a.loadDefaultTheme()
-  if a.FrontMatter.PageType== "" {
+  if !parent && a.FrontMatter.PageType== "" {
+    // There is no child theme
     return
   }
-	themePath := a.childThemeFullPath()
-  fmt.Printf("loadChildTheme() %s\n", themePath)
-  fmt.Printf("\tPageTypeName: %+v\n", a.FrontMatter.PageType)
+  var themePath string
+	if parent {
+    themePath = a.parentThemeFullPath()
+  } else {
+    themePath = a.childThemeFullPath()
+  }
 	var p PageType
 	if err := readTomlFile(themePath, &p); err != nil {
 		a.QuitError(errs.ErrCode("0105", fmt.Errorf("Problem reading TOML file %s for pagetype %s\n", themePath, a.FrontMatter.PageType).Error()))
 	}
-  fmt.Println("\tMust refactor loadChildTheme() and loadParentTheme() when working")
 	a.Page.Theme.PageType = p
-  a.Page.Theme.PageType.PathName = a.childThemeFullDirectory()
-	// TODO: Should probably force filename to lowercase
-	a.FrontMatter.isChild = true
-  // xxxx
+  if parent {
+    a.Page.Theme.PageType.PathName = a.parentThemeFullDirectory()
+	  a.FrontMatter.isChild = false 
+  } else {
+    a.Page.Theme.PageType.PathName = a.childThemeFullDirectory()
+	  // TODO: Should probably force filename to lowercase
+	  a.FrontMatter.isChild = true
+  }
 }
 
-
-// loadParentTheme() knows the name of the theme (it's in
-// a.FrontMatter.Theme) but doesn't know whether
-// it exists.
-func (a *App) loadParentTheme() {
-
-  // If the site has a preset theme, load it.
-  // If no theme was specified, use the default.
-  a.loadDefaultTheme()
-
-	themePath := a.parentThemeFullPath()
-	var p PageType
-	if err := readTomlFile(themePath, &p); err != nil {
-		//return errs.ErrCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", themePath, a.FrontMatter.Theme).Error())
-		a.QuitError(errs.ErrCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", themePath, a.FrontMatter.Theme).Error()))
-	}
-  // xxx fmt.Printf("loadParentTheme()\n%+v\n", p)
-	//a.Page.Theme.PageType.PathName
-	a.Page.Theme.PageType = p
-  a.Page.Theme.PageType.PathName = a.parentThemeFullDirectory()
-	// TODO: Should probably force filename to lowercase
-	a.FrontMatter.isChild = false
-}
-
-// loadTheme() copies the theme and pageType, if any, to the Publish directory.
-// They're found in App.FrontMatter.Theme and App.FrontMatter.PageType.
-func (a *App) oldloadTheme() {
-	//themeName := "themename"
-	themeDir := "themepath"
-	if !dirExists(themeDir) {
-	}
-
-	// Generate the fully qualified name of the TOML file for this theme.
-	// TODO: a.themePath()?
-	//themePath := pageTypePath(themeDir, themeName)
-	// First get the parent theme shared assets
-	// Temp var because the goal is simply to get the
-	// shared assets.
-	var p PageType
-	//if err := a.PageType(themeName, themeDir, themePath, &p); err != nil {
-	//	a.QuitError(errs.ErrCode("0117", themePath, err.Error()))
-	//	}
-	//a.Page.Theme.RootStylesheets = p.RootStylesheets
-	a.Page.Theme.PageType.RootStylesheets = p.RootStylesheets
-	// See if a pagetype has been requested.
-	if a.FrontMatter.PageType!= "" {
-		//if a.FrontMatter.isChild {
-		// This is a child theme/page type, not a default/root theme
-		a.FrontMatter.isChild = true
-		themeDir = filepath.Join(themeDir, a.FrontMatter.PageType)
-		//themePath = pageTypePath(themeDir, a.FrontMatter.PageType)
-		//}
-	} else {
-		// This is a default/root theme, not a child theme/page type
-		a.FrontMatter.isChild = false
-		// Try to load the .toml file named after the theme directory.
-		//themePath = pageTypePath(themeDir, themeName)
-	}
-	/*jjjj
-	if err := a.PageType(themeName, themeDir, themePath, &a.Page.Theme.PageType); err != nil {
-		a.QuitError(errs.ErrCode("0108", fmt.Errorf("Error loading %s", themePath).Error(), err.Error()))
-	}
-	*/
-}
 
 // pageTypePath() is a utility function to generate the full pathname  of a PageType file
 // from a subdirectory name.
