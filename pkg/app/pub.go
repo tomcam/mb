@@ -21,20 +21,11 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"regexp"
 	"strings"
 )
 
 var (
 
-	// Credit to anonymous user at:
-	// https://play.golang.org/p/OfQ91QadBCH
-	// Match an h1 in Markdown
-	h1, _ = regexp.Compile("(?m)^\\s*#{1}\\s*([^#\\n]+)$")
-	// Match headers 2-6 in Markdown
-	anyHeader, _ = regexp.Compile("(?m)^\\s*#{2,6}\\s*([^#\\n]+)$")
-	// Match everything after the pound sign on a line starting with the pound sign
-	notPound, _ = regexp.Compile("(?m)[^#|\\s].*$")
 
 	closingHTMLTags = `
 </body>
@@ -656,37 +647,7 @@ func (a *App) startHTML() {
 	`
 }
 
-// firstHeader() returns the first header it founds in the markdown.
-// It looks through the whole text for an h1. If not found,
-// it looks for the first h2 to h6 it can find.
-// Otherwise it returns ""
-func firstHeader(markdown string) string {
-	result := header1(markdown)
-	if result != "" {
-		return result
-	}
-	return header2To6(markdown)
-}
 
-// header1() extracts the first h1 it finds in the markdown
-func header1(s string) string {
-	any := h1.FindString(strings.Trim(s, "\n\t\r"))
-	if any != "" {
-		return (notPound.FindString(any))
-	} else {
-		return ""
-	}
-}
-
-// header2To6() extracts the first h2-h2 it finds.
-func header2To6(s string) string {
-	any := anyHeader.FindString(strings.Trim(s, "\n\t\r"))
-	if any != "" {
-		return notPound.FindString(any)
-	} else {
-		return ""
-	}
-}
 
 func (a *App) titleTag() string {
 	if a.FrontMatter.Title != "" {
