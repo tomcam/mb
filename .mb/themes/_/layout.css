@@ -24,16 +24,16 @@ article {width:var(--article-column-width);}
 article {padding-left:var(--text-start);}
 article {margin-left:var(--left-margin);}
 
+
 aside {color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
 aside {width:var(--sidebar-width);}                            
 
 
 footer {color:var(--footer-fg);background-color:var(--footer-bg);} 
-footer {padding-left:var(--text-start);}
+footer {padding-top:var(--footer-padding-top);padding-bottom:var(--footer-padding-bottom);padding-left:var(--text-start);padding-right:var(--footer-padding-right);}
 footer {clear:both;}    
-footer {width:var(--header-footer-width);} 
-footer {margin-right:var(--right-margin);margin-left:var(--left-margin);}
-
+footer {width:var(--footer-width);} 
+footer {margin-top:var(--footer-margin-top);margin-bottom;var(--footer-margin-bottom);margin-right:var(--right-margin);margin-left:var(--left-margin);}
 
 /* Indent list up to 3 levels */
 li li {margin-left:1rem;}
