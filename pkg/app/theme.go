@@ -19,9 +19,9 @@ type Supported struct {
 
 type Theme struct {
 	// Parent root stylesheets get copied to the child automatically
-	RootStylesheets []string
-	PageType        PageType
-	Supported       Supported
+	//RootStylesheets []string
+	PageType  PageType
+	Supported Supported
 }
 
 type PageType struct {
@@ -40,10 +40,8 @@ type PageType struct {
 	// "Root" stylesheets available to all pagetypes. In the
 	// default/root theme directory this list is used for "inheritance"
 	// to child pagetypes.
-	// It's unlikely
-	// you'd want different theme-light.css files for each pagetype,
-	// for example. All child pagetype themes copy these over to their
-	// theme directorices
+	// All child pagetype themes copy these over to their
+	// theme directories.
 	// In the child directories these will be
 	// copied by default unless this value is nonempty, in which
 	// case only the named stylesheets will be copied over.
@@ -89,59 +87,139 @@ type layoutElement struct {
 	File string
 }
 
-// themeName() returns the simple name of the current theme.
-func (a *App) currThemeName() string {
-	theme := strings.ToLower(strings.TrimSpace(a.FrontMatter.Theme))
-	if theme == "" {
-		theme = a.defaultTheme()
-	}
-	return theme
+// Return the fuly qualified pathname of the
+// parent theme directory.
+func (a *App) parentThemeFullDirectory() string {
+	return filepath.Join(a.themesPath, a.FrontMatter.Theme)
 }
 
-// themePath() returns the fully qualified path name of the curren theme
-func (a *App) currThemePath() string {
-	path := filepath.Join(a.themesPath, a.currThemeName())
-	return path
+// Return the fuly qualified filenae of the
+// parent theme, including the .toml extension.
+func (a *App) parentThemeFullPath() string {
+	return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
+}
+
+// childThemeFullDirectory() Returns the fuly qualified pathname of the
+// child theme directory, if any, or "" if none is present.
+func (a *App) childThemeFullDirectory() string {
+	if a.FrontMatter.PageType!= "" {
+    return filepath.Join(a.themesPath, a.FrontMatter.Theme, a.FrontMatter.PageType)
+  }
+	return  ""
+}
+
+// Return the fuly qualified filename of the
+// child theme, including the .toml extension.
+func (a *App) childThemeFullPath() string {
+	return filepath.Join(a.childThemeFullDirectory(), a.FrontMatter.PageType+"."+defaults.ConfigFileDefaultExt)
+}
+
+
+// loadDefaltTheme(): If the site has a preset theme, load it.
+// If no theme was specified, use the default.
+func (a *App) loadDefaultTheme() {
+	if !dirExists(a.themesPath) {
+		a.QuitError(errs.ErrCode("1004", "PREVIOUS"))
+	}
+	// If no theme was specified in the front matter,
+	// but one was specified in the site config site.toml,
+	// make the one specified in site.toml the theme.
+	if a.Site.Theme != "" && a.FrontMatter.Theme == "" {
+		a.FrontMatter.Theme = a.Site.Theme
+	}
+	// If no theme was specified at all, use the Metabuzz default.
+	if a.FrontMatter.Theme == "" {
+		a.FrontMatter.Theme = defaults.DefaultThemeName
+	}
+
+}
+
+// loadChildTheme() assumes loadParentTheme()
+// has already been called.
+func (a *App) loadChildTheme() {
+  // xxx necessary?
+  a.loadDefaultTheme()
+  if a.FrontMatter.PageType== "" {
+    return
+  }
+	themePath := a.childThemeFullPath()
+  fmt.Printf("loadChildTheme() %s\n", themePath)
+  fmt.Printf("\tPageTypeName: %+v\n", a.FrontMatter.PageType)
+	var p PageType
+	if err := readTomlFile(themePath, &p); err != nil {
+		a.QuitError(errs.ErrCode("0105", fmt.Errorf("Problem reading TOML file %s for pagetype %s\n", themePath, a.FrontMatter.PageType).Error()))
+	}
+  fmt.Println("\tMust refactor loadChildTheme() and loadParentTheme() when working")
+	a.Page.Theme.PageType = p
+  a.Page.Theme.PageType.PathName = a.childThemeFullDirectory()
+	// TODO: Should probably force filename to lowercase
+	a.FrontMatter.isChild = true
+  // xxxx
+}
+
+
+// loadParentTheme() knows the name of the theme (it's in
+// a.FrontMatter.Theme) but doesn't know whether
+// it exists.
+func (a *App) loadParentTheme() {
+
+  // If the site has a preset theme, load it.
+  // If no theme was specified, use the default.
+  a.loadDefaultTheme()
+
+	themePath := a.parentThemeFullPath()
+	var p PageType
+	if err := readTomlFile(themePath, &p); err != nil {
+		//return errs.ErrCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", themePath, a.FrontMatter.Theme).Error())
+		a.QuitError(errs.ErrCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", themePath, a.FrontMatter.Theme).Error()))
+	}
+  // xxx fmt.Printf("loadParentTheme()\n%+v\n", p)
+	//a.Page.Theme.PageType.PathName
+	a.Page.Theme.PageType = p
+  a.Page.Theme.PageType.PathName = a.parentThemeFullDirectory()
+	// TODO: Should probably force filename to lowercase
+	a.FrontMatter.isChild = false
 }
 
 // loadTheme() copies the theme and pageType, if any, to the Publish directory.
 // They're found in App.FrontMatter.Theme and App.FrontMatter.PageType.
-func (a *App) loadTheme() {
-	themeName := a.currThemeName()
-	themeDir := a.currThemePath()
+func (a *App) oldloadTheme() {
+	//themeName := "themename"
+	themeDir := "themepath"
 	if !dirExists(themeDir) {
-		a.QuitError(errs.ErrCode("1004",
-			fmt.Errorf("theme \"%v\" was specified, but couldn't find a theme directory named %v", themeName, themeDir).Error()))
 	}
 
 	// Generate the fully qualified name of the TOML file for this theme.
 	// TODO: a.themePath()?
-	themePath := pageTypePath(themeDir, themeName)
+	//themePath := pageTypePath(themeDir, themeName)
 	// First get the parent theme shared assets
 	// Temp var because the goal is simply to get the
 	// shared assets.
 	var p PageType
-	if err := a.PageType(themeName, themeDir, themePath, &p); err != nil {
-		a.QuitError(errs.ErrCode("0117", themePath, err.Error()))
-	}
-	a.Page.Theme.RootStylesheets = p.RootStylesheets
+	//if err := a.PageType(themeName, themeDir, themePath, &p); err != nil {
+	//	a.QuitError(errs.ErrCode("0117", themePath, err.Error()))
+	//	}
+	//a.Page.Theme.RootStylesheets = p.RootStylesheets
+	a.Page.Theme.PageType.RootStylesheets = p.RootStylesheets
 	// See if a pagetype has been requested.
-	if a.FrontMatter.PageTypeName != "" {
+	if a.FrontMatter.PageType!= "" {
 		//if a.FrontMatter.isChild {
 		// This is a child theme/page type, not a default/root theme
 		a.FrontMatter.isChild = true
-		themeDir = filepath.Join(themeDir, a.FrontMatter.PageTypeName)
-		themePath = pageTypePath(themeDir, a.FrontMatter.PageTypeName)
+		themeDir = filepath.Join(themeDir, a.FrontMatter.PageType)
+		//themePath = pageTypePath(themeDir, a.FrontMatter.PageType)
 		//}
 	} else {
 		// This is a default/root theme, not a child theme/page type
 		a.FrontMatter.isChild = false
 		// Try to load the .toml file named after the theme directory.
-		themePath = pageTypePath(themeDir, themeName)
+		//themePath = pageTypePath(themeDir, themeName)
 	}
+	/*jjjj
 	if err := a.PageType(themeName, themeDir, themePath, &a.Page.Theme.PageType); err != nil {
 		a.QuitError(errs.ErrCode("0108", fmt.Errorf("Error loading %s", themePath).Error(), err.Error()))
 	}
+	*/
 }
 
 // pageTypePath() is a utility function to generate the full pathname  of a PageType file
@@ -155,7 +233,7 @@ func pageTypePath(subDir, themeName string) string {
 // theme directory) or a pageType, named by directory, one level in.
 // ThemeDir is the fully qualified path name of the theme directory.
 // fullpathName is the fully qualified path name of the .toml file.
-func (a *App) PageType(themeName, themeDir, fullPathName string, PageType *PageType) error {
+func (a *App) oldPageType(themeName, themeDir, fullPathName string, PageType *PageType) error {
 	if err := readTomlFile(fullPathName, PageType); err != nil {
 		return errs.ErrCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", fullPathName, a.FrontMatter.Theme).Error(), err.Error())
 	}
@@ -178,7 +256,7 @@ func (a *App) newTheme(from, to string) error {
 	if to == "" {
 		a.QuitError(errs.ErrCode("1017", ""))
 	}
-  return a.copyTheme(from, to, false)
+	return a.copyTheme(from, to, false)
 }
 
 // copyThemeDirectory() copies the directory specified by the fully qualified directory name
@@ -248,9 +326,8 @@ func (a *App) createPageType(theme, pageType string) error {
 func (a *App) copyTheme(from, to string, isChild bool) error {
 	// Obtain the fully qualified name of the source
 	// theme directory to copy
-  //fmt.Println("Create theme " + from)
-  //fmt.Fprintf(os.Stdout, "Created theme %s from %s",to, from); // xxx
-  // xxx
+	//fmt.Println("Create theme " + from)
+	//fmt.Fprintf(os.Stdout, "Created theme %s from %s",to, from); // xxx
 	source := a.themePath(from)
 	// Generate name of TOML file expected to be there
 	tomlFile := a.themeTOMLFilename(from, source)
@@ -279,7 +356,7 @@ func (a *App) copyTheme(from, to string, isChild bool) error {
 	}
 	// Success
 	//a.Verbose("Created theme " + filepath.Base(dest))
-  fmt.Println("Created theme " + to + " from " + from + " in " + dest)
+	fmt.Println("Created theme " + to + " from " + from + " in " + dest)
 	return nil
 }
 

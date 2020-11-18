@@ -68,11 +68,11 @@ func (a *App) build() error {
 				if err = a.publishFile(filepath.Join(dir, file.Name())); err != nil {
 					return errs.ErrCode("PREVIOUS", err.Error())
 				}
-        commaNeeded = true
+				commaNeeded = true
 			}
 		}
-    // Close search index JSON file with ']'
-    a.DelimitIndexJSON(a.Site.SearchJSONFilePath, false)
+		// Close search index JSON file with ']'
+		a.DelimitIndexJSON(a.Site.SearchJSONFilePath, false)
 
 	}
 	fmt.Printf("%v ", a.fileCount)

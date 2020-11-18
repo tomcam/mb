@@ -25,51 +25,11 @@ import (
 )
 
 var (
-
-
 	closingHTMLTags = `
 </body>
 </html>
 `
 )
-
-// xxx
-// TODO: Document this function
-// TODO: Add proper error checking
-// TODO: Just hold a file descripter in *App?
-func (a *App) AddCommaToSearchIndex(file string) error {
-	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		return err
-	}
-	if _, err = f.Write([]byte(",\n")); err != nil {
-		f.Close()
-		return err
-	}
-	return nil
-}
-
-// xxx
-// TODO: Just hold a file descripter in *App?
-// TODO: Document this function
-func (a *App) DelimitIndexJSON(file string, opening bool) error {
-	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		return err
-	}
-	if opening == true {
-		if _, err = f.Write([]byte("[\n")); err != nil {
-			f.Close()
-			return err
-		}
-		return nil
-	}
-	if _, err = f.Write([]byte("]\n")); err != nil {
-		f.Close()
-		return err
-	}
-	return nil
-}
 
 // publishFile() is the heart of this program. It converts
 // a Markdown document (with optional TOML at the beginning)
@@ -103,17 +63,8 @@ func (a *App) publishFile(filename string) error {
 		return errs.ErrCode("0103", filename)
 	}
 
-	// If no theme was specified in the front matter, but one was specified in the
-	// site config, make the one specified in site.toml the theme.
-	if a.Site.Theme != "" && a.FrontMatter.Theme == "" {
-		a.FrontMatter.Theme = a.Site.Theme
-	}
-	// If no theme was specified at all, use the Metabuzz default.
-	if a.FrontMatter.Theme == "" {
-		a.FrontMatter.Theme = defaults.DefaultThemeName
-	}
-	a.loadTheme()
-	// Parse front matter.
+	a.loadParentTheme()
+	a.loadChildTheme() // aka PageType
 	// Convert article to HTML
 	a.Article(filename, input)
 	// Begin HTML document.
@@ -171,10 +122,10 @@ func (a *App) publishFile(filename string) error {
 	if sidebar == "left" || sidebar == "right" {
 		a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Sidebar, "<aside>"))
 	} else {
-    // TODO: If you have sidebar="ight" for example and/or the word "sidebar"
-    // appears in the main Markdown, you get a bonus error message
+		// TODO: If you have sidebar="ight" for example and/or the word "sidebar"
+		// appears in the main Markdown, you get a bonus error message
 		///a.QuitError(errs.ErrCode("1019", filename))
-  }
+	}
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Footer, "<footer>"))
 
 	// Complete the HTML document with closing <body> and <html> tags
@@ -469,8 +420,8 @@ func (a *App) getMode(stylesheet string) string {
 // to be published.
 func (a *App) publishAssets() {
 	p := a.Page.Theme.PageType
-	a.publishPageAssets()
-	a.publishThemeAssets()
+	a.findPageAssets()
+	a.findThemeAssets()
 	// Copy out different stylesheet depending on the
 	// type of sidebar, if any.
 	switch strings.ToLower(a.FrontMatter.Sidebar) {
@@ -519,9 +470,78 @@ func (a *App) publishAssets() {
 	}
 }
 
-func (a *App) copyStyleSheets(p PageType) {
-	// Copy shared stylesheets first
-	for _, file := range a.Page.Theme.RootStylesheets {
+// CSSDir() computes the fully qualified directory
+// name for .CSS files, based on App.assetPath()
+// (it is assumed to be a subdirectory of assetPath())
+func (a *App) CSSDir() string {
+	return filepath.Join(a.assetPath(), a.Site.CSSDir)
+}
+
+// ImageDir() computes the fully qualified directory
+// name for image files, based on App.assetPath()
+// (it is assumed to be a subdirectory of assetPath())
+func (a *App) ImageDir() string {
+	return filepath.Join(a.assetPath(), a.Site.ImageDir)
+}
+
+// assetPath() computes the fully qualified directory
+// name for assets, based on Site.AssetDir, etc.
+func (a *App) assetPath() string {
+	return filepath.Join(a.Site.path, a.Site.Publish, a.Site.AssetDir, "themes", a.FrontMatter.Theme)
+}
+
+// relTargetThemeDir() computes the relative destination directory
+// name for theme assets
+func (a *App) relTargetThemeDir() string {
+	return filepath.Join(a.Site.AssetDir, "themes", a.FrontMatter.Theme, a.FrontMatter.PageType)
+}
+
+// fullTargetThemeDir() computes the fully qualified destination directory
+// name for theme assets
+func (a *App) fullTargetThemeDir() string {
+	return filepath.Join(a.Site.Publish, a.relTargetThemeDir())
+}
+
+// copyStyleSheet() takes the name of a stylesheet specified
+// in the theme and copies it to the destination (publish)
+// directory.
+func (a *App) copyStyleSheet(file string) {
+	// Don't try to copy the file if it's a URL
+  fmt.Printf("copyStylesheet() %s\n", file)
+	if strings.HasPrefix(strings.ToLower(file), "http") {
+		a.appendStr(stylesheetTag(file))
+		return
+	}
+
+  var from string
+	// Get fully qualified source filename to copy.
+	/// xxxfrom := filepath.Join(a.parentThemeFullDirectory(), file)
+  if a.FrontMatter.isChild {
+	  from = filepath.Join(a.childThemeFullDirectory(), file)
+  } else {
+	  from = filepath.Join(a.parentThemeFullDirectory(), file)
+  }
+
+	// Relative path to the publish directory for themes
+	pathname := filepath.Join(a.relTargetThemeDir(), file)
+	// Write out the link
+	a.appendStr(stylesheetTag(pathname))
+  //fmt.Println("\t" + stylesheetTag(pathname))
+
+	to := filepath.Join(a.fullTargetThemeDir(), file)
+	if from == to {
+		a.QuitError(errs.ErrCode("0922", "from '"+from+"' to '"+to+"'"))
+	}
+
+  //fmt.Println("\tfrom '"+from+"' to '"+to+"'")
+	// Actually copy the style sheet to its destination
+	if err := Copy(from, to); err != nil {
+		a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
+	}
+}
+
+func (a *App) copyRootStylesheets() {
+	for _, file := range a.Page.Theme.PageType.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
 		// TODO: Decide whether this should be in root stylesheets and/or regular.
@@ -531,14 +551,88 @@ func (a *App) copyStyleSheets(p PageType) {
 		if a.FrontMatter.isChild {
 			file = filepath.Join("..", file)
 		}
-		a.copyStylesheet(file)
+		a.copyStyleSheet(file)
+	}
+}
+
+// copyStyleSheets() takes the list of style sheets
+// given in the theme TOML file and copies them to the
+// publishing (asset) directory
+func (a *App) copyStyleSheets(p PageType) {
+	dir := a.fullTargetThemeDir()
+	if dirExists(dir) {
+		fmt.Println("Directory " + dir + " already exists. Sayanara. xxx")
+		return
+	}
+	fmt.Printf("copyStyleSheets() Creating theme directory %s\n", dir)
+	if err := os.MkdirAll(dir, defaults.PublicFilePermissions); err != nil {
+		a.QuitError(errs.ErrCode("0402", dir))
+	}
+
+	a.copyRootStylesheets()
+
+	for _, file := range p.Stylesheets {
+		file = a.getMode(file)
+		a.copyStyleSheet(file)
+	}
+	// responsive.css is always last
+	a.copyStyleSheet("responsive.css")
+}
+
+func (a *App) oldcopyStyleSheets(p PageType) {
+	// Copy shared stylesheets first
+	//kjjfor _, file := range a.Page.Theme.RootStylesheets {
+	for _, file := range a.Page.Theme.PageType.RootStylesheets {
+		// If user has requested a dark theme, then don't copy skin.css
+		// to the target. Copy theme-dark.css instead.
+		// TODO: Decide whether this should be in root stylesheets and/or regular.
+		file = a.getMode(file)
+		// If it's a child theme, then copy its stylesheets from the parent
+		// directory.
+		if a.FrontMatter.isChild {
+			file = filepath.Join("..", file)
+		}
+		a.copyStyleSheet(file)
 	}
 	for _, file := range p.Stylesheets {
 		file = a.getMode(file)
-		a.copyStylesheet(file)
+		a.copyStyleSheet(file)
 	}
-  // responsive.css is always last
-  a.copyStylesheet("responsive.css")
+	// responsive.css is always last
+	a.copyStyleSheet("responsive.css")
+}
+
+// findThemeAsets() obtains a list of all non-source files.
+// XXX I think I can merge this with findPageAssets()
+func (a *App) findThemeAssets() {
+	// First get the list of stylesheets specified for this PageType.
+	// Get a directory listing of all the non-source files
+	dir := a.Page.Theme.PageType.PathName
+	// Get the full directory listing.
+	candidates, err := ioutil.ReadDir(dir)
+	if err != nil {
+		return
+	}
+	for _, file := range candidates {
+		filename := file.Name()
+		// If it's a file...
+		if !file.IsDir() {
+			if !hasExtensionFrom(filename, defaults.MarkdownExtensions) &&
+				!hasExtensionFrom(filename, defaults.ExcludedAssetExtensions) {
+				// ...and not a stylesheet, add to the list.
+				if !hasExtension(filename, ".css") {
+					a.Page.Theme.PageType.otherAssets = append(a.Page.Theme.PageType.otherAssets, filename)
+				}
+			}
+		} else {
+			// Special case for :
+			if filename == (defaults.ThemeHelpSubdirname) {
+				// Ignore it by design. This is help for the
+				// user at design time. Don't want it cluttering
+				// up the directory at publish time.
+			}
+		}
+	}
 }
 
 // publishThemeAssets() obtains a list of non-stylesheet asset files in the current
@@ -546,8 +640,8 @@ func (a *App) copyStyleSheets(p PageType) {
 // few other excluded types. It writes these to App.Page.Theme.PageType.otherAssets
 // It writes stylesheets to App.Page.Theme.currPageType.stylesheets.
 // That because the otherAssets files can just get copied over, by the stylesheets
-// file list needs to be turned into stylesheet links.
-func (a *App) publishThemeAssets() {
+// file list needs to be turned into stylesheet links
+func (a *App) oldpublishThemeAssets() {
 	// First get the list of stylesheets specified for this PageType.
 	// Get a directory listing of all the non-source files
 	dir := a.Page.Theme.PageType.PathName
@@ -571,19 +665,21 @@ func (a *App) publishThemeAssets() {
 		} else {
 			// Special case for :
 			if filename == (defaults.ThemeHelpSubdirname) {
-				fmt.Println("Found special dir", filename)
+				// Ignore it by design. This is help for the
+				// user at design time. Don't want it cluttering
+				// up the directory at publish time.
 			}
 		}
 	}
 }
 
-func (a *App) copyStylesheet(file string) {
+func (a *App) oldcopyStylesheet(file string) {
 	if strings.HasPrefix(strings.ToLower(file), "http") {
 		a.appendStr(stylesheetTag(file))
 		return
 	}
 	relDir := relDirFile(a.Site.path, a.Page.filePath)
-	assetDir := filepath.Join(a.Site.AssetDir, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageTypeName, a.Site.AssetDir)
+	assetDir := filepath.Join(a.Site.AssetDir, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir)
 	from := filepath.Join(a.Page.Theme.PageType.PathName, file)
 	to := filepath.Join(assetDir, file)
 	var pathname string
@@ -591,10 +687,10 @@ func (a *App) copyStylesheet(file string) {
 		pathname = file
 		fmt.Println(pathname)
 	} else {
-		pathname = filepath.Join(defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageTypeName, a.Site.AssetDir, file)
+		pathname = filepath.Join(defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir, file)
 	}
 	a.appendStr(stylesheetTag(pathname))
-	to = filepath.Join(a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageTypeName, a.Site.AssetDir, file)
+	to = filepath.Join(a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir, file)
 	if err := Copy(from, to); err != nil {
 		a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
 	}
@@ -602,10 +698,9 @@ func (a *App) copyStylesheet(file string) {
 
 // Look alongside the current file to assets to publish
 // for example, it's a news article and it has an image.
-// TODO: This willb repeated for each file in the directory,
-// so I need a way to do it only once.
-func (a *App) publishPageAssets() {
+func (a *App) findPageAssets() {
 	candidates, err := ioutil.ReadDir(a.Page.dir)
+	// TODO: Better error handling
 	if err != nil {
 		return
 	}
@@ -646,8 +741,6 @@ func (a *App) startHTML() {
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	`
 }
-
-
 
 func (a *App) titleTag() string {
 	if a.FrontMatter.Title != "" {
@@ -758,7 +851,7 @@ func (a *App) localFiles(relDir string) {
 	if dirHasMarkdownFiles {
 		// Create its theme directory
 		assetDir := filepath.Join(
-			a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageTypeName, a.Site.AssetDir)
+			a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir)
 		if err := os.MkdirAll(assetDir, defaults.PublicFilePermissions); err != nil {
 			a.QuitError(errs.ErrCode("0402", assetDir))
 		}
@@ -809,7 +902,7 @@ func wrapTagBytes(tag string, html []byte, block bool) string {
 // for layout elements such as header, aside, etc.
 // replaceWith is the extension to search for, for example,
 // "sidebar" or "header".
-// Look for a file in the current directory 
+// Look for a file in the current directory
 // sharing the name of the Markdown page, so a page
 // named contact.md might have an optional contact.sidebar page, for
 // example. If that file is found, it takes precedence over everything
@@ -824,107 +917,107 @@ func wrapTagBytes(tag string, html []byte, block bool) string {
 // file named contact.sidebar. If that file exists, it takes
 // precedents over all contents of the Sidebar part of the
 // theme TOML file.
-// 
+//
 // Returns the contents of that file as pure HTML ready to be
 // inserted into the output, or "".
 func (a *App) layoutElementOverride(pr *layoutElement, tag string, replaceWith string) string {
 
-      // Look for the matching file, so if the source Markdown
-      // file is contact.md, look for a contact.sidebar file.
-			elFile := replaceExtension(a.Page.filePath, replaceWith)
-			if fileExists(elFile) {
-				// If that .sidebar file exists, immediately
-				// insert into the stream and leave,
-				// because it's the highest priority.
-				input := fileToBuf(elFile)
-        // Generate HTML from the Markdown contents of this file.
-				return wrapTag(tag, string(a.MdFileToHTMLBuffer(elFile, input)), true)
-			}
- return ""
+	// Look for the matching file, so if the source Markdown
+	// file is contact.md, look for a contact.sidebar file.
+	elFile := replaceExtension(a.Page.filePath, replaceWith)
+	if fileExists(elFile) {
+		// If that .sidebar file exists, immediately
+		// insert into the stream and leave,
+		// because it's the highest priority.
+		input := fileToBuf(elFile)
+		// Generate HTML from the Markdown contents of this file.
+		return wrapTag(tag, string(a.MdFileToHTMLBuffer(elFile, input)), true)
+	}
+	return ""
 }
-
 
 // layoutElementToHTML() takes an page region (header, nav, article, sidebar, or footer)
 // and converts it to HTML. All we know is that it's been specified
 // but we don't know whether's a Markdown file, inline HTML, whatever.
 func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
-  var html string
-  pathname := filepath.Join(a.Page.Theme.PageType.PathName, pr.File)
+	var html string
+	pathname := filepath.Join(a.Page.Theme.PageType.PathName, pr.File)
+  fmt.Printf("layoutElement() pathname: %s\n", pathname)
 	switch tag {
-  case "<header>":
-   html = a.layoutElementOverride(pr,tag,"header")
-  case "<footer>":
-    html = a.layoutElementOverride(pr,tag,"footer")
-  case "<aside>":
-    html = a.layoutElementOverride(pr,tag,"sidebar")
-  case "<nav>":
-    html = a.layoutElementOverride(pr,tag,"navbar")
+	case "<header>":
+		html = a.layoutElementOverride(pr, tag, "header")
+	case "<footer>":
+		html = a.layoutElementOverride(pr, tag, "footer")
+	case "<aside>":
+		html = a.layoutElementOverride(pr, tag, "sidebar")
+	case "<nav>":
+		html = a.layoutElementOverride(pr, tag, "navbar")
 	case "<article>":
 		// Exception: the theme TOML file doesnt have any entries under
-    // "[article]" but there is markdown on the page. This might be
-    // the most common case. Doing this allows the user to create a
-    // website simply by creating a file named 
-    // index.md or README.md in Markdown. 
+		// "[article]" but there is markdown on the page. This might be
+		// the most common case. Doing this allows the user to create a
+		// website simply by creating a file named
+		// index.md or README.md in Markdown.
 
-    // This differs from all the other
-    // layout elements in the theme TOML file, which require you to
-    // specify something in File or HTML in order for them
-    // to appear in the HTML output.
-    // A theme TOML without an "[article]" layout element specified 
-    // is equivalent to <article>{{ article }}</article>. 
-    // So wrap the entire article in the
+		// This differs from all the other
+		// layout elements in the theme TOML file, which require you to
+		// specify something in File or HTML in order for them
+		// to appear in the HTML output.
+		// A theme TOML without an "[article]" layout element specified
+		// is equivalent to <article>{{ article }}</article>.
+		// So wrap the entire article in the
 		// appropriate tag.
-    if a.Page.Theme.PageType.Article.File == "" && a.Page.Theme.PageType.Article.HTML == "" {
-      // NO article.md specified
-      return wrapTag(tag, string(a.Page.Article), true)
-    } else {
-      // article.md specified 
-      html = a.layoutElementOverride(pr,tag,"article")
-    }
+		if a.Page.Theme.PageType.Article.File == "" && a.Page.Theme.PageType.Article.HTML == "" {
+			// NO article.md specified
+			return wrapTag(tag, string(a.Page.Article), true)
+		} else {
+			// article.md specified
+			html = a.layoutElementOverride(pr, tag, "article")
+		}
 	default:
 		a.QuitError(errs.ErrCode("1203", tag))
 	}
 
-  // If nonempty, the header or whatever was generated
-  // from a file in case something like this:
-  //   [header]
-  //   File = "header.md"
-  if html != "" {
-    return html
-  }
+	// If nonempty, the header or whatever was generated
+	// from a file in case something like this:
+	//   [header]
+	//   File = "header.md"
+	if html != "" {
+		return html
+	}
 
-  // If nonempty, the header or other page element 
-  // was generated from a file in case something like this:
-  //   [header]
-  //   HTML = "<header>Super simple header</header>"
-  // Note that in this case Metabuzz doesn't supply
-  // the tage, so you have to add the <header> or <nav>
-  // or whatever.
-  if pr.HTML != "" {
-    return pr.HTML
-  }
+	// If nonempty, the header or other page element
+	// was generated from a file in case something like this:
+	//   [header]
+	//   HTML = "<header>Super simple header</header>"
+	// Note that in this case Metabuzz doesn't supply
+	// the tage, so you have to add the <header> or <nav>
+	// or whatever.
+	if pr.HTML != "" {
+		return pr.HTML
+	}
 
-  // Skip if there's no file specified
-  if pr.File == "" {
-    return ""
-  }
+	// Skip if there's no file specified
+	if pr.File == "" {
+		return ""
+	}
 
-  // Pretty common case. Convert a page layout element from the
-  // theme TOML file (e.g. header.md or aside.md) 
-  // into HTML.
-  var input []byte
-  // Error if the specified file can't be found.
-  if !fileExists(pathname) {
-    a.QuitError(errs.ErrCode("1015", pathname))
-  }
-  if isMarkdownFile(pathname) {
-    input = fileToBuf(pathname)
-    if tag == "<article>" {
-      return wrapTag(tag, string(a.MdFileToHTMLBuffer(pathname, input)), true)
-    } else {
-      return wrapTag(tag, string(a.MdFileToHTMLBuffer(pathname, input)), true)
-    }
-  }
+	// Pretty common case. Convert a page layout element from the
+	// theme TOML file (e.g. header.md or aside.md)
+	// into HTML.
+	var input []byte
+	// Error if the specified file can't be found.
+	if !fileExists(pathname) {
+		a.QuitError(errs.ErrCode("1015", pathname))
+	}
+	if isMarkdownFile(pathname) {
+		input = fileToBuf(pathname)
+		if tag == "<article>" {
+			return wrapTag(tag, string(a.MdFileToHTMLBuffer(pathname, input)), true)
+		} else {
+			return wrapTag(tag, string(a.MdFileToHTMLBuffer(pathname, input)), true)
+		}
+	}
 	return fileToString(pathname)
 }
 
@@ -932,4 +1025,41 @@ func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
 func metatag(tag string, content string) string {
 	const quote = `"`
 	return ("\n<meta name=" + quote + tag + quote + " content=" + quote + content + quote + ">\n")
+}
+
+// TODO: Document this function
+// TODO: Add proper error checking
+// TODO: Just hold a file descripter in *App?
+func (a *App) AddCommaToSearchIndex(file string) error {
+	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		return err
+	}
+	if _, err = f.Write([]byte(",\n")); err != nil {
+		f.Close()
+		return err
+	}
+	return nil
+}
+
+// xxx
+// TODO: Just hold a file descripter in *App?
+// TODO: Document this function
+func (a *App) DelimitIndexJSON(file string, opening bool) error {
+	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		return err
+	}
+	if opening == true {
+		if _, err = f.Write([]byte("[\n")); err != nil {
+			f.Close()
+			return err
+		}
+		return nil
+	}
+	if _, err = f.Write([]byte("]\n")); err != nil {
+		f.Close()
+		return err
+	}
+	return nil
 }

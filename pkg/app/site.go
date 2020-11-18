@@ -14,6 +14,10 @@ type Site struct {
 
 	// Target subdirectory for assets such as CSS and images.
 	// It's expected to be a child of the Publish directory.
+	// The function App.assetDir() computes the full
+	// path of that directory, based on the app path,
+	// the current theme, etc.
+	// See also its subdirectories, CSSDir and ImageDir
 	AssetDir string
 
 	// Make it easy if you just have 1 author.
@@ -39,6 +43,9 @@ type Site struct {
 	// Company name & other info user specifies in site.toml
 	Company companyConfig
 
+	// Subdirectory under the AssetDir where CSS files go
+	CSSDir string
+
 	// List of all directories in the site
 	dirs map[string]dirInfo
 
@@ -61,6 +68,9 @@ type Site struct {
 
 	// Full path of header tags for "code injection"
 	headTagsPath string
+
+	// Subdirectory under the AssetDir where image files go
+	ImageDir string
 
 	// for HTML header, as in "en" or "fr"
 	Language string

@@ -2,7 +2,6 @@ package app
 
 import (
 	"bytes"
-
 	"github.com/BurntSushi/toml"
 	"github.com/tomcam/mb/pkg/errs"
 )
@@ -26,7 +25,7 @@ type FrontMatter struct {
 	Mode string
 
 	// Current page template in use
-	PageTypeName string
+	PageType string
 
 	// Generates a Description metatag on output
 	Description string

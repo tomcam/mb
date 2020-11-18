@@ -131,6 +131,7 @@ var errMsgs = map[string]string{
 	"0919": "Pagetype name is already taken",                       // custom message
 	"0920": "Error generating Markdown",                            //
 	"0921": "Error generating TOC",                                 // custom message
+	"0922": "Can't copy a file onto itself. That would be silly.", //
 
 	// 0950 - Something's already there
 	"0951": "Site already exists:", // sitename
