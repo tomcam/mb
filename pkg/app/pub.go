@@ -507,7 +507,7 @@ func (a *App) fullTargetThemeDir() string {
 // directory.
 func (a *App) copyStyleSheet(file string) {
 	// Don't try to copy the file if it's a URL
-  fmt.Printf("copyStylesheet() %s\n", file)
+  //fmt.Printf("copyStylesheet() %s\n", file)
 	if strings.HasPrefix(strings.ToLower(file), "http") {
 		a.appendStr(stylesheetTag(file))
 		return
@@ -560,11 +560,13 @@ func (a *App) copyRootStylesheets() {
 // publishing (asset) directory
 func (a *App) copyStyleSheets(p PageType) {
 	dir := a.fullTargetThemeDir()
+  /* xxx Need a better check
 	if dirExists(dir) {
 		fmt.Println("Directory " + dir + " already exists. Sayanara. xxx")
 		return
 	}
-	fmt.Printf("copyStyleSheets() Creating theme directory %s\n", dir)
+  */
+	//fmt.Printf("copyStyleSheets() Creating theme directory %s\n", dir)
 	if err := os.MkdirAll(dir, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", dir))
 	}
@@ -942,7 +944,7 @@ func (a *App) layoutElementOverride(pr *layoutElement, tag string, replaceWith s
 func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
 	var html string
 	pathname := filepath.Join(a.Page.Theme.PageType.PathName, pr.File)
-  fmt.Printf("layoutElement() pathname: %s\n", pathname)
+  //fmt.Printf("layoutElement() pathname: %s\n", pathname)
 	switch tag {
 	case "<header>":
 		html = a.layoutElementOverride(pr, tag, "header")
