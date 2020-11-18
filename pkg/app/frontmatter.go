@@ -26,7 +26,7 @@ type FrontMatter struct {
 	Mode string
 
 	// Current page template in use
-	PageType string
+	PageTypeName string
 
 	// Generates a Description metatag on output
 	Description string

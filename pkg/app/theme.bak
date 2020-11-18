@@ -104,9 +104,9 @@ func (a *App) currThemePath() string {
 	return path
 }
 
-// loadTheme() copies the theme and pageType, if any, to the Publish directory.
+// readPageType() copies the theme and pageType, if any, to the Publish directory.
 // They're found in App.FrontMatter.Theme and App.FrontMatter.PageType.
-func (a *App) loadTheme() {
+func (a *App) readPageType() {
 	themeName := a.currThemeName()
 	themeDir := a.currThemePath()
 	if !dirExists(themeDir) {
@@ -126,12 +126,12 @@ func (a *App) loadTheme() {
 	}
 	a.Page.Theme.RootStylesheets = p.RootStylesheets
 	// See if a pagetype has been requested.
-	if a.FrontMatter.PageTypeName != "" {
+	if a.FrontMatter.PageType != "" {
 		//if a.FrontMatter.isChild {
 		// This is a child theme/page type, not a default/root theme
 		a.FrontMatter.isChild = true
-		themeDir = filepath.Join(themeDir, a.FrontMatter.PageTypeName)
-		themePath = pageTypePath(themeDir, a.FrontMatter.PageTypeName)
+		themeDir = filepath.Join(themeDir, a.FrontMatter.PageType)
+		themePath = pageTypePath(themeDir, a.FrontMatter.PageType)
 		//}
 	} else {
 		// This is a default/root theme, not a child theme/page type
@@ -142,10 +142,13 @@ func (a *App) loadTheme() {
 	if err := a.PageType(themeName, themeDir, themePath, &a.Page.Theme.PageType); err != nil {
 		a.QuitError(errs.ErrCode("0108", fmt.Errorf("Error loading %s", themePath).Error(), err.Error()))
 	}
+  fmt.Printf("readPageType() themePath: %s\n", themePath)
 }
 
 // pageTypePath() is a utility function to generate the full pathname  of a PageType file
 // from a subdirectory name.
+// xxx I think it only returns the theme's root directory.
+// Not sure if that's  a problem.
 func pageTypePath(subDir, themeName string) string {
 	path := filepath.Join(subDir, themeName+"."+defaults.ConfigFileDefaultExt)
 	return path
@@ -155,13 +158,16 @@ func pageTypePath(subDir, themeName string) string {
 // theme directory) or a pageType, named by directory, one level in.
 // ThemeDir is the fully qualified path name of the theme directory.
 // fullpathName is the fully qualified path name of the .toml file.
-func (a *App) PageType(themeName, themeDir, fullPathName string, PageType *PageType) error {
-	if err := readTomlFile(fullPathName, PageType); err != nil {
+func (a *App) PageType(themeName, themeDir, fullPathName string, PageType *p) error {
+  // xxx
+  //var s PageType
+	if err := readTomlFile(fullPathName, p); err != nil {
 		return errs.ErrCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", fullPathName, a.FrontMatter.Theme).Error(), err.Error())
 	}
-	PageType.name = themeName
-	PageType.PathName = themeDir
-	a.Page.Theme.PageType = *PageType
+  fmt.Printf("PageType(%s, %s, %s, \n***\n%+v\n***)\n", themeName, themeDir, fullPathName, *p)
+	p.name = themeName
+	p.PathName = fullPathName 
+	a.Page.Theme.PageType = *p
 	// Success
 	return nil
 }

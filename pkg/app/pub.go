@@ -592,7 +592,7 @@ func (a *App) copyStylesheet(file string) {
 		return
 	}
 	relDir := relDirFile(a.Site.path, a.Page.filePath)
-	assetDir := filepath.Join(a.Site.AssetDir, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir)
+	assetDir := filepath.Join(a.Site.AssetDir, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageTypeName, a.Site.AssetDir)
 	from := filepath.Join(a.Page.Theme.PageType.PathName, file)
 	to := filepath.Join(assetDir, file)
 	var pathname string
@@ -600,10 +600,10 @@ func (a *App) copyStylesheet(file string) {
 		pathname = file
 		fmt.Println(pathname)
 	} else {
-		pathname = filepath.Join(defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir, file)
+		pathname = filepath.Join(defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageTypeName, a.Site.AssetDir, file)
 	}
 	a.appendStr(stylesheetTag(pathname))
-	to = filepath.Join(a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir, file)
+	to = filepath.Join(a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageTypeName, a.Site.AssetDir, file)
 	if err := Copy(from, to); err != nil {
 		a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
 	}
@@ -797,7 +797,7 @@ func (a *App) localFiles(relDir string) {
 	if dirHasMarkdownFiles {
 		// Create its theme directory
 		assetDir := filepath.Join(
-			a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir)
+			a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageTypeName, a.Site.AssetDir)
 		if err := os.MkdirAll(assetDir, defaults.PublicFilePermissions); err != nil {
 			a.QuitError(errs.ErrCode("0402", assetDir))
 		}
