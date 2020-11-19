@@ -1,25 +1,14 @@
-html {font-size:13px;}
 /* System fonts always look best so it's a good default */
 html,body,p {font-family:var(--informal),sans-serif;}
 /* OTOH Courier is a lousy code font by default */
 code,pre{font-family:var(--code),monospace;}
-
-h1{ font-size:2.5em;padding-top:2rem; }
-h2{ font-size:2em;padding-top:1.5rem; }
-h3{ font-size:1.5em;padding-top:1.5rem; }
-h4{ font-size:1em;padding-top:1rem;}
-h5{ font-size:1.2em;padding-top:.5rem;}
-h6{ font-size:0.9em; }
-
-table > thead > tr > th  {margin-top:4rem;}
-blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
 /* ****************************/
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/
 
 
-header {padding-top:3rem;padding-bottom:3.5rem;border-bottom:1px solid var(--trim-fg);padding-left:10%;}
+header {padding-top:3em;padding-bottom:3.5em;border-bottom:1px solid var(--trim-fg);}
 
 /*
  * --------------------------------------------------
@@ -41,7 +30,7 @@ header > p {font-size:var(--branding-height);font-weight:900;display:inline;}
  */
 header > ul {line-height:var(--header-height);}
 header > ul {margin-left:0;list-style-type:none;display:inline;}
-header > ul > li{display:inline;padding-right:1.5rem;font-size:1.25rem;} 
+header > ul > li{display:inline;padding-right:1.5em;font-size:1.25rem;} 
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
@@ -56,7 +45,7 @@ header > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;padding-right:1rem;color:var(--fg);}
+header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;padding-right:1em;color:var(--fg);}
 
 
 /* ******************************/
@@ -71,8 +60,8 @@ nav > img {display:inline;}
  * make it a bullet.
  * --------------------------------------------------
  */
-nav > p {margin-top:0;line-height:var(--nav-height);}
-nav > p > a {font-size:1.25em;margin-right:1em;font-weight:700;}
+nav > p {padding-top:0;line-height:var(--navbar-height);}
+nav > p > a {font-size:1.25rem;padding-right:1em;font-weight:700;}
 nav > p > a {font-style:normal;}
 
 nav > p > a,
@@ -102,32 +91,24 @@ nav > ul > li > a:active {text-decoration:underline;}
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
 
-article {padding-top:6em;}
-article > p, article > ul, article > ol {font-family:var(--formal);}
-article > h1,article > h2 {font-weight:700;}
-article > h1 {font-size:4rem;margin-top:0;margin-bottom:3rem;}
-article > h2 {margin-top:4rem;}
-article > h4 {font-weight:normal;font-size:1.25rem;margin-bottom:1rem; } /* Byline */
+article > p, article > ul, article > ol {font-family:var(--formal);font-size:1.25rem;padding-bottom:.7em;}
+article > p > strong {font-weight:700;}
+article > h1 {font-weight:800;}
+article > h2 {font-weight:700;}
+article > h4 {font-weight:normal;padding-bottom:1em; } /* Byline */
 article > h4 > strong {font-weight:bold;} /* Byline */
 article > h4 > em {font-family:var(--times);}
-article > h5 {text-align:right;font-size:1.5rem;font-family:var(--times);font-style:italic;}
-article > p > strong {font-weight:700;}
+article > h5 {font-size:1.0rem;font-family:var(--code);}
 
-article > p, 
-  article > ul, 
-  article > ol, 
-  article > li, 
-  article > dd, 
-  article > dl,
-  article > hr {
-		font-size:1.5rem;
-		line-height:2.5rem;
-		margin-top:1em;
-    padding-right:var(--right-end);
-}
+article > ul, article > ol {padding-top:.5em;}
+article > li {padding-left:1em;}
 
-article > ul, article > ol {margin-top:.5em;}
-article > li {margin-left:1rem;}
+/* Indent list up to 3 levels */
+li li {margin-left:1rem;}
+li li li {margin-left:1rem;}
+
+table > thead > tr > th  {padding-top:2em;}
+blockquote {font-style:italic;margin:2em 2em 2em 2em;}
 
 /*
  * --------------------------------------------------
@@ -136,13 +117,14 @@ article > li {margin-left:1rem;}
  */
 article > p > code, article > code, article > pre, article > pre > code {
 		font-family:var(--code);
-		font-size:.8em;
+		font-size:1rem;
 		overflow:auto;
-    margin-bottom:0em;
-    line-height:1.15em;
+    padding-bottom:0em;
+    margin-top:0;
+    line-height:var(--code-line-height);
     padding: .5em;
 		}
-article > pre { padding-left: 1em;line-height:1.5em;font-size:1.1em;}
+
 article > p > a,
 article > p > a:link,
 article > p >  a:visited
@@ -162,9 +144,9 @@ article > img, article > p > img {
   display:block;
 }
 
-article > table {margin-top:2rem;margin-bottom:3rem;}
-article > table > td,th {padding:1rem;}
-article > table > tbody > tr > td {padding:1rem;}
+article > table {margin-top:2em;margin-bottom:3em;}
+article > table > td,th {padding:1em;}
+article > table > tbody > tr > td {padding:1em;}
 
 
 /* ******************************/
@@ -173,19 +155,19 @@ article > table > tbody > tr > td {padding:1rem;}
 
 aside {height:100vh;}
 
-aside > h2 {padding:1em;text-align:center;font-size:1.2rem;font-weight:700;}
-aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2rem;}
-aside > ul {text-align:right;margin-right:1rem;line-height:1.5em;}
+aside > h2 {text-align:center;font-size:1.2rem;font-weight:700;}
+aside > h3 {font-size:.75rem;font-weight:bold;padding-bottom:2em;}
+aside > ul {text-align:right;padding-right:1em;line-height:1.5em;}
 aside > ul > li {list-style-type:none;} 
 aside > ul > li > a,
 aside > ul > li > a:link,
-aside > ul > li > a:visited {text-decoration:none;font-size:1rem;line-height:2.5rem;font-weight:normal;margin-right:1em;} 
+aside > ul > li > a:visited {text-decoration:none;font-size:1rem;line-height:2.5em;font-weight:normal;padding-right:1em;} 
 /* For accessibility purposes show visual distinction when hovering or active */
 aside > ul > li > a:hover,
 aside > ul > li > a:active {font-weight:bold;} 
 
-aside > p > img {margin-top:1rem;width:100%;padding:0;}
-aside > p {padding:1em;font-size:1.2rem;margin-bottom:0em;}
+aside > p > img {padding-top:1em;width:100%;padding:0;}
+aside > p {padding:1em;font-size:1.2rem;padding-bottom:0em;}
 
 
 /* ******************************/
@@ -205,7 +187,7 @@ footer {border-bottom:1px solid var(--trim-fg);}
  * Doesn't act like a link.
  * --------------------------------------------------
  */
-footer > p {font-size:var(footer-branding-height);font-weight:900;display:inline;} 
+footer > p {font-size:var(--footer-branding-height);font-weight:900;display:inline;} 
 
  
 /*
@@ -219,7 +201,7 @@ footer > p {font-size:var(footer-branding-height);font-weight:900;display:inline
  */
 footer > ul {line-height:var(--footer-height);}
 footer > ul {margin-left:0;list-style-type:none;display:inline;}
-footer > ul > li{display:inline;padding-right:1rem;font-size:1.25rem;} 
+footer > ul > li{display:inline;padding-right:1em;font-size:1.25rem;} 
 footer > ul > li > a,
 footer > ul > li > a:link,
 footer > ul > li > a:visited
@@ -240,7 +222,7 @@ footer {border-top: 1px solid var(--trim-fg);}
 footer > h2 {text-align:center;}
 footer > table {font-size:calc(80%);}
 /* Give table columns to get some breathing room */
-footer > table > thead > tr > th {padding-right:2rem;} 
+footer > table > thead > tr > th {padding-right:2em;} 
 footer > table > thead > tr > th {padding-top:1em;padding-right:2em;padding-bottom:1em;}
 footer > table > tbody > tr > td {padding-right:3em;}
 footer > table > tbody > tr > td > a:link,

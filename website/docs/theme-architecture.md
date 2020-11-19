@@ -1,12 +1,18 @@
 # Metabuzz theme architecture
 
 ## TODO: Things to cover
+* Explain how --left-margin and --right-margin are used by header,nav,article,footer
+* theme names are forced to lowercase internally, so they're not case senstive
+* Purpose of --header-footer-width
 * Changing `--fg` and `--bg` propagates  `--header-fg`, `--navg-fg`, etc. because they're all based on the first one by default. Of course you're welcome to change that behavior by setting `--header-fg` etc.
+* the huge number of contstants like --header-margin-top and so on will come in handy later
+with some automated tools
 * If you want an image in a header,nav,sidebar,or footer,put them in the either the theme directory or the article directory. Either way they will be copied to the article directory.
 * A theme TOML without an "[article]" layout element specified is equivalent to <article>{{ article }}</article>. 
+* Feel free to override what's in sizes.css. The presets are there for your convenience. Warn about development on smaller screens because responsive.css mayaffect what you see
 * Setting rem/em size, now with more @media queries. https://css-tricks.com/rems-ems/
 If you just want a tutorial on how to create your own theme, visit the [Tutorial: Creating a custom theme for Metabuzz](tutorial-custom-theme.html) page.
-
+* All font sizes are in rem because it's based on the browser font size.  All other measurements are in em so they expand more naturally.
 Metabuzz is designed to let you create attractive, full-featured websites as soon as you've installed the software. All you need to know is the basics of Markdown, and even that's optional, because any text at all is valid Markdown. (See the [CommonMark spec](https://spec.commonmark.org#characters-and-lines) if you're interested).
 
 A Metabuzz site lives in its own directory. Inside it are a number of subdirectories for the site's source (markdown files and graphic assets such as images, `favicon.ico`, site configuration, and helper files for things like embedding tweets or YouTube videos). Some of these directories start with the period or dot character. They're hidden by default on Unix-style systems but otherwise they're no different from any other directory.

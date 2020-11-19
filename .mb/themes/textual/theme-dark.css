@@ -47,14 +47,14 @@
 
 
     /* Primary foreground (text) and background colors in navbar */
-    --nav-fg: var(--fg);
-    --nav-bg: var(--bg);
+    --navbar-fg: var(--fg);
+    --navbar-bg: var(--bg);
     /* Link colors specific to navbar */
-    --a-nav: var(--a); 
-    --a-nav-link:  var(--a);
-    --a-nav-visited:  var(--a);
-    --a-nav-hover: var(--a); 
-    --a-nav-active:  var(--a);
+    --a--navbar: var(--a); 
+    --a--navbar-link:  var(--a);
+    --a--navbar-visited:  var(--a);
+    --a--navbar-hover: var(--a); 
+    --a--navbar-active:  var(--a);
 
     /* Default foreground (text) and background colors in article */
     --article-fg: var(--fg);
@@ -106,14 +106,14 @@ header > ul > li:last-child > a {border: 2px solid var(--header-fg);color:var(--
 header > ul > li:last-child > a:hover {color: var(--header-bg);background-color: var(--header-fg);}
 
 /* NAVBAR */
-nav > p {background-color:var(--nav-bg); }
+nav > p {background-color:var(--navbar-bg); }
 nav > ul > li > a,
 nav > ul > li > a:link,
-nav > ul > li > a:visited {color:var(--nav-fg);} 
+nav > ul > li > a:visited {color:var(--navbar-fg);} 
 
 nav > p > a,
 nav > p > a:link,
-nav > p > a:visited {color:var(--nav-fg);} 
+nav > p > a:visited {color:var(--navbar-fg);} 
 
 
 /* ARTICLE */

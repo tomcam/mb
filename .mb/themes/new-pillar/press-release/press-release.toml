@@ -6,11 +6,11 @@ PathName = ""
 
 [Header]
   HTML = ""
-  File = "header.md"
+  iFile = "header.md"
 
 [Navbar]
   HTML = ""
-  File = ""
+  File = "nav.md"
 
 [Article]
   HTML = ""

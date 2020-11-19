@@ -8,13 +8,13 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    inkscape:version="1.0 (4035a4f, 2020-05-01)"
-   sodipodi:docname="map32x32.svg"
+   sodipodi:docname="map32x32-red.svg"
    id="svg1001"
    version="1.1"
    fill="#ff0000"
-   height="16.827999"
-   width="16"
-   viewBox="0 0 16 16.827999">
+   height="32"
+   width="32"
+   viewBox="0 0 32 32">
   <metadata
      id="metadata1007">
     <rdf:RDF>
@@ -34,8 +34,8 @@
      inkscape:window-maximized="0"
      inkscape:window-y="23"
      inkscape:window-x="0"
-     inkscape:cy="14.195676"
-     inkscape:cx="13.345029"
+     inkscape:cy="16.285345"
+     inkscape:cx="21.672515"
      inkscape:zoom="32.0625"
      fit-margin-bottom="0"
      fit-margin-right="0"
@@ -54,8 +54,9 @@
      bordercolor="#666666"
      pagecolor="#ffffff" />
   <path
+     style="stroke-width:1.95017"
      id="path999"
      clip-rule="evenodd"
-     d="M 10,0 6,4 v 12.828 l 4,-4 z M 1.707,1.707 A 1,1 0 0 0 0,2.414 v 10 a 1,1 0 0 0 0.293,0.707 L 4,16.828 V 4 Z m 14,2 L 12,0 v 12.828 l 2.293,2.293 A 1,1 0 0 0 16,14.414 v -10 A 1,1 0 0 0 15.707,3.707 Z"
+     d="M 20,0 12,7.6063699 V 32 l 8,-7.60637 z M 3.414,3.2460185 A 2,1.9015925 0 0 0 0,4.5904444 V 23.606371 a 2,1.9015925 0 0 0 0.586,1.344426 L 8,32 V 7.6063699 Z m 28,3.8031848 L 24,0 v 24.39363 l 4.586,4.360352 A 2,1.9015925 0 0 0 32,27.409556 V 8.3936292 A 2,1.9015925 0 0 0 31.414,7.0492033 Z"
      fill-rule="evenodd" />
 </svg>
