@@ -94,7 +94,7 @@ nav > ul > li > a:active {text-decoration:underline;}
 article > p, article > ul, article > ol {font-family:var(--formal);font-size:1.25rem;padding-bottom:.7em;}
 article > p > strong {font-weight:700;}
 article > h1 {font-weight:800;}
-article > h2 {font-weight:700;}
+article > h2, article > h3 {font-weight:700;}
 article > h4 {font-weight:normal;padding-bottom:1em; } /* Byline */
 article > h4 > strong {font-weight:bold;} /* Byline */
 article > h4 > em {font-family:var(--times);}

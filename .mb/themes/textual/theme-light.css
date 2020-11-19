@@ -57,10 +57,10 @@
     --navbar-bg:var(--bg);
     /* Link colors specific to navbar */
     --a--navbar: var(--a); 
-    --a--navbar-link:  var(--a);
-    --a--navbar-visited:  var(--a);
+    --a--navbar-link: var(--a);
+    --a--navbar-visited: var(--a);
     --a--navbar-hover: var(--a); 
-    --a--navbar-active:  var(--a);
+    --a--navbar-active: var(--a);
 
 
 /* ************************************/
@@ -72,10 +72,10 @@
     --article-bg: var(--bg);
     /* Link colors specific to article */
     --a-article: var(--a); 
-    --a-article-link:  var(--a);
-    --a-article-visited:  var(--a);
+    --a-article-link: var(--a);
+    --a-article-visited: var(--a);
     --a-article-hover: var(--a); 
-    --a-article-active:  var(--a);
+    --a-article-active: var(--a);
 
         
 /* ************************************/
@@ -97,10 +97,10 @@
     --sidebar-bg: gray;
     /* Link colors specific to sidebar */
     --a-sidebar: var(--a); 
-    --a-sidebar-link:  var(--a);
-    --a-sidebar-visited:  var(--a);
+    --a-sidebar-link: var(--a);
+    --a-sidebar-visited: var(--a);
     --a-sidebar-hover: var(--a); 
-    --a-sidebar-active:  var(--a);
+    --a-sidebar-active: var(--a);
 
 
 /* ************************************/
@@ -156,7 +156,7 @@ nav > p > a:visited {color:var(--navbar-fg);}
 article > p > a,
 article > p > a:link,
 article > p >  a:visited
-	{color:var(--trim-fg);}
+	{color:var(--a);}
 article > p >  a:hover,
 article > p >  a:active
 	{color:var(--trim-bg);background-color:var(--trim-fg);}
@@ -165,8 +165,6 @@ article > p > code, article > code, article > pre, article > pre > code {
     background-color:#F0F0F0;                                                   
     }    
 
-article > h4 {color:gray;} 
-article > h4 > strong {color:black; } 
 article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
 
