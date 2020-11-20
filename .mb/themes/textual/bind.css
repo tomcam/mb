@@ -67,7 +67,7 @@ aside {margin-right:var(--aside-margin-right);margin-left:var(--aside-margin-lef
 footer {color:var(--footer-fg);background-color:var(--footer-bg);} 
 footer {width:var(--header-footer-width);} 
 footer {padding-top:var(--footer-padding-top);padding-bottom:var(--footer-padding-bottom);}
-footer {padding-left:var(--footer-padding-left);padding-right:var(--footer-padding-right);}  */
+footer {padding-left:var(--footer-padding-left);padding-right:var(--footer-padding-right);} 
 footer {margin-top:var(--footer-margin-top);margin-bottom:var(--footer-margin-bottom);}
 footer {margin-right:var(--right-margin);margin-left:var(--text-start);}
 footer {clear:both;}    

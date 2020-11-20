@@ -50,7 +50,7 @@
   --footer-width:100%;
 
    /* ******************************
-   *  Make theme wide style       *
+   *  Make theme wide-70 style       *
    * ******************************/
 
 	--article-column-width:70%; 
@@ -58,6 +58,18 @@
   --left-margin:0%;
   --right-margin:0%;
   --header-footer-width:100%;
+  --text-start: 20%;
+
+  /* ******************************
+   *  Make theme wide style       *
+   * ******************************/
+
+  --article-column-width:75%;
+  --alt-article-column-width:65%;
+	--sidebar-width:15%;    
+  --left-margin:0%;
+  --right-margin:0%;
+  --header-footer-width:100%; 
   --text-start: 20%;
 
   /* ******************************
@@ -70,16 +82,6 @@
   --right-margin:10%;
   --header-footer-width:80%;
   --text-start: 5%; 
-
-  /* ******************************
-   *  Make theme wide style       *
-   * ******************************/
-
-  --article-column-width:80%;
-	--sidebar-width:20%;    
-  --left-margin:0%;
-  --right-margin:0%;
-  --header-footer-width:100%; 
 
   /* The following should add up to 100% for both
    * wide and pillar theme styles:

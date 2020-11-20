@@ -1,0 +1,14 @@
+# Ghetto way to keep the test theme tex-pillar current.
+# By definition tex-pillar is a pillar version of Textual.
+# They are identical except for changes in sizes.css 
+# and the presence of pillar.css (only
+# in tex-pillar since textual is supposed to be a wide theme)
+
+in=tex-pillar.toml
+bak=tex-pillar.bak
+echo "This is destructive and buggy"
+#cp ~/code/mb/.mb/themes/tex-pillar/$in $bak
+#cp ~/code/mb/.mb/themes/textual/*.css ~/code/mb/.mb/themes/tex-pillar
+#sed  's/\"sizes.css\"\,/\"sizes.css\"\,\"pillar.css\"\,/' $bak > $in
+#cp $in ~/code/mb/.mb/themes/tex-pillar
+
