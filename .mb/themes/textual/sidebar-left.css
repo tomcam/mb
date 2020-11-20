@@ -2,8 +2,8 @@
 article{float:right;}
 aside{float:left;}
 
-aside{margin-left: 10%;}
+iiaside{margin-left: var(--text-start);}
 aside{padding:0;}
+aside{margin-left:var(--left-margin);}
 article{width:65%;}
-article {padding-left:0;}
 

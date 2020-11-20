@@ -1,9 +1,7 @@
 ===
-theme="_"
+theme="textual"
+mode="dark"
 sidebar="left"
 ===
-
-
 {{ inc "theme-and-variations.md" }}
 {{ inc "mdemo.md" }}
-

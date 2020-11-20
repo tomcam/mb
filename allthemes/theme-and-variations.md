@@ -5,8 +5,38 @@ There are many issues to tackle before the first release, and they're familiar o
 * new-pillar, left sidebar, has no left margin 
 * _, left sidebar, loses text on left when collapsed under mobile media threshold
 
+Press release
 
-## lanyon
+
+## textual
+* [Light theme with left sidebar](testtextual-light-mode-sidebar-left.html)
+* [Light theme with right sidebar](testtextual-light-mode-sidebar-right.html)
+* [Light theme with no sidebar](testtextual-light-mode-sidebar-none.html)
+* [Dark theme with left sidebar](testtextual-dark-mode-sidebar-left.html)
+* [Dark theme with right sidebar](testtextual-dark-mode-sidebar-right.html)
+* [Dark theme with no sidebar](testtextual-dark-mode-sidebar-none.html)
+
+## _
+* [Left sidebar](ur-left-sidebar.html)
+* [No sidebar](ur-index.html)
+* [Right sidebar](ur-right-sidebar.html)
+
+## wide 
+* [Left sidebar](wide-left-sidebar.html)
+* [No sidebar](wide-index.html)
+* [Right sidebar](wide-right-sidebar.html)
+
+## new-wide 
+* [Left sidebar](new-wide-left-sidebar.html)
+* [No sidebar](new-wide-index.html)
+* [Right sidebar](new-wide-right-sidebar.html)
+
+## new-pillar
+* [Left sidebar](new-pillar-left-sidebar.html)
+* [No sidebar](new-pillar-index.html)
+* [Right sidebar](new-pillar-right-sidebar.html)
+
+# lanyon
 * [Light theme with left sidebar](testlanyon-light-mode-sidebar-left.html)
 * [Light theme with right sidebar](testlanyon-light-mode-sidebar-right.html)
 * [Light theme with no sidebar](testlanyon-light-mode-sidebar-none.html)
@@ -29,26 +59,6 @@ There are many issues to tackle before the first release, and they're familiar o
 * [Dark theme with left sidebar](testcv-dark-mode-sidebar-left.html)
 * [Dark theme with right sidebar](testcv-dark-mode-sidebar-right.html)
 * [Dark theme with no sidebar](testcv-dark-mode-sidebar-none.html)
-
-## new-wide 
-* [Left sidebar](new-wide-left-sidebar.html)
-* [No sidebar](new-wide-index.html)
-* [Right sidebar](new-wide-right-sidebar.html)
-
-## new-pillar
-* [Left sidebar](new-pillar-left-sidebar.html)
-* [No sidebar](new-pillar-index.html)
-* [Right sidebar](new-pillar-right-sidebar.html)
-
-## _
-* [Left sidebar](ur-left-sidebar.html)
-* [No sidebar](ur-index.html)
-* [Right sidebar](ur-right-sidebar.html)
-
-## wide 
-* [Left sidebar](wide-left-sidebar.html)
-* [No sidebar](wide-index.html)
-* [Right sidebar](wide-right-sidebar.html)
 
 ## pillar
 * [Left sidebar](pillar-left-sidebar.html)
