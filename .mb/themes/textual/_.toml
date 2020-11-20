@@ -1,7 +1,7 @@
 Branding = "_"
 Description = ""
 #Stylesheets = ["sizes.css", "theme-light.css", "_.css", "responsive.css"]
-Stylesheets = ["sizes.css", "theme-light.css", "textual.css"]
+Stylesheets = ["sizes.css", "theme-light.css", "_.css"]
 RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
 PathName = ""
 
