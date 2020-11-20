@@ -1,3 +1,4 @@
 aside{float:left;}
-article{margin-left:var(--text-start);}
-header,nav,article,footer {width:var(--alt-article-column-width);}
+iarticle{padding-left:var(--article-text-start);}
+article{padding-left:var(--text-start);}
+article{margin-left:var(--left-margin);}

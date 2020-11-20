@@ -49,29 +49,18 @@
    /* Same as footer {width} */
   --footer-width:100%;
 
-   /* ******************************
-   *  Make theme wide-70 style       *
-   * ******************************/
-
-	--article-column-width:70%; 
-	--sidebar-width:20%;    
-  --left-margin:0%;
-  --right-margin:0%;
-  --header-footer-width:100%;
-  --text-start: 20%;
-
   /* ******************************
    *  Make theme wide style       *
    * ******************************/
 
-  --article-column-width:75%;
+  --article-column-width:85%;
   --alt-article-column-width:65%;
 	--sidebar-width:15%;    
   --left-margin:0%;
   --right-margin:0%;
   --header-footer-width:100%; 
   --text-start: 20%;
-
+  --article-text-start:0%;
   /* The following should add up to 100% for both
    * wide and pillar theme styles:
    * --article-column-width

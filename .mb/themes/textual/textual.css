@@ -18,10 +18,9 @@ blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/
 
+header {width:var(--header-footer-width);} 
+header {padding-top:3rem;padding-bottom:3.5rem;border-bottom:1px solid var(--trim-fg);}
 
-header {padding-top:3rem;padding-bottom:3.5rem;border-bottom:1px solid var(--trim-fg);padding-left:var(--text-start);}
-
-iheader{margin-left:var(--text-start);}
 /*
  * --------------------------------------------------
  * Simplest case: Branded name, nothing else
@@ -64,6 +63,7 @@ header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:9
 /*  NAVBAR                      */
 /* ******************************/
 
+header {width:var(--header-footer-width);} 
 nav > img {display:inline;}
 
 /*
@@ -114,6 +114,27 @@ article > h4 > em {font-family:var(--times);}
 article > h5 {font-size:1.5rem;font-family:var(--code);}
 article > p > strong {font-weight:700;}
 
+
+
+article > p, 
+  article > h1,
+  article > h2,
+  article > h3,
+  article > h4,
+  article > h5,
+  article > h6, 
+  article > ul,
+  article > ol, 
+  article > li, 
+  article > dd, 
+  article > dl,
+  article > code,
+  article > pre,
+  article > hr {
+	    ipadding-left:var(--article-text-start);
+      padding-right:var(--article-text-start);
+    }
+
 article > p, 
   article > ul, 
   article > ol, 
@@ -129,6 +150,7 @@ article > p,
 
 article > ul, article > ol {margin-top:.5em;}
 article > li {margin-left:1rem;}
+article{padding-left:var(--article-text-start);}
 
 /*
  * --------------------------------------------------
@@ -198,6 +220,7 @@ footer {border-bottom:1px solid var(--trim-fg);}
 /* ****************************/
 /*  FOOTER BRANDING AND LINKS */
 /* ****************************/
+header {width:var(--header-footer-width);} 
 
 
 /*
