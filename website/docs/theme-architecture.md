@@ -1,6 +1,32 @@
 # Metabuzz theme architecture
 
 ## TODO: Things to cover
+* wide vs. pillar
+  - Most themes are based on Textual.
+  - Textual can be either wide or pillar style. It defauls to wide.
+  - To make it pillar style, 
+    1. Add this to the bottom of `sizes.css`
+    `--alt-article-column-width:65%;`
+    1. Create the filler `pillar.css` with these contents
+    `header,nav,article,footer {width:var(--alt-article-column-width);}`
+    1. Include the file "pillar.css" directly
+    after "sizes.css" in the Toml file, something like this:
+    `Stylesheets = ["sizes.css", "pillar.css","theme-light.css", "textual.css"]`
+  - The the `left-margin` and `right-margin` values need to be nonzero in `sizes.css`:
+    ````
+    /* ******************************
+     *  Make theme pillar style     *
+     * ******************************/
+
+    --article-column-width:65%;
+    --alt-article-column-width:65%;
+    --sidebar-width:15%;    
+    --left-margin:10%; 
+    --right-margin:10%;
+    --header-footer-width:80%;
+    --text-start: 5%; 
+    ````
+
 * Explain how --left-margin and --right-margin are used by header,nav,article,footer
 * theme names are forced to lowercase internally, so they're not case senstive
 * Purpose of --header-footer-width
