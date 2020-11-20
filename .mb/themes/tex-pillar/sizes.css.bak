@@ -1,0 +1,218 @@
+:root 
+{
+
+  --article-column-width:65%;
+	--sidebar-width:15%;    
+  --left-margin:10%; 
+  --right-margin:10%;
+  --header-footer-width:80%;
+  --text-start: 5%; 
+
+ /* ******************************
+   *  Make theme wide style       *
+   * ******************************/
+
+/*
+	--article-column-width:75%; 
+	--sidebar-width:20%;    
+  --left-margin:0%;
+  --right-margin:0%;
+  --header-footer-width:100%;
+  --text-start:20%;
+*/
+
+  /* ******************************
+   *  Header dimensions           *
+   * ******************************/
+
+  /* Used for header {width} */
+  --header-width:100%;
+
+  /* Adjusts header height and keeps it vertically centered */
+	--header-height:3rem;
+
+	/* Size of the main text in the header. */
+	--branding-height:3rem;
+
+  /* For big headlines it can be good to tighten letter spacing. 
+   * Used for header {letter-spacing}*/
+  --header-letter-spacing:-.1em;
+
+  /* padding is spacing surrounding the text, pushing out.
+   * Used for header {padding-} */
+  --header-padding-bottom:0em;  
+  --header-padding-top:0em;
+  /* padding-right is implied  --header-footer-width. */
+  /* padding-left is implied by --text-start */
+
+  /* margin pushes from outside, toward the text. 
+   * Used for header {margin-} etc. */
+  --header-margin-top:0em;
+  --header-margin-bottom:2em;  
+
+  /* Normally the global --left-margin and --right-margin 
+   * are used for header, navbar, article, and footer */
+  --header-margin-right:0;
+  --header-margin-left:0;
+
+
+  /* ******************************
+   *  Navbar dimensions           *
+   * ******************************/
+
+  /* Width is handled by header-footer-width.  */
+
+  /* padding is spacing surrounding the text, pushing out.
+   * Used for {padding} */
+  --navbar-padding-bottom:1em;  
+  --navbar-padding-top:0em;
+  /* padding-right is implied  --header-footer-width. */
+  /* padding-left is implied by --text-start */
+
+  /* margin pushes from outside, toward the text. 
+   * Used for nav {margin-} etc. */
+  --navbar-margin-top:0em;
+  --navbar-margin-bottom:0em;  
+  /* Normally the global --left-margin and --right-margin 
+   * are used for header, navbar, article, and footer */
+  --navbar-margin-right:0;
+  --navbar-margin-left:0;
+
+	/* Adjusts navbar height and keeps it vertically centered */
+	--navbar-height:5rem;
+
+  /* ******************************
+   *  Article dimensions          *
+   * ******************************/
+
+  /* Used for article {width} */
+  --article-width:100%;
+
+  /* Good to tighten letter spacing if headers are
+   * extra extra tall. Used for h1 {letter-spacing}
+   * etc. Just comment out to use them. */
+  /*
+  --h1-letter-spacing:-.1em;
+  --h2-letter-spacing:-.1em;
+  */
+  --article-line-height:2rem;
+  --code-line-height:1.75rem;
+
+  /* Font sizes used for article h1 {font-size} etc. */
+  --h1-font-size:3rem;
+  --h2-font-size:1.8rem;
+  --h3-font-size:1.25rem;
+  --h4-font-size:1rem;
+  --h5-font-size:.8rem;
+  --h6-font-size:.8em;
+
+  /* Used for article h1 {padding-top} etc. */ 
+  --p-padding-top:0em;
+  --h1-padding-top:0em;
+  --h2-padding-top:1em;
+  --h3-padding-top:0em;
+  --h4-padding-top:0em;
+  --h5-padding-top:0em;
+  --h6-padding-top:0em;
+
+  --p-padding-bottom:0em;
+  --h1-padding-bottom:0em;
+  --h2-padding-bottom:.25em;
+  --h3-padding-bottom:.25em;
+  --h4-padding-bottom:0em;
+  --h5-padding-bottom:0em;
+  --h6-padding-bottom:0em;
+
+  /* Used for article h1 {margin-top} etc. */ 
+  -p-margin-top:0em;
+  --h1-margin-top:0em;
+  --h2-margin-top:0em;
+  --h3-margin-top:0em;
+  --h4-margin-top:0em;
+  --h5-margin-top:0em;
+  --h6-margin-top:0em;
+
+  --p-margin-bottom:0em;
+  --h1-margin-bottom:0em;
+  --h2-margin-bottom:0em;
+  --h3-margin-bottom:0em;
+  --h4-margin-bottom:0em;
+  --h5-margin-bottom:0em;
+  --h6-margin-bottom:0em;
+
+  --p-line-height:1.1em;
+  --h1-line-height:1.1em;
+  --h2-line-height:1em;
+  --h3-line-height:1em;
+  --h4-line-height:.6em;
+  --h5-line-height:1em;
+  --h6-line-height:1em;
+
+  /* padding is spacing surrounding the text, pushing out.
+   * Used for article {padding-} */
+  --article-padding-bottom:0em;  
+  --article-padding-top:0em;
+  /* padding-right is implied  --article-column-width. */
+  /* padding-left is implied by --text-start */
+
+  /* margin pushes from outside, toward the text. 
+   * Used for article {margin-} etc. */
+  --article-margin-top:0em;
+  --article-margin-bottom:1em;  
+  /* Normally the global --left-margin and --right-margin 
+   * are used for header, navbar, article, and footer */
+  --article-margin-right:0;
+  --article-margin-left:0;
+
+
+  /* ******************************
+   *  Sidebar dimensions          *
+   * ******************************/
+
+  /* Used for aside {width-} */
+  --aside-width:100%;
+
+  /* padding is spacing surrounding the text, pushing out.
+   * Used for aside {padding-} */
+  --aside-padding-top:2em;
+  --aside-padding-bottom:1em;  
+  --aside-padding-right:1em;  
+  --aside-padding-left:2em;
+
+  /* margin pushes from outside, toward the text. 
+   * Used for article {margin-} etc. */
+  --aside-margin-top:0;
+  --aside-margin-bottom:1em;  
+  --aside-margin-right:0;
+  --aside-margin-left:0;
+
+
+  /* ******************************
+   *  Footer dimensions           *
+   * ******************************/
+
+  /* Width is handled by header-footer-width.  */
+
+	/* Adjusts footer height and keeps it vertically centered */
+	--footer-height:6rem;
+
+	/* Size of the main text in the header. */
+	--footer-branding-height:3rem;
+
+  /* Used for footer {margin} etc. */
+  --footer-margin-top:3rem;
+  --footer-margin-bottom:3rem;
+  /* Normally the global --left-margin and --right-margin 
+   * are used for header, navbar, article, and footer */
+  --footer-margin-top:3rem;
+  --footer-margin-bottom:3.5rem;
+
+  /* Used for footer {padding-} etc. */
+  --footer-padding-top:0;
+  --footer-padding-bottom:1rem;
+  --footer-padding-left:0;
+  --footer-padding-right:1rem;
+
+}
+
+ 

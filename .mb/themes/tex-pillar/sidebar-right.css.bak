@@ -1,0 +1,5 @@
+aside{float:left;}
+article{margin-left:var(--left-margin);}
+article {padding-left:var(--text-start);}
+
+ 
