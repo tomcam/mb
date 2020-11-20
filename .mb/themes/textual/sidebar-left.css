@@ -5,5 +5,8 @@ article{margin-right:var(--right-margin);}
 article{margin-left:0;}
 
 
-/* UPdating 11/20/20 */
+/* Updating 11/20/20 */
 article{padding-left:5%;}
+
+/* NOT on sidebar-right. Only on default and sidebar-left */ 
+/* article{padding-right:var(--sidebar-width);} */
