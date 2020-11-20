@@ -70,11 +70,6 @@ Press release
 * [No sidebar](2-index.html)
 * [Right sidebar](2-right-sidebar.html)
 
-## foo
-* [Left sidebar](foo-left-sidebar.html)
-* [No sidebar](foo-index.html)
-* [Right sidebar](foo-right-sidebar.html)
-
 
 
 

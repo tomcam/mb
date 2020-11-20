@@ -1,8 +1,4 @@
-/* Put article on the left and sidebar on the right */
 aside{float:left;}
-iaside{width:20%;margin-right:0%;}
-/* ************** DO NOT DELETE. SIDEBAR-RIGHT WORKS FOR WIDE THEME **************** */
-article{padding-left:var(--text-start);}
 article{margin-left:var(--left-margin);}
 
-iarticle{width:60%;}
+ 

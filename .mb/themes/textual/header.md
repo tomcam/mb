@@ -14,4 +14,7 @@
 {{- else }}
 * [{{.FrontMatter.Theme}}](/)
 {{- end }} 
+* [Events](/)
+* [Podcast](/)
+* [Subscribe](/)
 
