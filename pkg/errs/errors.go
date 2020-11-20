@@ -73,7 +73,7 @@ var errMsgs = map[string]string{
 	"0210": "Error creating TOML file:",                          // filename
 	"0211": "Error creating sample file",                         // filename
 	"0212": "Error renaming temporary output file",               // filename
-
+  "0213": "Unable to create pillar file",                       // filename
 	// 0250 - Error closing file
 	"0251": "Error closing copy of file", // filename
 	"0252": "Error closing TOML file",    // filename

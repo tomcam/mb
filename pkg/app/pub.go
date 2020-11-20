@@ -1,6 +1,7 @@
 package app
 
 import (
+  "fmt"
 	"bytes"
 	"encoding/json"
 	"github.com/tomcam/mb/pkg/defaults"
@@ -44,7 +45,6 @@ func (a *App) publishFile(filename string) error {
 	var f FrontMatter
 	a.FrontMatter = &f
 	a.Page.filePath = filename
-	a.Verbose(filename)
 	a.Page.filename = filepath.Base(filename)
 	a.Page.dir = currDir()
 	a.Verbose("%s", filename)
@@ -415,9 +415,32 @@ func (a *App) getMode(stylesheet string) string {
 	return stylesheet
 }
 
+// addPillar() appends a stylesheet called pillar.css.
+// It is meant for themes based on Textual, which with
+// just a few
 // publishAssets() copies out the stylesheets, graphics, and other
 // relevant files from the pageType (or default theme) directory
 // to be published.
+// TODO: I think this was just made totally manual
+func (a *App) addPillar() {
+	if (a.Page.Theme.Wide) {
+    fmt.Println("NO PILLAR FOR YOU")
+    // xxxx
+  } else {
+const fileContents = `
+header,nav,article,footer {width:var(--alt-article-column-width);}
+`
+    filename := "pillar.css"
+	  fullFilename := filepath.Join(a.fullTargetThemeDir(), filename)
+    a.appendStr(stylesheetTag(filepath.Join(a.relTargetThemeDir(),filename)))
+    err := writeTextFile(fullFilename, fileContents)
+    if err != nil {
+			a.QuitError(errs.ErrCode("0213", fullFilename))
+    }
+
+ }
+}
+
 func (a *App) publishAssets() {
 	p := a.Page.Theme.PageType
 	a.findPageAssets()

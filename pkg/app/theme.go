@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// TODO: Not needed?
 type Supported struct {
 	Left_sidebar  string
 	right_sidebar string
@@ -21,6 +22,14 @@ type Theme struct {
 	// Parent root stylesheets get copied to the child automatically
 	//RootStylesheets []string
 	PageType  PageType
+  // If you base a theme on Textual it can be either
+  // wide style (the default) or pillar style. Wide
+  // means the site stretches across the full with of
+  // the window. Pillar means it has space on the right
+  // and left sides. This determines whether a 
+  // Textual-based theme gets the ol' Pillar Conversion Kit
+  Wide bool
+
 	Supported Supported
 }
 
@@ -58,6 +67,7 @@ type PageType struct {
 	otherAssets []string
 
 	// Full pathname of the containing directory
+  // TODO: should probably be lowercase. No reason to export
 	PathName string
 
 	// List of files to exclude from copying to the publish directory
@@ -155,7 +165,7 @@ func (a *App) loadTheme(parent bool) {
 	a.Page.Theme.PageType = p
   if parent {
     a.Page.Theme.PageType.PathName = a.parentThemeFullDirectory()
-	  a.FrontMatter.isChild = false 
+	  a.FrontMatter.isChild = false
   } else {
     a.Page.Theme.PageType.PathName = a.childThemeFullDirectory()
 	  // TODO: Should probably force filename to lowercase
@@ -171,20 +181,6 @@ func pageTypePath(subDir, themeName string) string {
 	return path
 }
 
-// PageType() reads in either the default/anonymous pageType (root of the
-// theme directory) or a pageType, named by directory, one level in.
-// ThemeDir is the fully qualified path name of the theme directory.
-// fullpathName is the fully qualified path name of the .toml file.
-func (a *App) oldPageType(themeName, themeDir, fullPathName string, PageType *PageType) error {
-	if err := readTomlFile(fullPathName, PageType); err != nil {
-		return errs.ErrCode("0104", fmt.Errorf("Problem reading TOML file %s for theme %s\n", fullPathName, a.FrontMatter.Theme).Error(), err.Error())
-	}
-	PageType.name = themeName
-	PageType.PathName = themeDir
-	a.Page.Theme.PageType = *PageType
-	// Success
-	return nil
-}
 
 // newTheme() generates a new theme from an old one.
 // Equivalent of mb new theme
