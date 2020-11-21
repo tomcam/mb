@@ -1,0 +1,13 @@
+article{float:right;}
+aside{float:left;}
+
+article{margin-right:var(--right-margin);}
+
+
+
+/* Updating 11/20/20 */
+article{padding-left:0;margin-left:0;}
+iarticle{margin-left:var(--left-margin);}
+aside{padding-left:var(--text-start);}
+iaside{width:12rem;}
+

@@ -1,0 +1,76 @@
+:root 
+{
+
+  /* ******************************
+   *  Header dimensions           *
+   * ******************************/
+
+	/* Adjusts header height and keeps it vertically centered */
+	--header-height:6rem;
+
+	/* Size of the main text in the header. */
+	--branding-height:4rem;
+
+  /* ******************************
+   *  Navbar dimensions           *
+   * ******************************/
+
+	/* Adjusts navbar height and keeps it vertically centered */
+	--nav-height:5rem;
+
+  /* ******************************
+   *  Sidebar dimensions          *
+   * ******************************/
+
+  --sidebar-padding-top:4rem;
+  --sidebar-padding-left:3em;
+  --sidebar-padding-right:1em;
+
+  /* ******************************
+   *  Footer dimensions           *
+   * ******************************/
+
+	/* Adjusts footer height and keeps it vertically centered */
+	--footer-height:6rem;
+
+	/* Size of the main text in the header. */
+	--footer-branding-height:3rem;
+
+  /* Same as footer {margin-top:}  */
+  --footer-margin-top:3rem;
+
+  /* Same as footer {margin-bottom:}  */
+  --footer-margin-bottom:3rem;
+
+   /* Same as footer {padding-top:}  */
+  --footer-padding-top:3rem;
+
+  /* Same as footer {padding-bottom} */
+  --footer-padding-bottom:3.5rem;
+
+  /* Same as footer {padding-left} */
+  --footer-padding-left:0;
+
+  /* Same as footer {padding-right} */
+  --footer-padding-right:1rem;
+
+   /* Same as footer {width} */
+  --footer-width:100%;
+
+  /* ******************************
+   *  Make theme pillar style     *
+   * ******************************/
+
+  --article-column-width:75%;
+  --alt-article-column-width:75%;
+	--sidebar-width:20%;    
+  --left-margin:5%; 
+  --right-margin:5%;
+  --header-footer-width:80%;
+  --text-start: 5%; 
+
+
+
+}
+
+ 
