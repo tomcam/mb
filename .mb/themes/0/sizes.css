@@ -6,10 +6,10 @@
    * ******************************/
 
 	/* Adjusts header height and keeps it vertically centered */
-	--header-height:6rem;
+	--header-height:3rem;
 
 	/* Size of the main text in the header. */
-	--branding-height:4rem;
+	--branding-height:2rem;
 
   /* ******************************
    *  Navbar dimensions           *

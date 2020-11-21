@@ -3,13 +3,6 @@ html,body,p {font-family:var(--informal),sans-serif;}
 /* OTOH Courier is a lousy code font by default */
 code,pre{font-family:var(--code),monospace;}
 
-h1{ font-size:2.5em;padding-top:2rem; }
-h2{ font-size:2em;padding-top:1.5rem; }
-h3{ font-size:1.5em;padding-top:1.5rem; }
-h4{ font-size:1em;padding-top:1rem;}
-h5{ font-size:1.2em;padding-top:.5rem;}
-h6{ font-size:0.9em; }
-
 table > thead > tr > th  {margin-top:4rem;}
 blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
@@ -17,8 +10,7 @@ blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/
 
-header {width:var(--header-footer-width);} 
-header {padding-top:3rem;padding-bottom:3.5rem;border-bottom:1px solid var(--trim-fg);}
+header {border-bottom:1px solid var(--trim-fg);}
 
 /*
  * --------------------------------------------------
@@ -62,7 +54,7 @@ header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:9
 /*  NAVBAR                      */
 /* ******************************/
 
-header {width:var(--header-footer-width);} 
+nav {width:var(--header-footer-width);} 
 nav > img {display:inline;}
 
 /*
@@ -103,18 +95,14 @@ nav > ul > li > a:active {text-decoration:underline;}
 /* ******************************/
 
 article{padding-right:var(--sidebar-width);}
-article {padding-top:6em;}
 article > p, article > ul, article > ol {font-family:var(--formal);}
 article > h1,article > h2 {font-weight:700;}
-article > h1 {font-size:4rem;margin-top:0;margin-bottom:3rem;}
-article > h2 {margin-top:4rem;}
-article > h4 {font-weight:normal;font-size:1.25rem;margin-bottom:1rem; } /* Byline */
+article h1 + h2 {margin-top:0;color:var(--trim-fg);font-size:1.5rem;padding-top:.5em;padding-bottom:.5em;}
+article > h4 {font-weight:normal;font-size:1.25rem;} /* Byline */
 article > h4 > strong {font-weight:bold;} /* Byline */
 article > h4 > em {font-family:var(--times);}
 article > h5 {font-size:1.5rem;font-family:var(--code);}
 article > p > strong {font-weight:700;}
-
-
 
 article > p, 
   article > ul, 
