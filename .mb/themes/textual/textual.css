@@ -131,7 +131,6 @@ article > p,
 
 article > ul, article > ol {margin-top:.5em;}
 article > li {margin-left:1rem;}
-article{padding-left:var(--article-text-start);}
 
 /*
  * --------------------------------------------------
