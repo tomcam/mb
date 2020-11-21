@@ -1,5 +1,4 @@
 #!/bin/zsh
-echo "Warning: doesn't work on pagetypes yet"
 # A theme can have many variation: no sidebar, left sidebar,
 # dark mode, light mode, etc. This generates
 # a tiny test Markdown file for each variation (See BODY below)
@@ -10,9 +9,20 @@ echo "Warning: doesn't work on pagetypes yet"
 # can be copied into a document allowing you to test each version
 # of each theme.
 if [ $# -ne 1 ]; then
-  echo "Need the name of a theme"
-  exit 2
+  echo "Need the name of a theme or pagetype"
+  exit 1
 fi
+
+dir=`dirname ${1}`
+theme=`basename ${1}`
+
+if [ $dir = "." ]; then 
+  dir=$theme
+else
+  dir=$dir/$theme
+fi
+mkdir -p $dir
+echo "Created dir ${dir}"
 
 # The actual Markdown is the same for all test files
 read -r -d '' BODY << EOM
@@ -20,55 +30,55 @@ read -r -d '' BODY << EOM
 {{ inc "mdemo.md" }}
 EOM
 
-FILE_LIGHT_MODE_SIDEBAR_LEFT=$1-light-mode-sidebar-left
+FILE_LIGHT_MODE_SIDEBAR_LEFT=light-mode-sidebar-left
 read -r -d '' LIGHT_MODE_SIDEBAR_LEFT << EOM
 ===
-theme="$1"
+theme="$theme"
 mode="light"
 sidebar="left"
 ===
 EOM
 
-FILE_LIGHT_MODE_SIDEBAR_NONE=$1-light-mode-sidebar-none
+FILE_LIGHT_MODE_SIDEBAR_NONE=light-mode-sidebar-none
 read -r -d '' LIGHT_MODE_SIDEBAR_NONE << EOM
 ===
-theme="$1"
+theme="$theme"
 mode="light"
 sidebar="none"
 ===
 EOM
 
-FILE_DARK_MODE_SIDEBAR_LEFT=$1-dark-mode-sidebar-left
+FILE_DARK_MODE_SIDEBAR_LEFT=dark-mode-sidebar-left
 read -r -d '' DARK_MODE_SIDEBAR_LEFT << EOM
 ===
-theme="$1"
+theme="$theme"
 mode="dark"
 sidebar="left"
 ===
 EOM
 
-FILE_DARK_MODE_SIDEBAR_NONE=$1-dark-mode-sidebar-none
+FILE_DARK_MODE_SIDEBAR_NONE=dark-mode-sidebar-none
 read -r -d '' DARK_MODE_SIDEBAR_NONE << EOM
 ===
-theme="$1"
+theme="$theme"
 mode="dark"
 sidebar="none"
 ===
 EOM
 
-FILE_LIGHT_MODE_SIDEBAR_RIGHT=$1-light-mode-sidebar-right
+FILE_LIGHT_MODE_SIDEBAR_RIGHT=light-mode-sidebar-right
 read -r -d '' LIGHT_MODE_SIDEBAR_RIGHT << EOM
 ===
-theme="$1"
+theme="$theme"
 mode="light"
 sidebar="right"
 ===
 EOM
 
-FILE_DARK_MODE_SIDEBAR_RIGHT=$1-dark-mode-sidebar-right
+FILE_DARK_MODE_SIDEBAR_RIGHT=dark-mode-sidebar-right
 read -r -d '' DARK_MODE_SIDEBAR_RIGHT << EOM
 ===
-theme="$1"
+theme="$theme"
 mode="dark"
 sidebar="right"
 ===
@@ -110,12 +120,11 @@ declare -a descriptions=(
 # Use this in case the generate files are bunk.
 # Once it's understood they work, remove it.
 # That way it's easy to clear out the text files
-TEST="test"
-OUTFILE="DELETE-$1.md"
-echo "## ${1}" > $OUTFILE
+OUTFILE="$theme.md"
+echo "## ${theme}" > $OUTFILE
 for ((idx=1; idx<=${#filenames[@]}; idx++)); do
-  filename=$TEST${filenames[idx]}
-  md=$filename.md
+  filename=${filenames[idx]}
+  md=$dir/$filename.md
   anchortext=${descriptions[idx]}
   echo "${files[idx]}" > $md
   echo $BODY >> $md
@@ -128,5 +137,4 @@ then
   pbcopy < $OUTFILE
   echo "Contents of ${OUTFILE} have been copied to the Clipboard\n"
 fi
-nvim $outfile
 
