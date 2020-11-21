@@ -58,8 +58,8 @@ article > h6{ font-size:var(--h6-font-size);padding-top:var(--h6-padding-top);pa
 
 aside {color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
 aside {width:var(--sidebar-width);}                            
-aside {padding-top:var(--aside-padding-top);padding-bottom:var(--aside-padding-bottom);}
-aside {padding-right:var(--aside-padding-right);padding-left:var(--aside-padding-left);}
+aside {padding-top:var(--sidebar-padding-top);padding-bottom:var(--sidebar-padding-bottom);}
+aside {padding-right:var(--sidebar-padding-right);padding-left:var(--sidebar-padding-left);}
 aside {margin-top:var(--aside-margin-top);margin-bottom:var(--aside-margin-bottom);}
 aside {margin-right:var(--aside-margin-right);margin-left:var(--aside-margin-left);}
 

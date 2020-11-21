@@ -70,7 +70,7 @@
         
     /* Default foreground (text) and background colors in aside */
     --sidebar-fg: var(--fg);
-    --sidebar-bg: gray;
+    --sidebar-bg: var(--bg);
     /* Link colors specific to sidebar */
     --a-sidebar: var(--a); 
     --a-sidebar-link:  var(--a);

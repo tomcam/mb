@@ -19,6 +19,14 @@
 	--nav-height:5rem;
 
   /* ******************************
+   *  Sidebar dimensions          *
+   * ******************************/
+
+  --sidebar-padding-top:4rem;
+  --sidebar-padding-left:3em;
+  --sidebar-padding-right:1em;
+
+  /* ******************************
    *  Footer dimensions           *
    * ******************************/
 
@@ -53,9 +61,9 @@
    *  Make theme wide style       *
    * ******************************/
 
-  --article-column-width:85%;
+  --article-column-width:80%;
   --alt-article-column-width:65%;
-	--sidebar-width:15%;    
+	--sidebar-width:20%;    
   --left-margin:0%;
   --right-margin:0%;
   --header-footer-width:100%; 

@@ -177,7 +177,7 @@ article > table > tbody > tr > td {padding:1rem;}
 
 aside {height:100vh;}
 
-aside > h2 {padding:1em;text-align:center;font-size:1.2rem;font-weight:700;}
+aside > h2 {text-align:center;font-size:1.2rem;font-weight:700;}
 aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2rem;}
 aside > ul {text-align:right;margin-right:1rem;line-height:1.5em;}
 aside > ul > li {list-style-type:none;} 
