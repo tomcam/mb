@@ -61,13 +61,13 @@
    *  Make theme pillar style     *
    * ******************************/
 
-  --article-column-width:75%;
-  --alt-article-column-width:75%;
+  --article-column-width:65%;
+  --alt-article-column-width:55%;
 	--sidebar-width:20%;    
-  --left-margin:5%; 
-  --right-margin:5%;
-  --header-footer-width:80%;
-  --text-start: 5%; 
+  --left-margin:10%; 
+  --right-margin:10%;
+  --header-footer-width:85%;
+  --text-start:5%; 
 
 
 

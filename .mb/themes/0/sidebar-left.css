@@ -7,7 +7,8 @@ article{margin-right:var(--right-margin);}
 
 /* Updating 11/20/20 */
 article{padding-left:0;margin-left:0;}
-iarticle{margin-left:var(--left-margin);}
+article{width:var(--alt-article-column-width);}
+article{margin-right:15%;}
 aside{padding-left:var(--text-start);}
-iaside{width:12rem;}
-
+aside{margin-left:10%;}
+aside{padding-left:0;}

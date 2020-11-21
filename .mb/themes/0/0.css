@@ -20,7 +20,6 @@ blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
 header {width:var(--header-footer-width);} 
 header {padding-top:3rem;padding-bottom:3.5rem;border-bottom:1px solid var(--trim-fg);}
-
 /*
  * --------------------------------------------------
  * Simplest case: Branded name, nothing else
@@ -63,7 +62,7 @@ header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:9
 /*  NAVBAR                      */
 /* ******************************/
 
-header {width:var(--header-footer-width);} 
+nav {width:var(--header-footer-width);} 
 nav > img {display:inline;}
 
 /*
@@ -103,8 +102,7 @@ nav > ul > li > a:active {text-decoration:underline;}
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
 article{margin-left:var(--left-margin);}
-
-ikarticle{padding-right:var(--sidebar-width);}
+article{width:var(--article-column-width);} 
 article > p, article > ul, article > ol {font-family:var(--formal);}
 article > h1,article > h2 {font-weight:700;}
 article > h1 {font-size:4rem;margin-top:0;margin-bottom:3rem;}
@@ -147,7 +145,7 @@ article > p > code, article > code, article > pre, article > pre > code {
     line-height:1.15em;
     padding: .5em;
 		}
-article > pre { padding-left: 1em;line-height:1.5em;font-size:1.1em;}
+article > pre {line-height:1.5em;font-size:1.1em;}
 article > p > a,
 article > p > a:link,
 article > p >  a:visited
@@ -197,6 +195,7 @@ aside > p {padding:1em;font-size:1.2rem;margin-bottom:0em;}
 /*  FOOTER                      */
 /* ******************************/
 
+footer {width:var(--header-footer-width);} 
 footer {border-bottom:1px solid var(--trim-fg);}
 
 /* ****************************/
