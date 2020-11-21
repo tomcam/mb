@@ -101,6 +101,7 @@ nav > ul > li > a:active {text-decoration:underline;}
 /* ******************************/
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
+
 article{padding-right:var(--sidebar-width);}
 article {padding-top:6em;}
 article > p, article > ul, article > ol {font-family:var(--formal);}
@@ -125,7 +126,6 @@ article > p,
 		font-size:1.5rem;
 		line-height:2.5rem;
 		margin-top:1em;
-    ipadding-right:var(--right-end);
 }
 
 article > ul, article > ol {margin-top:.5em;}
@@ -136,6 +136,7 @@ article > li {margin-left:1rem;}
  * Code listings
  * --------------------------------------------------
  */
+
 article > p > code, article > code, article > pre, article > pre > code {
 		font-family:var(--code);
 		font-size:.8em;
@@ -145,6 +146,12 @@ article > p > code, article > code, article > pre, article > pre > code {
     padding: .5em;
 		}
 article > pre { padding-left: 1em;line-height:1.5em;font-size:1.1em;}
+
+/*
+ * --------------------------------------------------
+ * Links in normal paragraph text
+ * --------------------------------------------------
+ */
 article > p > a,
 article > p > a:link,
 article > p >  a:visited

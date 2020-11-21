@@ -38,7 +38,10 @@ footer {margin-top:var(--footer-margin-top);margin-bottom:var(--footer-margin-bo
 
 
 /* Indent list up to 3 levels */
-li li {margin-left:1rem;}
-li li li {margin-left:1rem;}
-
+li {margin-left:1em;}
+li li {margin-left:1em;}
+li li li {margin-left:1em;}
+li li li li {margin-left:1em;}
+li li li li li {margin-left:1em;}
+li li li li li li {margin-left:1em;}
 

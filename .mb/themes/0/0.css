@@ -124,7 +124,6 @@ article > p,
 		font-size:1.5rem;
 		line-height:2.5rem;
 		margin-top:1em;
-    ipadding-right:var(--right-end);
 }
 
 article > ul, article > ol {margin-top:.5em;}
@@ -145,6 +144,12 @@ article > p > code, article > code, article > pre, article > pre > code {
     padding: .5em;
 		}
 article > pre {line-height:1.5em;font-size:1.1em;}
+
+/*
+ * --------------------------------------------------
+ * Links in normal paragraph text
+ * --------------------------------------------------
+ */
 article > p > a,
 article > p > a:link,
 article > p >  a:visited
