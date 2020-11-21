@@ -1,14 +1,9 @@
 article{float:right;}
 aside{float:left;}
 
-article{margin-right:var(--right-margin);}
-
-
-
-/* Updating 11/20/20 */
+article{margin-right:15%;}
 article{padding-left:0;margin-left:0;}
 article{width:var(--alt-article-column-width);}
-article{margin-right:15%;}
-aside{padding-left:var(--text-start);}
+
 aside{margin-left:10%;}
 aside{padding-left:0;}
