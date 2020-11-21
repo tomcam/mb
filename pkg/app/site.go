@@ -300,6 +300,7 @@ func (a *App) NewSite(sitename string) error {
 		a.QuitError(errs.ErrCode("0911", "from '"+a.themesPath+"' to '"+a.Site.themesPath+"'"))
 	}
 
+  // xxxx
 	// Copy all scodes from the user application data directory
 	// to the project directory.
 	err = copyDirAll(a.sCodePath, a.Site.sCodePath)
@@ -307,7 +308,15 @@ func (a *App) NewSite(sitename string) error {
 		a.QuitError(errs.ErrCode("0915", "from '"+a.sCodePath+"' to '"+a.Site.sCodePath+"'"))
 	}
 
-	// xxx Shouldn'tt his go below the sitn that creates a.Site.Publish
+  // xxxx
+	// Copy all header tags.
+	err = copyDirAll(a.headTagsPath, a.Site.headTagsPath)
+	if err != nil {
+		a.QuitError(errs.ErrCode("0923", "from '"+a.sCodePath+"' to '"+a.Site.sCodePath+"'"))
+	}
+
+	// xxx I think this duplicates code from pub.go somewhere
+  // but not certain
 	a.Site.AssetDir = filepath.Join(a.Site.Publish, a.Site.AssetDir)
 
 	// Create a little home page

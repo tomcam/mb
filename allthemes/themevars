@@ -128,5 +128,5 @@ then
   pbcopy < $OUTFILE
   echo "Contents of ${OUTFILE} have been copied to the Clipboard\n"
 fi
-
+nvim $outfile
 

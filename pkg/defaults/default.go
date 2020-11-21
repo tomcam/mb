@@ -4,7 +4,7 @@ import "github.com/tomcam/mb/pkg/slices"
 
 var (
 	Version = ProductName + " version " +
-		"0.45.0"
+		"0.7.0"
 
 	// Directory configuration for a project--a new site.
 	SiteDirs = [][]string{

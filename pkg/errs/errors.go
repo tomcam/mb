@@ -132,6 +132,7 @@ var errMsgs = map[string]string{
 	"0920": "Error generating Markdown",                            //
 	"0921": "Error generating TOC",                                 // custom message
 	"0922": "Can't copy a file onto itself. That would be silly.", //
+	"0923": "Unable to copy header tags directory to site directory",    // custom message
 
 	// 0950 - Something's already there
 	"0951": "Site already exists:", // sitename

@@ -1,3 +1,6 @@
+# Utilities
+  - cmpthemes compares CSS files for 2 different themes
+  
 # Bugs
 
 # Todo

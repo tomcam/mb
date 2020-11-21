@@ -6,6 +6,7 @@
 [mbz0126 Error reading config file](errors/0126.html)  
 [mbz0917 Unterminated quote string](errors/0917.html#unterminated)   
 [mbz0917 Function not defined](errors/0917.html#function-not-defined)   
+[mbz0923 Unable to copy header tags directory to site directory](errors/0923.html)
 [mbz0951 Site already exists](errors/0951.html)  
 [mbz1004 Theme was specified, but couldn't find a theme directory](errors/1004.html)   
 [mbz1015 Theme specifies a file that can't be found](errors/1015.html)   

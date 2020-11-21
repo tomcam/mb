@@ -11,7 +11,7 @@
 * [Functions](functions.html)
 * [Glossary](glossary.html)
 * [Header](header.html)
-* [Head Tags Directory](headtags-dir.html)
+* [Head Tags Directory](headtags.html)
 * [Internal documentation notes](documenting.html)
 * Markdown
   * [Lists](lists.html)

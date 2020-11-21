@@ -1,13 +1,16 @@
 # Metabuzz theme architecture
 
 ## TODO: Things to cover
-* wide vs. pillar
+* Mention that the following are added automatically
+  responsive.css 
+  theme-dark.css
+* wide vs. pillar: THIS NEEDS UPDATING
   - Most themes are based on Textual.
   - Textual can be either wide or pillar style. It defauls to wide.
   - To make it pillar style, 
     1. Add this to the bottom of `sizes.css`
     `--alt-article-column-width:65%;`
-    1. Create the filler `pillar.css` with these contents
+    1. Create the file `pillar.css` with these contents
     `header,nav,article,footer {width:var(--alt-article-column-width);}`
     1. Include the file "pillar.css" directly
     after "sizes.css" in the Toml file, something like this:
@@ -247,7 +250,7 @@ Metabuzz distinguishes between what it calls "root stylesheets" and "stylesheets
 
 ```
 stylesheets = [ "sizes.css", "theme-light.css", 
-  "wide.css", "responsive.css"  ]
+  "wide.css" ]
 
 rootstylesheets = [ "reset.css", "fonts.css", "layout.css" ]
 ```
@@ -260,7 +263,7 @@ force theme to be split into two lines in the example below.
 
 ```
 stylesheets = [ "sizes.css", "theme-light.css", 
-  "wide.css", "responsive.css"  ]
+  "wide.css"]
 
 rootstylesheets = [ "reset.css", "fonts.css", "layout.css" ]
 

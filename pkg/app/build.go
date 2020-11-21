@@ -52,7 +52,6 @@ func (a *App) build() error {
 		}
 
 		// Go through all the Markdown files and convert.
-		// xxx
 		// Start search index JSON file with opening '['
 		a.DelimitIndexJSON(a.Site.SearchJSONFilePath, true)
 		commaNeeded := false
