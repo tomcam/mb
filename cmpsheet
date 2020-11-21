@@ -1,0 +1,17 @@
+
+#!/bin/zsh
+# Hacky utility to diff selected stylesheets of 2 different themes
+# Pretty much just made for my machine and probably
+# shouldn't be in the distribution
+
+if [ $# -ne 3 ]; then
+  echo "Need the name of both themes, then the stylesheet to compare"
+  echo "Example:"
+  echo "$ cmpsheet wide pillar layout.css"
+  exit 2
+fi
+echo "Comparing stylesheet ${1} to theme ${2}"
+
+themedir=~/code/mb/.mb/themes
+diff $themedir/$1/$3 $themedir/$2/$3 | less
+
