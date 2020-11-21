@@ -1,0 +1,63 @@
+#!/bin/zsh
+# Hacky utility to diff main files of 2 different themes
+# Pretty much just made for my machine and probably
+# shouldn't be in the distribution
+declare -a files=(
+  'bind.css'
+  'fonts.css'
+  'layout.css'
+  'pillar.css'
+  'reset.css'
+  'responsive.css'
+  'sidebar-left.css'
+  'sidebar-right.css'
+  'sizes.css'
+  'theme-dark.css'
+  'theme-light.css'
+	)
+
+
+if [ $# -ne 2 ]; then
+  #echo 1>&2 "$0: not enough arguments"
+  echo "Need the name of 2 themes to compare"
+  exit 2
+fi
+echo "Comparing theme ${1} to theme ${2}"
+
+themedir=/Users/tom/code/mb/.mb/themes
+# Loop through the array
+for file in "${files[@]}"
+do
+	# And execute the command
+  echo "Comparing ${themedir}/${1}/${file} ${themedir}/${1}/${file} "
+  read answer
+	diff $themedir/$1/$file $themedir/$2/$file | less
+	#diff ../.mb/themes/$1/$file ../.mb/themes/$2/$file 
+	#echo "Comparing ../.mb/themes/${1}/${file} ../.mb/themes/${1}/${file} "
+  
+done
+
+: '
+reset.css
+bind.css
+layout.css
+responsive.css
+page-pillar.css
+page-wide.css
+sidebar-left.css
+sidebar-right.css
+sizes.css
+new-wide.css
+theme-dark.css
+theme-light.css
+
+new-wide.toml
+
+article.md
+footer.md
+header.md
+nav.md
+sidebar.md
+'
+
+

@@ -19,9 +19,9 @@ nav {width:var(--header-footer-width);}
 nav {margin-right:var(--right-margin);margin-left:var(--text-start);}
 nav {margin-top:var(--navbar-margin-top);margin-bottom:var(--navbar-margin-bottom);}
 
+
 article {width:var(--article-column-width);} 
 article {color:var(--article-fg);background-color:var(--article-bg);}
-article {width:var(--article-column-width);}                       
 article {padding-top:var(--article-padding-top);padding-bottom:var(--article-padding-bottom);}
 article {line-height:var(--article-line-height);}
 article > p 
