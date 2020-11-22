@@ -1,0 +1,169 @@
+#!/bin/zsh
+# A theme can have many variation: no sidebar, left sidebar,
+# dark mode, light mode, etc. This generates
+# a tiny test Markdown file for each variation (See BODY below)
+# then generates a file named $OUTFILE. It also tries to
+# run pbcopy, which on a Mac copies the contents of a file
+# to the clipboard.
+# $OUTFILE contains all of those variations and a header, so the contents
+# can be copied into a document allowing you to test each version
+# of each theme.
+if [ $# -ne 1 ]; then
+  echo "Need the name of a theme or pagetype"
+  exit 1
+fi
+
+dir=`dirname ${1}`
+theme=`basename ${1}`
+basename=`basename ${1}`
+
+if [ $dir = "." ]; then 
+  # Something like this:
+  # ./themevars debut
+  dir=$theme
+  outpath=$dir
+else
+  # Something like this:
+  # ./themevars debut/gallery
+  pagetype="pagetype=\"$theme\""
+  theme=`dirname ${1}`
+  dir=$theme/$basename
+  outpath=$dir
+fi
+mkdir -p $dir
+echo "Created dir ${dir}"
+echo "Pagetype: ${pagetype}"
+echo "Theme: ${theme}"
+echo "Basename: ${basename}"
+echo "Outpath: ${outpath}"
+read _
+
+# The actual Markdown is the same for all test files
+read -r -d '' BODY << EOM
+{{ inc "theme-and-variations.md" }}
+{{ inc "mdemo.md" }}
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_LEFT=light-mode-sidebar-left
+read -r -d '' LIGHT_MODE_SIDEBAR_LEFT << EOM
+===
+theme="$theme"
+$pagetype
+mode="light"
+sidebar="left"
+===
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_NONE=light-mode-sidebar-none
+read -r -d '' LIGHT_MODE_SIDEBAR_NONE << EOM
+===
+theme="$theme"
+$pagetype
+mode="light"
+sidebar="none"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_LEFT=dark-mode-sidebar-left
+read -r -d '' DARK_MODE_SIDEBAR_LEFT << EOM
+===
+theme="$theme"
+$pagetype
+mode="dark"
+sidebar="left"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_NONE=dark-mode-sidebar-none
+read -r -d '' DARK_MODE_SIDEBAR_NONE << EOM
+===
+theme="$theme"
+$pagetype
+mode="dark"
+sidebar="none"
+===
+EOM
+
+FILE_LIGHT_MODE_SIDEBAR_RIGHT=light-mode-sidebar-right
+read -r -d '' LIGHT_MODE_SIDEBAR_RIGHT << EOM
+===
+theme="$theme"
+$pagetype
+mode="light"
+sidebar="right"
+===
+EOM
+
+FILE_DARK_MODE_SIDEBAR_RIGHT=dark-mode-sidebar-right
+read -r -d '' DARK_MODE_SIDEBAR_RIGHT << EOM
+===
+theme="$theme"
+$pagetype
+mode="dark"
+sidebar="right"
+===
+EOM
+
+
+
+# Create an array of files
+# The contents of the files themeselves.
+declare -a files=(
+  $LIGHT_MODE_SIDEBAR_LEFT 
+  $LIGHT_MODE_SIDEBAR_RIGHT
+  $LIGHT_MODE_SIDEBAR_NONE
+  $DARK_MODE_SIDEBAR_LEFT
+  $DARK_MODE_SIDEBAR_RIGHT 
+  $DARK_MODE_SIDEBAR_NONE
+	)
+
+# The matching filenames
+declare -a filenames=(
+  $FILE_LIGHT_MODE_SIDEBAR_LEFT 
+  $FILE_LIGHT_MODE_SIDEBAR_RIGHT
+  $FILE_LIGHT_MODE_SIDEBAR_NONE
+  $FILE_DARK_MODE_SIDEBAR_LEFT 
+  $FILE_DARK_MODE_SIDEBAR_RIGHT
+  $FILE_DARK_MODE_SIDEBAR_NONE
+	)
+
+# The matching descriptions (anchor text) 
+declare -a descriptions=(
+  "Light theme with left sidebar" 
+  "Light theme with right sidebar" 
+  "Light theme with no sidebar" 
+  "Dark theme with left sidebar" 
+  "Dark theme with right sidebar" 
+  "Dark theme with no sidebar" 
+	)
+
+# This is the name of the file that will contain links
+# to all the generated files.
+OUTFILE="$dir/$theme.md"
+echo "## ${outpath}" > $OUTFILE
+for ((idx=1; idx<=${#filenames[@]}; idx++)); do
+  # Get the filename, like light-mode-sidebar-left
+  filename=${filenames[idx]}
+
+  # Create the complete output directory & filename
+  # Precede the filename with the theme name and a hyphen, like "debut-"
+  #md=$dir/$theme-$filename.md
+  md=$dir/$filename.md
+  echo "Should be creating ${md}"
+  anchortext=${descriptions[idx]}
+  echo "${files[idx]}" > $md
+  echo $BODY >> $md
+  echo "* [${anchortext}]($dir/${filename}.html)" >> $OUTFILE
+  echo "about to touch $dir/theme-and-variations.md"
+  read _
+  touch $dir/theme-and-variations.md
+  touch $dir/mdemo.md
+done
+echo "Created file ${OUTFILE}. "
+cat $OUTFILE
+if command -v pbcopy &> /dev/null
+then
+  pbcopy < $OUTFILE
+  echo "Contents of ${OUTFILE} have been copied to the Clipboard\n"
+fi
+
