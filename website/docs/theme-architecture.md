@@ -29,6 +29,24 @@
     --header-footer-width:80%;
     --text-start: 5%; 
     ````
+Or wide style
+
+
+```
+  /* ******************************
+   *  Make theme wide style       *
+   * ******************************/
+
+  --article-column-width:80%;
+  --alt-article-column-width:65%;
+	--sidebar-width:20%;    
+  --left-margin:0%;
+  --right-margin:0%;
+  --header-footer-width:100%; 
+  --text-start: 20%;
+```
+
+
 
 * Explain how --left-margin and --right-margin are used by header,nav,article,footer
 * theme names are forced to lowercase internally, so they're not case senstive
