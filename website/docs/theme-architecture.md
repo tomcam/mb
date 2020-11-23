@@ -1,6 +1,11 @@
 # Metabuzz theme architecture
 
 ## TODO: Things to cover
+* --text-start works on header, footer all the time.
+  It is different with a left sidebar. That's because
+  it's a padding size, buut that amount is increased
+  by the size of the sidebar.
+  
 * Mention that the following are added automatically
   responsive.css 
   theme-dark.css
