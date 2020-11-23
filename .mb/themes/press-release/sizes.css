@@ -87,7 +87,10 @@
   --article-column-width:65%;
   --alt-article-column-width:55%;
 	--sidebar-width:20%;    
-  --left-margin:10%; 
+  /* --left-margin computed as 65% 
+   * (there's no sidebar) minus 
+   * half of the remaining 35% */
+  --left-margin: 17.5%; 
   --right-margin:10%;
   --header-footer-width:85%;
   --text-start:5%; 
