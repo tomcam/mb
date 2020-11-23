@@ -23,11 +23,14 @@ nav {width:var(--header-footer-width);}
 nav {margin-right:var(--right-margin);margin-left:var(--left-margin);}
 
 article {color:var(--article-fg);background-color:var(--article-bg);}
-article {width:var(--article-column-width);}                       
+
+/* Makes sense only when there are no sidebars */
+article {width:var(--header-footer-width);}                       
 article {margin-top:var(--article-margin-top);padding-bottom:var(--article-margin-bottom);}
-article {padding-left:var(--left-margin);}
+article {margin-left:var(--left-margin);}
 article {padding-top:var(--article-padding-top);padding-bottom:var(--article-padding-bottom);}
-article {margin-left:var(--text-start);}
+article {padding-left:var(--text-start);}
+
 h1{font-size:var(--h1-font-size);padding-top:var(--h1-padding-top);padding-bottom:var(--h1-padding-bottom);margin-top:var(--h1-margin-top);margin-bottom:var(--h1-margin-bottom);}
 h2{font-size:var(--h2-font-size);padding-top:var(--h2-padding-top);padding-bottom:var(--h2-padding-bottom);margin-top:var(--h2-margin-top);margin-bottom:var(--h2-margin-bottom);}
 h3{font-size:var(--h3-font-size);padding-top:var(--h3-padding-top);padding-bottom:var(--h3-padding-bottom);margin-top:var(--h3-margin-top);margin-bottom:var(--h3-margin-bottom);}
@@ -39,6 +42,10 @@ h6{font-size:var(--h6-font-size);padding-top:var(--h6-padding-top);padding-botto
 
 aside {color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
 aside {width:var(--sidebar-width);}                            
+aside{margin-right:var(--sidebar-margin-right);}
+
+/* aside, header, footer should use simple left-margin */
+/* aside{margin-left:var(--left-margin);} */
 
 
 footer {color:var(--footer-fg);background-color:var(--footer-bg);} 

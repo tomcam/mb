@@ -1,2 +1,4 @@
+/*
 header,nav,article,footer {width:var(--alt-article-column-width);}
-
+*/
+iarticle{width:var(--header-footer-width);}

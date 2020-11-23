@@ -32,7 +32,7 @@
    * ******************************/
 
   /* Same as header {margin-top:}  */
-  --article-margin-top:3rem;
+  --article-margin-top:0rem;
 
   /* Same as article {margin-bottom:}  */
   --article-margin-bottom:3rem;
@@ -43,19 +43,21 @@
   /* Same as header {padding-bottom} */
   --article-padding-bottom:3.5rem;
 
+  /* Same as article h1 {font-size}, h1 {padding}, h1 {margin} */
   --h1-font-size:2.5rem;
   --h1-padding-top:0em;
   --h1-padding-bottom:0em;
   --h1-margin-top:0em;
   --h1-margin-bottom:0em;
 
+  /* Same as article h2 {font-size}, h2 {padding}, h2 {margin} */
   --h2-font-size:2rem;
   --h2-padding-top:0em;
   --h2-padding-bottom:0em;
   --h2-margin-top:1.5em;
   --h2-margin-bottom:0em;
 
- 
+  /* Same as article h3 {font-size}, h3 {padding}, h3 {margin} */
   --h3-font-size:2rem;
   --h3-padding-top:1em;
   --h3-padding-bottom:0em;
@@ -63,20 +65,21 @@
   --h3-margin-bottom:0em;
 
 
+  /* Same as article h4 {font-size}, h5 {padding}, h5 {margin} */
   --h4-font-size:1rem;
   --h4-padding-top:.75em;
   --h4-padding-bottom:0em;
   --h4-margin-top:0em;
   --h4-margin-bottom:0em;
 
-
+  /* Same as article h5 {font-size}, h5 {padding}, h5 {margin} */
   --h5-font-size:.9rem;
   --h5-padding-top:0em;
   --h5-padding-bottom:0em;
   --h5-margin-top:0em;
   --h5-margin-bottom:0em;
 
-
+  /* Same as article h6 {font-size}, h6 {padding}, h6 {margin} */
   --h6-font-size:.7rem;
   --h6-padding-top:0em;
   --h6-padding-bottom:0em;

@@ -21,7 +21,7 @@
 
     /* Default foreground (text) and background colors  */
     --fg: black;
-    --bg: white;
+    --bg: var(--trim-fg);
     /* Default link colors */
     --a: blue;
     --a-link: var(--a);
@@ -37,7 +37,7 @@
     
     /* Primary foreground (text) and background colors in header */
     --header-fg: var(--fg);
-    --header-bg: var(--bg);
+    --header-bg: white;
     /* Link colors specific to header */
     --a-header: var(--header-fg); 
     --a-header-link:  var(--header-fg);
@@ -48,7 +48,7 @@
 
     /* Primary foreground (text) and background colors in navbar */
     --nav-fg:var(--fg);
-    --nav-bg:var(--bg);
+    --nav-bg:white;
     /* Link colors specific to navbar */
     --a-nav: var(--a); 
     --a-nav-link:  var(--a);
@@ -59,7 +59,7 @@
 
     /* Default foreground (text) and background colors in article */
     --article-fg: var(--fg);
-    --article-bg: var(--bg);
+    --article-bg: white;
     /* Link colors specific to article */
     --a-article: var(--a); 
     --a-article-link:  var(--a);
@@ -70,7 +70,7 @@
         
     /* Default foreground (text) and background colors in aside */
     --sidebar-fg: var(--fg);
-    --sidebar-bg: var(--bg);
+    --sidebar-bg: white;
     /* Link colors specific to sidebar */
     --a-sidebar: var(--a); 
     --a-sidebar-link:  var(--a);
@@ -81,7 +81,7 @@
 
     /* Primary foreground (text) and background colors in footer */
     --footer-fg:var(--fg);
-    --footer-bg:var(--bg);
+    --footer-bg:white;
     /* Link colors specific to footer */
     --a-footer: var(--a);
     --a-footer-link: var(--a);
