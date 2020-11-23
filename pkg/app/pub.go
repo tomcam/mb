@@ -1,7 +1,6 @@
 package app
 
 import (
-  "fmt"
 	"bytes"
 	"encoding/json"
 	"github.com/tomcam/mb/pkg/defaults"
@@ -324,25 +323,22 @@ func (a *App) publishLocalFiles(dir string) bool {
 	// First check the directory to ensure there's at least 1 markdown file.
 	hasMarkdown := false
 
-	// Look for the specific file README.md, which competes with
-	// index.md:
-	// https://stackoverflow.com/questions/58826517/why-do-some-static-site-generators-use-readme-md-instead-of-index-md
 	for _, file := range candidates {
 		filename := file.Name()
 		if hasExtensionFrom(filename, defaults.MarkdownExtensions) {
 			hasMarkdown = true
 		}
 
+    // Look for the specific file README.md, which competes with
+    // index.md:
+    // https://stackoverflow.com/questions/58826517/why-do-some-static-site-generators-use-readme-md-instead-of-index-md
 		if filename == "README.md" {
-			//a.Site.dirs[dir].MdOptions |= HasReadmeMd
 			a.addMdOption(dir, HasReadmeMd)
 
 		}
 		if strings.ToLower(filename) == "index.md" {
-			//a.Site.dirs[dir].MdOptions |= HasIndexMd
 			a.addMdOption(dir, HasIndexMd)
 		}
-
 	}
 
 	if hasMarkdown {
@@ -371,7 +367,6 @@ func (a *App) publishLocalFiles(dir string) bool {
 				copyTo := filepath.Join(a.Site.Publish, relDir, filename)
 				//a.Verbose("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
 				if err := Copy(copyFrom, copyTo); err != nil {
-					//a.QuitError(err.Error())
 					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 				}
 				// TODO: Get rid of fileExists() when possible
@@ -413,32 +408,6 @@ func (a *App) getMode(stylesheet string) string {
 		stylesheet = "theme-dark.css"
 	}
 	return stylesheet
-}
-
-// addPillar() appends a stylesheet called pillar.css.
-// It is meant for themes based on Textual, which with
-// just a few
-// publishAssets() copies out the stylesheets, graphics, and other
-// relevant files from the pageType (or default theme) directory
-// to be published.
-// TODO: I think this was just made totally manual
-func (a *App) addPillar() {
-	if (a.Page.Theme.Wide) {
-    fmt.Println("NO PILLAR FOR YOU")
-    // xxxx
-  } else {
-const fileContents = `
-header,nav,article,footer {width:var(--alt-article-column-width);}
-`
-    filename := "pillar.css"
-	  fullFilename := filepath.Join(a.fullTargetThemeDir(), filename)
-    a.appendStr(stylesheetTag(filepath.Join(a.relTargetThemeDir(),filename)))
-    err := writeTextFile(fullFilename, fileContents)
-    if err != nil {
-			a.QuitError(errs.ErrCode("0213", fullFilename))
-    }
-
- }
 }
 
 func (a *App) publishAssets() {
@@ -493,12 +462,14 @@ func (a *App) publishAssets() {
 	}
 }
 
+/*
 // CSSDir() computes the fully qualified directory
 // name for .CSS files, based on App.assetPath()
 // (it is assumed to be a subdirectory of assetPath())
 func (a *App) CSSDir() string {
 	return filepath.Join(a.assetPath(), a.Site.CSSDir)
 }
+*/
 
 // ImageDir() computes the fully qualified directory
 // name for image files, based on App.assetPath()
@@ -529,7 +500,7 @@ func (a *App) fullTargetThemeDir() string {
 // in the theme and copies it to the destination (publish)
 // directory.
 func (a *App) copyStyleSheet(file string) {
-	// Don't try to copy the file if it's a URL
+	// Pass through if not a local file
   //fmt.Printf("copyStylesheet() %s\n", file)
 	if strings.HasPrefix(strings.ToLower(file), "http") {
 		a.appendStr(stylesheetTag(file))
@@ -583,13 +554,14 @@ func (a *App) copyRootStylesheets() {
 // publishing (asset) directory
 func (a *App) copyStyleSheets(p PageType) {
 	dir := a.fullTargetThemeDir()
-  /* xxx Need a better check
+  /* xxxx Need a better check
 	if dirExists(dir) {
 		fmt.Println("Directory " + dir + " already exists. Sayanara. xxx")
 		return
 	}
   */
 	//fmt.Printf("copyStyleSheets() Creating theme directory %s\n", dir)
+  //fmt.Printf("copyStyleSheets() relative directory is %v\n",filepath.Rel(
 	if err := os.MkdirAll(dir, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", dir))
 	}

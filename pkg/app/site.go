@@ -93,10 +93,6 @@ type Site struct {
 	// Directory for finished site--rendered HTML & asset output
 	Publish string
 
-	// Fully qualified directory name of the location themes get copied
-	// to in the published site
-	pubThemesPath string
-
 	// Full path of shortcode dir for this project. It's computed
 	// at runtime using SCodeDir, also in this struct.
 	sCodePath string
@@ -112,7 +108,6 @@ type Site struct {
 	// Social media URLs
 	Social socialConfig
 
-	// Language tag for html lang=
 	// Name (not path) of Theme used by this site unless overridden in front matter.
 	Theme string
 
@@ -160,14 +155,14 @@ type OG struct {
 	Image_alt        string
 }
 
-type dirInfo struct {
-	mdOptions MdOptions
-}
-
 // Indicates whether it's directory, a directory containing
 // markdown files, or file, or a Markdown file.
 // Used for bit flags
 type MdOptions uint8
+
+type dirInfo struct {
+	mdOptions MdOptions
+}
 
 const (
 	// Known to be a directory with at least 1 Markdown file
@@ -348,7 +343,6 @@ func (a *App) SiteDefaults() {
 	// Unlike the other dot directories, Publish is only
 	// 1 level deep. It is not nested inside the .mb directory
 	a.Site.Publish = filepath.Join(a.Site.path, defaults.PublishDir)
-	a.Site.pubThemesPath = filepath.Join(a.Site.Publish, defaults.ThemeDir)
 
 	// xxx
 	a.Site.SearchJSONFilePath = filepath.Join(a.Site.Publish, defaults.SearchJSONFilename)

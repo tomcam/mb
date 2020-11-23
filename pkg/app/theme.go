@@ -89,6 +89,12 @@ type PageType struct {
 // It defaults to the name of the component, so if it's a nav and
 // no filename is specified it assumes nav.html
 // Inline HTML would override File if both are specified.
+// These correspond directly to the entries in themename.toml
+// that look like this:
+//  [Header]
+//  HTML=""
+//  File="header.md"
+//
 type layoutElement struct {
 	// Inline HTML
 	HTML string
@@ -103,7 +109,7 @@ func (a *App) parentThemeFullDirectory() string {
 	return filepath.Join(a.themesPath, a.FrontMatter.Theme)
 }
 
-// Return the fuly qualified filenae of the
+// Return the fuly qualified filename of the
 // parent theme, including the .toml extension.
 func (a *App) parentThemeFullPath() string {
 	return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
@@ -160,7 +166,8 @@ func (a *App) loadTheme(parent bool) {
   }
 	var p PageType
 	if err := readTomlFile(themePath, &p); err != nil {
-		a.QuitError(errs.ErrCode("0105", fmt.Errorf("Problem reading TOML file %s for pagetype %s\n", themePath, a.FrontMatter.PageType).Error()))
+		//a.QuitError(errs.ErrCode("0105", fmt.Errorf("Problem reading TOML file %s for pagetype %s\n", themePath, a.FrontMatter.PageType).Error()))
+		a.QuitError(errs.ErrCode("0105", themePath, a.FrontMatter.PageType))
 	}
 	a.Page.Theme.PageType = p
   if parent {
