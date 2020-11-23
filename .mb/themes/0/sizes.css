@@ -142,27 +142,41 @@
    *  Make theme pillar style     *
    * ******************************/
 
-  --article-column-width:60%;
+  /*  IMPORTANT
+      The following should always add up to 100%: 
+      --article-column-width 
+      --left-margin
+      --right-margin
 
-  /* Use this when there are sidebars. 
-   * Compute as:
-   * --article-column-width --sidebar-width */
-  --alt-article-column-width:45%;
-	--sidebar-width:15%; 
 
-  /* To center the whole client area given the
-   * left and right margins:
-   * From 100% 
-   *   subtract --article-column-width (because that includes sidebars)
-   *   Multiple the remainder by .25
-   *
-   * 100% - 60% = 30%
-   *
+      IMPORTANT
+      --alt-article-column-width and  --sidebar-width 
+      should always sum up to --article-column-width 
+   
+  */
+
+  /* --article-column-width is width of article plus sidebar */
+  --article-column-width:70%;
+
+  /* --alt-article-column-width is width of article WITHOUT sidebar 
+   * Added to --sidebar-width it should always sum up to
+   * --article-column-width */
+  --alt-article-column-width:55%;
+
+  /* --sidebar-width must be the same as
+   * --article-column-width MINUS --alt-article-column-width
    */
+  --sidebar-width:15%;
 
-  --left-margin:17.5%;
-  --right-margin:10%;
-  --header-footer-width:60%;
+  /* --header-footer-width should normally be the same
+   * as --article-column-width That's because they 
+   * stretch out with botht the article and the sidebar. */
+  --header-footer-width:var(--article-column-width);
+
+  --left-margin:15%;
+  --right-margin:15%;
+
+  /* --text-start is a padding value not a maring */
   --text-start:5%; 
 
 }

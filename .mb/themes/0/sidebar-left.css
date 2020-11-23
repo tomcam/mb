@@ -1,14 +1,11 @@
 article{float:right;}
 
-article{padding-left:0;}
-/* With sidebar to left no padding is needed  */
-article{margin-left:0;}
+/* This is the header and footer width minus sidebar width */
 article {width:var(--alt-article-column-width);}
-
-/* Compute this as follows: */
-
-article{margin-right:22.5%}
-article{padding-left:0;}
-
-/* ASIDE */
+/* With sidebar to left no article margin is needed  */
+article{margin-left:0;}
+/* Which means the sidebar needs that margin. */
 aside{margin-left:var(--left-margin);}
+
+
+
