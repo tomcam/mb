@@ -1,6 +1,9 @@
 # Utilities
   - cmpthemes compares CSS files for 2 different themes
-  
+  - cmpsheet diff selected stylesheets of 2 different themes  
+  - themevars generates source .md files
+    to test all possible versions of a
+    theme (sidebar variations, ligt/dark).
 # Bugs
 
 # Todo
