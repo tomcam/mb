@@ -23,9 +23,7 @@ nav {width:var(--header-footer-width);}
 nav {margin-right:var(--right-margin);margin-left:var(--left-margin);}
 
 article {color:var(--article-fg);background-color:var(--article-bg);}
-
-/* Makes sense only when there are no sidebars */
-article {width:var(--header-footer-width);}                       
+article {width:var(--article-column-width);}                       
 article {margin-top:var(--article-margin-top);padding-bottom:var(--article-margin-bottom);}
 article {margin-left:var(--left-margin);}
 article {margin-right:var(--right-margin);}
@@ -40,21 +38,16 @@ h5{font-size:var(--h6-font-size);padding-top:var(--h5-padding-top);padding-botto
 h6{font-size:var(--h6-font-size);padding-top:var(--h6-padding-top);padding-bottom:var(--h6-padding-bottom);margin-top:var(--h6-margin-top);margin-bottom:var(--h6-margin-bottom);}
 
 
-
 aside {color:var(--sidebar-fg);background-color:var(--sidebar-bg);} 
 aside {width:var(--sidebar-width);}                            
-aside{margin-right:var(--sidebar-margin-right);}
-
-/* aside, header, footer should use simple left-margin */
-/* aside{margin-left:var(--left-margin);} */
 
 
 footer {color:var(--footer-fg);background-color:var(--footer-bg);} 
 footer {margin-top:var(--footer-margin-top);margin-bottom:var(--footer-margin-bottom);}
+footer {margin-right:var(--right-margin);margin-left:var(--left-margin);}
 footer {padding-top:var(--footer-padding-top);padding-bottom:var(--footer-padding-bottom);padding-left:var(--text-start);padding-right:var(--footer-padding-right);}
 footer {clear:both;}    
-footer {width:var(--footer-width);} 
-footer {margin-top:var(--footer-margin-top);margin-bottom:var(--footer-margin-bottom);margin-right:var(--right-margin);margin-left:var(--left-margin);}
+footer {width:var(--header-footer-width);}
 
 
 /* Indent lists */
