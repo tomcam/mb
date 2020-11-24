@@ -102,8 +102,6 @@ header > ul > li > a:active
 	{color:var(--header-fg);}
 
 header > ul > li:first-child > a {color:var(--header-fg);}
-header > ul > li:last-child > a {border: 2px solid var(--header-fg);color:var(--header-fg);}
-header > ul > li:last-child > a:hover {color: var(--header-bg);background-color: var(--header-fg);}
 
 /* NAVBAR */
 nav > p {background-color:var(--nav-bg); }
@@ -128,7 +126,7 @@ article > p >  a:active
 article > p{color:#F2F2F2;}
 article > h1 {color:#F2F2F2;}
 article > h2, article > h3 {color:#b8c6d4;}
-article > h4 {color:gray;} 
+article > h4 {color:#F2F2F2;} 
 article > h4 > strong {color:black; } 
 
 article > p > code, article > code, article > pre, article > pre > code {

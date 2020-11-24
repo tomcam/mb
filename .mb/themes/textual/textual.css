@@ -10,8 +10,6 @@ blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/
 
-header {border-bottom:1px solid var(--trim-fg);}
-
 /*
  * --------------------------------------------------
  * Simplest case: Branded name, nothing else
@@ -32,7 +30,7 @@ header > p {font-size:var(--branding-height);font-weight:900;display:inline;}
  */
 header > ul {line-height:var(--header-height);}
 header > ul {margin-left:0;list-style-type:none;display:inline;}
-header > ul > li{display:inline;padding-right:1.5rem;font-size:1.25rem;} 
+header > ul > li{display:inline;font-size:1.25rem;} 
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
@@ -154,9 +152,11 @@ article > p >  a:active
  * --------------------------------------------------
  */
 article > img, article > p > img {
-  width:100%;
+  /*
+   * width:100%;
   box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
   display:block;
+   * */
 }
 
 article > table {margin-top:2rem;margin-bottom:3rem;}
