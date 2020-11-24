@@ -49,12 +49,3 @@ footer {padding-top:var(--footer-padding-top);padding-bottom:var(--footer-paddin
 footer {clear:both;}    
 footer {width:var(--header-footer-width);}
 
-
-/* Indent lists */
-li {margin-left:0em;}
-li li {margin-left:1em;}
-li li li {margin-left:1em;}
-li li li li {margin-left:1em;}
-li li li li li {margin-left:1em;}
-li li li li li li {margin-left:1em;}
-

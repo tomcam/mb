@@ -48,13 +48,3 @@ footer {margin-right:var(--right-margin);margin-left:var(--left-margin);}
 footer {padding-top:var(--footer-padding-top);padding-bottom:var(--footer-padding-bottom);padding-left:var(--text-start);padding-right:var(--footer-padding-right);}
 footer {clear:both;}    
 footer {width:var(--header-footer-width);}
-
-
-/* Indent lists */
-li {margin-left:0em;}
-li li {margin-left:1em;}
-li li li {margin-left:1em;}
-li li li li {margin-left:1em;}
-li li li li li {margin-left:1em;}
-li li li li li li {margin-left:1em;}
-

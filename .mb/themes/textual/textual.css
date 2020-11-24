@@ -3,15 +3,19 @@ html,body,p {font-family:var(--informal),sans-serif;}
 /* OTOH Courier is a lousy code font by default */
 code,pre{font-family:var(--code),monospace;}
 
-table > thead > tr > th  {margin-top:4rem;}
-blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
+/* Indent lists */
+li {margin-left:0em;}
+li li {margin-left:1em;}
+li li li {margin-left:1em;}
+li li li li {margin-left:1em;}
+li li li li li {margin-left:1em;}
+li li li li li li {margin-left:1em;}
+
 
 /* ****************************/
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/
 
-/* XXX Temporary */
-header {border-bottom:1px solid var(--trim-fg);}
 /*
  * --------------------------------------------------
  * Simplest case: Branded name, nothing else
@@ -32,7 +36,7 @@ header > p {font-size:var(--branding-height);font-weight:900;display:inline;}
  */
 header > ul {line-height:var(--header-height);}
 header > ul {margin-left:0;list-style-type:none;display:inline;}
-header > ul > li{display:inline;font-size:1.25rem;} 
+header > ul > li{display:inline;padding-right:.5rem;font-size:1.25rem;} 
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
@@ -53,10 +57,6 @@ header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:9
 /* ******************************/
 /*  NAVBAR                      */
 /* ******************************/
-
-/* XXX Temporary */
-nav {border-bottom:1px solid var(--trim-fg);}
-
 
 nav {width:var(--header-footer-width);} 
 nav > img {display:inline;}
@@ -122,6 +122,9 @@ article > p,
 
 article > ul, article > ol {margin-top:.5em;}
 article > li {margin-left:1rem;}
+
+article > table > thead > tr > th  {padding-top:2em;}
+article > blockquote {font-style:italicmargin: 2rem 2rem 2rem 2rem;}
 
 /*
  * --------------------------------------------------
@@ -253,5 +256,4 @@ footer > table > tbody > tr > td > a:visited
 footer > table > tbody > tr > td > a:hover,
 footer > table > tbody > tr > td > a:active
 	{text-decoration:underline;}
-
 

@@ -1,1 +1,0 @@
-FOOTER.MD  in THEME

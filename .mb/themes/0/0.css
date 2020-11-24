@@ -3,12 +3,13 @@ html,body,p {font-family:var(--informal),sans-serif;}
 /* OTOH Courier is a lousy code font by default */
 code,pre{font-family:var(--code),monospace;}
 
-h1{ font-size:2.5em;padding-top:2rem; }
-h2{ font-size:2em;padding-top:1.5rem; }
-h3{ font-size:1.5em;padding-top:1.5rem; }
-h4{ font-size:1em;padding-top:1rem;}
-h5{ font-size:1.2em;padding-top:.5rem;}
-h6{ font-size:0.9em; }
+/* Indent lists */
+li {margin-left:0em;}
+li li {margin-left:1em;}
+li li li {margin-left:1em;}
+li li li li {margin-left:1em;}
+li li li li li {margin-left:1em;}
+li li li li li li {margin-left:1em;}
 
 table > thead > tr > th  {margin-top:4rem;}
 blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
@@ -39,7 +40,7 @@ header > p {font-size:var(--branding-height);font-weight:900;display:inline;}
  */
 header > ul {line-height:var(--header-height);}
 header > ul {margin-left:0;list-style-type:none;display:inline;}
-header > ul > li{display:inline;padding-right:1.5rem;font-size:1.25rem;} 
+header > ul > li{display:inline;padding-right:.5rem;font-size:1.25rem;} 
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
@@ -128,6 +129,17 @@ article > p,
 article > ul, article > ol {margin-top:.5em;}
 article > li {margin-left:1rem;}
 article{padding-left:var(--text-start);}
+
+/* Indent lists */
+article > li {margin-left:0em;}
+article > li li {margin-left:1em;}
+article > li li li {margin-left:1em;}
+article > li li li li {margin-left:1em;}
+article > li li li li li {margin-left:1em;}
+article > li li li li li li {margin-left:1em;}
+
+article > table > thead > tr > th  {padding-top:2em;}
+article > blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
 /*
  * --------------------------------------------------

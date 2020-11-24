@@ -1,6 +1,6 @@
 Branding = ""
 Description = ""
-RootStylesheets = ["reset.css", "fonts.css", "layout.css"]
+RootStylesheets = ["reset.css", "fonts.css", "bind.css"]
 Stylesheets = ["sizes.css", "theme-light.css", "textual.css"]
 PathName = ""
 
