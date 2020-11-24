@@ -1,6 +1,7 @@
 package app
 
 import (
+  "fmt"
 	"bytes"
 	"encoding/json"
 	"github.com/tomcam/mb/pkg/defaults"
@@ -442,6 +443,8 @@ func (a *App) publishAssets() {
 		from := filepath.Join(a.Page.Theme.PageType.PathName, file)
 		// Create a matching directory for assets
 		relDir := relDirFile(a.Site.path, a.Page.filePath)
+    // xxxx
+    fmt.Printf("copyStyleSheets() relDir: %v\n", relDir)
 		// Create a fully qualified filename for the published file
 		// which means depositing it in the document directoyr, not
 		// the assets directory.
@@ -561,7 +564,13 @@ func (a *App) copyStyleSheets(p PageType) {
 	}
   */
 	//fmt.Printf("copyStyleSheets() Creating theme directory %s\n", dir)
-  //fmt.Printf("copyStyleSheets() relative directory is %v\n",filepath.Rel(
+  /*
+  path, err :=filepath.Rel(a.Site.path, a.Site.themesPath)
+  if err != nil {
+    fmt.Println("copyStyleSheets() error!!!!")
+  }
+  fmt.Printf("copyStyleSheets()\tSite.themesPath: %s\n\tSite.path: %s\n\tRelative directory: %v\n",a.Site.themesPath, a.Site.path, path)
+  */
 	if err := os.MkdirAll(dir, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", dir))
 	}
