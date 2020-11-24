@@ -5,11 +5,11 @@
    *  Header dimensions           *
    * ******************************/
 
-	/* Adjusts header height and keeps it vertically centered */
-	--header-height:3rem;
+  /* Adjusts header height and keeps it vertically centered */
+  --header-height:3rem;
 
-	/* Size of the main text in the header. */
-	--branding-height:2rem;
+  /* Size of the main text in the header. */
+  --branding-height:2rem;
 
   /* Same as header {margin-top:}  */
   --header-margin-top:3rem;
@@ -26,6 +26,19 @@
   /* NOTE: MTF doesn't use padding-left for header.
    * It uses --text-start instead */
 
+
+  /* ******************************
+   *  Navbar dimensions           *
+   * ******************************/
+
+  /* Adjusts navbar height and keeps it vertically centered */
+  --nav-height:5rem;
+
+  /* Same as nav {margin-top} */
+  --nav-margin-top:0em;
+
+  /* Same as nav {margin-bottom} */
+  --nav-margin-bottom:0em;
 
   /* ******************************
    *  Article dimensions          *
@@ -88,14 +101,6 @@
 
 
   /* ******************************
-   *  Navbar dimensions           *
-   * ******************************/
-
-	/* Adjusts navbar height and keeps it vertically centered */
-	--nav-height:5rem;
-
-
-  /* ******************************
    *  Sidebar dimensions          *
    * ******************************/
 
@@ -107,11 +112,11 @@
    *  Footer dimensions           *
    * ******************************/
 
-	/* Adjusts footer height and keeps it vertically centered */
-	--footer-height:6rem;
+  /* Adjusts footer height and keeps it vertically centered */
+  --footer-height:6rem;
 
-	/* Size of the main text in the header. */
-	--footer-branding-height:3rem;
+  /* Size of the main text in the header. */
+  --footer-branding-height:3rem;
 
   /* Same as footer {margin-top:}  */
   --footer-margin-top:3rem;
@@ -131,8 +136,8 @@
    * ******************************/
 
   --article-column-width:80%;
-  --alt-article-column-width:65%;
-	--sidebar-width:20%;    
+  --alt-article-column-width:65%; /* Unused in wide themes */
+  --sidebar-width:20%;    
   --left-margin:0%;
   --right-margin:0%;
   --header-footer-width:100%; 

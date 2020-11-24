@@ -28,6 +28,7 @@ article {margin-top:var(--article-margin-top);padding-bottom:var(--article-margi
 article {padding-left:var(--left-margin);}
 article {padding-top:var(--article-padding-top);padding-bottom:var(--article-padding-bottom);}
 article {padding-left:var(--text-start);} /* TC: Was margin */
+
 h1{font-size:var(--h1-font-size);padding-top:var(--h1-padding-top);padding-bottom:var(--h1-padding-bottom);margin-top:var(--h1-margin-top);margin-bottom:var(--h1-margin-bottom);}
 h2{font-size:var(--h2-font-size);padding-top:var(--h2-padding-top);padding-bottom:var(--h2-padding-bottom);margin-top:var(--h2-margin-top);margin-bottom:var(--h2-margin-bottom);}
 h3{font-size:var(--h3-font-size);padding-top:var(--h3-padding-top);padding-bottom:var(--h3-padding-bottom);margin-top:var(--h3-margin-top);margin-bottom:var(--h3-margin-bottom);}
