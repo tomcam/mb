@@ -182,8 +182,8 @@
   --left-margin:15%;
   --right-margin:15%;
 
-  /* --text-start is a padding value not a maring */
-  --text-start:5%; 
+  /* --text-start is a padding value not a margin */
+  --text-start:10%; 
 
 }
 
