@@ -10,6 +10,8 @@ blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/
 
+/* XXX Temporary */
+header {border-bottom:1px solid var(--trim-fg);}
 /*
  * --------------------------------------------------
  * Simplest case: Branded name, nothing else
@@ -52,6 +54,10 @@ header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:9
 /*  NAVBAR                      */
 /* ******************************/
 
+/* XXX Temporary */
+nav {border-bottom:1px solid var(--trim-fg);}
+
+
 nav {width:var(--header-footer-width);} 
 nav > img {display:inline;}
 
@@ -92,7 +98,7 @@ nav > ul > li > a:active {text-decoration:underline;}
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
 
-article{padding-right:var(--sidebar-width);}
+article {padding-right:var(--article-pad-text-end);}
 article > p, article > ul, article > ol {font-family:var(--formal);}
 article > h1,article > h2 {font-weight:700;}
 article h1 + h2 {margin-top:0;color:var(--trim-fg);font-size:1.5rem;padding-top:.5em;padding-bottom:.5em;}

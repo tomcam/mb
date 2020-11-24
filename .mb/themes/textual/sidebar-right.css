@@ -1,3 +1,6 @@
 article{padding-left:var(--text-start);}
 article{margin-left:var(--left-margin);}
-article{padding-right:5%;}
+
+/* 11/23/20: Experimental 
+*/
+iarticle { padding-right:var(--article-pad-text-end);}

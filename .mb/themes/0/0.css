@@ -100,7 +100,7 @@ nav > ul > li > a:active {text-decoration:underline;}
 /* ******************************/
 /*  ARTICLE-MAIN PORTION OF TEXT*/
 /* ******************************/
-iarticle{margin-left:var(--left-margin);}
+article {padding-right:var(--article-pad-text-end);}
 article > p, article > ul, article > ol {font-family:var(--formal);}
 article > h1,article > h2 {font-weight:700;}
 article > h1 {font-size:4rem;margin-top:0;margin-bottom:3rem;}

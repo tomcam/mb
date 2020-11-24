@@ -58,7 +58,7 @@ footer {margin-top:var(--footer-margin-top);margin-bottom:var(--footer-margin-bo
 
 
 /* Indent lists */
-li {margin-left:1em;}
+li {margin-left:0em;}
 li li {margin-left:1em;}
 li li li {margin-left:1em;}
 li li li li {margin-left:1em;}

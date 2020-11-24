@@ -6,7 +6,7 @@ PathName = ""
 
 [Nav]
   HTML = ""
-  File = ""
+  File = "nav.md"
 
 [Header]
   HTML = ""
