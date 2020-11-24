@@ -1,6 +1,11 @@
 # Metabuzz theme architecture
 
 ## TODO: Things to cover
+* Explain the slightly awkward separation of concerns required in theme-light.css andth
+theme-dark.css. YOu have things like this appearing in them:
+```
+header > ul > li:last-child > a {border: 2px solid var(--header-fg);color:var(--header-fg);}      
+```
 * --text-start works on header, footer all the time.
   It is different with a left sidebar. That's because
   it's a padding size, buut that amount is increased
@@ -10,6 +15,7 @@
   responsive.css 
   theme-dark.css
 * wide vs. pillar: THIS NEEDS UPDATING
+  - 11/23/20: bind.css files are identical, but not sidebar*.css files
   - Most themes are based on Textual.
   - Textual can be either wide or pillar style. It defauls to wide.
   - To make it pillar style, 
@@ -240,7 +246,7 @@ mytheme
 ├── fonts.css
 ├── footer.md
 ├── header.md
-├── layout.css
+├── bind.css
 ├── nav.md
 ├── reset.css
 ├── responsive.css
@@ -275,7 +281,7 @@ Metabuzz distinguishes between what it calls "root stylesheets" and "stylesheets
 stylesheets = [ "sizes.css", "theme-light.css", 
   "wide.css" ]
 
-rootstylesheets = [ "reset.css", "fonts.css", "layout.css" ]
+rootstylesheets = [ "reset.css", "fonts.css", "bind.css" ]
 ```
 
 ### Note
@@ -288,7 +294,7 @@ force theme to be split into two lines in the example below.
 stylesheets = [ "sizes.css", "theme-light.css", 
   "wide.css"]
 
-rootstylesheets = [ "reset.css", "fonts.css", "layout.css" ]
+rootstylesheets = [ "reset.css", "fonts.css", "bind.css" ]
 
 branding = "Wide Theme"
 
@@ -324,7 +330,7 @@ most useless theme, here called `mytheme`, looks like this:
 <meta name="description" content="foo">
 <link rel="stylesheet" href="themes/mytheme/reset.css">
 <link rel="stylesheet" href="themes/mytheme/fonts.css">
-<link rel="stylesheet" href="themes/mytheme/layout.css">
+<link rel="stylesheet" href="themes/mytheme/bind.css">
 <link rel="stylesheet" href="themes/mytheme/sizes.css">
 <link rel="stylesheet" href="themes/mytheme/theme-light.css">
 <link rel="stylesheet" href="themes/mytheme/mytheme.css">

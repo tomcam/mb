@@ -4,6 +4,20 @@ article > h3:before { content: 'foo'; }
 
 See css-snippets.txt
 
+## Remove bullet characters from nested ul li for table of contents generation
+article > ul > li, 
+  article > ul > li > ul > li, 
+  article > ul > li > ul > li > ul > li,
+  article > ul > li > ul > li > ul > li > ul > li,
+  article > ul > li > ul > li > ul > li > ul > li > ul > li,
+  article > ul > li > ul > li > ul > li > ul > li > ul > li, ul > li
+  {list-style-type:none;}
+
+## Last item shows as button-type thing
+
+```
+header > ul > li:last-child > a {border: 2px solid var(--header-fg);color:var(--header-fg);}  
+```
 ## Gallery thingie
 
 article > h2 {margin-top:4rem;clear:left;}

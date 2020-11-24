@@ -2,6 +2,14 @@
 * 0 theme, sidebar-right: header is probably right width. Footer is too small, 
 Metabuzz automatically generates an id attribute for each header from h1 to h6 by taking the text of the link itself, reducing it to lowercase, and either replacing spaces and other non-letter characters with hyphens, or removing them altogether.
 
+## textual
+* [Light theme with left sidebar](textual/light-mode-sidebar-left.html)
+* [Light theme with right sidebar](textual/light-mode-sidebar-right.html)
+* [Light theme with no sidebar](textual/light-mode-sidebar-none.html)
+* [Dark theme with left sidebar](textual/dark-mode-sidebar-left.html)
+* [Dark theme with right sidebar](textual/dark-mode-sidebar-right.html)
+* [Dark theme with no sidebar](textual/dark-mode-sidebar-none.html)
+
 ## 0
 * [Light theme with left sidebar](test0-light-mode-sidebar-left.html)
 * [Light theme with right sidebar](test0-light-mode-sidebar-right.html)

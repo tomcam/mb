@@ -1,6 +1,9 @@
 # Metabuzz Markdown quick reference
 
-**Table of contents** 
+**Automatically generated table of contents**
+{{ toc }}
+
+**Manual Table of contents** 
 
 * [Common text formatting](#common-text-formatting)
 * [Links](#links)
@@ -226,9 +229,12 @@ Reasons people hate bullet lists
   + The `+` isn't required. It's just for clarity
     - Most Metabuzz themes go up to 3 visible levels
     - Any more levels than 3 makes it hard for the reader
+      + Level allowed
+        * Even level 5
 ```
 
 #### It shows as:
+
 Reasons people hate bullet lists
 
 * It reminds them of bad PowerPoint
@@ -238,7 +244,8 @@ Reasons people hate bullet lists
   + The `+` isn't required. It's just for clarity
     - Most Metabuzz themes go up to 3 visible levels
     - Any more levels than 3 makes it hard for the reader
-
+      + Level allowed
+        * Even level 5
 <a name="def-lists"></a>
 ### The "third" list type: definition lists
 
