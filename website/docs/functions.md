@@ -66,7 +66,7 @@ See [inc](functions/inc.html) in the functions reference
 
 Can pass it the name of a markdown file too, not just HTML
 
-## toc {{levels} {list type}}
+## toc \{\{levels\}\} \{\list type\}\} 
 
 Generates a table of contents at the current
 location in the document. It's generated from
@@ -83,13 +83,13 @@ specified as "1" to "6".
 ```
 ## Table of contents
 
-{{ toc }}
+\{\{ toc \}\}
 
 ```
 
 This is equivalent to:
 ```
-{{ toc "6" "ul" }}
+\{\{ toc "6" "ul" \}\}
 
 ```
 
