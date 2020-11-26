@@ -107,8 +107,9 @@ func NewDefaultApp() *App {
 			markdownStart: []byte{},
 		},
 		Site: &Site{
-			// Assets just go into the publish directory
-			AssetDir: ".",
+			// Assets just go into the /assets directory, which Jekyll/aka
+      // GitHub Pages prefers
+			AssetDir: defaults.DefaultAssetDir ,
 			// configFile: filepath.Join(SiteConfigDir, SiteConfigFilename),
 			// dirs:     map[string]MdOptions{},
 			dirs:     map[string]dirInfo{},

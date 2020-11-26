@@ -308,7 +308,6 @@ func (a *App) publishLocalFiles(dir string) bool {
 		}
 		// Mark that the directory has been created so this
 		// doesn't get repeated.
-		//a.Site.dirs[dir].MdOptions |= MarkdownDir
 		a.addMdOption(dir, MarkdownDir)
 	}
 	// Get the directory listing.
@@ -430,7 +429,8 @@ func (a *App) publishAssets() {
 		p.Stylesheets = append(p.Stylesheets, "sidebar-right.css")
 
 	}
-	a.copyStyleSheets(p)
+	// xxxx a.copyStyleSheets(p)
+  a.copyThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
 	// Copy other files in the theme directory to the target publish directory.
 	// This is whatever happens to be in the theme directory 
   // with sizes.css, fonts.css, etc. 
@@ -453,15 +453,7 @@ func (a *App) publishAssets() {
 		// Create a fully qualified filename for the published file
 		// which means depositing it in the document directoyr, not
 		// the assets directory.
-		// TODO: What we really want is to put the assets in the assets directory.
-		// After all, they're in the theme directory (example: social media icon files),
-		// and CSS files specified in the TOML are correctly sent to the assets directory.
-		// But to do that we'd need some concept of an asset directory in the theme, so instead
-		// of something like ![facebook icon](facebook-24x24-red.svg) in, for example.
-		// nav.md, we'd need to do something like specify what files get copied in the
-		// theme's TOML, or have some kind of ![facebook icon]({{ThemeDir}}/facebook-24x24-red.svg)
-		// prefix.
-		// TODO:
+    // xxx
 		assetDir := filepath.Join(a.Site.PublishDir, relDir)
 		to := filepath.Join(assetDir, file)
 		if err := Copy(from, to); err != nil {
@@ -486,8 +478,8 @@ func (a *App) ImageDir() string {
 	return filepath.Join(a.assetPath(), a.Site.ImageDir)
 }
 
-// assetPath() computes the fully qualified directory
-// name for assets, based on Site.AssetDir, etc.
+// assetPath() computes the fully qualified target directory
+// name for assets, based on Site.AssetDir, etc. to be published
 func (a *App) assetPath() string {
 	return filepath.Join(a.Site.path, a.Site.PublishDir, a.Site.AssetDir, a.Site.ThemesDir, a.FrontMatter.Theme)
 }
@@ -559,27 +551,16 @@ func (a *App) copyRootStylesheets() {
 // given in the theme TOML file and copies them to the
 // publishing (asset) directory
 func (a *App) copyStyleSheets(p PageType) {
-  // See if the directory has already been created.
-  // Exit if so.
-	dir := a.fullTargetThemeDir()
   /*
 	if dirExists(dir) {
 		return
 	}
   */
+  // xxxx 
   // Create the target theme stylesheet directory.
-	if err := os.MkdirAll(dir, defaults.PublicFilePermissions); err != nil {
-		a.QuitError(errs.ErrCode("0402", dir))
-	}
 
-	a.copyRootStylesheets()
-
-	for _, file := range p.Stylesheets {
-		file = a.getMode(file)
-		a.copyStyleSheet(file)
-	}
-	// responsive.css is always last
-	a.copyStyleSheet("responsive.css")
+  a.copyThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
+  return
 }
 
 

@@ -51,6 +51,10 @@ const (
 Welcome to %s
 `
 
+	// Name of subdirectory within the publish directory for CSS, theme files.
+	// for that theme.
+	DefaultAssetDir = "assets"
+
 	// Name of the subdirectory the rendered files get rendered
 	// to. It can't be changed because it's used to determine
 	// whether a site is contained within its parent directory.

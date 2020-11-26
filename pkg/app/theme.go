@@ -103,8 +103,7 @@ type layoutElement struct {
 	File string
 }
 
-// Return the fuly qualified pathname of the
-// parent theme directory.
+// Return the fuly qualified directory name of the parent theme
 func (a *App) parentThemeFullDirectory() string {
 	return filepath.Join(a.themesPath, a.FrontMatter.Theme)
 }
@@ -112,8 +111,7 @@ func (a *App) parentThemeFullDirectory() string {
 // Return the fuly qualified filename of the
 // parent theme, including the .toml extension.
 func (a *App) parentThemeFullPath() string {
-	//return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
-	return filepath.Join(a.parentThemeFullDirectory(), a.defaultTheme()+"."+defaults.ConfigFileDefaultExt)
+	return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
   //xxxxx
 }
 
@@ -206,25 +204,31 @@ func (a *App) newTheme(from, to string) error {
 	return a.copyTheme(from, to, false)
 }
 
-// copyThemeDirectory() copies the directory specified by the fully qualified directory name
-// from, to the fully qualified  directory name to.
-func (a *App) copyThemeDirectory(from, to string) error {
-	// Create the target directory
-	if err := os.MkdirAll(to, defaults.ProjectFilePermissions); err != nil {
-		return errs.ErrCode("0905", "Unable to create target theme directory "+to)
-	}
-	// Copy only 1 level deep.
-	// There should be nothing interesting or tricky about this directory. Just
-	// markdown files, HTML files, and assets.
-	if err := copyDirOnly(from, to); err != nil {
-		msg := fmt.Sprintf("Unable to copy from pageType directory %s to new pageType directory %s", from, to)
-		return errs.ErrCode("0906", msg)
+
+// copyThemeDirectory() copies the directory specified 
+// by the fully qualified directory name from, 
+// to the fully qualified  directory name to.
+func (a *App) copyThemeDirectory(from, to string) {
+
+  // Create the destination directory.
+	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
+		a.QuitError(errs.ErrCode("0402", to))
 	}
 
-	// Success
-	return nil
+	p := a.Page.Theme.PageType
+	a.copyRootStylesheets()
+
+	for _, file := range p.Stylesheets {
+		file = a.getMode(file)
+		a.copyStyleSheet(file)
+	}
+	// responsive.css is always last
+	a.copyStyleSheet("responsive.css")
+
 }
 
+
+// TODO: Uhh, is this necessary?
 func (a *App) newPageType(theme, pageType string) error {
 	return a.createPageType(theme, pageType)
 }
@@ -294,16 +298,15 @@ func (a *App) copyTheme(from, to string, isChild bool) error {
 	}
 	a.Verbose("Creating theme " + dest + to)
 
-	if err := a.copyThemeDirectory(source, dest); err != nil {
-		return errs.ErrCode("PREVIOUS", "")
-	}
+  a.copyThemeDirectory(source, dest)
 	err := a.updateThemeDirectory(from, dest, to, tomlFile, isChild)
 	if err != nil {
 		return errs.ErrCode("PREVIOUS", err.Error())
 	}
 	// Success
 	//a.Verbose("Created theme " + filepath.Base(dest))
-	fmt.Println("Created theme " + to + " from " + from + " in " + dest)
+	//fmt.Println("Created theme " + to + " from " + from + " in " + dest)
+	a.Verbose("Created theme " + to + " from " + from + " in " + dest)
 	return nil
 }
 
