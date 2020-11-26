@@ -6,6 +6,7 @@ import (
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 )
@@ -166,7 +167,6 @@ func (a *App) loadTheme(parent bool) {
   }
 	var p PageType
 	if err := readTomlFile(themePath, &p); err != nil {
-		//a.QuitError(errs.ErrCode("0105", fmt.Errorf("Problem reading TOML file %s for pagetype %s\n", themePath, a.FrontMatter.PageType).Error()))
 		a.QuitError(errs.ErrCode("0105", themePath, a.FrontMatter.PageType))
 	}
 	a.Page.Theme.PageType = p
@@ -210,6 +210,7 @@ func (a *App) newTheme(from, to string) error {
 // to the fully qualified  directory name to.
 func (a *App) copyThemeDirectory(from, to string) {
 
+  // xxxx
   // Create the destination directory.
 	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", to))
@@ -220,19 +221,20 @@ func (a *App) copyThemeDirectory(from, to string) {
 
 	for _, file := range p.Stylesheets {
 		file = a.getMode(file)
-		a.copyStyleSheet(file)
+		a.copyStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), path.Base(file)))
 	}
 	// responsive.css is always last
-	a.copyStyleSheet("responsive.css")
+	a.copyStyleSheet("responsive.css",filepath.Join(a.fullTargetThemeDir(), "responsive.css"))
 
 }
 
-
+/*
 // TODO: Uhh, is this necessary?
 func (a *App) newPageType(theme, pageType string) error {
 	return a.createPageType(theme, pageType)
 }
 
+*/
 // createPageType() is very similar to copyTheme() but
 // it creates a new pagetype from an existing one and
 // puts it one subdirectory down from the original.
@@ -268,13 +270,15 @@ func (a *App) createPageType(theme, pageType string) error {
 
 // copyTheme() creates a new theme in the theme directory to, from
 // the theme directory from. "from" is specifed only as a file/theme
-// name, not a fully qulaified pathame, so "wide" for example.
+// name, not a fully qualified pathame, so "wide" for example.
 // It copies everything in from, and
 // renames the from.toml file in the new theme directory to
 // to.toml. to is a fully qualified pathname.
 // If isChild is true, then to is actually a child pageType of from,
 // so there's different handling.
 func (a *App) copyTheme(from, to string, isChild bool) error {
+  // xxx
+  promptString("copyTheme from " + from + " to " +  to)
 	// Obtain the fully qualified name of the source
 	// theme directory to copy
 	//fmt.Println("Create theme " + from)

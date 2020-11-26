@@ -224,7 +224,9 @@ create theme based on an existing one.
 					newPageType = promptString("Name of pagetype to create?")
 				}
 				fromTheme = promptString("Add this pagetype to which theme?")
-				err := a.newPageType(fromTheme, newPageType)
+				//kjjerr := a.newPageType(fromTheme, newPageType)
+				err := a.createPageType(fromTheme, newPageType)
+
 				if err != nil {
 					a.QuitError(err)
 				} else {
@@ -347,14 +349,6 @@ create theme based on an existing one.
 			},
 		}
 	)
-
-	// Example command line:
-	// new theme --from=pillar
-	//cmdNewTheme.Flags().StringVarP(&a.Args.NewThemeFrom, "from", "f", DEFAULT_THEME_NAME, "name of theme to copy from")
-	// Example command line:
-	// new theme --to=mytheme
-	//cmdNewTheme.Flags().StringVarP(&a.Args.NewThemeTo, "to", "t", "", "name of theme to create (required)")
-	//cmdNewTheme.MarkFlagRequired("to")
 
 	// Example command line:
 	// new site

@@ -125,7 +125,7 @@ var errMsgs = map[string]string{
 	"0913": "Unable to read project directory",                     //
 	"0914": "Error creating a temporary file",                      // filename
 	"0915": "Unable to copy scodes directory to site directory",    // custom message
-	"0916": "Unable to copy a style sheet",                         // custom message
+	"0916": "Unable to copy style sheet",                         // custom message
 	"0917": "Error creating ",                                      // filename, Golang message
 	"0918": "Can't copy a theme onto itself. That would be silly.", //
 	"0919": "Pagetype name is already taken",                       // custom message
