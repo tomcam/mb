@@ -21,13 +21,13 @@ func (a *App) build() error {
 	var err error
 	a.SiteDefaults()
 	// Delete any existing publish dir
-	if err := os.RemoveAll(a.Site.Publish); err != nil {
-		return errs.ErrCode("0302", a.Site.Publish)
+	if err := os.RemoveAll(a.Site.PublishDir); err != nil {
+		return errs.ErrCode("0302", a.Site.PublishDir)
 	}
 
 	// Create an empty publish dir
-	if err := os.MkdirAll(a.Site.Publish, defaults.PublicFilePermissions); err != nil {
-		return errs.ErrCode("0403", a.Site.Publish)
+	if err := os.MkdirAll(a.Site.PublishDir, defaults.PublicFilePermissions); err != nil {
+		return errs.ErrCode("0403", a.Site.PublishDir)
 	}
 
 	if a.Site.path == "" {

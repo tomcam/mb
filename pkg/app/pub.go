@@ -1,7 +1,6 @@
 package app
 
 import (
-  //"fmt"
 	"bytes"
 	"encoding/json"
 	"github.com/tomcam/mb/pkg/defaults"
@@ -134,7 +133,7 @@ func (a *App) publishFile(filename string) error {
 
 	// Write everything to a temp file so in case there was an error, the
 	// previous HTML file is preserved.
-	tmpFile, err := ioutil.TempFile(a.Site.Publish, defaults.ProductName+"-tmp-")
+	tmpFile, err := ioutil.TempFile(a.Site.PublishDir, defaults.ProductName+"-tmp-")
 	if err != nil {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 	}
@@ -154,7 +153,7 @@ func (a *App) publishFile(filename string) error {
 
 	// Generate the full pathname of the matching output file, as it will
 	// appear in its published location.
-	outfile = filepath.Join(a.Site.Publish, relDir, base)
+	outfile = filepath.Join(a.Site.PublishDir, relDir, base)
 	// If the write succeeded, rename it to the output file
 	// This way if there was an existing HTML file but there was
 	// an error in output this time, it doesn't get clobbered.
@@ -300,7 +299,7 @@ func (a *App) setMdOption(dir string, mdOption MdOptions) {
 // Returns false if markdown files (or any files at all) are absent.
 func (a *App) publishLocalFiles(dir string) bool {
 	relDir := relativeDirectory(a.Site.path, dir)
-	pubDir := filepath.Join(a.Site.Publish, relDir)
+	pubDir := filepath.Join(a.Site.PublishDir, relDir)
 
 	// If this directory hasn't been created, create it.
 	if !a.Site.dirs[pubDir].mdOptions.IsOptionSet(MarkdownDir) {
@@ -365,7 +364,7 @@ func (a *App) publishLocalFiles(dir string) bool {
 				// Figure out the target directory.
 				relDir := relDirFile(a.Site.path, copyFrom)
 				// Get the target file's fully qualified filename.
-				copyTo := filepath.Join(a.Site.Publish, relDir, filename)
+				copyTo := filepath.Join(a.Site.PublishDir, relDir, filename)
 				//a.Verbose("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
 				if err := Copy(copyFrom, copyTo); err != nil {
 					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
@@ -411,7 +410,14 @@ func (a *App) getMode(stylesheet string) string {
 	return stylesheet
 }
 
+// publishAssets() copies out all the other files needed by the 
+// Markdown page: stylesheets specified in the TOML file,
+// graphic assets, and anything else lying around in the
+// Markdown page's directory.
 func (a *App) publishAssets() {
+  // Find out the current theme or pagetype.
+  // They're identical, other than a pagetype
+  // is a child of a theme.
 	p := a.Page.Theme.PageType
 	a.findPageAssets()
 	a.findThemeAssets()
@@ -426,10 +432,11 @@ func (a *App) publishAssets() {
 	}
 	a.copyStyleSheets(p)
 	// Copy other files in the theme directory to the target publish directory.
-	// This is whatever happens to be
-	// in the theme directory with sizes.css, fonts.css, etc. Since those files
-	// are stylesheets specified in the .TOML (or determined dynamically, like
-	// sidebar-left.css and sidebar-right.css) it's easy. You generate a stylesheet
+	// This is whatever happens to be in the theme directory 
+  // with sizes.css, fonts.css, etc. 
+  // Since those files are stylesheets specified in the .TOML 
+  // (or determined dynamically, like sidebar-left.css 
+  // and sidebar-right.css) it's easy. You generate a stylesheet
 	// tag for them and then copy them right to the published theme directory.
 	// The other files are dealt with here. Probably they would typically
 	// be graphics files. They will be copied not to the
@@ -443,7 +450,6 @@ func (a *App) publishAssets() {
 		from := filepath.Join(a.Page.Theme.PageType.PathName, file)
 		// Create a matching directory for assets
 		relDir := relDirFile(a.Site.path, a.Page.filePath)
-    // xxxx
 		// Create a fully qualified filename for the published file
 		// which means depositing it in the document directoyr, not
 		// the assets directory.
@@ -456,7 +462,7 @@ func (a *App) publishAssets() {
 		// theme's TOML, or have some kind of ![facebook icon]({{ThemeDir}}/facebook-24x24-red.svg)
 		// prefix.
 		// TODO:
-		assetDir := filepath.Join(a.Site.Publish, relDir)
+		assetDir := filepath.Join(a.Site.PublishDir, relDir)
 		to := filepath.Join(assetDir, file)
 		if err := Copy(from, to); err != nil {
 			a.QuitError(errs.ErrCode("0124", "from '"+from+"' to '"+to+"'"))
@@ -483,20 +489,20 @@ func (a *App) ImageDir() string {
 // assetPath() computes the fully qualified directory
 // name for assets, based on Site.AssetDir, etc.
 func (a *App) assetPath() string {
-	return filepath.Join(a.Site.path, a.Site.Publish, a.Site.AssetDir, "themes", a.FrontMatter.Theme)
+	return filepath.Join(a.Site.path, a.Site.PublishDir, a.Site.AssetDir, a.Site.ThemesDir, a.FrontMatter.Theme)
 }
 
 // relTargetThemeDir() computes the relative destination directory
 // name for theme assets
 func (a *App) relTargetThemeDir() string {
   // xxxx Look up the html <base> tag
-	return filepath.Join("/", a.Site.AssetDir, "themes", a.FrontMatter.Theme, a.FrontMatter.PageType)
+	return filepath.Join("/", a.Site.AssetDir, a.Site.ThemesDir, a.FrontMatter.Theme, a.FrontMatter.PageType)
 }
 
 // fullTargetThemeDir() computes the fully qualified destination directory
 // name for theme assets
 func (a *App) fullTargetThemeDir() string {
-	return filepath.Join(a.Site.Publish, a.relTargetThemeDir())
+	return filepath.Join(a.Site.PublishDir, a.relTargetThemeDir())
 }
 
 // copyStyleSheet() takes the name of a stylesheet specified
@@ -553,13 +559,15 @@ func (a *App) copyRootStylesheets() {
 // given in the theme TOML file and copies them to the
 // publishing (asset) directory
 func (a *App) copyStyleSheets(p PageType) {
+  // See if the directory has already been created.
+  // Exit if so.
 	dir := a.fullTargetThemeDir()
   /*
 	if dirExists(dir) {
-		fmt.Println("Directory " + dir + " already exists. Sayanara. xxx")
 		return
 	}
   */
+  // Create the target theme stylesheet directory.
 	if err := os.MkdirAll(dir, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", dir))
 	}
@@ -612,6 +620,8 @@ func (a *App) findThemeAssets() {
 
 // Look alongside the current file to assets to publish
 // for example, it's a news article and it has an image.
+// Exception: the only CSS files copied over are those
+// specified in the TOML.
 func (a *App) findPageAssets() {
 	candidates, err := ioutil.ReadDir(a.Page.dir)
 	// TODO: Better error handling
@@ -624,6 +634,8 @@ func (a *App) findPageAssets() {
 		for _, file := range candidates {
 			filename := file.Name()
 			if !file.IsDir() {
+        // Random CSS files are NOT copied.  Pretty much everything
+        // else is, unless it has an excluded file extension.
 				if !hasExtensionFrom(filename, defaults.MarkdownExtensions) &&
 					!hasExtensionFrom(filename, defaults.ExcludedAssetExtensions) &&
 					!hasExtension(filename, ".css") {
@@ -765,7 +777,7 @@ func (a *App) localFiles(relDir string) {
 	if dirHasMarkdownFiles {
 		// Create its theme directory
 		assetDir := filepath.Join(
-			a.Site.Publish, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir)
+			a.Site.PublishDir, relDir, defaults.ThemeDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Site.AssetDir)
 		if err := os.MkdirAll(assetDir, defaults.PublicFilePermissions); err != nil {
 			a.QuitError(errs.ErrCode("0402", assetDir))
 		}

@@ -29,7 +29,7 @@ func (a *App) info() {
 	if isProject(".") {
 		fmt.Println("This appears to be a project/site source directory")
 		exists("Site directory: ", a.Site.path)
-		exists("Publish directory", a.Site.Publish)
+		exists("Publish directory", a.Site.PublishDir)
 		exists("Theme directory", a.Site.themesPath)
 		exists("Headers directory", a.Site.headTagsPath)
 		//:exists("Asset directory", a.assetDir())

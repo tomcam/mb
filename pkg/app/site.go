@@ -91,7 +91,7 @@ type Site struct {
 	path string
 
 	// Directory for finished site--rendered HTML & asset output
-	Publish string
+	PublishDir string
 
 	// Full path of shortcode dir for this project. It's computed
 	// at runtime using SCodeDir, also in this struct.
@@ -110,6 +110,10 @@ type Site struct {
 
 	// Name (not path) of Theme used by this site unless overridden in front matter.
 	Theme string
+
+	// Target subdirectory where themes get copied for publication.
+	// It's expected to be a child of the Publish directory.
+  ThemesDir string
 
 	// Directory this site uses to copy themes from. If the -d option was
 	// set, use the global factory themes directory. Otherwise, use local copy
@@ -250,8 +254,7 @@ func (a *App) writeSiteConfig() error {
 }
 
 // NewSite() attempts to create an empty
-// project site using the
-// supplied directory name.
+// project site using the supplied directory name.
 func (a *App) NewSite(sitename string) error {
 	if sitename == "" {
 		return errs.ErrCode("1013", "")
@@ -295,7 +298,6 @@ func (a *App) NewSite(sitename string) error {
 		a.QuitError(errs.ErrCode("0911", "from '"+a.themesPath+"' to '"+a.Site.themesPath+"'"))
 	}
 
-  // xxxx
 	// Copy all scodes from the user application data directory
 	// to the project directory.
 	err = copyDirAll(a.sCodePath, a.Site.sCodePath)
@@ -303,16 +305,13 @@ func (a *App) NewSite(sitename string) error {
 		a.QuitError(errs.ErrCode("0915", "from '"+a.sCodePath+"' to '"+a.Site.sCodePath+"'"))
 	}
 
-  // xxxx
 	// Copy all header tags.
 	err = copyDirAll(a.headTagsPath, a.Site.headTagsPath)
 	if err != nil {
 		a.QuitError(errs.ErrCode("0923", "from '"+a.sCodePath+"' to '"+a.Site.sCodePath+"'"))
 	}
 
-	// xxx I think this duplicates code from pub.go somewhere
-  // but not certain
-	a.Site.AssetDir = filepath.Join(a.Site.Publish, a.Site.AssetDir)
+	a.Site.AssetDir = filepath.Join(a.Site.PublishDir, a.Site.AssetDir)
 
 	// Create a little home page
 	// The home page is based on the site name.
@@ -342,13 +341,11 @@ func (a *App) SiteDefaults() {
 
 	// Unlike the other dot directories, Publish is only
 	// 1 level deep. It is not nested inside the .mb directory
-	a.Site.Publish = filepath.Join(a.Site.path, defaults.PublishDir)
+	a.Site.PublishDir = filepath.Join(a.Site.path, defaults.PublishDir)
 
 	// xxx
-	a.Site.SearchJSONFilePath = filepath.Join(a.Site.Publish, defaults.SearchJSONFilename)
+	a.Site.SearchJSONFilePath = filepath.Join(a.Site.PublishDir, defaults.SearchJSONFilename)
 
-	// TODO: Move to  NewDefaultApp() and change to AppDefaults I think
-	// scode path?
 	a.commonPath = filepath.Join(a.configDir, defaults.CommonDir)
 	a.headTagsPath = filepath.Join(a.configDir, defaults.HeadTagsDir)
 	a.sCodePath = filepath.Join(a.configDir, defaults.SCodeDir)

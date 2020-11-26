@@ -112,7 +112,9 @@ func (a *App) parentThemeFullDirectory() string {
 // Return the fuly qualified filename of the
 // parent theme, including the .toml extension.
 func (a *App) parentThemeFullPath() string {
-	return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
+	//return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
+	return filepath.Join(a.parentThemeFullDirectory(), a.defaultTheme()+"."+defaults.ConfigFileDefaultExt)
+  //xxxxx
 }
 
 // childThemeFullDirectory() Returns the fuly qualified pathname of the
@@ -145,7 +147,7 @@ func (a *App) loadDefaultTheme() {
 	}
 	// If no theme was specified at all, use the Metabuzz default.
 	if a.FrontMatter.Theme == "" {
-		a.FrontMatter.Theme = defaults.DefaultThemeName
+		a.FrontMatter.Theme = strings.ToLower(defaults.DefaultThemeName)
 	}
 
 }
