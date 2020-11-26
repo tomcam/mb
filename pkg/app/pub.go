@@ -1,7 +1,7 @@
 package app
 
 import (
-  "fmt"
+  //"fmt"
 	"bytes"
 	"encoding/json"
 	"github.com/tomcam/mb/pkg/defaults"
@@ -444,7 +444,6 @@ func (a *App) publishAssets() {
 		// Create a matching directory for assets
 		relDir := relDirFile(a.Site.path, a.Page.filePath)
     // xxxx
-    fmt.Printf("copyStyleSheets() relDir: %v\n", relDir)
 		// Create a fully qualified filename for the published file
 		// which means depositing it in the document directoyr, not
 		// the assets directory.
@@ -490,7 +489,8 @@ func (a *App) assetPath() string {
 // relTargetThemeDir() computes the relative destination directory
 // name for theme assets
 func (a *App) relTargetThemeDir() string {
-	return filepath.Join(a.Site.AssetDir, "themes", a.FrontMatter.Theme, a.FrontMatter.PageType)
+  // xxxx Look up the html <base> tag
+	return filepath.Join("/", a.Site.AssetDir, "themes", a.FrontMatter.Theme, a.FrontMatter.PageType)
 }
 
 // fullTargetThemeDir() computes the fully qualified destination directory
@@ -504,7 +504,6 @@ func (a *App) fullTargetThemeDir() string {
 // directory.
 func (a *App) copyStyleSheet(file string) {
 	// Pass through if not a local file
-  //fmt.Printf("copyStylesheet() %s\n", file)
 	if strings.HasPrefix(strings.ToLower(file), "http") {
 		a.appendStr(stylesheetTag(file))
 		return
@@ -523,14 +522,12 @@ func (a *App) copyStyleSheet(file string) {
 	pathname := filepath.Join(a.relTargetThemeDir(), file)
 	// Write out the link
 	a.appendStr(stylesheetTag(pathname))
-  //fmt.Println("\t" + stylesheetTag(pathname))
 
 	to := filepath.Join(a.fullTargetThemeDir(), file)
 	if from == to {
 		a.QuitError(errs.ErrCode("0922", "from '"+from+"' to '"+to+"'"))
 	}
 
-  //fmt.Println("\tfrom '"+from+"' to '"+to+"'")
 	// Actually copy the style sheet to its destination
 	if err := Copy(from, to); err != nil {
 		a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
@@ -557,19 +554,11 @@ func (a *App) copyRootStylesheets() {
 // publishing (asset) directory
 func (a *App) copyStyleSheets(p PageType) {
 	dir := a.fullTargetThemeDir()
-  /* xxxx Need a better check
+  /*
 	if dirExists(dir) {
 		fmt.Println("Directory " + dir + " already exists. Sayanara. xxx")
 		return
 	}
-  */
-	//fmt.Printf("copyStyleSheets() Creating theme directory %s\n", dir)
-  /*
-  path, err :=filepath.Rel(a.Site.path, a.Site.themesPath)
-  if err != nil {
-    fmt.Println("copyStyleSheets() error!!!!")
-  }
-  fmt.Printf("copyStyleSheets()\tSite.themesPath: %s\n\tSite.path: %s\n\tRelative directory: %v\n",a.Site.themesPath, a.Site.path, path)
   */
 	if err := os.MkdirAll(dir, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", dir))
@@ -867,7 +856,6 @@ func (a *App) layoutElementOverride(pr *layoutElement, tag string, replaceWith s
 func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
 	var html string
 	pathname := filepath.Join(a.Page.Theme.PageType.PathName, pr.File)
-  //fmt.Printf("layoutElement() pathname: %s\n", pathname)
 	switch tag {
 	case "<header>":
 		html = a.layoutElementOverride(pr, tag, "header")
