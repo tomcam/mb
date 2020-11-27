@@ -44,16 +44,6 @@ Metabuzz automatically generates an id attribute for each header from h1 to h6 b
 * [No sidebar](wide-index.html)
 * [Right sidebar](wide-right-sidebar.html)
 
-## new-wide 
-* [Left sidebar](new-wide-left-sidebar.html)
-* [No sidebar](new-wide-index.html)
-* [Right sidebar](new-wide-right-sidebar.html)
-
-## new-pillar
-* [Left sidebar](new-pillar-left-sidebar.html)
-* [No sidebar](new-pillar-index.html)
-* [Right sidebar](new-pillar-right-sidebar.html)
-
 # lanyon
 * [Light theme with left sidebar](testlanyon-light-mode-sidebar-left.html)
 * [Light theme with right sidebar](testlanyon-light-mode-sidebar-right.html)
