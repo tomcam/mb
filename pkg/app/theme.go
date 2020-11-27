@@ -317,6 +317,44 @@ func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error 
 	return Copy(sourceCSSFile, targetCSSFile)
 }
 
+// newcopyTheme() copies from the theme directory to, from
+// the theme directory from. "from" is specifed only as a file/theme
+// name, not a fully qualified pathame, so "wide" for example.
+// It copies everything in from, and
+// renames the from.toml file in the new theme directory to
+// to.toml. to is a fully qualified pathname.
+// If isChild is true, then to is actually a child pageType of from,
+// so there's different handling.
+func (a *App) copyTheme(from, to string, isChild bool)  {
+  a.Verbose("copyTheme(%v,%v)",from,to)
+	// Obtain the fully qualified name of the source
+	// theme directory to copy
+	source := a.themePath(from)
+	// Generate name of TOML file expected to be there
+	tomlFile := a.themeTOMLFilename(path.Base(from))
+	// Check for both these elements.
+	if !a.isTheme(source, tomlFile) {
+		a.QuitError(errs.ErrCode("1008", source))
+	}
+
+  a.Verbose("\tsource: %v", source)
+	var dest string
+	if !isChild {
+		dest = a.themePath(to)
+	} else {
+		dest = a.themePath(filepath.Join(from,to))
+	}
+	if dirExists(dest) {
+		a.QuitError(errs.ErrCode("0904", "directory "+dest+" already exists"))
+	}
+  a.Verbose("\tdest: %v", dest)
+  copyDirOnly(source, dest)
+	a.updateThemeDirectory(from, dest, tomlFile, isChild)
+	// Success
+	//a.Verbose("Created theme " + filepath.Base(dest))
+	a.Verbose("Created theme " + to + " from " + from + " in " + dest)
+}
+
 
 
 // copyTheme() copies from the theme directory to, from
@@ -327,7 +365,7 @@ func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error 
 // to.toml. to is a fully qualified pathname.
 // If isChild is true, then to is actually a child pageType of from,
 // so there's different handling.
-func (a *App) copyTheme(from, to string, isChild bool) error {
+func (a *App) oldcopyTheme(from, to string, isChild bool) error {
   // xxx
   a.Verbose("copyTheme(%v,%v)",from,to)
 	// Obtain the fully qualified name of the source
