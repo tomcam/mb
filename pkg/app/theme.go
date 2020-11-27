@@ -502,9 +502,6 @@ func (a *App) newTheme(from, to string) {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 	}
 
-  a.Quit("newTheme(): Handle child themes")
-
-  // xxxx
 }
 
 // copyThemeDirectory() copies the directory specified 
@@ -512,7 +509,7 @@ func (a *App) newTheme(from, to string) {
 // to the fully qualified  directory name to.
 func (a *App) copyThemeDirectory(from, to string) {
 
-  // xxxx
+  fmt.Printf("copyThemeDirectory(): Should probably be just a straight copy\n")
   // Create the destination directory.
 	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", to))
@@ -532,7 +529,6 @@ func (a *App) copyThemeDirectory(from, to string) {
 }
 
 
-// xxxx
 func (a *App) copyRootStylesheets(from, to string) {
   a.Verbose("copyRootStylesheets(%v,%v)",from,to)
   toThemePath := to
@@ -565,7 +561,6 @@ func (a *App) copyRootStylesheets(from, to string) {
 // to the fully qualified  directory name to.
 func (a *App) publishThemeDirectory(from, to string) {
 
-  // xxxx
   // Create the destination directory.
 	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", to))
@@ -578,6 +573,13 @@ func (a *App) publishThemeDirectory(from, to string) {
 		file = a.getMode(file)
 		a.publishStyleSheet(file, filepath.Join(to, path.Base(file)))
 	}
+  sidebar := strings.ToLower(a.FrontMatter.Sidebar)
+  switch sidebar {
+  case "left":
+    a.publishStyleSheet("sidebar-left.css", filepath.Join(to, "sidebar-left.css"))
+  case "right":
+    a.publishStyleSheet("sidebar-right.css", filepath.Join(to, "sidebar-right.css"))
+  }
 	// responsive.css is always last
 	a.publishStyleSheet("responsive.css",filepath.Join(to, "responsive.css"))
 
