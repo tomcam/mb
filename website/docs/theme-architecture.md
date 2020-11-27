@@ -14,6 +14,8 @@ header > ul > li:last-child > a {border: 2px solid var(--header-fg);color:var(--
 * Mention that the following are added automatically
   responsive.css 
   theme-dark.css
+* Random assets like graphics files or random HTML files in the current article's directory
+are copied but not CSS files. The only CSS files are those specified in the TOML file plus responsive.css
 * wide vs. pillar: THIS NEEDS UPDATING
   - 11/23/20: bind.css files are identical, but not sidebar*.css files
   - Most themes are based on Textual.

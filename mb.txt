@@ -27,10 +27,28 @@
   - TOC generator
   - Concept of posts
 
-- Add a created by header file in code injection thingie
+# Things to remember
+*  a.QuitError(errs.ErrCode("0105", themePath, a.FrontMatter.PageType))
+*  a.FrontMatter.Theme is the current theme name
+*  parentThemeFullDirectory()
+*  parentThemeFullPath()
+*  childThemeFullDirectory()
+*  childThemeFullPath()
+*  Site.AssetDir
+*  Site.CSSDir
+*  Site.ImageDir
+*  Site.path is starting path
+*  Site.pubThemesPath (commented out because it's not used)
+*  Site.ThemesPath (which maybe should be called pubThemesPath? or destThemesPath?)
+*  Site.dirs (could use for sitemap)
+*  Site.Theme
+*  App.relTargetThemeDir()
+*  App.fullTargetThemeDir()%
+
+
 - Collect in 1 file, then Minify https://github.com/tdewolff/minify stylesheets
 - Ensure default theme in site.toml works. I don't think it does
-- I thinkn the common dir should be in .site not in the global filespace. Example: the common files used in the gallery are not useful to most consumers
+- I think the common dir should be in .site not in the global filespace. Example: the common files used in the gallery are not useful to most consumers
 - Enure naming config file on the command line works
 - Consider moving .FrontMatter into .Page? It does belong there logically
 

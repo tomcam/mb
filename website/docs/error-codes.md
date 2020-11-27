@@ -4,6 +4,7 @@
 [mbz0108 Error reading theme file](errors/0108.html)  
 [mbz1019 Only possible sidebar types are "right" and "left"](errors/1019.html)  
 [mbz0126 Error reading config file](errors/0126.html)  
+[mbz0209 Error creating file](errors/0209.html)  
 [mbz0917 Unterminated quote string](errors/0917.html#unterminated)   
 [mbz0917 Function not defined](errors/0917.html#function-not-defined)   
 [mbz0923 Unable to copy header tags directory to site directory](errors/0923.html)
