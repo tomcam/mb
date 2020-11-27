@@ -1,7 +1,6 @@
 package app
 
 import (
-  "fmt"
 	"bytes"
 	"encoding/json"
 	"github.com/tomcam/mb/pkg/defaults"
@@ -534,7 +533,7 @@ func (a *App) publishStyleSheet(file, to string) {
 	}
 }
 
-// copyRootStyleSheets copies the files specified in the
+// publishRootStyleSheets copies the files specified in the
 // theme TOML as rootstylesheets= to a target directory.
 // Normally that would be either the publish directory if
 // you're generating a site, or the new theme directory
@@ -543,7 +542,7 @@ func (a *App) publishStyleSheet(file, to string) {
 // current document. dir is the destination.
 func (a *App) publishRootStylesheets(dir string) {
   // xxx
-  fmt.Printf("publishRootStylesheets(%v) from %v\n", dir,a.Page.Theme.PageType.RootStylesheets)
+  a.Verbose("publishRootStylesheets(%v) from %v\n", dir,a.Page.Theme.PageType.RootStylesheets)
 	for _, file := range a.Page.Theme.PageType.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
@@ -555,7 +554,7 @@ func (a *App) publishRootStylesheets(dir string) {
 			file = filepath.Join("..", file)
 		}
 		//a.publishStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), file))
-    fmt.Printf("publishStyleSheet(%v,%v)\n", file, filepath.Join(dir,file))
+    a.Verbose("\tpublishStyleSheet(%v,%v)\n", file, filepath.Join(dir,file))
 		a.publishStyleSheet(file, filepath.Join(dir, file))
 	}
 }
@@ -564,16 +563,14 @@ func (a *App) publishRootStylesheets(dir string) {
 // given in the theme TOML file and copies them to the
 // publishing (asset) directory
 func (a *App) publishStyleSheets(p PageType) {
+  // TODO: I think this is called too often 
   /*
 	if dirExists(dir) {
 		return
 	}
   */
-  // xxxx 
   // Create the target theme stylesheet directory.
-
   a.copyThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
-  return
 }
 
 

@@ -61,6 +61,8 @@ var errMsgs = map[string]string{
 		defaults.ConfigFileDefaultExt,
 	"0127": "TOML error reading PageType file",     // custom message + err.Error()
 	"0128": "TOML error reading theme file",        // 
+	"0129": "Error getting information on file",        // 
+	"0130": "Error reading symlink file",        // 
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -76,6 +78,7 @@ var errMsgs = map[string]string{
 	"0211": "Error creating sample file",                         // filename
 	"0212": "Error renaming temporary output file",               // filename
   "0213": "Unable to create pillar file",                       // filename
+  "0214": "Problem copying file",                       // filename
 
 	// 0250 - Error closing file
 	"0251": "Error closing copy of file", // filename
@@ -95,6 +98,7 @@ var errMsgs = map[string]string{
 	"0407": "Error creating site directory",      // dir name
 	"0408": "Error creating index directory",
   "0409": "Error creating new theme directory", // Fully qualified pathname
+  "0410": "Error creating directory",           // dir name
 
 	// 0500	- Error determining directory name
 	"0501": "",
@@ -110,7 +114,7 @@ var errMsgs = map[string]string{
 	"0705": "Missing name of target directory",       // directory name to copy to
 	"0706": "Unable to read from headtags directory", // Expected pathname of headtags directory
 	"0707": "Directories are identical:",             // custom message
-
+  "0708": "Unable to read directory",               //
 	// 0800	- Can't determine the name of something
 	"0801": "",
 
