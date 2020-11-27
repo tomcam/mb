@@ -151,7 +151,7 @@ var errMsgs = map[string]string{
 	"1001": "Missing front matter and markdown", // filename
 	"1002": "This isn't a project directory",    // full custom message
 	"1003": "Unable to find theme",              // full custom message
-	"1004": "The",                               // full custom message
+	"1004": "Unable to find",                               // full custom message
 	"1005": "PageType not found",                // full custom message
 	"1006": "PageType not found",                // full custom message
 	"1007": "Error reading theme",               // full custom message
@@ -170,6 +170,8 @@ var errMsgs = map[string]string{
   "1020": "Missing name of theme to create",   // 
   "1021": "Can't find a theme named",           // filename
   "1022": "Can't find a TOML file for the them",
+	"1023": "Unable to read directory",                        // filename
+
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name
 	"1102": "Can't change to source directory", // directory name

@@ -2,6 +2,8 @@ package app
 
 import (
 	"fmt"
+	"github.com/tomcam/mb/pkg/slices"
+	"io/ioutil"
 	"github.com/BurntSushi/toml"
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
@@ -134,7 +136,7 @@ func (a *App) childThemeFullPath() string {
 // If no theme was specified, use the default.
 func (a *App) loadDefaultTheme() {
 	if !dirExists(a.themesPath) {
-		a.QuitError(errs.ErrCode("1004", "PREVIOUS"))
+		a.QuitError(errs.ErrCode("1004","theme directory " + a.themesPath))
 	}
 	// If no theme was specified in the front matter,
 	// but one was specified in the site config site.toml,
@@ -151,7 +153,6 @@ func (a *App) loadDefaultTheme() {
 
 
 func (a *App) loadTheme(parent bool) {
-  // xxx necessary?
   a.loadDefaultTheme()
   if !parent && a.FrontMatter.PageType== "" {
     // There is no child theme
@@ -317,7 +318,7 @@ func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error 
 	return Copy(sourceCSSFile, targetCSSFile)
 }
 
-// newcopyTheme() copies from the theme directory to, from
+// copyTheme() copies from the theme directory to, from
 // the theme directory from. "from" is specifed only as a file/theme
 // name, not a fully qualified pathame, so "wide" for example.
 // It copies everything in from, and
@@ -325,6 +326,9 @@ func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error 
 // to.toml. to is a fully qualified pathname.
 // If isChild is true, then to is actually a child pageType of from,
 // so there's different handling.
+// It is different from publishTheme(), which is a bit selective.
+// For example, it only copies sidebar-left.css or sidebar-right.css
+// as needed.
 func (a *App) copyTheme(from, to string, isChild bool)  {
   a.Verbose("copyTheme(%v,%v)",from,to)
 	// Obtain the fully qualified name of the source
@@ -498,11 +502,52 @@ func (a *App) copyRootStylesheets(from, to string) {
 // by the fully qualified directory name from, 
 // to the fully qualified  directory name to.
 func (a *App) publishThemeDirectory(from, to string) {
-
+  a.Verbose("publishThemeDirectory(%v,%v)",from,to)
   // Create the destination directory.
 	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", to))
 	}
+
+	// Get the directory listing.
+	candidates, err := ioutil.ReadDir(from)
+	if err != nil {
+		a.QuitError(errs.ErrCode("1023", from, err.Error()))
+	}
+
+	// Get list of files in the local directory to exclude from copy
+	excludeFromDir := slices.NewSearchInfo(a.FrontMatter.ExcludeFilenames)
+
+  // Copy all files that aren't stylesheets
+	for _, file := range candidates {
+		filename := file.Name()
+		// Don't copy if it's a directory.
+		if !file.IsDir() {
+			// Don't copy if its extension is on one of the excluded lists.
+			if !hasExtension(filename, ".css") &&
+				!hasExtensionFrom(filename, defaults.MarkdownExtensions) &&
+        !hasExtensionFrom(filename, defaults.ExcludedAssetExtensions) &&
+				!excludeFromDir.Contains(filename) &&
+				!strings.HasPrefix(filename, ".") {
+				// Got the file. Get its fully qualified name.
+				copyFrom := filepath.Join(from, filename)
+				// Figure out the target directory.
+				relDir := relDirFile(a.Site.path, copyFrom)
+				// Get the target file's fully qualified filename.
+				copyTo := filepath.Join(a.Site.PublishDir, relDir, filename)
+        copyTo = filepath.Join(to, filename)
+				a.Verbose("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
+				if err := Copy(copyFrom, copyTo); err != nil {
+					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
+				}
+				// TODO: Get rid of fileExists() when possible
+				if !fileExists(copyTo) {
+					a.QuitError(errs.ErrCode("PREVIOUS", copyTo))
+				}
+			}
+		}
+  }
+
+  // Publish appropriate style sheets
 
 	p := a.Page.Theme.PageType
 	a.publishRootStylesheets(to)

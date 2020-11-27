@@ -498,7 +498,8 @@ func (a *App) fullTargetThemeDir() string {
 
 // publishStyleSheet() takes the name of a stylesheet specified
 // in the theme and copies it to the destination (publish)
-// directory.
+// directory. Automatically detects if it's a 
+// child pagetype.
 func (a *App) publishStyleSheet(file, to string) {
 	// Pass through if not a local file
 	if strings.HasPrefix(strings.ToLower(file), "http") {
@@ -508,7 +509,6 @@ func (a *App) publishStyleSheet(file, to string) {
 
   var from string
 	// Get fully qualified source filename to copy.
-	/// xxxfrom := filepath.Join(a.parentThemeFullDirectory(), file)
   if a.FrontMatter.isChild {
 	  from = filepath.Join(a.childThemeFullDirectory(), file)
   } else {
@@ -542,7 +542,7 @@ func (a *App) publishStyleSheet(file, to string) {
 // current document. dir is the destination.
 func (a *App) publishRootStylesheets(dir string) {
   // xxx
-  a.Verbose("publishRootStylesheets(%v) from %v\n", dir,a.Page.Theme.PageType.RootStylesheets)
+  a.Verbose("\tpublishRootStylesheets(%v) from %v\n", dir,a.Page.Theme.PageType.RootStylesheets)
 	for _, file := range a.Page.Theme.PageType.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
