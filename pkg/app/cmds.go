@@ -27,7 +27,6 @@ var (
 	cmdBuild = flag.NewFlagSet("build", flag.ExitOnError)
 
 	// Declare command-line subcomand for copying theme
-	// Example: copytheme -from=default to=newtest
 	cmdCopyTheme = flag.NewFlagSet("copytheme", flag.ExitOnError)
 	cmdCopyFrom  = cmdCopyTheme.String("from", "", "theme to copy")
 	cmdCopyTo    = cmdCopyTheme.String("to", "", "name of new theme")

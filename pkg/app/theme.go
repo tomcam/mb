@@ -211,14 +211,45 @@ func (a *App) newTheme(from, to string) error {
 func (a *App) copyThemeDirectory(from, to string) {
 
   // xxxx
+  fmt.Printf("copyThemeDirectory(%v,%v)\n", from, to)
   // Create the destination directory.
 	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", to))
 	}
 
 	p := a.Page.Theme.PageType
-	a.copyRootStylesheets()
+  fmt.Printf("\tcopyRootStylesheets(%v)\n", to)
+	a.copyRootStylesheets(to)
 
+  fmt.Printf("\tcopying other stylesheets()\n")
+	for _, file := range p.Stylesheets {
+		file = a.getMode(file)
+		//a.copyStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), path.Base(file)))
+		a.copyStyleSheet(file, filepath.Join(to, path.Base(file)))
+	}
+	// responsive.css is always last
+	//a.copyStyleSheet("responsive.css",filepath.Join(a.fullTargetThemeDir(), "responsive.css"))
+	a.copyStyleSheet("responsive.css",filepath.Join(to, "responsive.css"))
+
+}
+
+// oldcopyThemeDirectory() copies the directory specified 
+// by the fully qualified directory name from, 
+// to the fully qualified  directory name to.
+func (a *App) oldcopyThemeDirectory(from, to string) {
+
+  // xxxx
+  fmt.Printf("copyThemeDirectory(%v,%v)\n", from, to)
+  // Create the destination directory.
+	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
+		a.QuitError(errs.ErrCode("0402", to))
+	}
+
+	p := a.Page.Theme.PageType
+  fmt.Printf("\tcopyRootStylesheets(%v)\n", to)
+	a.copyRootStylesheets(to)
+
+  fmt.Printf("\tcopying other stylesheets()\n")
 	for _, file := range p.Stylesheets {
 		file = a.getMode(file)
 		a.copyStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), path.Base(file)))
@@ -228,13 +259,7 @@ func (a *App) copyThemeDirectory(from, to string) {
 
 }
 
-/*
-// TODO: Uhh, is this necessary?
-func (a *App) newPageType(theme, pageType string) error {
-	return a.createPageType(theme, pageType)
-}
 
-*/
 // createPageType() is very similar to copyTheme() but
 // it creates a new pagetype from an existing one and
 // puts it one subdirectory down from the original.
@@ -278,7 +303,7 @@ func (a *App) createPageType(theme, pageType string) error {
 // so there's different handling.
 func (a *App) copyTheme(from, to string, isChild bool) error {
   // xxx
-  promptString("copyTheme from " + from + " to " +  to)
+  fmt.Printf("copyTheme(%v,%v)",from,to)
 	// Obtain the fully qualified name of the source
 	// theme directory to copy
 	//fmt.Println("Create theme " + from)
@@ -291,6 +316,7 @@ func (a *App) copyTheme(from, to string, isChild bool) error {
 		return errs.ErrCode("1008", from)
 	}
 
+  fmt.Printf("\tsource: %v\n", source)
 	var dest string
 	if !isChild {
 		dest = a.themePath(to)
@@ -301,7 +327,7 @@ func (a *App) copyTheme(from, to string, isChild bool) error {
 		return errs.ErrCode("0904", "directory "+dest+" already exists")
 	}
 	a.Verbose("Creating theme " + dest + to)
-
+  fmt.Printf("\tdest: %v\n", dest)
   a.copyThemeDirectory(source, dest)
 	err := a.updateThemeDirectory(from, dest, to, tomlFile, isChild)
 	if err != nil {

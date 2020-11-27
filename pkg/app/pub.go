@@ -1,6 +1,7 @@
 package app
 
 import (
+  "fmt"
 	"bytes"
 	"encoding/json"
 	"github.com/tomcam/mb/pkg/defaults"
@@ -527,46 +528,22 @@ func (a *App) copyStyleSheet(file, to string) {
 
 	// Actually copy the style sheet to its destination
 	if err := Copy(from, to); err != nil {
-		a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
+		//a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
+		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
+
 	}
 }
 
-// copyStyleSheet() takes the name of a stylesheet specified
-// in the theme and copies it to the destination (publish)
-// directory.
-func (a *App) oldcopyStyleSheet(file string) {
-	// Pass through if not a local file
-	if strings.HasPrefix(strings.ToLower(file), "http") {
-		a.appendStr(stylesheetTag(file))
-		return
-	}
-
-  var from string
-	// Get fully qualified source filename to copy.
-	/// xxxfrom := filepath.Join(a.parentThemeFullDirectory(), file)
-  if a.FrontMatter.isChild {
-	  from = filepath.Join(a.childThemeFullDirectory(), file)
-  } else {
-	  from = filepath.Join(a.parentThemeFullDirectory(), file)
-  }
-
-	// Relative path to the publish directory for themes
-	pathname := filepath.Join(a.relTargetThemeDir(), file)
-	// Write out the link
-	a.appendStr(stylesheetTag(pathname))
-
-	to := filepath.Join(a.fullTargetThemeDir(), file)
-	if from == to {
-		a.QuitError(errs.ErrCode("0922", "from '"+from+"' to '"+to+"'"))
-	}
-
-	// Actually copy the style sheet to its destination
-	if err := Copy(from, to); err != nil {
-		a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
-	}
-}
-
-func (a *App) copyRootStylesheets() {
+// copyRootStyleSheets copies the files specified in the
+// theme TOML as rootstylesheets= to a target directory.
+// Normally that would be either the publish directory if
+// you're generating a site, or the new theme directory
+// if you're creating or copying a theme.
+// The source of the stylesheets is defined by the pagetype of the
+// current document. dir is the destination.
+func (a *App) copyRootStylesheets(dir string) {
+  // xxx
+  fmt.Printf("copyRootStylesheets(%v) from %v\n", dir,a.Page.Theme.PageType)
 	for _, file := range a.Page.Theme.PageType.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
@@ -577,7 +554,9 @@ func (a *App) copyRootStylesheets() {
 		if a.FrontMatter.isChild {
 			file = filepath.Join("..", file)
 		}
-		a.copyStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), file))
+		//a.copyStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), file))
+    fmt.Printf("copyStyleSheet(%v,%v)\n", file, filepath.Join(dir,file))
+		a.copyStyleSheet(file, filepath.Join(dir, file))
 	}
 }
 
