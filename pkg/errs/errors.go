@@ -60,6 +60,7 @@ var errMsgs = map[string]string{
 		defaults.ProductName + "." +
 		defaults.ConfigFileDefaultExt,
 	"0127": "TOML error reading PageType file",     // custom message + err.Error()
+	"0128": "TOML error reading theme file",        // 
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error

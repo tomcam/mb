@@ -223,6 +223,101 @@ func (a *App) copyStyleSheet(file, from, to string) {
 
 
 
+func (a *App) newupdateThemeDirectory(from, dest string, isChild bool) error {
+	// Create a toml file for the new theme
+
+	// Parse the original toml file to get its list of stylesheets.
+	// Goal is to replace the original theme stylesheet name, say, default.css,
+	// with the new theme's style sheet name, say, mytheme.css.
+	var p PageType
+  tomlFile := a.themeTOMLFilename(filepath.Base(from))
+	if _, err := toml.DecodeFile(tomlFile, &p); err != nil {
+		return errs.ErrCode("0128", fmt.Errorf("Problem reading TOML file %s\n", tomlFile).Error(), err.Error())
+	}
+
+	// Get the plain name of the target stylesheet, say, "mynewtheme"
+	destFilename := filepath.Base(dest)
+	var targetTomlFile string
+  targetDir  := dest
+	// Figure out the name and location of the toml that describes
+	// the theme. If it's a new theme, it would be in something
+	// like /themes/mynewtheme/mynewtheme.toml. If it's a pagetype for an existing
+	// theme, it would be in something like /themes/mynewtheme/blog/blog.toml
+	tomlFilename := destFilename + "." + defaults.ConfigFileDefaultExt
+	if !isChild {
+		// It's a new theme
+		targetDir = filepath.Join(a.Site.themesPath, dest)
+		targetTomlFile = filepath.Join(a.themesPath, destFilename, tomlFilename)
+	} else {
+		// It's a pagetype of an existing theme
+		targetDir = filepath.Join(a.Site.themesPath, dest, from)
+		targetDir = dest
+		targetTomlFile = filepath.Join(dest, filepath.Base(dest)+"."+defaults.ConfigFileDefaultExt)
+	}
+	// Obtain the contents of the original TOML file.
+	if _, err := toml.DecodeFile(tomlFile, &p); err != nil {
+		return errs.ErrCode("0116",
+			fmt.Errorf("Problem reading TOML file %s\n",
+				tomlFile).Error(), err.Error())
+	}
+
+	var targetCSSFile string
+
+	// Search its list of stylesheets for the old name.
+	sourceCSSFile := path.Base(from) + ".css"
+	// Get the new name to replace it with.
+  //targetCSSFile = filepath.Join(dest, destFilename + ".css")
+  targetCSSFile = path.Base(dest + ".css")
+  fmt.Printf("sourceCSSFile: %v. targetCSSFile: %v\n", sourceCSSFile, targetCSSFile)
+
+	// The TOML file has a declaration along the lines of
+	//stylesheets = [ "sizes.css", "theme-light.css", "myoldtheme.css"  ]
+	// Look through the old list of stylesheets from the TOML file. Replace the old stylesheet
+	// name ("myoldtheme.css" in this example)with the new one.
+	newStylesheets := []string{}
+	for _, cssFile := range p.Stylesheets {
+		if cssFile == sourceCSSFile {
+			// Found a matching stylesheet filename. Replace
+			// it with the new stylesheet name.
+			newStylesheets = append(newStylesheets, targetCSSFile)
+		} else {
+			// It's a generic file like sizes.css or fonts.css,
+			// so copy over unchanged
+			newStylesheets = append(newStylesheets, cssFile)
+		}
+
+	}
+	// Search and replace completed.
+	// Replace the old list of stylesheets in the PageType struct.
+	p.Stylesheets = newStylesheets
+
+	// Write out the new TOML file, with the search/replaced stylesheet name in the
+	// Stylesheets list.
+	if err := writeTomlFile(targetTomlFile, &p); err != nil {
+		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
+	}
+
+	// Now get rid of the previous .toml and .css files
+	delToml := filepath.Join(targetDir, from+"."+defaults.ConfigFileDefaultExt)
+	delCSS := filepath.Join(targetDir, from+".css")
+	// Delete them if they exist. No error is returned if there's a problem.
+	// Because I live on the edge, baby.
+	deleteFileMust(delToml)
+	deleteFileMust(delCSS)
+	// Create copy of css file
+	sourceCSSFile = replaceExtension(tomlFile, "css")
+	if isChild {
+		d := filepath.Dir(dest)
+		targetCSSFile = filepath.Join(d, destFilename, targetCSSFile)
+		return Copy(sourceCSSFile, targetCSSFile)
+
+	}
+	// It's not a child pageType, it's peer of the original.
+	targetCSSFile = replaceExtension(targetTomlFile, "css")
+	return Copy(sourceCSSFile, targetCSSFile)
+}
+
+
 // newTheme() generates a new theme from an old one.
 // Equivalent of mb new theme
 // This is a parent theme.
@@ -245,16 +340,11 @@ func (a *App) newTheme(from, to string) {
   if dirExists(toThemePath) {
     a.QuitError(errs.ErrCode("0952", to))
   }
-  fmt.Println("\tFrom: " + fromThemePath)
-  fmt.Println("\tTo: " + toThemePath)
-  /*
-  if err := a.copyTheme(from, to, false); err != nil {
-    a.QuitError(errs.ErrCode("0924", to))
-  }
-  */
+  //fmt.Println("\tFrom: " + fromThemePath)
+  //fmt.Println("\tTo: " + toThemePath)
 	// Generate name of TOML file expected to be there
 	tomlFile := a.themeTOMLFilename(filepath.Base(fromThemePath))
-  fmt.Printf("\ttomlFile: %v\n", tomlFile)
+  //fmt.Printf("\ttomlFile: %v\n", tomlFile)
 	// Check for both these elements.
 	if !fileExists(tomlFile) {
     a.QuitError(errs.ErrCode("1008", filepath.Base(fromThemePath)))
@@ -286,33 +376,16 @@ func (a *App) newTheme(from, to string) {
 		a.copyStyleSheet(file, fromThemePath, toThemePath)
 	}
 
+	// Worked except left old themename stylesheet in place
+  // err := a.updateThemeDirectory(from, to, to, tomlFile, false)
+	err := a.newupdateThemeDirectory(fromThemePath, toThemePath, false)
 
-
-  /*
-
-  fmt.Printf("\tsource: %v\n", source)
-	var dest string
-	if !isChild {
-		dest = a.themePath(to)
-	} else {
-		dest = to
+	if err != nil {
+		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 	}
-	if dirExists(dest) {
-		return errs.ErrCode("0904", "directory "+dest+" already exists")
-	}
-	a.Verbose("Creating theme " + dest + to)
-  fmt.Printf("\tdest: %v\n", dest)
-  */
 
-	//filepath.Join(a.themesPath, a.FrontMatter.Theme)
-  // Return the fuly qualified directory name of the parent theme
+  a.Quit("newTheme(): Handle child themes")
 
-  // Return the fuly qualified filename of the
-  // parent theme, including the .toml extension.
-	//filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
-  //xxxxx
-
-	//return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
   // xxxx
 }
 
