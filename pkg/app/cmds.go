@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/tomcam/mb/pkg/defaults"
-	"github.com/tomcam/mb/pkg/errs"
+	//"github.com/tomcam/mb/pkg/errs"
 	//"github.com/spf13/viper"
 )
 
@@ -276,7 +276,7 @@ create theme based on an existing one.
 		NewThemeName string
 		// the bar part of
 		// new theme foo from bar
-		NewThemeFrom = a.defaultTheme()
+		SourceTheme = a.defaultTheme()
 		cmdNewTheme  = &cobra.Command{
 			Use:   "theme {newtheme} | from {oldtheme} ",
 			Short: "new theme mytheme",
@@ -303,10 +303,13 @@ create theme based on an existing one.
 					NewThemeName = promptString("Name of theme to create?")
 				}
 				// Create a new theme from the default theme
-				NewThemeFrom = promptStringDefault("Name to copy it from?", NewThemeFrom)
+				SourceTheme = promptStringDefault("Name to copy it from?", SourceTheme)
+        a.newTheme(SourceTheme, NewThemeName)
+        /*
 				if err := a.newTheme(NewThemeFrom, NewThemeName); err != nil {
 					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 				}
+        */
 				// Could put a message that it was created
 			},
 		}

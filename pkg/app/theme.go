@@ -29,7 +29,6 @@ type Theme struct {
   // the window. Pillar means it has space on the right
   // and left sides. This determines whether a 
   // Textual-based theme gets the ol' Pillar Conversion Kit
-  Wide bool
 
 	Supported Supported
 }
@@ -113,7 +112,6 @@ func (a *App) parentThemeFullDirectory() string {
 // parent theme, including the .toml extension.
 func (a *App) parentThemeFullPath() string {
 	return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
-  //xxxxx
 }
 
 // childThemeFullDirectory() Returns the fuly qualified pathname of the
@@ -189,9 +187,182 @@ func pageTypePath(subDir, themeName string) string {
 }
 
 
+
+// file: Name of styleshet in source directory
+// from: Fully qualified pathname of source directory
+// to: Fully qualified directory name of target directory
+func (a *App) copyStyleSheet(file, from, to string) {
+	// Pass through if not a local file
+	if strings.HasPrefix(strings.ToLower(file), "http") {
+		a.appendStr(stylesheetTag(file))
+		return
+	}
+
+	// Get fully qualified source filename to copy.
+	from = filepath.Join(from, file)
+  if a.FrontMatter.isChild {
+	  //from = filepath.Join(a.childThemeFullDirectory(), file)
+    a.Quit("copyStyleSheet(): handle case of child theme")
+  }
+
+	// Relative path to the publish directory for themes
+	to = filepath.Join(to, file)
+
+	if from == to {
+		a.QuitError(errs.ErrCode("0922", "from '"+from+"' to '"+to+"'"))
+	}
+
+	// Actually copy the style sheet to its destination
+	if err := Copy(from, to); err != nil {
+		//a.QuitError(errs.ErrCode("0916", "from '"+from+"' to '"+to+"'"))
+		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
+
+	}
+}
+
+
+
+
 // newTheme() generates a new theme from an old one.
 // Equivalent of mb new theme
-func (a *App) newTheme(from, to string) error {
+// This is a parent theme.
+func (a *App) newTheme(from, to string) {
+  fmt.Printf("newTheme(%v,%v)\n",from,to)
+	if from == to {
+		a.QuitError(errs.ErrCode("0918", ""))
+	}
+	if from == "" {
+		a.QuitError(errs.ErrCode("1020", ""))
+	}
+	if to == "" {
+		a.QuitError(errs.ErrCode("1017", ""))
+	}
+  fromThemePath := a.themePath(from)
+  toThemePath := a.themePath(to)
+  if !dirExists(fromThemePath) {
+    a.QuitError(errs.ErrCode("1021", fromThemePath))
+  }
+  if dirExists(toThemePath) {
+    a.QuitError(errs.ErrCode("0952", to))
+  }
+  fmt.Println("\tFrom: " + fromThemePath)
+  fmt.Println("\tTo: " + toThemePath)
+  /*
+  if err := a.copyTheme(from, to, false); err != nil {
+    a.QuitError(errs.ErrCode("0924", to))
+  }
+  */
+	// Generate name of TOML file expected to be there
+	tomlFile := a.themeTOMLFilename(filepath.Base(fromThemePath))
+  fmt.Printf("\ttomlFile: %v\n", tomlFile)
+	// Check for both these elements.
+	if !fileExists(tomlFile) {
+    a.QuitError(errs.ErrCode("1008", filepath.Base(fromThemePath)))
+	}
+
+  // Create the destination directory.
+	if err := os.MkdirAll(toThemePath, defaults.PublicFilePermissions); err != nil {
+		a.QuitError(errs.ErrCode("0409", toThemePath))
+	}
+
+  var p PageType
+
+  // Load the TOML file for the source theme
+	if err := readTomlFile(tomlFile, &p); err != nil {
+		a.QuitError(errs.ErrCode("0127", tomlFile, ))
+	}
+
+	for _, file := range p.RootStylesheets {
+		// If user has requested a dark theme, then don't copy skin.css
+		// to the target. Copy theme-dark.css instead.
+		// TODO: Decide whether this should be in root stylesheets and/or regular.
+		file = a.getMode(file)
+    //fmt.Printf("About to copyStyleSheet(%v,%v,%v)\n", file, fromThemePath, toThemePath)
+		a.copyStyleSheet(file, fromThemePath, toThemePath)
+	}
+
+	for _, file := range p.Stylesheets {
+		file = a.getMode(file)
+		a.copyStyleSheet(file, fromThemePath, toThemePath)
+	}
+
+
+
+  /*
+
+  fmt.Printf("\tsource: %v\n", source)
+	var dest string
+	if !isChild {
+		dest = a.themePath(to)
+	} else {
+		dest = to
+	}
+	if dirExists(dest) {
+		return errs.ErrCode("0904", "directory "+dest+" already exists")
+	}
+	a.Verbose("Creating theme " + dest + to)
+  fmt.Printf("\tdest: %v\n", dest)
+  */
+
+	//filepath.Join(a.themesPath, a.FrontMatter.Theme)
+  // Return the fuly qualified directory name of the parent theme
+
+  // Return the fuly qualified filename of the
+  // parent theme, including the .toml extension.
+	//filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
+  //xxxxx
+
+	//return filepath.Join(a.parentThemeFullDirectory(), a.FrontMatter.Theme+"."+defaults.ConfigFileDefaultExt)
+  // xxxx
+}
+
+
+/*
+func (a *App) loadTheme(parent bool) {
+  // xxx necessary?
+  a.loadDefaultTheme()
+  if !parent && a.FrontMatter.PageType== "" {
+    // There is no child theme
+    return
+  }
+  var themePath string
+	if parent {
+    themePath = a.parentThemeFullPath()
+  } else {
+    themePath = a.childThemeFullPath()
+  }
+	var p PageType
+	if err := readTomlFile(themePath, &p); err != nil {
+		a.QuitError(errs.ErrCode("0105", themePath, a.FrontMatter.PageType))
+	}
+	a.Page.Theme.PageType = p
+  if parent {
+    a.Page.Theme.PageType.PathName = a.parentThemeFullDirectory()
+	  a.FrontMatter.isChild = false
+  } else {
+    a.Page.Theme.PageType.PathName = a.childThemeFullDirectory()
+	  // TODO: Should probably force filename to lowercase
+	  a.FrontMatter.isChild = true
+  }
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// newTheme() generates a new theme from an old one.
+// Equivalent of mb new theme
+func (a *App) oldnewTheme(from, to string) error {
 	if from == to {
 		a.QuitError(errs.ErrCode("0918", ""))
 	}
@@ -201,7 +372,10 @@ func (a *App) newTheme(from, to string) error {
 	if to == "" {
 		a.QuitError(errs.ErrCode("1017", ""))
 	}
-	return a.copyTheme(from, to, false)
+  // xxx
+	//return a.copyTheme(from, to, false)
+	a.copyThemeDirectory(from, to)
+  return nil
 }
 
 
@@ -219,17 +393,17 @@ func (a *App) copyThemeDirectory(from, to string) {
 
 	p := a.Page.Theme.PageType
   fmt.Printf("\tcopyRootStylesheets(%v)\n", to)
-	a.copyRootStylesheets(to)
+	a.publishRootStylesheets(to)
 
   fmt.Printf("\tcopying other stylesheets()\n")
 	for _, file := range p.Stylesheets {
 		file = a.getMode(file)
-		//a.copyStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), path.Base(file)))
-		a.copyStyleSheet(file, filepath.Join(to, path.Base(file)))
+		//a.publishStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), path.Base(file)))
+		a.publishStyleSheet(file, filepath.Join(to, path.Base(file)))
 	}
 	// responsive.css is always last
-	//a.copyStyleSheet("responsive.css",filepath.Join(a.fullTargetThemeDir(), "responsive.css"))
-	a.copyStyleSheet("responsive.css",filepath.Join(to, "responsive.css"))
+	//a.publishStyleSheet("responsive.css",filepath.Join(a.fullTargetThemeDir(), "responsive.css"))
+	a.publishStyleSheet("responsive.css",filepath.Join(to, "responsive.css"))
 
 }
 
@@ -247,15 +421,15 @@ func (a *App) oldcopyThemeDirectory(from, to string) {
 
 	p := a.Page.Theme.PageType
   fmt.Printf("\tcopyRootStylesheets(%v)\n", to)
-	a.copyRootStylesheets(to)
+	a.publishRootStylesheets(to)
 
   fmt.Printf("\tcopying other stylesheets()\n")
 	for _, file := range p.Stylesheets {
 		file = a.getMode(file)
-		a.copyStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), path.Base(file)))
+		a.publishStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), path.Base(file)))
 	}
 	// responsive.css is always last
-	a.copyStyleSheet("responsive.css",filepath.Join(a.fullTargetThemeDir(), "responsive.css"))
+	a.publishStyleSheet("responsive.css",filepath.Join(a.fullTargetThemeDir(), "responsive.css"))
 
 }
 
@@ -272,7 +446,7 @@ func (a *App) createPageType(theme, pageType string) error {
 	// theme directory to copy
 	source := a.themePath(theme)
 	// Generate name of TOML file expected to be there
-	tomlFile := a.themeTOMLFilename(theme, source)
+	tomlFile := a.themeTOMLFilename(theme)
 	// Check for both these elements.
 	if !a.isTheme(source, tomlFile) {
 		return errs.ErrCode("1010", source+"  doesn't seem to be a theme")
@@ -310,10 +484,10 @@ func (a *App) copyTheme(from, to string, isChild bool) error {
 	//fmt.Fprintf(os.Stdout, "Created theme %s from %s",to, from); // xxx
 	source := a.themePath(from)
 	// Generate name of TOML file expected to be there
-	tomlFile := a.themeTOMLFilename(from, source)
+	tomlFile := a.themeTOMLFilename(path.Base(from))
 	// Check for both these elements.
 	if !a.isTheme(source, tomlFile) {
-		return errs.ErrCode("1008", from)
+		return errs.ErrCode("1008", source)
 	}
 
   fmt.Printf("\tsource: %v\n", source)
@@ -335,7 +509,7 @@ func (a *App) copyTheme(from, to string, isChild bool) error {
 	}
 	// Success
 	//a.Verbose("Created theme " + filepath.Base(dest))
-	//fmt.Println("Created theme " + to + " from " + from + " in " + dest)
+	fmt.Println("Created theme " + to + " from " + from + " in " + dest)
 	a.Verbose("Created theme " + to + " from " + from + " in " + dest)
 	return nil
 }
@@ -348,7 +522,7 @@ func (a *App) themePath(theme string) string {
 
 // themeTOMLFilename() returns the fully qualified pathname
 // of the named theme's expected TOML filename.
-func (a *App) themeTOMLFilename(theme, themePath string) string {
+func (a *App) themeTOMLFilename(theme string) string {
 	return filepath.Join(a.themesPath, theme, theme+"."+defaults.ConfigFileDefaultExt)
 }
 

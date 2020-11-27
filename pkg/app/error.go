@@ -50,3 +50,12 @@ func (a *App) QuitError(e error) {
 		os.Exit(1)
 	}
 }
+
+// Quit() is a quick and dirty function that displays the
+// message and exits to the operating system.
+// TODO: Don't allow these in production!
+func (a *App) Quit(format string, ss ...interface{}) {
+	fmt.Println(a.fmtMsg(format, ss...))
+  os.Exit(1)
+}
+

@@ -59,6 +59,7 @@ var errMsgs = map[string]string{
 	"0126": "Error reading config file " + // Viper runtime error
 		defaults.ProductName + "." +
 		defaults.ConfigFileDefaultExt,
+	"0127": "TOML error reading PageType file",     // custom message + err.Error()
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -74,6 +75,7 @@ var errMsgs = map[string]string{
 	"0211": "Error creating sample file",                         // filename
 	"0212": "Error renaming temporary output file",               // filename
   "0213": "Unable to create pillar file",                       // filename
+
 	// 0250 - Error closing file
 	"0251": "Error closing copy of file", // filename
 	"0252": "Error closing TOML file",    // filename
@@ -91,6 +93,7 @@ var errMsgs = map[string]string{
 	"0406": "Error copying directory",            // custom msg with both dirs, Golang error,
 	"0407": "Error creating site directory",      // dir name
 	"0408": "Error creating index directory",
+  "0409": "Error creating new theme directory", // Fully qualified pathname
 
 	// 0500	- Error determining directory name
 	"0501": "",
@@ -133,9 +136,11 @@ var errMsgs = map[string]string{
 	"0921": "Error generating TOC",                                 // custom message
 	"0922": "Can't copy a file onto itself. That would be silly.", //
 	"0923": "Unable to copy header tags directory to site directory",    // custom message
-
+  "0924": "Unable to create theme",                               // theme name
+  
 	// 0950 - Something's already there
 	"0951": "Site already exists:", // sitename
+	"0952": "There is already a theme named", // theme path
 
 	// 1000	- Something's missing that should be there
 	"1001": "Missing front matter and markdown", // filename
@@ -157,7 +162,9 @@ var errMsgs = map[string]string{
 	"1017": "Missing name of the theme to create.",
 	"1018": "No path specified for the project", //
   "1019": "Only possible sidebar types are \"right\" and \"left\"", /// filename
-
+  "1020": "Missing name of theme to create",   // 
+  "1021": "Can't find a theme named",           // filename
+  "1022": "Can't find a TOML file for the them",
 	// 1100 - Problem changing to a directory
 	"1101": "Can't change to source directory", // directory name
 	"1102": "Can't change to source directory", // directory name

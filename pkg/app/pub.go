@@ -497,10 +497,10 @@ func (a *App) fullTargetThemeDir() string {
 	return filepath.Join(a.Site.PublishDir, a.relTargetThemeDir())
 }
 
-// copyStyleSheet() takes the name of a stylesheet specified
+// publishStyleSheet() takes the name of a stylesheet specified
 // in the theme and copies it to the destination (publish)
 // directory.
-func (a *App) copyStyleSheet(file, to string) {
+func (a *App) publishStyleSheet(file, to string) {
 	// Pass through if not a local file
 	if strings.HasPrefix(strings.ToLower(file), "http") {
 		a.appendStr(stylesheetTag(file))
@@ -541,9 +541,9 @@ func (a *App) copyStyleSheet(file, to string) {
 // if you're creating or copying a theme.
 // The source of the stylesheets is defined by the pagetype of the
 // current document. dir is the destination.
-func (a *App) copyRootStylesheets(dir string) {
+func (a *App) publishRootStylesheets(dir string) {
   // xxx
-  fmt.Printf("copyRootStylesheets(%v) from %v\n", dir,a.Page.Theme.PageType)
+  fmt.Printf("publishRootStylesheets(%v) from %v\n", dir,a.Page.Theme.PageType.RootStylesheets)
 	for _, file := range a.Page.Theme.PageType.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
@@ -554,16 +554,16 @@ func (a *App) copyRootStylesheets(dir string) {
 		if a.FrontMatter.isChild {
 			file = filepath.Join("..", file)
 		}
-		//a.copyStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), file))
-    fmt.Printf("copyStyleSheet(%v,%v)\n", file, filepath.Join(dir,file))
-		a.copyStyleSheet(file, filepath.Join(dir, file))
+		//a.publishStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), file))
+    fmt.Printf("publishStyleSheet(%v,%v)\n", file, filepath.Join(dir,file))
+		a.publishStyleSheet(file, filepath.Join(dir, file))
 	}
 }
 
-// copyStyleSheets() takes the list of style sheets
+// publishStyleSheets() takes the list of style sheets
 // given in the theme TOML file and copies them to the
 // publishing (asset) directory
-func (a *App) copyStyleSheets(p PageType) {
+func (a *App) publishStyleSheets(p PageType) {
   /*
 	if dirExists(dir) {
 		return
