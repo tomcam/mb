@@ -224,13 +224,7 @@ create theme based on an existing one.
 				}
 				fromTheme = promptString("Add this pagetype to which theme?")
 				//kjjerr := a.newPageType(fromTheme, newPageType)
-				err := a.createPageType(fromTheme, newPageType)
-
-				if err != nil {
-					a.QuitError(err)
-				} else {
-					fmt.Println("Created pagetype", newPageType)
-				}
+				a.newPageType(fromTheme, newPageType)
 			},
 		}
 

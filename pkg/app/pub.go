@@ -429,7 +429,7 @@ func (a *App) publishAssets() {
 		p.Stylesheets = append(p.Stylesheets, "sidebar-right.css")
 
 	}
-  a.copyThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
+  a.publishThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
 	// Copy other files in the theme directory to the target publish directory.
 	// This is whatever happens to be in the theme directory 
   // with sizes.css, fonts.css, etc. 
@@ -570,7 +570,7 @@ func (a *App) publishStyleSheets(p PageType) {
 	}
   */
   // Create the target theme stylesheet directory.
-  a.copyThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
+  a.publishThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
 }
 
 

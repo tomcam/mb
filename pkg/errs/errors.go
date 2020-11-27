@@ -157,7 +157,7 @@ var errMsgs = map[string]string{
 	"1007": "Error reading theme",               // full custom message
 	"1008": "No theme file by the name",         // custom message
 	"1009": "Not a project directory",           //  Dir name
-	"1010": "Not a theme file",                  // full custom message
+	"1010": "Sorry,",                  // full custom message
 	"1011": "No Publish directory specified",    //
 	"1012": "Please specify a site name",
 	"1013": "Please specify a site name",
