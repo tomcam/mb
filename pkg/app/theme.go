@@ -203,7 +203,7 @@ func (a *App) copyStyleSheet(file, from, to string) {
 	from = filepath.Join(from, file)
   if a.FrontMatter.isChild {
 	  //from = filepath.Join(a.childThemeFullDirectory(), file)
-    a.Quit("copyStyleSheet(): handle case of child theme")
+    a.Quit("\t\tcopyStyleSheet(): handle case of child theme")
   }
 
 	// Relative path to the publish directory for themes
@@ -396,7 +396,7 @@ func (a *App) newPageType(theme, pageType string)  {
 // Equivalent of mb new theme
 // This is a parent theme.
 func (a *App) newTheme(from, to string) {
-  a.Verbose("newTheme(%v,%v)\n",from,to)
+  a.Verbose("newTheme(%v,%v)",from,to)
 	if from == to {
 		a.QuitError(errs.ErrCode("0918", ""))
 	}
@@ -415,12 +415,12 @@ func (a *App) newTheme(from, to string) {
     a.QuitError(errs.ErrCode("0952", to))
   }
 
-  a.Verbose("\tcopyDirOnly(%v,%v)\n", fromThemePath, toThemePath)
+  a.Verbose("\tcopyDirOnly(%v,%v)", fromThemePath, toThemePath)
   if err := copyDirOnly(fromThemePath, toThemePath); err != nil {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
   }
 
-  a.Verbose("\tupdateCopiedThemeDirectory(%v,%v,false)\n", fromThemePath, toThemePath)
+  a.Verbose("\tupdateCopiedThemeDirectory(%v,%v,false)", fromThemePath, toThemePath)
 	err := a.updateCopiedThemeDirectory(fromThemePath, toThemePath, false)
 	if err != nil {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
@@ -502,7 +502,7 @@ func (a *App) copyRootStylesheets(from, to string) {
 // by the fully qualified directory name from, 
 // to the fully qualified  directory name to.
 func (a *App) publishThemeDirectory(from, to string) {
-  a.Verbose("publishThemeDirectory(%v,%v)",from,to)
+  a.Verbose("\tpublishThemeDirectory(%v,%v)",from,to)
   // Create the destination directory.
 	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", to))
@@ -535,7 +535,7 @@ func (a *App) publishThemeDirectory(from, to string) {
 				// Get the target file's fully qualified filename.
 				copyTo := filepath.Join(a.Site.PublishDir, relDir, filename)
         copyTo = filepath.Join(to, filename)
-				a.Verbose("\tCopying '%s' to '%s'\n", copyFrom, copyTo)
+				a.Verbose("\t\tCopy(%s,%s", copyFrom, copyTo)
 				if err := Copy(copyFrom, copyTo); err != nil {
 					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 				}

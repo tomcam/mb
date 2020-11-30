@@ -1,5 +1,4 @@
-package app
-
+package app;
 import (
 	"bytes"
 	"encoding/json"
@@ -92,7 +91,6 @@ func (a *App) publishFile(filename string) error {
 		Title: title,
 		Body:  mdext.BuildDocBody(node, a.Page.markdownStart),
 	}
-	// xxx
 	if err := appendIndexDoc(a.Site.SearchJSONFilePath, doc); err != nil {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 	}
@@ -164,9 +162,24 @@ func (a *App) publishFile(filename string) error {
 	if !fileExists(outfile) {
 		a.QuitError(errs.ErrCode("0910", outfile))
 	}
-	a.Verbose("\tCreated file %s\n", outfile)
+	a.Verbose("\tCreated file %s", outfile)
 	a.fileCount++
-	//
+	// a.Page.dir
+  if !a.Site.dirs[a.Page.dir].mdOptions.IsOptionSet(HasIndexMd)  &&
+    !a.Site.dirs[a.Page.dir].mdOptions.IsOptionSet(HasReadmeMd) {
+    // xxx
+    a.Verbose("\tDirectory %s doesn't have a README.md, index.md, index.html, or index.html file. Creating empty index.html",
+    a.Page.dir)
+    // Add an empty index.html to prevent directory traversal attacks
+    /* 
+    if err = writeTextFile("index.html", ""); err != nil {
+      a.QuitError(errs.ErrCode("0215", a.Page.dir))
+      // xxxx
+    }
+    */
+  } else {
+    a.Verbose("\tDirectory %s has a README.md, index.md, index.html, or index.html file",a.Page.dir)
+  }
 	// Success
 	return nil
 }
@@ -335,9 +348,17 @@ func (a *App) publishLocalFiles(dir string) bool {
 			a.addMdOption(dir, HasReadmeMd)
 
 		}
-		if strings.ToLower(filename) == "index.md" {
-			a.addMdOption(dir, HasIndexMd)
-		}
+    // Look for some variation of index.html. If there
+    // isn't one we'll create it later for security reasons
+    name := strings.ToLower(filename)
+    switch (name) {
+    case "index.md":
+ 			  a.addMdOption(dir, HasIndexMd)
+   case "index.htm":
+			  a.addMdOption(dir, HasIndexMd)
+    case "index.html":
+			  a.addMdOption(dir, HasIndexMd)
+    }
 	}
 
 	if hasMarkdown {
@@ -452,7 +473,6 @@ func (a *App) publishAssets() {
 		// Create a fully qualified filename for the published file
 		// which means depositing it in the document directoyr, not
 		// the assets directory.
-    // xxx
 		assetDir := filepath.Join(a.Site.PublishDir, relDir)
 		to := filepath.Join(assetDir, file)
 		if err := Copy(from, to); err != nil {
@@ -541,8 +561,7 @@ func (a *App) publishStyleSheet(file, to string) {
 // The source of the stylesheets is defined by the pagetype of the
 // current document. dir is the destination.
 func (a *App) publishRootStylesheets(dir string) {
-  // xxx
-  a.Verbose("\tpublishRootStylesheets(%v) from %v\n", dir,a.Page.Theme.PageType.RootStylesheets)
+  a.Verbose("\tpublishRootStylesheets(%v) from %v", dir,a.Page.Theme.PageType.RootStylesheets)
 	for _, file := range a.Page.Theme.PageType.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
@@ -554,7 +573,7 @@ func (a *App) publishRootStylesheets(dir string) {
 			file = filepath.Join("..", file)
 		}
 		//a.publishStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), file))
-    a.Verbose("\tpublishStyleSheet(%v,%v)\n", file, filepath.Join(dir,file))
+    a.Verbose("\t\tpublishStyleSheet(%v,%v)", file, filepath.Join(dir,file))
 		a.publishStyleSheet(file, filepath.Join(dir, file))
 	}
 }
@@ -576,7 +595,6 @@ func (a *App) publishStyleSheets(p PageType) {
 
 
 // findThemeAsets() obtains a list of all non-source files.
-// XXX I think I can merge this with findPageAssets()
 func (a *App) findThemeAssets() {
 	// First get the list of stylesheets specified for this PageType.
 	// Get a directory listing of all the non-source files

@@ -79,6 +79,7 @@ var errMsgs = map[string]string{
 	"0212": "Error renaming temporary output file",               // filename
   "0213": "Unable to create pillar file",                       // filename
   "0214": "Problem copying file",                       // filename
+  "0215": "Problem creating safety index.html file in directory",            // directory name
 
 	// 0250 - Error closing file
 	"0251": "Error closing copy of file", // filename
