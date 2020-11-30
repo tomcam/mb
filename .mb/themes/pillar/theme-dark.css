@@ -20,7 +20,7 @@
 	 */
 
     /* Default foreground (text) and background colors  */
-    --fg:white;
+    --fg:#F2F2F2;
     --bg:#010536; /* Dark blue. darker #071412;	darkest #040D0B; */
     /* Default link colors */
     --a:cyan;

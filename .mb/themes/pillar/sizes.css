@@ -6,10 +6,10 @@
    * ******************************/
 
   /* adjusts header height and keeps it vertically centered */
-  --header-height:3rem;
+  --header-height:5rem;
 
   /* size of the main text in the header. */
-  --branding-height:2rem;
+  --branding-height:5rem;
 
   /* Same as header {margin-top:}  */
   --header-margin-top:3rem;
@@ -186,7 +186,7 @@
  */
 
   /* --text-start is a padding value not a margin */
-  --text-start:5%; 
+  --text-start:8%; 
 
   /* Trying to keep this independent of text direction. Otherwise
    * I'd just call it padding-right. */

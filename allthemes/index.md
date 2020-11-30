@@ -8,21 +8,14 @@ sidebar="none"
 #mode="dark"
 #mode="light"
 ===
-Check out a simple ul in this theme
-* Is
-* the
-* bullet
-* char
-* visible?
 
-How about deeper?
-
-* Level 1
-  * Level 2
-    * Level 3
-      * Level 4
-        * Level 5
-          * Level 6 
+## textual
+* [Light theme with left sidebar](textual/light-mode-sidebar-left.html)
+* [Light theme with right sidebar](textual/light-mode-sidebar-right.html)
+* [Light theme with no sidebar](textual/light-mode-sidebar-none.html)
+* [Dark theme with left sidebar](textual/dark-mode-sidebar-left.html)
+* [Dark theme with right sidebar](textual/dark-mode-sidebar-right.html)
+* [Dark theme with no sidebar](textual/dark-mode-sidebar-none.html)
 
 
 <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px"  viewBox="0 0 20 20" fill="currentColor">

@@ -4,4 +4,5 @@ theme="textual"
 mode="light"
 sidebar="left"
 ===
-hello, world
+## this better include mdemo.md
+{{ inc "../mdemo.md" }}

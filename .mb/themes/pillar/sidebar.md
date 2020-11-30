@@ -11,3 +11,15 @@ Best Szechuan restaurant in town? You might be surprised
 
 Springfield Park reopens with a restored bandshell
 [MORE](/)
+
+{{- /* the sidebar element doesn't resize the way we'd like. This keeps it filling the height as it should */ -}}
+<script>
+function sidebarHeight() {
+s=document.getElementById('sidebar');
+a=document.getElementById('article'); 
+h=a.offsetHeight+'px';
+s.style.height=h;
+}
+window.onresize=sidebarHeight;
+</script>
+
