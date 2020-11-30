@@ -20,10 +20,10 @@
 	 */
 
     /* Default foreground (text) and background colors  */
-    --fg: black;
-    --bg: var(--trim-fg);
+    --fg:black;
+    --bg:#F6F3EC;
     /* Default link colors */
-    --a: blue;
+    --a:#1919DB;
     --a-link: var(--a);
     --a-visited: var(--a);
     --a-hover: var(--a);
@@ -31,7 +31,7 @@
 
     
     /* Secondary foreground (text) and background colors for accents. */
-    --trim-fg:darkgray; 
+    --trim-fg:#969598; 
     --trim-bg:white;
 
     
@@ -47,7 +47,7 @@
 
 
     /* Primary foreground (text) and background colors in navbar */
-    --nav-fg:var(--fg);
+    --nav-fg:#CD433F;
     --nav-bg:white;
     /* Link colors specific to navbar */
     --a-nav: var(--a); 
