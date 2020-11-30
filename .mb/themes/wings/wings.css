@@ -16,14 +16,14 @@ li li li li li li {margin-left:1em;}
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/
 
-header {padding-left:0em;text-align:right;text-shadow: 1px 0 0 lightgray, 0 -1px 0 lightgray, 0 1px 0 lightgray, -1px 0 0 lightgray;} 
+header {padding-left:7%;/* text-align:right; */text-shadow: 1px 0 0 lightgray, 0 -1px 0 lightgray, 0 1px 0 lightgray, -1px 0 0 lightgray;} 
 /*
  * --------------------------------------------------
  * Simplest case: Branded name, nothing else
  * Doesn't act like a link.
  * --------------------------------------------------
  */
-header > p {font-size:var(--branding-height);font-weight:900;display:inline;} 
+header > p {font-size:var(--branding-height);font-weight:700;display:inline;} 
 
  
 /*
@@ -52,7 +52,7 @@ header > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-header > ul > li:first-child > a {text-align:left;font-size:var(--branding-height);font-weight:900;padding-right:25em;}
+header > ul > li:first-child > a {text-align:left;font-size:var(--branding-height);font-weight:700;padding-right:60%;}
 
 /*
  * --------------------------------------------------
@@ -60,8 +60,7 @@ header > ul > li:first-child > a {text-align:left;font-size:var(--branding-heigh
  * heading
  * --------------------------------------------------
  */
-iheader > ul > li:last-child::before > a {content: '\A'; white-space: pre;color:black;display:block;text-align:left;font-size:var(--branding-height);font-weight:900;padding-right:25em;}
-header > ul > li:last-child {display:block;text-align:left;font-size:var(--branding-height);font-weight:900;padding-right:25em;}
+header > ul > li:last-child {display:block;text-align:left;font-size:var(--branding-height);font-weight:700;padding-right:40em;}
 
 
 
@@ -125,8 +124,8 @@ article > p,
   article > dd, 
   article > dl,
   article > hr {
-		font-size:1.5rem;
-		line-height:2.5rem;
+		font-size:1.2rem;
+		line-height:1.4rem;
 		margin-top:1em;
 }
 

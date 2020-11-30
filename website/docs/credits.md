@@ -23,6 +23,9 @@ Skateboarder by [JayMantri](https://pixabay.com/users/jaymantri-362084/)
 https://pixabay.com/photos/skateboard-skateboarder-young-405894/
 
 
+New york/empire state building image
+Photo by Lukas Kloeppel from Pexels
+https://www.pexels.com/photo/aerial-architecture-blue-sky-buildings-466685/
 
 Image by <a href="https://pixabay.com/users/IngoMoringo-14497112/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4793338">IngoMoringo</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4793338">Pixabay</a>
 ://pixabay.com/photos/glass-ball-glass-ball-mirroring-4793338/
@@ -211,6 +214,10 @@ https://www.flaticon.com/free-icon/chronometer_126417#term=timer&page=1&position
 <div>Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/"             title="Flaticon">www.flaticon.com</a></div>
 
 
+## Code acknowledgements
+
+Stackoverflow user [pilchard](https://stackoverflow.com/users/13762301/pilchard) for the sidebar height backfill:
+https://stackoverflow.com/questions/65082016/javascript-attempt-to-keep-sidebar-at-100vh-at-all-times
 
 
 

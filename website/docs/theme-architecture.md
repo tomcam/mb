@@ -1,6 +1,76 @@
 # Metabuzz theme architecture
 
 ## TODO: Things to cover
+
+* Explain this
+  /* Trying to keep this independent of text direction. Otherwise
+   * I'd just call it padding-right. */
+  --article-pad-text-end:0%;
+
+
+
+
+* Old dimensions for Pillar
+
+### sizes.css
+
+```
+  /* --article-column-width is width of article plus sidebar */
+  --article-column-width:80%;
+
+  /* --alt-article-column-width is width of article WITHOUT sidebar 
+   * Added to --sidebar-width it should always sum up to
+   * --article-column-width */
+  --alt-article-column-width:60%;
+
+  /* --sidebar-width must be the same as
+   * --article-column-width MINUS --alt-article-column-width
+   */
+  --sidebar-width:20%;
+
+  /* --header-footer-width should normally be the same
+   * as --article-column-width That's because they 
+   * stretch out with botht the article and the sidebar. */
+  --header-footer-width:var(--article-column-width);
+
+  --left-margin:7.5%;
+  --right-margin:7.5%;
+
+  /* --text-start is a padding value not a margin */
+  --text-start:5%; 
+```
+
+### sidebar-left.css
+```
+article{float:right;}
+
+/* This is the header and footer width minus sidebar width */
+article {width:var(--alt-article-column-width);}
+/* With sidebar to left no article margin is needed  */
+article{margin-left:0;margin-right:12.5%;padding-left:5%;}
+/* Which means the sidebar needs that margin. */
+aside{margin-left:var(--left-margin);padding-right:2em;padding-left:2.5%;}
+
+```
+
+### sidebar-right.css
+```
+/* This is the header and footer width minus sidebar width */
+article {width:var(--alt-article-column-width);}
+/* With sidebar to right no left margin is needed  */
+article{margin-right:0;}
+aside{padding-right:2.5%;}```
+
+
+
+
+
+* theme-light.css and theme-dark.css file is in 2 parts. The root
+section with color variables common to all MTF themes, and then
+color/border assignments for that particular theme. Border 
+rules are there because they assign color values
+* You can defined CSS variables in terms of other CSS variables:
+--header-fg: var(--fg);
 * Explain the slightly awkward separation of concerns required in theme-light.css andth
 theme-dark.css. YOu have things like this appearing in them:
 ```

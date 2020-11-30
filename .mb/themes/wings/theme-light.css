@@ -37,7 +37,8 @@
     
     /* Primary foreground (text) and background colors in header */
     --header-fg:#F8F5F4;
-    --header-bg:#D8E2ED; 
+    --header-bg:#D8E2ED; /* Polynesia: #1A4086; */
+              /* ![Clipart image of Polynesian island](polynesia-3021072-955.jpg) */
     /* Link colors specific to header */
     --a-header: var(--header-fg); 
     --a-header-link:  var(--header-fg);
