@@ -2,9 +2,10 @@
 :root 
 {
 
-	/* ****************/
-	/* COLORS         */
-	/* ****************/
+	/* **********************************************************/
+	/* COLOR DECLARATIONS USED BY ALL METABUZZ FRAMEWORK THEMES */
+	/* **********************************************************/
+
 	/*
 	 * Most but not all colors used by a theme appear
 	 * in this CSS file as CSS variables, so that you
@@ -16,9 +17,6 @@
 	 * used to color non-text objects, which is why
 	 * they aren't called -text or -background.
 	 *
-	 * --------------------------------------------------
-	 * Header style
-	 * --------------------------------------------------
 	 */
 
     /* Default foreground (text) and background colors  */
@@ -90,7 +88,15 @@
 
 }
 
-/* HEADER colors */
+
+/* **********************************************************/
+/* COLOR AND BORDER CHOICES UNIQUE TO THIS THEME            */
+/* **********************************************************/
+
+/* ******************************/
+/*  HEADER COLORS AND BORDERS   */
+/* ******************************/
+
 header > p {color:var(--header-fg);background-color:var(--header-bg);} 
 
 header > ul > li > a,
@@ -101,9 +107,19 @@ header > ul > li > a:hover,
 header > ul > li > a:active
 	{color:var(--header-fg);}
 
+/*
+ * --------------------------------------------------
+ * Special feature: First item in list can have
+ * a distinct color.
+ * --------------------------------------------------
+ */
 header > ul > li:first-child > a {color:var(--header-fg);}
 
-/* NAVBAR */
+
+/* ******************************/
+/*  NAVBAR COLORS AND BORDERS   */
+/* ******************************/
+
 nav > p {background-color:var(--nav-bg); }
 nav > ul > li > a,
 nav > ul > li > a:link,
@@ -114,13 +130,30 @@ nav > p > a:link,
 nav > p > a:visited {color:var(--nav-fg);} 
 
 
-/* ARTICLE */
+/* ******************************/
+/*  ARTICLE COLORS AND BORDERS  */
+/* ******************************/
+
 article > p > a,
 article > p > a:link,
-article > p >  a:visited
+article > p >  a:visited,
+article > ul > li > a,
+article > ul > li > a:link,
+article > ul > li > a:visited,
+article > ul > li > ul > li > a,
+article > ul > li > ul > li > a:link,
+article > ul > li > ul > li > a:visited,
+article > ul > li > ul > li > ul > li > a,
+article > ul > li > ul > li > ul > li > a:link,
+article > ul > li > ul > li > ul > li > a:visited
 	{color:#7cbefc;} 
 article > p >  a:hover,
-article > p >  a:active
+article > p >  a:active,
+article > ul > li > a:hover,
+article > ul > li > a:active,
+article > ul > li > ul > li > a:hover,
+article > ul > li > ul > li > a:active,
+article > ul > li > ul > li > ul > li > a:hover
 	{background-color:var(--trim-fg);}
 
 article > p{color:#F2F2F2;}
@@ -137,7 +170,10 @@ article > p > code, article > code, article > pre, article > pre > code {
 article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
 
-/* SIDEBAR */
+
+/* ******************************/
+/*  SIDEBAR COLORS AND BORDERS  */
+/* ******************************/
 
 aside > p > a,
 aside > p > a:link,
@@ -149,7 +185,11 @@ aside > h3 {color:#F2F2F2;}
 aside > h4 {color:var(--header-bg);background-color:var(--header-fg)}
 aside > h3 > del {color:var(--header-bg);} 
 aside > h5 {color:red;}
-/* FOOTER */
+
+/* ******************************/
+/*  FOOTER COLORS AND BORDERS   */
+/* ******************************/
+
 footer > table > thead > tr > th {color:var(--trim-fg);background-color:var(--footer-bg);}
 /* Color of links in main rows (body) of table */
 footer > table > tbody > tr > td > a:link,

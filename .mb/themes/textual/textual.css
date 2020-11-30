@@ -124,7 +124,7 @@ article > ul, article > ol {margin-top:.5em;}
 article > li {margin-left:1rem;}
 
 article > table > thead > tr > th  {padding-top:2em;}
-article > blockquote {font-style:italicmargin: 2rem 2rem 2rem 2rem;}
+article > blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
 /*
  * --------------------------------------------------
@@ -144,15 +144,30 @@ article > pre { padding-left: 1em;line-height:1.5em;font-size:1.1em;}
 
 /*
  * --------------------------------------------------
- * Links in normal paragraph text
+ * Links in normal paragraph text and lists
  * --------------------------------------------------
  */
 article > p > a,
 article > p > a:link,
-article > p >  a:visited
+article > p >  a:visited,
+article > ul > li > a,
+article > ul > li > a:link,
+article > ul > li > a:visited,
+article > ul > li > ul > li > a,
+article > ul > li > ul > li > a:link,
+article > ul > li > ul > li > a:visited,
+article > ul > li > ul > li > ul > li > a,
+article > ul > li > ul > li > ul > li > a:link,
+article > ul > li > ul > li > ul > li > a:visited
 	{font-family:var(--informal);text-decoration:underline;}
 article > p >  a:hover,
-article > p >  a:active
+article > p >  a:active,
+article > ul > li > a:hover,
+article > ul > li > a:active,
+article > ul > li > ul > li > a:hover,
+article > ul > li > ul > li > a:active,
+article > ul > li > ul > li > ul > li > a:hover,
+article > ul > li > ul > li > ul > li > a:active
 	{text-decoration:none;}
 
 /*

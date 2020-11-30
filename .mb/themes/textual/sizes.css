@@ -12,7 +12,7 @@
   --branding-height:3rem;
 
   /* Same as header {margin-top:}  */
-  --header-margin-top:3rem;
+  --header-margin-top:0;
 
   /* Same as header {margin-bottom:}  */
   --header-margin-bottom:3rem;
@@ -56,10 +56,6 @@
 
   /* Same as header {padding-bottom} */
   --article-padding-bottom:3.5rem;
-
-  /* Trying to keep this independent of text direction. Otherwise
-   * I'd just call it padding-right. */
-  --article-pad-text-end:7.5%;
 
   /* Same as article h1 {font-size}, h1 {padding}, h1 {margin} */
   --h1-font-size:2.5rem;
@@ -140,14 +136,34 @@
    *  Make theme wide style       *
    * ******************************/
 
+  /* --article-column-width is width of article plus sidebar */
   --article-column-width:80%;
+
+  --article-text-width: 75%;
+
+  /* --alt-article-column-width is width of article WITHOUT sidebar 
+   * Added to --sidebar-width it should always sum up to
+   * --article-column-width */
   --alt-article-column-width:65%; /* Unused in wide themes */
+
+  /* --sidebar-width must be the same as
+   * --article-column-width MINUS --alt-article-column-width
+   */
   --sidebar-width:20%;    
   --left-margin:0%;
   --right-margin:0%;
   --header-footer-width:100%; 
+/*
+ * --------------------------------------------------
+ * --text-start and --article-pad-text-end are
+ * an attempt to keep this framework indepedent
+ * of text direction. Not sure how successful yet.
+ * --------------------------------------------------
+ */
+
   --text-start: 20%;
-  --article-text-width: 60%;
+  --article-pad-text-end:0%;
+
 }
 
  

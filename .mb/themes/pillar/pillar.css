@@ -20,6 +20,11 @@ blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
 header {width:var(--header-footer-width);} 
 header {padding-top:3rem;padding-bottom:3.5rem;border-bottom:1px solid var(--trim-fg);}
+
+
+
+
+
 /*
  * --------------------------------------------------
  * Simplest case: Branded name, nothing else
@@ -71,9 +76,8 @@ header > ul > li:last-child > a {padding:.5rem;}
 /*  NAVBAR                      */
 /* ******************************/
 
-nav {width:var(--header-footer-width);} 
 nav > img {display:inline;}
-
+nav {border-bottom:1px solid gray;}
 /*
  * --------------------------------------------------
  * Simplest case: a single item. Don't even need to
@@ -171,13 +175,13 @@ article > blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
  * --------------------------------------------------
  */
 article > p > code, article > code, article > pre, article > pre > code {
-		font-family:var(--code);
-		font-size:.8em;
-		overflow:auto;
-    margin-bottom:0em;
-    line-height:1.15em;
-    padding: .5em;
-		}
+  font-family:var(--code);
+  font-size:.8em;
+  overflow:auto;
+  margin-bottom:0em;
+  line-height:1.15em;
+  padding: .5em;
+  }
 article > pre {line-height:1.5em;font-size:1.1em;}
 
 /*

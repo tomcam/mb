@@ -56,10 +56,6 @@
   /* Same as header {padding-bottom} */
   --article-padding-bottom:3.5rem;
 
-  /* Trying to keep this independent of text direction. Otherwise
-   * I'd just call it padding-right. */
-  --article-pad-text-end:7.5%;
-
   /* Same as article h1 {font-size}, h1 {padding}, h1 {margin} */
   --h1-font-size:2.5rem;
   --h1-padding-top:0em;
@@ -181,8 +177,21 @@
   --left-margin:7.5%;
   --right-margin:7.5%;
 
+/*
+ * --------------------------------------------------
+ * --text-start and --article-pad-text-end are
+ * an attempt to keep this framework indepedent
+ * of text direction. Not sure how successful yet.
+ * --------------------------------------------------
+ */
+
   /* --text-start is a padding value not a margin */
   --text-start:5%; 
+
+  /* Trying to keep this independent of text direction. Otherwise
+   * I'd just call it padding-right. */
+  --article-pad-text-end:5%;
+
 
 }
 
