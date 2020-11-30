@@ -5,6 +5,7 @@ theme="reference"
 ===
 # Theme Gallery
 
+[Adam](adam/index.html)  
 [Aventurine](aventurine/index.html)  
 [Chill](chill/index.html)  
 [CV](cv/index.html)  
@@ -22,6 +23,7 @@ theme="reference"
 [Timeline](timeline/index.html)  
 [Update](update/index.html)  
 [Wide](wide/index.html)  
+[Wings](wings/index.html)  
 [Zack](zack/index.html)  
 
 
