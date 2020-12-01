@@ -62,6 +62,9 @@
     --a-article-visited:  var(--a);
     --a-article-hover: var(--a); 
     --a-article-active:  var(--a);
+    /* Horizontal rule */
+    --hr-fg:var(--article-fg);
+    --hr-bg:var(--article-bg);
 
     /* Default foreground (text) and background colors in aside */
     --aside-fg: var(--fg);
@@ -127,6 +130,7 @@ header > ul > li:last-child > a:hover {color: var(--header-bg);background-color:
 /*  NAVBAR COLORS AND BORDERS   */
 /* ******************************/
 
+nav {border-bottom:1px solid gray;}
 nav > p {background-color:var(--nav-bg); }
 nav > ul > li > a,
 nav > ul > li > a:link,
@@ -176,7 +180,6 @@ article > p > code, article > code, article > pre, article > pre > code {
 
 article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
-
 
 /* ******************************/
 /*  SIDEBAR COLORS AND BORDERS  */

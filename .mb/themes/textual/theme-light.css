@@ -182,7 +182,7 @@ aside > h4 {color:var(--header-bg);background-color:var(--header-fg)}
 /*  FOOTER COLORS AND BORDERS   */
 /* ******************************/
 
-footer {border-bottom:1px solid var(--trim-fg);}
+footer {border-top:1px solid var(--trim-fg);}
 footer > table > thead > tr > th {color:var(--footer-fg);background-color:var(--footer-bg);}
 /* Color of links in main rows (body) of table */
 footer > table > tbody > tr > td > a:link,

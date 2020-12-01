@@ -124,6 +124,7 @@ header > ul > li:last-child > a {border: 2px solid var(--header-fg);color:var(--
 /*  NAVBAR COLORS AND BORDERS   */
 /* ******************************/
 
+nav {border-bottom:1px solid gray;}
 nav > p {background-color:var(--nav-bg); }
 nav > ul > li > a,
 nav > ul > li > a:link,
