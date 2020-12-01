@@ -57,6 +57,13 @@
   /* Same as header {padding-bottom} */
   --article-padding-bottom:3.5rem;
 
+  /* Same as article p {font-size}, p {padding}, p {margin} */
+  --p-font-size:1.5rem;
+  --p-padding-top:0em;
+  --p-padding-bottom:0em;
+  --p-margin-top:1em;
+  --p-margin-bottom:0em;
+
   /* Same as article h1 {font-size}, h1 {padding}, h1 {margin} */
   --h1-font-size:2.5rem;
   --h1-padding-top:0em;
@@ -86,7 +93,7 @@
   --h4-margin-bottom:0em;
 
   /* Same as article h5 {font-size}, h5 {padding}, h5 {margin} */
-  --h5-font-size:.9rem;
+  --h5-font-size:1.5rem;
   --h5-padding-top:0em;
   --h5-padding-bottom:0em;
   --h5-margin-top:0em;
