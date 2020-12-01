@@ -10,50 +10,30 @@
 # of each theme.
 if [ $# -ne 1 ]; then
   echo "Need the name of a theme or pagetype"
-  echo ""
-  echo "Example usage:"
-  echo ""
-  echo "    `basename ${0}` debut"
-  echo "    `basename ${0}` debut/gallery"
-  echo ""
   exit 1
 fi
+
 dir=`dirname ${1}`
 theme=`basename ${1}`
-basename=`basename ${1}`
-allthemes=theme-and-variations.md
 
 if [ $dir = "." ]; then 
-  # Something like this:
-  # ./themevars debut
   dir=$theme
-  outpath=$dir
 else
-  # Something like this:
-  # ./themevars debut/gallery
-  pagetype="pagetype=\"$theme\""
-  theme=`dirname ${1}`
-  dir=$theme/$basename
-  outpath=$dir
+  dir=$dir/$theme
 fi
 mkdir -p $dir
-#echo "Created dir ${dir}"
-#echo "Pagetype: ${pagetype}"
-#echo "Theme: ${theme}"
-#echo "Basename: ${basename}"
-#echo "Outpath: ${outpath}"
+echo "Created dir ${dir}"
 
 # The actual Markdown is the same for all test files
 read -r -d '' BODY << EOM
-## this better include mdemo.md
-{{ inc "../mdemo.md" }}
+{{ inc "theme-and-variations.md" }}
+{{ inc "mdemo.md" }}
 EOM
 
 FILE_LIGHT_MODE_SIDEBAR_LEFT=light-mode-sidebar-left
 read -r -d '' LIGHT_MODE_SIDEBAR_LEFT << EOM
 ===
 theme="$theme"
-$pagetype
 mode="light"
 sidebar="left"
 ===
@@ -63,7 +43,6 @@ FILE_LIGHT_MODE_SIDEBAR_NONE=light-mode-sidebar-none
 read -r -d '' LIGHT_MODE_SIDEBAR_NONE << EOM
 ===
 theme="$theme"
-$pagetype
 mode="light"
 sidebar="none"
 ===
@@ -73,7 +52,6 @@ FILE_DARK_MODE_SIDEBAR_LEFT=dark-mode-sidebar-left
 read -r -d '' DARK_MODE_SIDEBAR_LEFT << EOM
 ===
 theme="$theme"
-$pagetype
 mode="dark"
 sidebar="left"
 ===
@@ -83,7 +61,6 @@ FILE_DARK_MODE_SIDEBAR_NONE=dark-mode-sidebar-none
 read -r -d '' DARK_MODE_SIDEBAR_NONE << EOM
 ===
 theme="$theme"
-$pagetype
 mode="dark"
 sidebar="none"
 ===
@@ -93,7 +70,6 @@ FILE_LIGHT_MODE_SIDEBAR_RIGHT=light-mode-sidebar-right
 read -r -d '' LIGHT_MODE_SIDEBAR_RIGHT << EOM
 ===
 theme="$theme"
-$pagetype
 mode="light"
 sidebar="right"
 ===
@@ -103,7 +79,6 @@ FILE_DARK_MODE_SIDEBAR_RIGHT=dark-mode-sidebar-right
 read -r -d '' DARK_MODE_SIDEBAR_RIGHT << EOM
 ===
 theme="$theme"
-$pagetype
 mode="dark"
 sidebar="right"
 ===
@@ -142,27 +117,18 @@ declare -a descriptions=(
   "Dark theme with no sidebar" 
 	)
 
-# This is the name of the file that will contain links
-# to all the generated files.
-OUTFILE="$dir/$theme.md"
-echo "## ${outpath}" > $OUTFILE
+# Use this in case the generate files are bunk.
+# Once it's understood they work, remove it.
+# That way it's easy to clear out the text files
+OUTFILE="$theme.md"
+echo "## ${theme}" > $OUTFILE
 for ((idx=1; idx<=${#filenames[@]}; idx++)); do
-  # Get the filename, like light-mode-sidebar-left
   filename=${filenames[idx]}
-
-  # Create the complete output directory & filename
-  # Precede the filename with the theme name and a hyphen, like "debut-"
-  #md=$dir/$theme-$filename.md
   md=$dir/$filename.md
-#  echo "Should be creating ${md}"
   anchortext=${descriptions[idx]}
   echo "${files[idx]}" > $md
   echo $BODY >> $md
-  echo "* [${anchortext}]($dir/${filename}.html)" >> $OUTFILE
-  #echo "about to touch $dir/${allthemes}"
-  #read _
-  touch $dir/${allthemes}
-  touch $dir/mdemo.md
+  echo "* [${anchortext}](${filename}.html)" >> $OUTFILE
 done
 echo "Created file ${OUTFILE}. "
 cat $OUTFILE
@@ -170,10 +136,5 @@ if command -v pbcopy &> /dev/null
 then
   pbcopy < $OUTFILE
   echo "Contents of ${OUTFILE} have been copied to the Clipboard\n"
-  echo ""
-  echo "Now paste them into ${allthemes}. Ctrl+C if you DON'T want to edit this file."
-  echo ""
-  read _
-  nvim ${allthemes}
 fi
 

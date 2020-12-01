@@ -161,28 +161,28 @@
   */
 
   /* --article-column-width is width of article plus sidebar */
-  --article-column-width:70%;
+  --article-column-width:80%;
 
   /* --alt-article-column-width is width of article WITHOUT sidebar 
    * Added to --sidebar-width it should always sum up to
    * --article-column-width */
-  --alt-article-column-width:55%;
+  --alt-article-column-width:60%;
 
   /* --sidebar-width must be the same as
    * --article-column-width MINUS --alt-article-column-width
    */
-  --sidebar-width:15%;
+  --sidebar-width:20%;
 
   /* --header-footer-width should normally be the same
    * as --article-column-width That's because they 
    * stretch out with botht the article and the sidebar. */
   --header-footer-width:var(--article-column-width);
 
-  --left-margin:15%;
-  --right-margin:15%;
+  --left-margin:7.5%;
+  --right-margin:7.5%;
 
   /* --text-start is a padding value not a margin */
-  --text-start:10%; 
+  --text-start:5%; 
 
 }
 

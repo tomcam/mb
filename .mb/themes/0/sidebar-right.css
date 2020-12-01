@@ -2,4 +2,4 @@
 article {width:var(--alt-article-column-width);}
 /* With sidebar to right no left margin is needed  */
 article{margin-right:0;}
-
+aside{padding-right:2.5%;}

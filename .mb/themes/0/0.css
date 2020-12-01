@@ -44,7 +44,7 @@ header > ul > li{display:inline;padding-right:.5rem;font-size:1.25rem;}
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
-	{font-weight:400;text-decoration:none;color:var(--trim-fg);}
+	{font-weight:400;text-decoration:none;}
 header > ul > li > a:hover,
 header > ul > li > a:active
 	{text-decoration:underline;}
@@ -55,7 +55,16 @@ header > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;padding-right:1rem;color:var(--fg);}
+header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;padding-right:1rem;}
+
+/*
+ * --------------------------------------------------
+ * Special feature: Last item in list is styled 
+ * to look like a button. 
+ * See also theme-light.css and theme-dark.css
+ * --------------------------------------------------
+ */
+header > ul > li:last-child > a {padding:.5rem;}
 
 
 /* ******************************/
@@ -112,6 +121,21 @@ article > h4 > em {font-family:var(--times);}
 article > h5 {font-size:1.5rem;font-family:var(--code);}
 article > p > strong {font-weight:700;}
 
+article > p, 
+  article > ul, 
+  article > ol, 
+  article > li, 
+  article > dd, 
+  article > dl,
+  article > h1 
+  article > h2 
+  article > h3 
+  article > h4 
+  article > h5 
+  article > h6 
+  article > hr {
+    width:105%;
+  }
 
 
 article > p, 
@@ -164,7 +188,7 @@ article > pre {line-height:1.5em;font-size:1.1em;}
 article > p > a,
 article > p > a:link,
 article > p >  a:visited
-	{font-family:var(--informal);text-decoration:underline;}
+	{font-family:var(--informal);}
 article > p >  a:hover,
 article > p >  a:active
 	{text-decoration:none;}
@@ -191,6 +215,16 @@ article > table > tbody > tr > td {padding:1rem;}
 
 aside {height:100vh;}
 
+aside, aside > p, aside > h2, aside > h3, aside > h4 {margin-left:0;padding-left:0;padding-right:0rem;} 
+aside > p {margin-bottom:1rem;font-size:.8rem;padding-left:.75em;padding-right:.75em;}
+aside > h2 {margin:0;padding:1rem;font-size:1.75rem;font-weight:bold;white-space:nowrap;}
+aside > h3 {font-size:1em;font-weight:bold;margin-bottom:1rem;}
+aside > h5 {text-align:center;font-weight:bold;margin-left:0;padding-left:0;margin-top:2rem;margin-bottom:1rem;}
+aside > h6  {font-weight:normal;font-style:italic;}
+
+
+
+
 aside > h2 {text-align:center;font-size:1.2rem;font-weight:700;}
 aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2rem;}
 aside > ul {text-align:right;margin-right:1rem;line-height:1.5em;}
@@ -203,7 +237,6 @@ aside > ul > li > a:hover,
 aside > ul > li > a:active {font-weight:bold;} 
 
 aside > p > img {margin-top:1rem;width:100%;padding:0;}
-aside > p {padding:1em;font-size:1.2rem;margin-bottom:0em;}
 
 
 /* ******************************/
@@ -212,12 +245,6 @@ aside > p {padding:1em;font-size:1.2rem;margin-bottom:0em;}
 
 footer {width:var(--header-footer-width);} 
 footer {border-bottom:1px solid var(--trim-fg);}
-
-/* ****************************/
-/*  FOOTER BRANDING AND LINKS */
-/* ****************************/
-header {width:var(--header-footer-width);} 
-
 
 /*
  * --------------------------------------------------
@@ -243,7 +270,7 @@ footer > ul > li{display:inline;padding-right:1rem;font-size:1.25rem;}
 footer > ul > li > a,
 footer > ul > li > a:link,
 footer > ul > li > a:visited
-	{font-weight:400;text-decoration:none;color:var(--trim-fg);}
+	{font-weight:400;text-decoration:none;}
 footer > ul > li > a:hover,
 footer > ul > li > a:active
 	{text-decoration:underline;}
@@ -254,9 +281,8 @@ footer > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-footer > ul > li:first-child > a {font-size:var(--footer-branding-height);font-weight:900;color:var(--trim-fg);}
+footer > ul > li:first-child > a {font-size:var(--footer-branding-height);font-weight:900;}
 
-footer {border-top: 1px solid var(--trim-fg);} 
 footer > h2 {text-align:center;}
 footer > table {font-size:calc(80%);}
 /* Give table columns to get some breathing room */
