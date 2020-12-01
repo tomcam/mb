@@ -115,10 +115,10 @@ func (a *App) publishFile(filename string) error {
 
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Header, "<header>"))
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Nav, "<nav>"))
-	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Article, "<article>"))
+	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Article, "<article id=\"article\">"))
 	sidebar := strings.ToLower(a.FrontMatter.Sidebar)
 	if sidebar == "left" || sidebar == "right" {
-		a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Sidebar, "<aside>"))
+		a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Sidebar, "<aside id=\"sidebar\">"))
 	} else {
 		// TODO: If you have sidebar="ight" for example and/or the word "sidebar"
 		// appears in the main Markdown, you get a bonus error message
@@ -882,11 +882,11 @@ func (a *App) layoutElementToHTML(pr *layoutElement, tag string) string {
 		html = a.layoutElementOverride(pr, tag, "header")
 	case "<footer>":
 		html = a.layoutElementOverride(pr, tag, "footer")
-	case "<aside>":
+	case "<aside id=\"sidebar\">":
 		html = a.layoutElementOverride(pr, tag, "sidebar")
 	case "<nav>":
 		html = a.layoutElementOverride(pr, tag, "navbar")
-	case "<article>":
+	case "<article id=\"article\">":
 		// Exception: the theme TOML file doesnt have any entries under
 		// "[article]" but there is markdown on the page. This might be
 		// the most common case. Doing this allows the user to create a
