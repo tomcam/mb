@@ -127,10 +127,10 @@
   --footer-branding-height:3rem;
 
   /* Same as footer {margin-top:}  */
-  --footer-margin-top:3rem;
+  --footer-margin-top:0;
 
   /* Same as footer {margin-bottom:}  */
-  --footer-margin-bottom:3rem;
+  --footer-margin-bottom:0;
 
    /* Same as footer {padding-top:}  */
   --footer-padding-top:3rem;
