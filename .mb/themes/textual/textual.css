@@ -40,7 +40,7 @@ header > ul > li{display:inline;padding-right:.5rem;font-size:1.25rem;}
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
-	{font-weight:400;text-decoration:none;color:var(--trim-fg);}
+	{font-weight:400;text-decoration:none;}
 header > ul > li > a:hover,
 header > ul > li > a:active
 	{text-decoration:underline;}
@@ -51,7 +51,7 @@ header > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;padding-right:1rem;color:var(--fg);}
+header > ul > li:first-child > a {font-size:var(--branding-height);font-weight:900;padding-right:1rem;}
 
 
 /* ******************************/
@@ -101,7 +101,7 @@ nav > ul > li > a:active {text-decoration:underline;}
 article {padding-right:var(--article-pad-text-end);}
 article > p, article > ul, article > ol {font-family:var(--formal);}
 article > h1,article > h2 {font-weight:700;}
-article h1 + h2 {margin-top:0;color:var(--trim-fg);font-size:1.5rem;padding-top:.5em;padding-bottom:.5em;}
+article h1 + h2 {margin-top:0;font-size:1.5rem;padding-top:.5em;padding-bottom:.5em;}
 article > h4 {font-weight:normal;font-size:1.25rem;} /* Byline */
 article > h4 > strong {font-weight:bold;} /* Byline */
 article > h4 > em {font-family:var(--times);}
@@ -213,12 +213,11 @@ aside > p {padding:1em;font-size:1.2rem;margin-bottom:0em;}
 /*  FOOTER                      */
 /* ******************************/
 
-footer {border-bottom:1px solid var(--trim-fg);}
 
 /* ****************************/
 /*  FOOTER BRANDING AND LINKS */
 /* ****************************/
-header {width:var(--header-footer-width);} 
+footer {width:var(--header-footer-width);} 
 
 
 /*
@@ -245,7 +244,7 @@ footer > ul > li{display:inline;padding-right:1rem;font-size:1.25rem;}
 footer > ul > li > a,
 footer > ul > li > a:link,
 footer > ul > li > a:visited
-	{font-weight:400;text-decoration:none;color:var(--trim-fg);}
+	{font-weight:400;text-decoration:none;}
 footer > ul > li > a:hover,
 footer > ul > li > a:active
 	{text-decoration:underline;}
@@ -256,9 +255,8 @@ footer > ul > li > a:active
  * branding
  * --------------------------------------------------
  */
-footer > ul > li:first-child > a {font-size:var(--footer-branding-height);font-weight:900;color:var(--trim-fg);}
+footer > ul > li:first-child > a {font-size:var(--footer-branding-height);font-weight:900;}
 
-footer {border-top: 1px solid var(--trim-fg);} 
 footer > h2 {text-align:center;}
 footer > table {font-size:calc(80%);}
 /* Give table columns to get some breathing room */
