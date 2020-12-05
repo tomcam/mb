@@ -33,6 +33,7 @@ type Theme struct {
   // Textual-based theme gets the ol' Pillar Conversion Kit
 
 	Supported Supported
+
 }
 
 type PageType struct {
@@ -84,6 +85,11 @@ type PageType struct {
 	Article layoutElement
 	Footer  layoutElement
 	Sidebar layoutElement
+
+  // Should be Semver format (https://semver.org)
+  // so major-minor-patch + additional labels.
+  // Not enforced.
+  Version string
 }
 
 // layoutElement could be, say, a header:
@@ -359,6 +365,17 @@ func (a *App) copyTheme(from, to string, isChild bool)  {
 	a.Verbose("Created theme " + to + " from " + from + " in " + dest)
 }
 
+// themeVersion() returns the Semver version number
+// of the theme. 
+// tomlFile should be the fully qualified filename
+// of the theme file
+func (a *App) themeVersion(tomlFile string) string {
+	var p PageType
+	if _, err := toml.DecodeFile(tomlFile, &p); err != nil {
+		a.QuitError(errs.ErrCode("0131", tomlFile))
+	}
+  return p.Version
+}
 
 
 
@@ -507,6 +524,10 @@ func (a *App) publishThemeDirectory(from, to string) {
 	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", to))
 	}
+  tomlFile := filepath.Join(from,filepath.Base(from) +".toml")
+  a.Verbose("\tversion number of theme: %s", a.themeVersion(tomlFile))
+
+  // xxxx
 
 	// Get the directory listing.
 	candidates, err := ioutil.ReadDir(from)
@@ -593,7 +614,7 @@ func (a *App) createPageType(theme, pageType string) error {
 		// TODO: Original error code needed
 		return errs.ErrCode("0919", "directory "+dest+" already exists")
 	}
-	err := a.publishTheme(theme, dest, true)
+ 	err := a.publishTheme(theme, dest, true)
 	if err != nil {
 		return errs.ErrCode("PREVIOUS", err.Error())
 	}
@@ -622,7 +643,7 @@ func (a *App) publishTheme(from, to string, isChild bool) error {
 	if !a.isTheme(source, tomlFile) {
 		return errs.ErrCode("1008", source)
 	}
-
+  // xxxx
   a.Verbose("\tsource: %v", source)
 	var dest string
 	if !isChild {

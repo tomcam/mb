@@ -2,7 +2,6 @@ package app;
 import (
 	"bytes"
 	"encoding/json"
-  "github.com/tdewolff/minify/v2/css"
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
 	"github.com/tomcam/mb/pkg/mdext"
@@ -508,7 +507,8 @@ func (a *App) assetPath() string {
 // name for theme assets
 func (a *App) relTargetThemeDir() string {
   // xxxx Look up the html <base> tag
-	return filepath.Join("/", a.Site.AssetDir, a.Site.ThemesDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Page.Theme.PageType.Version)
+	//return filepath.Join("/", a.Site.AssetDir, a.Site.ThemesDir, a.FrontMatter.Theme, a.FrontMatter.PageType,a.FrontMatter.PageType.Version)
+	return filepath.Join("/", a.Site.AssetDir, a.Site.ThemesDir, a.FrontMatter.Theme, a.FrontMatter.PageType)
 }
 
 // fullTargetThemeDir() computes the fully qualified destination directory
@@ -573,9 +573,10 @@ func (a *App) publishRootStylesheets(dir string) {
 		if a.FrontMatter.isChild {
 			file = filepath.Join("..", file)
 		}
-		//a.publishStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), file))
-    a.Verbose("\t\tpublishStyleSheet(%v,%v)", file, filepath.Join(dir,file))
-		a.publishStyleSheet(file, filepath.Join(dir, file))
+    // Worked
+    dest := a.fullTargetThemeDir()
+    a.Verbose("\t\tpublishStyleSheet(%v,%v)", file, dest)
+		a.publishStyleSheet(file, dest)
 	}
 }
 

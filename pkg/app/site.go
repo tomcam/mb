@@ -259,6 +259,16 @@ func (a *App) NewSite(sitename string) error {
 	if sitename == "" {
 		return errs.ErrCode("1013", "")
 	}
+  var err error
+  inDirAlready := false
+  // Lets you turn the current directory into a site.
+  // Kind of annoying in the source though.
+  // It's just so you can do this:
+  //   $ mb new site .
+  if sitename == "." {
+    inDirAlready = true
+    sitename = filepath.Base(currDir())
+  }
 	// Do a simplistic, fallible check to see if there's
 	// already a site present and quit if so.
 	// EXCEPTION: You get to assign one site name to
@@ -268,25 +278,30 @@ func (a *App) NewSite(sitename string) error {
 		return errs.ErrCode("0951", sitename)
 	}
 
+  a.Verbose("Creating site named %s", sitename)
 	// Create the site subdirectory.
-	err := os.MkdirAll(sitename, defaults.ProjectFilePermissions)
-	if err != nil {
-		return errs.ErrCode("401", sitename)
-	}
-
-	// Make it the current directory.
-	if err := os.Chdir(sitename); err != nil {
-		return errs.ErrCode("1106", sitename)
-	}
-
+  // Don't do it if already in the directory
+  if !inDirAlready {
+    err = os.MkdirAll(sitename, defaults.ProjectFilePermissions)
+    if err != nil {
+      return errs.ErrCode("401", sitename)
+    }
+  }
+	// Make it the current directory
+  // unless it was invoked as $ mb new site .
+  if !inDirAlready {
+    if err = os.Chdir(sitename); err != nil {
+      return errs.ErrCode("1106", sitename)
+    }
+  }
 	// Create minimal directory structure: Publish directory
 	// .site directory, .themes, etc.
-	if err := createDirStructure(&defaults.SiteDirs); err != nil {
+	if err = createDirStructure(&defaults.SiteDirs); err != nil {
 		return errs.ErrCode("PREVIOUS", err.Error())
 	}
 	a.SiteDefaults()
 	// Create its site.toml file
-	if err := a.writeSiteConfig(); err != nil {
+	if err = a.writeSiteConfig(); err != nil {
 		// Custom error message already generated
 		return errs.ErrCode("PREVIOUS", err.Error(), a.Site.siteFilePath)
 	}
