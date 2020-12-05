@@ -4,6 +4,44 @@ article > h3:before { content: 'foo'; }
 
 See css-snippets.txt
 
+## Create table of contents in sidebar that shows as boxes of text
+
+```
+/*
+ * --------------------------------------------------
+ * Sidebar unordered list shows as boxes, without
+ * indentation--it's for table of contents
+ * --------------------------------------------------
+ */
+aside > ul {
+  background-color:whitesmoke;
+  margin-right:1em;
+  border-collapse:collapse;
+}
+
+aside > ul li {
+  list-style-type:none;
+  margin-left:0;
+  /* Border bottom stretches across column at all levels */
+  border-bottom: 1px solid gray;
+}
+
+aside > ul li a {
+  padding-left:.5em;padding-right:.5em;
+  text-decoration:none;
+  line-height:1em;
+}
+
+aside > ul li a:active, aside > ul li a:hover {
+  /* For illustrative purposes only */
+  color:blue;
+}
+
+
+```
+
+
+
 ## Remove bullet characters from nested ul li for table of contents generation
 article > ul > li, 
   article > ul > li > ul > li, 
