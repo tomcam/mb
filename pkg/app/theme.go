@@ -2,11 +2,11 @@ package app
 
 import (
 	"fmt"
-	"github.com/tomcam/mb/pkg/slices"
-	"io/ioutil"
 	"github.com/BurntSushi/toml"
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
+	"github.com/tomcam/mb/pkg/slices"
+	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -24,16 +24,15 @@ type Supported struct {
 type Theme struct {
 	// Parent root stylesheets get copied to the child automatically
 	//RootStylesheets []string
-	PageType  PageType
-  // If you base a theme on Textual it can be either
-  // wide style (the default) or pillar style. Wide
-  // means the site stretches across the full with of
-  // the window. Pillar means it has space on the right
-  // and left sides. This determines whether a 
-  // Textual-based theme gets the ol' Pillar Conversion Kit
+	PageType PageType
+	// If you base a theme on Textual it can be either
+	// wide style (the default) or pillar style. Wide
+	// means the site stretches across the full with of
+	// the window. Pillar means it has space on the right
+	// and left sides. This determines whether a
+	// Textual-based theme gets the ol' Pillar Conversion Kit
 
 	Supported Supported
-
 }
 
 type PageType struct {
@@ -70,7 +69,7 @@ type PageType struct {
 	otherAssets []string
 
 	// Full pathname of the containing directory
-  // TODO: should probably be lowercase. No reason to export
+	// TODO: should probably be lowercase. No reason to export
 	PathName string
 
 	// List of files to exclude from copying to the publish directory
@@ -86,10 +85,10 @@ type PageType struct {
 	Footer  layoutElement
 	Sidebar layoutElement
 
-  // Should be Semver format (https://semver.org)
-  // so major-minor-patch + additional labels.
-  // Not enforced.
-  Version string
+	// Should be Semver format (https://semver.org)
+	// so major-minor-patch + additional labels.
+	// Not enforced.
+	Version string
 }
 
 // layoutElement could be, say, a header:
@@ -125,10 +124,10 @@ func (a *App) parentThemeFullPath() string {
 // childThemeFullDirectory() Returns the fuly qualified pathname of the
 // child theme directory, if any, or "" if none is present.
 func (a *App) childThemeFullDirectory() string {
-	if a.FrontMatter.PageType!= "" {
-    return filepath.Join(a.themesPath, a.FrontMatter.Theme, a.FrontMatter.PageType)
-  }
-	return  ""
+	if a.FrontMatter.PageType != "" {
+		return filepath.Join(a.themesPath, a.FrontMatter.Theme, a.FrontMatter.PageType)
+	}
+	return ""
 }
 
 // Return the fuly qualified filename of the
@@ -137,12 +136,11 @@ func (a *App) childThemeFullPath() string {
 	return filepath.Join(a.childThemeFullDirectory(), a.FrontMatter.PageType+"."+defaults.ConfigFileDefaultExt)
 }
 
-
 // loadDefaltTheme(): If the site has a preset theme, load it.
 // If no theme was specified, use the default.
 func (a *App) loadDefaultTheme() {
 	if !dirExists(a.themesPath) {
-		a.QuitError(errs.ErrCode("1004","theme directory " + a.themesPath))
+		a.QuitError(errs.ErrCode("1004", "theme directory "+a.themesPath))
 	}
 	// If no theme was specified in the front matter,
 	// but one was specified in the site config site.toml,
@@ -157,34 +155,32 @@ func (a *App) loadDefaultTheme() {
 
 }
 
-
 func (a *App) loadTheme(parent bool) {
-  a.loadDefaultTheme()
-  if !parent && a.FrontMatter.PageType== "" {
-    // There is no child theme
-    return
-  }
-  var themePath string
+	a.loadDefaultTheme()
+	if !parent && a.FrontMatter.PageType == "" {
+		// There is no child theme
+		return
+	}
+	var themePath string
 	if parent {
-    themePath = a.parentThemeFullPath()
-  } else {
-    themePath = a.childThemeFullPath()
-  }
+		themePath = a.parentThemeFullPath()
+	} else {
+		themePath = a.childThemeFullPath()
+	}
 	var p PageType
 	if err := readTomlFile(themePath, &p); err != nil {
 		a.QuitError(errs.ErrCode("0105", themePath, a.FrontMatter.PageType))
 	}
 	a.Page.Theme.PageType = p
-  if parent {
-    a.Page.Theme.PageType.PathName = a.parentThemeFullDirectory()
-	  a.FrontMatter.isChild = false
-  } else {
-    a.Page.Theme.PageType.PathName = a.childThemeFullDirectory()
-	  // TODO: Should probably force filename to lowercase
-	  a.FrontMatter.isChild = true
-  }
+	if parent {
+		a.Page.Theme.PageType.PathName = a.parentThemeFullDirectory()
+		a.FrontMatter.isChild = false
+	} else {
+		a.Page.Theme.PageType.PathName = a.childThemeFullDirectory()
+		// TODO: Should probably force filename to lowercase
+		a.FrontMatter.isChild = true
+	}
 }
-
 
 // pageTypePath() is a utility function to generate the full pathname  of a PageType file
 // from a subdirectory name.
@@ -192,8 +188,6 @@ func pageTypePath(subDir, themeName string) string {
 	path := filepath.Join(subDir, themeName+"."+defaults.ConfigFileDefaultExt)
 	return path
 }
-
-
 
 // file: Name of styleshet in source directory
 // from: Fully qualified pathname of source directory
@@ -207,10 +201,10 @@ func (a *App) copyStyleSheet(file, from, to string) {
 
 	// Get fully qualified source filename to copy.
 	from = filepath.Join(from, file)
-  if a.FrontMatter.isChild {
-	  //from = filepath.Join(a.childThemeFullDirectory(), file)
-    a.Quit("\t\tcopyStyleSheet(): handle case of child theme")
-  }
+	if a.FrontMatter.isChild {
+		//from = filepath.Join(a.childThemeFullDirectory(), file)
+		a.Quit("\t\tcopyStyleSheet(): handle case of child theme")
+	}
 
 	// Relative path to the publish directory for themes
 	to = filepath.Join(to, file)
@@ -227,9 +221,6 @@ func (a *App) copyStyleSheet(file, from, to string) {
 	}
 }
 
-
-
-
 func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error {
 	// Create a toml file for the new theme
 
@@ -237,7 +228,7 @@ func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error 
 	// Goal is to replace the original theme stylesheet name, say, default.css,
 	// with the new theme's style sheet name, say, mytheme.css.
 	var p PageType
-  tomlFile := a.themeTOMLFilename(filepath.Base(from))
+	tomlFile := a.themeTOMLFilename(filepath.Base(from))
 	if _, err := toml.DecodeFile(tomlFile, &p); err != nil {
 		return errs.ErrCode("0128", fmt.Errorf("Problem reading TOML file %s\n", tomlFile).Error(), err.Error())
 	}
@@ -245,8 +236,8 @@ func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error 
 	// Get the plain name of the target stylesheet, say, "mynewtheme"
 	destFilename := filepath.Base(dest)
 	var targetTomlFile string
-  //var targetDir string
-  //targetDir = dest
+	//var targetDir string
+	//targetDir = dest
 	// Figure out the name and location of the toml that describes
 	// the theme. If it's a new theme, it would be in something
 	// like /themes/mynewtheme/mynewtheme.toml. If it's a pagetype for an existing
@@ -274,8 +265,8 @@ func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error 
 	// Search its list of stylesheets for the old name.
 	sourceCSSFile := path.Base(from) + ".css"
 	// Get the new name to replace it with.
-  //targetCSSFile = filepath.Join(dest, destFilename + ".css")
-  targetCSSFile = path.Base(dest + ".css")
+	//targetCSSFile = filepath.Join(dest, destFilename + ".css")
+	targetCSSFile = path.Base(dest + ".css")
 
 	// The TOML file has a declaration along the lines of
 	//stylesheets = [ "sizes.css", "theme-light.css", "myoldtheme.css"  ]
@@ -335,8 +326,8 @@ func (a *App) updateCopiedThemeDirectory(from, dest string, isChild bool) error 
 // It is different from publishTheme(), which is a bit selective.
 // For example, it only copies sidebar-left.css or sidebar-right.css
 // as needed.
-func (a *App) copyTheme(from, to string, isChild bool)  {
-  a.Verbose("copyTheme(%v,%v)",from,to)
+func (a *App) copyTheme(from, to string, isChild bool) {
+	a.Verbose("copyTheme(%v,%v)", from, to)
 	// Obtain the fully qualified name of the source
 	// theme directory to copy
 	source := a.themePath(from)
@@ -347,18 +338,18 @@ func (a *App) copyTheme(from, to string, isChild bool)  {
 		a.QuitError(errs.ErrCode("1008", source))
 	}
 
-  a.Verbose("\tsource: %v", source)
+	a.Verbose("\tsource: %v", source)
 	var dest string
 	if !isChild {
 		dest = a.themePath(to)
 	} else {
-		dest = a.themePath(filepath.Join(from,to))
+		dest = a.themePath(filepath.Join(from, to))
 	}
 	if dirExists(dest) {
 		a.QuitError(errs.ErrCode("0904", "directory "+dest+" already exists"))
 	}
-  a.Verbose("\tdest: %v", dest)
-  copyDirOnly(source, dest)
+	a.Verbose("\tdest: %v", dest)
+	copyDirOnly(source, dest)
 	a.updateThemeDirectory(from, dest, tomlFile, isChild)
 	// Success
 	//a.Verbose("Created theme " + filepath.Base(dest))
@@ -366,7 +357,7 @@ func (a *App) copyTheme(from, to string, isChild bool)  {
 }
 
 // themeVersion() returns the Semver version number
-// of the theme. 
+// of the theme.
 // tomlFile should be the fully qualified filename
 // of the theme file
 func (a *App) themeVersion(tomlFile string) string {
@@ -374,20 +365,12 @@ func (a *App) themeVersion(tomlFile string) string {
 	if _, err := toml.DecodeFile(tomlFile, &p); err != nil {
 		a.QuitError(errs.ErrCode("0131", tomlFile))
 	}
-  return p.Version
+	return p.Version
 }
 
-
-
-
-
-
-
-
-
-// newPageType() creates a new pagetype from an existing one, 
+// newPageType() creates a new pagetype from an existing one,
 // placing it one subdirectory down from the original.
-func (a *App) newPageType(theme, pageType string)  {
+func (a *App) newPageType(theme, pageType string) {
 	// Obtain the fully qualified name of the source
 	// theme directory to copy
 	source := a.themePath(theme)
@@ -404,16 +387,15 @@ func (a *App) newPageType(theme, pageType string)  {
 		// TODO: Original error code needed
 		a.QuitError(errs.ErrCode("0919", "directory "+dest+" already exists"))
 	}
-	a.copyTheme(theme, pageType,true)
+	a.copyTheme(theme, pageType, true)
 
 }
-
 
 // newTheme() generates a new theme from an old one.
 // Equivalent of mb new theme
 // This is a parent theme.
 func (a *App) newTheme(from, to string) {
-  a.Verbose("newTheme(%v,%v)",from,to)
+	a.Verbose("newTheme(%v,%v)", from, to)
 	if from == to {
 		a.QuitError(errs.ErrCode("0918", ""))
 	}
@@ -423,47 +405,46 @@ func (a *App) newTheme(from, to string) {
 	if to == "" {
 		a.QuitError(errs.ErrCode("1017", ""))
 	}
-  fromThemePath := a.themePath(from)
-  toThemePath := a.themePath(to)
-  if !dirExists(fromThemePath) {
-    a.QuitError(errs.ErrCode("1021", fromThemePath))
-  }
-  if dirExists(toThemePath) {
-    a.QuitError(errs.ErrCode("0952", to))
-  }
+	fromThemePath := a.themePath(from)
+	toThemePath := a.themePath(to)
+	if !dirExists(fromThemePath) {
+		a.QuitError(errs.ErrCode("1021", fromThemePath))
+	}
+	if dirExists(toThemePath) {
+		a.QuitError(errs.ErrCode("0952", to))
+	}
 
-  a.Verbose("\tcopyDirOnly(%v,%v)", fromThemePath, toThemePath)
-  if err := copyDirOnly(fromThemePath, toThemePath); err != nil {
+	a.Verbose("\tcopyDirOnly(%v,%v)", fromThemePath, toThemePath)
+	if err := copyDirOnly(fromThemePath, toThemePath); err != nil {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
-  }
+	}
 
-  a.Verbose("\tupdateCopiedThemeDirectory(%v,%v,false)", fromThemePath, toThemePath)
+	a.Verbose("\tupdateCopiedThemeDirectory(%v,%v,false)", fromThemePath, toThemePath)
 	err := a.updateCopiedThemeDirectory(fromThemePath, toThemePath, false)
 	if err != nil {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 	}
 
-  return
+	return
 
-
-  // SAVE: This could refactored and used for publishing, I think
+	// SAVE: This could refactored and used for publishing, I think
 	// Generate name of TOML file expected to be there
 	tomlFile := a.themeTOMLFilename(filepath.Base(fromThemePath))
 	// Check for both these elements.
 	if !fileExists(tomlFile) {
-    a.QuitError(errs.ErrCode("1008", filepath.Base(fromThemePath)))
+		a.QuitError(errs.ErrCode("1008", filepath.Base(fromThemePath)))
 	}
 
-  // Create the destination directory.
+	// Create the destination directory.
 	if err := os.MkdirAll(toThemePath, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0409", toThemePath))
 	}
 
-  var p PageType
+	var p PageType
 
-  // Load the TOML file for the source theme
+	// Load the TOML file for the source theme
 	if err := readTomlFile(tomlFile, &p); err != nil {
-		a.QuitError(errs.ErrCode("0127", tomlFile, ))
+		a.QuitError(errs.ErrCode("0127", tomlFile))
 	}
 
 	for _, file := range p.RootStylesheets {
@@ -471,7 +452,7 @@ func (a *App) newTheme(from, to string) {
 		// to the target. Copy theme-dark.css instead.
 		// TODO: Decide whether this should be in root stylesheets and/or regular.
 		file = a.getMode(file)
-    a.Verbose("\tcopyStyleSheet(%v,%v,%v)\n", file, fromThemePath, toThemePath)
+		a.Verbose("\tcopyStyleSheet(%v,%v,%v)\n", file, fromThemePath, toThemePath)
 		a.copyStyleSheet(file, fromThemePath, toThemePath)
 	}
 
@@ -487,20 +468,19 @@ func (a *App) newTheme(from, to string) {
 
 }
 
-
 func (a *App) copyRootStylesheets(from, to string) {
-  a.Verbose("copyRootStylesheets(%v,%v)",from,to)
-  toThemePath := to
-  fromThemePath := from
+	a.Verbose("copyRootStylesheets(%v,%v)", from, to)
+	toThemePath := to
+	fromThemePath := from
 	// Generate name of TOML file expected to be there
 	tomlFile := a.themeTOMLFilename(filepath.Base(fromThemePath))
 
-  var p PageType
+	var p PageType
 
-  a.Verbose("\tTOML file:%v",tomlFile)
-  // Load the TOML file for the source theme
+	a.Verbose("\tTOML file:%v", tomlFile)
+	// Load the TOML file for the source theme
 	if err := readTomlFile(tomlFile, &p); err != nil {
-		a.QuitError(errs.ErrCode("0127", tomlFile, ))
+		a.QuitError(errs.ErrCode("0127", tomlFile))
 	}
 
 	for _, file := range p.RootStylesheets {
@@ -508,26 +488,25 @@ func (a *App) copyRootStylesheets(from, to string) {
 		// to the target. Copy theme-dark.css instead.
 		// TODO: Decide whether this should be in root stylesheets and/or regular.
 		file = a.getMode(file)
-    a.Verbose("\tcopyStyleSheet(%v,%v,%v)\n", file, fromThemePath, toThemePath)
+		a.Verbose("\tcopyStyleSheet(%v,%v,%v)\n", file, fromThemePath, toThemePath)
 		a.copyStyleSheet(file, fromThemePath, toThemePath)
 	}
 
 }
 
-
-// publishThemeDirectory() copies the directory specified 
-// by the fully qualified directory name from, 
+// publishThemeDirectory() copies the directory specified
+// by the fully qualified directory name from,
 // to the fully qualified  directory name to.
 func (a *App) publishThemeDirectory(from, to string) {
-  a.Verbose("\tpublishThemeDirectory(%v,%v)",from,to)
-  // Create the destination directory.
+	a.Verbose("\tpublishThemeDirectory(%v,%v)", from, to)
+	// Create the destination directory.
 	if err := os.MkdirAll(to, defaults.PublicFilePermissions); err != nil {
 		a.QuitError(errs.ErrCode("0402", to))
 	}
-  tomlFile := filepath.Join(from,filepath.Base(from) +".toml")
-  a.Verbose("\tversion number of theme: %s", a.themeVersion(tomlFile))
+	tomlFile := filepath.Join(from, filepath.Base(from)+".toml")
+	a.Verbose("\tversion number of theme: %s", a.themeVersion(tomlFile))
 
-  // xxxx
+	// xxxx
 
 	// Get the directory listing.
 	candidates, err := ioutil.ReadDir(from)
@@ -538,7 +517,7 @@ func (a *App) publishThemeDirectory(from, to string) {
 	// Get list of files in the local directory to exclude from copy
 	excludeFromDir := slices.NewSearchInfo(a.FrontMatter.ExcludeFilenames)
 
-  // Copy all files that aren't stylesheets
+	// Copy all files that aren't stylesheets
 	for _, file := range candidates {
 		filename := file.Name()
 		// Don't copy if it's a directory.
@@ -546,7 +525,7 @@ func (a *App) publishThemeDirectory(from, to string) {
 			// Don't copy if its extension is on one of the excluded lists.
 			if !hasExtension(filename, ".css") &&
 				!hasExtensionFrom(filename, defaults.MarkdownExtensions) &&
-        !hasExtensionFrom(filename, defaults.ExcludedAssetExtensions) &&
+				!hasExtensionFrom(filename, defaults.ExcludedAssetExtensions) &&
 				!excludeFromDir.Contains(filename) &&
 				!strings.HasPrefix(filename, ".") {
 				// Got the file. Get its fully qualified name.
@@ -555,7 +534,7 @@ func (a *App) publishThemeDirectory(from, to string) {
 				relDir := relDirFile(a.Site.path, copyFrom)
 				// Get the target file's fully qualified filename.
 				copyTo := filepath.Join(a.Site.PublishDir, relDir, filename)
-        copyTo = filepath.Join(to, filename)
+				copyTo = filepath.Join(to, filename)
 				a.Verbose("\t\tCopy(%s,%s", copyFrom, copyTo)
 				if err := Copy(copyFrom, copyTo); err != nil {
 					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
@@ -566,9 +545,9 @@ func (a *App) publishThemeDirectory(from, to string) {
 				}
 			}
 		}
-  }
+	}
 
-  // Publish appropriate style sheets
+	// Publish appropriate style sheets
 
 	p := a.Page.Theme.PageType
 	a.publishRootStylesheets(to)
@@ -577,18 +556,17 @@ func (a *App) publishThemeDirectory(from, to string) {
 		file = a.getMode(file)
 		a.publishStyleSheet(file, filepath.Join(to, path.Base(file)))
 	}
-  sidebar := strings.ToLower(a.FrontMatter.Sidebar)
-  switch sidebar {
-  case "left":
-    a.publishStyleSheet("sidebar-left.css", filepath.Join(to, "sidebar-left.css"))
-  case "right":
-    a.publishStyleSheet("sidebar-right.css", filepath.Join(to, "sidebar-right.css"))
-  }
+	sidebar := strings.ToLower(a.FrontMatter.Sidebar)
+	switch sidebar {
+	case "left":
+		a.publishStyleSheet("sidebar-left.css", filepath.Join(to, "sidebar-left.css"))
+	case "right":
+		a.publishStyleSheet("sidebar-right.css", filepath.Join(to, "sidebar-right.css"))
+	}
 	// responsive.css is always last
-	a.publishStyleSheet("responsive.css",filepath.Join(to, "responsive.css"))
+	a.publishStyleSheet("responsive.css", filepath.Join(to, "responsive.css"))
 
 }
-
 
 // createPageType() is very similar to copyTheme() but
 // it creates a new pagetype from an existing one and
@@ -614,7 +592,7 @@ func (a *App) createPageType(theme, pageType string) error {
 		// TODO: Original error code needed
 		return errs.ErrCode("0919", "directory "+dest+" already exists")
 	}
- 	err := a.publishTheme(theme, dest, true)
+	err := a.publishTheme(theme, dest, true)
 	if err != nil {
 		return errs.ErrCode("PREVIOUS", err.Error())
 	}
@@ -632,8 +610,8 @@ func (a *App) createPageType(theme, pageType string) error {
 // If isChild is true, then to is actually a child pageType of from,
 // so there's different handling.
 func (a *App) publishTheme(from, to string, isChild bool) error {
-  // xxx
-  a.Verbose("publishTheme(%v,%v)",from,to)
+	// xxx
+	a.Verbose("publishTheme(%v,%v)", from, to)
 	// Obtain the fully qualified name of the source
 	// theme directory to copy
 	source := a.themePath(from)
@@ -643,19 +621,19 @@ func (a *App) publishTheme(from, to string, isChild bool) error {
 	if !a.isTheme(source, tomlFile) {
 		return errs.ErrCode("1008", source)
 	}
-  // xxxx
-  a.Verbose("\tsource: %v", source)
+	// xxxx
+	a.Verbose("\tsource: %v", source)
 	var dest string
 	if !isChild {
 		dest = a.themePath(to)
 	} else {
-		dest = a.themePath(filepath.Join(from,to))
+		dest = a.themePath(filepath.Join(from, to))
 	}
 	if dirExists(dest) {
 		return errs.ErrCode("0904", "directory "+dest+" already exists")
 	}
-  a.Verbose("\tdest: %v", dest)
-  a.publishThemeDirectory(source, dest)
+	a.Verbose("\tdest: %v", dest)
+	a.publishThemeDirectory(source, dest)
 	a.updateThemeDirectory(from, dest, tomlFile, isChild)
 	// Success
 	//a.Verbose("Created theme " + filepath.Base(dest))
@@ -700,8 +678,8 @@ func (a *App) isTheme(dir, tomlFile string) bool {
 // - Deletes the old theme CSS file
 func (a *App) updateThemeDirectory(from, dest, tomlFile string, isChild bool) error {
 	// Create a toml file for the new theme
-  a.Verbose("updateThemeDirectorry(%v,%v,%v,%v)",from,dest,tomlFile,isChild)
-  promptString("")
+	a.Verbose("updateThemeDirectorry(%v,%v,%v,%v)", from, dest, tomlFile, isChild)
+	promptString("")
 	// Parse the original toml file to get its list of stylesheets.
 	// Goal is to replace the original theme stylesheet name, say, default.css,
 	// with the new theme's style sheet name, say, mytheme.css.
@@ -786,7 +764,7 @@ func (a *App) updateThemeDirectory(from, dest, tomlFile string, isChild bool) er
 	delCSS := filepath.Join(targetDir, from+".css")
 	// Delete them if they exist. No error is returned if there's a problem.
 	// Because I live on the edge, baby.
-  promptString("Attemping to delete " + delToml + " and " + delCSS)
+	promptString("Attemping to delete " + delToml + " and " + delCSS)
 	deleteFileMust(delToml)
 	deleteFileMust(delCSS)
 	// Create copy of css file
@@ -801,7 +779,6 @@ func (a *App) updateThemeDirectory(from, dest, tomlFile string, isChild bool) er
 	targetCSSFile = replaceExtension(targetTomlFile, "css")
 	return Copy(sourceCSSFile, targetCSSFile)
 }
-
 
 // defaultTheme() returns the simple name of
 // the theme used to create new pages

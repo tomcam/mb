@@ -47,32 +47,32 @@ func configDir() string {
 // Doesn't other directories
 // Thanks to https://github.com/plus3it/gorecurcopy/blob/master/gorecurcopy.go
 func copyDirOnly(source, dest string) error {
-  err := os.MkdirAll(dest, defaults.PublicFilePermissions)
+	err := os.MkdirAll(dest, defaults.PublicFilePermissions)
 	if err != nil {
-		return errs.ErrCode("0410",err.Error(),dest)
+		return errs.ErrCode("0410", err.Error(), dest)
 	}
 	entries, err := ioutil.ReadDir(source)
 	if err != nil {
 		// TODO: More specific errors
-		return errs.ErrCode("0708",err.Error(),source)
+		return errs.ErrCode("0708", err.Error(), source)
 	}
 	for _, entry := range entries {
 		sourcePath := filepath.Join(source, entry.Name())
 		destPath := filepath.Join(dest, entry.Name())
 		fileInfo, err := os.Stat(sourcePath)
 		if err != nil {
-		  return errs.ErrCode("0129",err.Error(),sourcePath)
+			return errs.ErrCode("0129", err.Error(), sourcePath)
 		}
 		switch fileInfo.Mode() & os.ModeType {
 		case os.ModeDir:
 			// Do nothing. What's the syntax for that?
 		case os.ModeSymlink:
 			if err := CopySymLink(sourcePath, destPath); err != nil {
-		    return errs.ErrCode("0130",err.Error(),sourcePath)
+				return errs.ErrCode("0130", err.Error(), sourcePath)
 			}
 		default:
 			if err := Copy(sourcePath, destPath); err != nil {
-		    return errs.ErrCode("0214",err.Error(),sourcePath)
+				return errs.ErrCode("0214", err.Error(), sourcePath)
 			}
 		}
 	}
@@ -201,6 +201,25 @@ func deleteFileMust(filename string) {
 	}
 	_ = os.Remove(filename)
 }
+
+
+// delimited() retrns the string found in between 
+// start and end. It's not well tested, because
+// its just used to strip the id= from tags like
+// <article id="article"> and <aside id="sidebar">
+func delimited(str string, start, end string) string {
+	s := strings.Index(str, start)
+	if s == -1 {
+		return ""
+	}
+	n := str[s+len(start):]
+	e := strings.Index(n, end)
+	if e == -1 {
+		return ""
+	}
+	return n[:e]
+}
+
 
 // dirExists() returns true if the name passed to it is a directory.
 func dirExists(path string) bool {

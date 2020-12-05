@@ -18,6 +18,7 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.7.0
 	github.com/stretchr/testify v1.4.0 // indirect
+	github.com/tdewolff/minify/v2 v2.9.10
 	github.com/yuin/goldmark v1.1.31
 	github.com/yuin/goldmark-highlighting v0.0.0-20200307114337-60d527fdb691
 	golang.org/x/net v0.0.0-20200202094626-16171245cfb2

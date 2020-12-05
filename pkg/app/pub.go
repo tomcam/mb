@@ -1,8 +1,10 @@
-package app;
+package app
+
 import (
 	"bytes"
 	"encoding/json"
-  "github.com/tdewolff/minify/v2/css"
+	//"fmt"
+	//"github.com/tdewolff/minify/v2/css"
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
 	"github.com/tomcam/mb/pkg/mdext"
@@ -61,10 +63,10 @@ func (a *App) publishFile(filename string) error {
 		return errs.ErrCode("0103", filename)
 	}
 
-  /* True means load parent theme */
-  a.loadTheme(true)
-  /* False means load pagetype, if any (aka child theme */
-  a.loadTheme(false)
+	/* True means load parent theme */
+	a.loadTheme(true)
+	/* False means load pagetype, if any (aka child theme */
+	a.loadTheme(false)
 	// Convert article to HTML
 	a.Article(filename, input)
 	// Begin HTML document.
@@ -120,13 +122,11 @@ func (a *App) publishFile(filename string) error {
 	sidebar := strings.ToLower(a.FrontMatter.Sidebar)
 	if sidebar == "left" || sidebar == "right" {
 		a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Sidebar, "<aside id=\"sidebar\">"))
-	} else {
-		// TODO: If you have sidebar="ight" for example and/or the word "sidebar"
-		// appears in the main Markdown, you get a bonus error message
-		///a.QuitError(errs.ErrCode("1019", filename))
 	}
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Footer, "<footer>"))
 
+	// Inject closing script tags here
+	a.insertScript(a.scriptClosePath)
 	// Complete the HTML document with closing <body> and <html> tags
 	a.appendStr(closingHTMLTags)
 
@@ -166,21 +166,21 @@ func (a *App) publishFile(filename string) error {
 	a.Verbose("\tCreated file %s", outfile)
 	a.fileCount++
 	// a.Page.dir
-  if !a.Site.dirs[a.Page.dir].mdOptions.IsOptionSet(HasIndexMd)  &&
-    !a.Site.dirs[a.Page.dir].mdOptions.IsOptionSet(HasReadmeMd) {
-    // xxx
-    a.Verbose("\tDirectory %s doesn't have a README.md, index.md, index.html, or index.html file. Creating empty index.html",
-    a.Page.dir)
-    // Add an empty index.html to prevent directory traversal attacks
-    /* 
-    if err = writeTextFile("index.html", ""); err != nil {
-      a.QuitError(errs.ErrCode("0215", a.Page.dir))
-      // xxxx
-    }
-    */
-  } else {
-    a.Verbose("\tDirectory %s has a README.md, index.md, index.html, or index.html file",a.Page.dir)
-  }
+	if !a.Site.dirs[a.Page.dir].mdOptions.IsOptionSet(HasIndexMd) &&
+		!a.Site.dirs[a.Page.dir].mdOptions.IsOptionSet(HasReadmeMd) {
+		// xxx
+		a.Verbose("\tDirectory %s doesn't have a README.md, index.md, index.html, or index.html file. Creating empty index.html",
+			a.Page.dir)
+		// Add an empty index.html to prevent directory traversal attacks
+		/*
+		   if err = writeTextFile("index.html", ""); err != nil {
+		     a.QuitError(errs.ErrCode("0215", a.Page.dir))
+		     // xxxx
+		   }
+		*/
+	} else {
+		a.Verbose("\tDirectory %s has a README.md, index.md, index.html, or index.html file", a.Page.dir)
+	}
 	// Success
 	return nil
 }
@@ -342,24 +342,24 @@ func (a *App) publishLocalFiles(dir string) bool {
 			hasMarkdown = true
 		}
 
-    // Look for the specific file README.md, which competes with
-    // index.md:
-    // https://stackoverflow.com/questions/58826517/why-do-some-static-site-generators-use-readme-md-instead-of-index-md
+		// Look for the specific file README.md, which competes with
+		// index.md:
+		// https://stackoverflow.com/questions/58826517/why-do-some-static-site-generators-use-readme-md-instead-of-index-md
 		if filename == "README.md" {
 			a.addMdOption(dir, HasReadmeMd)
 
 		}
-    // Look for some variation of index.html. If there
-    // isn't one we'll create it later for security reasons
-    name := strings.ToLower(filename)
-    switch (name) {
-    case "index.md":
- 			  a.addMdOption(dir, HasIndexMd)
-   case "index.htm":
-			  a.addMdOption(dir, HasIndexMd)
-    case "index.html":
-			  a.addMdOption(dir, HasIndexMd)
-    }
+		// Look for some variation of index.html. If there
+		// isn't one we'll create it later for security reasons
+		name := strings.ToLower(filename)
+		switch name {
+		case "index.md":
+			a.addMdOption(dir, HasIndexMd)
+		case "index.htm":
+			a.addMdOption(dir, HasIndexMd)
+		case "index.html":
+			a.addMdOption(dir, HasIndexMd)
+		}
 	}
 
 	if hasMarkdown {
@@ -431,14 +431,14 @@ func (a *App) getMode(stylesheet string) string {
 	return stylesheet
 }
 
-// publishAssets() copies out all the other files needed by the 
+// publishAssets() copies out all the other files needed by the
 // Markdown page: stylesheets specified in the TOML file,
 // graphic assets, and anything else lying around in the
 // Markdown page's directory.
 func (a *App) publishAssets() {
-  // Find out the current theme or pagetype.
-  // They're identical, other than a pagetype
-  // is a child of a theme.
+	// Find out the current theme or pagetype.
+	// They're identical, other than a pagetype
+	// is a child of a theme.
 	p := a.Page.Theme.PageType
 	a.findPageAssets()
 	a.findThemeAssets()
@@ -451,13 +451,13 @@ func (a *App) publishAssets() {
 		p.Stylesheets = append(p.Stylesheets, "sidebar-right.css")
 
 	}
-  a.publishThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
+	a.publishThemeDirectory(a.Page.Theme.PageType.PathName, a.fullTargetThemeDir())
 	// Copy other files in the theme directory to the target publish directory.
-	// This is whatever happens to be in the theme directory 
-  // with sizes.css, fonts.css, etc. 
-  // Since those files are stylesheets specified in the .TOML 
-  // (or determined dynamically, like sidebar-left.css 
-  // and sidebar-right.css) it's easy. You generate a stylesheet
+	// This is whatever happens to be in the theme directory
+	// with sizes.css, fonts.css, etc.
+	// Since those files are stylesheets specified in the .TOML
+	// (or determined dynamically, like sidebar-left.css
+	// and sidebar-right.css) it's easy. You generate a stylesheet
 	// tag for them and then copy them right to the published theme directory.
 	// The other files are dealt with here. Probably they would typically
 	// be graphics files. They will be copied not to the
@@ -507,7 +507,6 @@ func (a *App) assetPath() string {
 // relTargetThemeDir() computes the relative destination directory
 // name for theme assets
 func (a *App) relTargetThemeDir() string {
-  // xxxx Look up the html <base> tag
 	return filepath.Join("/", a.Site.AssetDir, a.Site.ThemesDir, a.FrontMatter.Theme, a.FrontMatter.PageType, a.Page.Theme.PageType.Version)
 }
 
@@ -519,7 +518,7 @@ func (a *App) fullTargetThemeDir() string {
 
 // publishStyleSheet() takes the name of a stylesheet specified
 // in the theme and copies it to the destination (publish)
-// directory. Automatically detects if it's a 
+// directory. Automatically detects if it's a
 // child pagetype.
 func (a *App) publishStyleSheet(file, to string) {
 	// Pass through if not a local file
@@ -528,13 +527,13 @@ func (a *App) publishStyleSheet(file, to string) {
 		return
 	}
 
-  var from string
+	var from string
 	// Get fully qualified source filename to copy.
-  if a.FrontMatter.isChild {
-	  from = filepath.Join(a.childThemeFullDirectory(), file)
-  } else {
-	  from = filepath.Join(a.parentThemeFullDirectory(), file)
-  }
+	if a.FrontMatter.isChild {
+		from = filepath.Join(a.childThemeFullDirectory(), file)
+	} else {
+		from = filepath.Join(a.parentThemeFullDirectory(), file)
+	}
 
 	// Relative path to the publish directory for themes
 	pathname := filepath.Join(a.relTargetThemeDir(), file)
@@ -562,7 +561,7 @@ func (a *App) publishStyleSheet(file, to string) {
 // The source of the stylesheets is defined by the pagetype of the
 // current document. dir is the destination.
 func (a *App) publishRootStylesheets(dir string) {
-  a.Verbose("\tpublishRootStylesheets(%v) from %v", dir,a.Page.Theme.PageType.RootStylesheets)
+	a.Verbose("\tpublishRootStylesheets(%v) from %v", dir, a.Page.Theme.PageType.RootStylesheets)
 	for _, file := range a.Page.Theme.PageType.RootStylesheets {
 		// If user has requested a dark theme, then don't copy skin.css
 		// to the target. Copy theme-dark.css instead.
@@ -574,7 +573,7 @@ func (a *App) publishRootStylesheets(dir string) {
 			file = filepath.Join("..", file)
 		}
 		//a.publishStyleSheet(file, filepath.Join(a.fullTargetThemeDir(), file))
-    a.Verbose("\t\tpublishStyleSheet(%v,%v)", file, filepath.Join(dir,file))
+		a.Verbose("\t\tpublishStyleSheet(%v,%v)", file, filepath.Join(dir, file))
 		a.publishStyleSheet(file, filepath.Join(dir, file))
 	}
 }
@@ -583,17 +582,15 @@ func (a *App) publishRootStylesheets(dir string) {
 // given in the theme TOML file and copies them to the
 // publishing (asset) directory
 func (a *App) publishStyleSheets(p PageType) {
-  // TODO: I think this is called too often 
-  /*
-	if dirExists(dir) {
-		return
-	}
-  */
-  // Create the target theme stylesheet directory.
-  a.publishThemeDirectory(a.Page.Theme.PageType.PathName,a.fullTargetThemeDir())
+	// TODO: I think this is called too often
+	/*
+		if dirExists(dir) {
+			return
+		}
+	*/
+	// Create the target theme stylesheet directory.
+	a.publishThemeDirectory(a.Page.Theme.PageType.PathName, a.fullTargetThemeDir())
 }
-
-
 
 // findThemeAsets() obtains a list of all non-source files.
 func (a *App) findThemeAssets() {
@@ -627,7 +624,6 @@ func (a *App) findThemeAssets() {
 	}
 }
 
-
 // Look alongside the current file to assets to publish
 // for example, it's a news article and it has an image.
 // Exception: the only CSS files copied over are those
@@ -644,8 +640,8 @@ func (a *App) findPageAssets() {
 		for _, file := range candidates {
 			filename := file.Name()
 			if !file.IsDir() {
-        // Random CSS files are NOT copied.  Pretty much everything
-        // else is, unless it has an excluded file extension.
+				// Random CSS files are NOT copied.  Pretty much everything
+				// else is, unless it has an excluded file extension.
 				if !hasExtensionFrom(filename, defaults.MarkdownExtensions) &&
 					!hasExtensionFrom(filename, defaults.ExcludedAssetExtensions) &&
 					!hasExtension(filename, ".css") {
@@ -724,6 +720,25 @@ func stripHeading(heading string) string {
 		return ""
 	}
 	return (heading[match+1 : l])
+}
+
+// insertScript() injects Javascript (technically,
+// any thing inside script tags) into the
+// output stream.
+// dir is the fully qualified directory
+// name containing the scripts.
+// The scripts supplied MUST provide their
+// own script tags.
+func (a *App) insertScript(dir string) {
+	var script string
+	scripts, err := ioutil.ReadDir(dir)
+	if err != nil {
+		a.QuitError(errs.ErrCode("0709", dir))
+	}
+	for _, file := range scripts {
+		script += fileToString(filepath.Join(dir, file.Name()))
+	}
+	a.appendStr(script)
 }
 
 // headTags() inserts miscellaneous items such as Google Analytics tags
@@ -805,31 +820,31 @@ func (a *App) closeHeadOpenBody() {
 	a.appendStr(closer)
 }
 
+// wrapTag() returns the HTML code contents surrounded
+// by the tag specified, which might look like
+// '<nav>' or it might look like '<article id="article">'
+// If block is true then it simply adds a newline for 
+// clarity.
 func wrapTag(tag string, contents string, block bool) string {
 	var newline string
 	if block {
 		newline = "\n"
 	}
+	// xxxx
+	var endTag, output string
 	if len(tag) > 3 {
-		output := newline + tag + contents + tag[:1] + "/" + tag[1:] + newline
-		return output
-	}
-	return ""
-}
-
-// Wraps the contents within a block/style tag,
-// so it turns <p>hello, world.<p> into
-// <article><p>hello, world.<p></article>
-// If block is true, adds newlines strictly for
-// clarity in the output HTML.
-func wrapTagBytes(tag string, html []byte, block bool) string {
-	var newline string
-	if block {
-		newline = "\n"
-	}
-	if len(tag) > 3 {
-		output := newline + tag + string(html) + tag[:1] + "/" + tag[1:] + newline
-		return output
+		output = newline + tag + contents + tag[:1] + "/" 
+		if strings.Contains(tag, "id=") { // && strings.HasPrefix(tag,"</"){
+			// To create the closing tag, strip any id= from the opening tag.
+			//id := delimited(tag, "\"", "\"")
+			endTag = strings.Fields(tag[1:])[0]
+		  //output = newline + tag + contents + tag[:1] + "/" + endTag + ">"
+		  output += endTag + ">"
+		} else{
+		  //output = newline + tag + contents + tag[:1] + "/" + tag[1:]
+		  output += tag[1:]
+    }
+		return output + newline
 	}
 	return ""
 }

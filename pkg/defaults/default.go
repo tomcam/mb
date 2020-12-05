@@ -12,6 +12,8 @@ var (
 		{GlobalConfigurationDirName, CommonDir},
 		{GlobalConfigurationDirName, HeadTagsDir},
 		{GlobalConfigurationDirName, SCodeDir},
+		{GlobalConfigurationDirName, ScriptCloseDir},
+		{GlobalConfigurationDirName, ScriptOpenDir},
 		{GlobalConfigurationDirName, SiteConfigDir},
 		{GlobalConfigurationDirName, ThemeDir},
 	}
@@ -69,6 +71,20 @@ Welcome to %s
 	// Name of subdirectory containing shortcode files
 	// Excluded from publishing.
 	SCodeDir = "scodes"
+
+  // Location of directory containing Javascript 
+  // that goes at the end of the HTML file, near
+  // the closing <body> tag.
+  // The files MUST supply <script> tags.
+  // It is possible that somehting other
+  // than Javascript will be used. 
+  ScriptCloseDir = "scriptclose" 
+
+  // Location of directory containing Javascript 
+  // that goes at the begining of the HTML file, near
+  // the opening <body> tag.
+  // The files MUST <script> tags.
+  ScriptOpenDir = "scriptopen"
 
 	// Name of subdirectory within the theme that holds help & sample files
 	// for that theme.

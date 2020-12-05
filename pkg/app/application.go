@@ -39,6 +39,11 @@ type App struct {
 	// Location of directory containing shortcode files
 	sCodePath string
 
+	// Full paths of directories containing javascript
+	// (or anything valid within <script> tags) to insert.
+	scriptClosePath string
+	scriptOpenPath  string
+
 	// Custom functions used in the template language.
 	// All built-in functions must appear here to be publicly available
 	funcs map[string]interface{}
@@ -108,8 +113,8 @@ func NewDefaultApp() *App {
 		},
 		Site: &Site{
 			// Assets just go into the /assets directory, which Jekyll/aka
-      // GitHub Pages prefers
-			AssetDir: defaults.DefaultAssetDir ,
+			// GitHub Pages prefers
+			AssetDir: defaults.DefaultAssetDir,
 			// configFile: filepath.Join(SiteConfigDir, SiteConfigFilename),
 			// dirs:     map[string]MdOptions{},
 			dirs:     map[string]dirInfo{},

@@ -63,6 +63,7 @@ var errMsgs = map[string]string{
 	"0128": "TOML error reading theme file",        // 
 	"0129": "Error getting information on file",        // 
 	"0130": "Error reading symlink file",        // 
+	"0131": "TOML error reading theme file",        // custom message + err.Error()
 
 	// 0200	- Error creating file
 	"0201": "Error creating site configuration file",             // err.Error
@@ -116,6 +117,9 @@ var errMsgs = map[string]string{
 	"0706": "Unable to read from headtags directory", // Expected pathname of headtags directory
 	"0707": "Directories are identical:",             // custom message
   "0708": "Unable to read directory",               //
+	"0709": "Unable to read from script directory", // Expected pathname of scripts directory
+
+
 	// 0800	- Can't determine the name of something
 	"0801": "",
 

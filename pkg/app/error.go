@@ -56,6 +56,5 @@ func (a *App) QuitError(e error) {
 // TODO: Don't allow these in production!
 func (a *App) Quit(format string, ss ...interface{}) {
 	fmt.Println(a.fmtMsg(format, ss...))
-  os.Exit(1)
+	os.Exit(1)
 }
-

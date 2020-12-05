@@ -271,7 +271,7 @@ create theme based on an existing one.
 		// the bar part of
 		// new theme foo from bar
 		SourceTheme = a.defaultTheme()
-		cmdNewTheme  = &cobra.Command{
+		cmdNewTheme = &cobra.Command{
 			Use:   "theme {newtheme} | from {oldtheme} ",
 			Short: "new theme mytheme",
 			Long: `site: Use new site to start a new project. Use new theme to 
@@ -298,12 +298,12 @@ create theme based on an existing one.
 				}
 				// Create a new theme from the default theme
 				SourceTheme = promptStringDefault("Name to copy it from?", SourceTheme)
-        a.newTheme(SourceTheme, NewThemeName)
-        /*
-				if err := a.newTheme(NewThemeFrom, NewThemeName); err != nil {
-					a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
-				}
-        */
+				a.newTheme(SourceTheme, NewThemeName)
+				/*
+					if err := a.newTheme(NewThemeFrom, NewThemeName); err != nil {
+						a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
+					}
+				*/
 				// Could put a message that it was created
 			},
 		}
