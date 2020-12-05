@@ -3,7 +3,7 @@ Description = ""
 RootStylesheets = ["reset.css", "fonts.css", "bind.css"]
 Stylesheets = ["sizes.css", "theme-light.css", "pillar.css"]
 PathName = ""
-
+Version="1.2.3"
 [Nav]
   HTML = ""
   File = "nav.md"

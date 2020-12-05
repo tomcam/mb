@@ -186,17 +186,53 @@ aside {height:100vh;}
 
 aside > h2 {padding:1em;text-align:center;font-size:1.2rem;font-weight:700;}
 aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2rem;}
+/*
 aside > ul {text-align:right;margin-right:1rem;line-height:1.5em;}
 aside > ul > li {list-style-type:none;} 
 aside > ul > li > a,
 aside > ul > li > a:link,
 aside > ul > li > a:visited {text-decoration:none;font-size:1rem;line-height:2.5rem;font-weight:normal;margin-right:1em;} 
-/* For accessibility purposes show visual distinction when hovering or active */
 aside > ul > li > a:hover,
 aside > ul > li > a:active {font-weight:bold;} 
-
+*/
 aside > p > img {margin-top:1rem;width:100%;padding:0;}
 aside > p {font-size:1.2rem;margin-bottom:0em;}
+
+/*
+ * --------------------------------------------------
+ * Sidebar unordered list shows as boxes, without
+ * indentation--it's for table of contents
+ * --------------------------------------------------
+ */
+aside > ul {
+  background-color:whitesmoke;
+  margin-right:1em;
+  border-collapse:collapse;
+}
+
+aside > ul li {
+  /* Border bottom stretches across column at all levels */
+  border-bottom: 1px solid gray;
+  margin-left:0;
+  list-style-type:none;
+}
+
+aside > ul li a {
+  padding-left:.5em;padding-right:.5em;
+  text-decoration:none;
+  line-height:1em;
+}
+
+aside > ul li a:active, aside > ul li a:hover {
+  color:yellow;
+}
+
+/* Special case: h1 for table of contents
+ * gets distinct look */
+aside > ul > li > a {
+  font-weight:bold;
+}
+
 
 
 /* ******************************/

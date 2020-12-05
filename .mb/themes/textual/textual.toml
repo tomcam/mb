@@ -1,4 +1,5 @@
-Branding = ""
+Branding = "Textual theme"
+Version = "0.7.0"
 Description = ""
 RootStylesheets = ["reset.css", "fonts.css", "bind.css"]
 Stylesheets = ["sizes.css", "theme-light.css", "textual.css"]

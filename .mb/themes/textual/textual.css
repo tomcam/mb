@@ -3,15 +3,6 @@ html,body,p {font-family:var(--informal),sans-serif;}
 /* OTOH Courier is a lousy code font by default */
 code,pre{font-family:var(--code),monospace;}
 
-/* Indent lists */
-li {margin-left:0em;}
-li li {margin-left:1em;}
-li li li {margin-left:1em;}
-li li li li {margin-left:1em;}
-li li li li li {margin-left:1em;}
-li li li li li li {margin-left:1em;}
-
-
 /* ****************************/
 /*  HEADER BRANDING AND LINKS */
 /* ****************************/
@@ -118,6 +109,14 @@ article > p,
 		line-height:2.5rem;
 }
 
+/* Indent lists */
+article > li {margin-left:0em;}
+article > li li {margin-left:1em;}
+article > li li li {margin-left:1em;}
+article > li li li li {margin-left:1em;}
+article > li li li li li {margin-left:1em;}
+article > li li li li li li {margin-left:1em;}
+
 article > ul, article > ol {margin-top:.5em;}
 article > li {margin-left:1rem;}
 
@@ -194,18 +193,53 @@ aside {height:100vh;}
 
 aside > h2 {text-align:center;font-size:1.2rem;font-weight:700;}
 aside > h3 {font-size:.75em;font-weight:bold;margin-bottom:2rem;}
-aside > ul {text-align:right;margin-right:1rem;line-height:1.5em;}
-aside > ul > li {list-style-type:none;} 
-aside > ul > li > a,
-aside > ul > li > a:link,
-aside > ul > li > a:visited {text-decoration:none;font-size:1rem;line-height:2.5rem;font-weight:normal;margin-right:1em;} 
-/* For accessibility purposes show visual distinction when hovering or active */
-aside > ul > li > a:hover,
-aside > ul > li > a:active {font-weight:bold;} 
-
 aside > p > img {margin-top:1rem;width:100%;padding:0;}
 aside > p {padding:1em;font-size:1.2rem;margin-bottom:0em;}
 
+
+/*
+ * --------------------------------------------------
+ * Sidebar unordered list shows as boxes, without
+ * indentation--it's for table of contents
+ * --------------------------------------------------
+ */
+aside > ul {
+  background-color:whitesmoke;
+  margin-right:1em;
+  border-collapse:collapse;
+  border-style:none;
+}
+
+
+aside > ul li {
+  list-style-type:none;
+  margin-left:0;
+  /* Border bottom stretches across column at all levels 
+   * but produces thicker border for cases in which
+   * a header (say, an h4) is followed by a higher
+   * level header (say, an h2).*/
+  border-bottom: 1px solid gray;
+}
+
+aside > ul li a {
+  padding-left:.5em;padding-right:.5em;
+  text-decoration:none;
+  line-height:1em;
+  /* Only underlines text. Doesn't stretch across the whole
+   * sidebar width. 
+   * border-bottom: 1px solid gray;
+   */
+}
+
+aside > ul li a:active, aside > ul li a:hover {
+  font-weight:bold;
+}
+
+/* Special case: h1 for table of contents
+ * gets distinct look */
+aside > ul > li > a {
+  font-weight:bold;
+}
 
 /* ******************************/
 /*  FOOTER                      */
