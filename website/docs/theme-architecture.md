@@ -1,6 +1,16 @@
 # Metabuzz theme architecture
 
 ## TODO: Things to cover
+* Publishing themes is different from copying.
+Publishing means copying out all assets necessary
+to generating an HTML page for publication. That menas
+it only copies CSS files necssary for that, and they're specifed
+in the theme TOML file. Also themes have hidden directories,
+all starting with a dot. They don't get copied.
+They are used for things like creating a gallery of themes, and or help text.
+for that particular theme.
+Those don't get copied out to the pubilshg directiory. Copying
+a theme would copy all CSS files, and the hidden directories.
 
 * Explain this
   /* Trying to keep this independent of text direction. Otherwise
