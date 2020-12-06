@@ -6,6 +6,15 @@ s=document.getElementById('sidebar');
 a=document.getElementById('article'); 
 h=a.offsetHeight+'px';
 s.style.height=h;
-}</script>
+//s.style.height='100vh';
+}
+document.onreadystatechange = function () {
+if (document.readyState == "interactive") {
+  // Init or start code here
+  bodyScroll();
+}
+} 
+  
+  </script>
 <body onscroll="bodyScroll();">
 
