@@ -4,6 +4,159 @@ article > h3:before { content: 'foo'; }
 
 See css-snippets.txt
 
+
+## Show unordered list in a sidebar as numbers in circles For a news-type section
+
+
+```
+/*
+ * --------------------------------------------------
+ * Sidebar unordered list for breaking news
+ * shows:
+ * - Item preceded by number in circle
+ * - Item is bold
+ * - Indented item in normal text with bottom padding
+ *
+ * Example usage (note 2nd level of indentation):
+ *
+ *  * Item 1
+ *     - More about item 1
+ *   * Item 2
+ *     - More about item 2
+ *   * Item 3
+ *     - More about item 3
+ *
+ * --------------------------------------------------
+ */
+
+aside > ul {
+  counter-reset:li;
+  list-style-type:none;
+  font-size:1rem;
+  line-height:2rem;
+  padding-left:1em;
+  border-top:none;
+}
+
+aside > ul li {
+  border:none;
+  font-weight:normal;
+}
+
+aside > ul > li > ul > li {
+  line-height:.75em;
+  padding-bottom:1em;
+}
+aside > ul >li {
+  font-weight:bold;
+  position:relative;
+  padding: .5em .25em 0rem 3em;
+  border:none;
+} 
+aside > ul > li:before {
+  background-color:var(--fg);
+  content:counter(li);
+  counter-increment:li;
+  height:2rem;
+  width:2em;
+  border-radius:50%;
+  color: var(--bg);
+  text-align:center;
+  position:absolute;
+  left:0;
+}
+
+``
+
+## Under an h3, show 3 pictures per row with a caption area underneath
+
+
+```
+/*
+ * --------------------------------------------------
+ * Special feature: "Featured Posts" section showing
+ * 3 images in a row with captions underneath.
+ * Start with an h3 ("Featured Posts, for example)
+ * then a ul with 3 items consisting of an image
+ * and text for it.
+ *
+ *
+ * Example:
+ *   ### Featured stories
+ *   * ![Picture of Oasis](oasis.png)
+ *     #### Oasis reunites
+ *     [MORE](oasis-reunites.html)
+ *   * ![Picture of bookcase](bookcase.png)
+ *     ##### Man, what a bookcase 
+ *     [MORE](bookcase.html)
+ *   * ![Picture of yomama](yomama.png)
+ *     #### I won't say it 
+ *     [MORE](yomama.html)
+ *
+ * Notes:
+ * - Remember to indent after the bullet.
+ * If you have less than 3 items, just put an empty
+ * header 3 after the first 1 or 2:
+ *
+ * --------------------------------------------------
+ */
+
+article > h3 {clear:left;}
+article > h3 + ul {
+	padding:0;
+	margin:0;
+	list-style-type:none;
+}
+
+/* Each li is 1/3 as wide as the container. */
+article > h3 + ul li {
+  background-color:white;
+	font-family:var(--informal);
+	width:28.3%;
+	float:left;
+	line-height:1em;
+  margin-right:5%;
+  border: 1px solid whitesmoke;
+}
+
+/* Leave some room on the right side of each image */
+article > h3 + ul li > img {
+  /* Not necessary */
+  display:inline;
+  width:100%;
+ }
+
+article > h3 + ul > li > h4 {
+ font-size:.8em;
+ font-family:var(--times);
+ padding-left:1em;
+}
+
+article > h3 + ul > li > h4 + p{
+ padding-left:1em;
+ padding-bottom:2em;
+}
+```
+
+### Example usage:
+
+```
+### News Roundup
+* ![2](2.jpg) 
+  #### h4 here. Let's see what a long caption looks like
+  [hello](/)
+* ![2](2.jpg) 
+  #### h4 here
+  [hello](/)
+* ![2](2.jpg) 
+  #### h4 here
+  [hello](/)
+```
+
+
+
+
+
 ## Create table of contents in sidebar that shows as boxes of text
 
 ```
