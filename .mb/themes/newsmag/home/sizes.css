@@ -9,7 +9,7 @@
   --header-height:2rem;
 
   /* Size of the main text in the header. */
-  --branding-height:2rem;
+  --branding-height:2.5rem;
 
   /* Same as header {margin-top:}  */
   --header-margin-top:0;
@@ -21,7 +21,7 @@
   --header-padding-top:1.5em;
 
   /* Same as header {padding-bottom} */
-  --header-padding-bottom:1em;
+  --header-padding-bottom:0em;
 
   /* NOTE: MTF doesn't use padding-left for header.
    * It uses --text-start instead */
@@ -32,7 +32,7 @@
    * ******************************/
 
   /* Adjusts navbar height and keeps it vertically centered */
-  --nav-height:5rem;
+  --nav-height:2rem;
 
   /* Same as nav {margin-top} */
   --nav-margin-top:0em;
@@ -58,7 +58,7 @@
   --article-margin-bottom:3rem;
 
    /* Same as article {padding-top:}  */
-  --article-padding-top:3rem;
+  --article-padding-top:0rem;
 
   /* Same as article {padding-bottom} */
   --article-padding-bottom:3.5rem;
@@ -99,7 +99,7 @@
   --h4-margin-bottom:0em;
 
   /* Same as article > h5 {font-size}, h5 {padding}, h5 {margin} */
-  --h5-font-size:1.5rem;
+  --h5-font-size:1.2rem;
   --h5-padding-top:0em;
   --h5-padding-bottom:0em;
   --h5-margin-top:0em;
@@ -150,7 +150,7 @@
    * ******************************/
 
   /* --article-column-width is width of article plus sidebar */
-  --article-column-width:80%;
+  --article-column-width:75%;
 
   --article-text-width: 75%;
 
@@ -162,7 +162,7 @@
   /* --sidebar-width must be the same as
    * --article-column-width MINUS --alt-article-column-width
    */
-  --sidebar-width:20%;    
+  --sidebar-width:25%;    
   --left-margin:0%;
   --right-margin:0%;
   --header-footer-width:100%; 
@@ -174,7 +174,7 @@
  * --------------------------------------------------
  */
 
-  --text-start: 20%;
+  --text-start: 10%;
   --article-pad-text-end:0%;
 
 }

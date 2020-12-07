@@ -1,10 +1,10 @@
 
-### BREAKING
+### World Trends...
 
-* Item 1
-  - More about item 1
-* Item 2
-  - More about item 2
-* Item 3
-  - More about item 3
+* What's happening in Seattle? 
+  - Authorities discuss the current civil unrest--and offer unsettling news 
+* Law & Order: Azusa debuts to stunning ratings
+  - Does this mean a Law & Order: Modesto revival?
+* Overview of the Mideast situation
+  - And we're not talking about Ohio.
 
