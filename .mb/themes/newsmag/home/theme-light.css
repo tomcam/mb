@@ -30,7 +30,7 @@
 
     
     /* Secondary foreground (text) and background colors for accents. */
-    --trim-fg:darkgray; 
+    --trim-fg:DodgerBlue; 
     --trim-bg:white;
 
     
@@ -69,7 +69,7 @@
         
     /* Default foreground (text) and background colors in aside */
     --sidebar-fg: var(--fg);
-    --sidebar-bg: var(--bg);
+    --sidebar-bg: whitesmoke;
     /* Link colors specific to sidebar */
     --a-sidebar: var(--a); 
     --a-sidebar-link:var(--a);
@@ -100,7 +100,7 @@
 /*  HEADER COLORS AND BORDERS   */
 /* ******************************/
 
-header > p {color:var(--header-fg);background-color:var(--header-bg);} 
+header > p {color:var(--trim-fg);background-color:var(--header-bg);} 
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
@@ -116,7 +116,7 @@ header > ul > li > a:active
  * a distinct color.
  * --------------------------------------------------
  */
-header > ul > li:first-child > a {color:var(--header-fg);}
+header > ul > li:first-child > a {color:var(--trim-fg);}
 
 
 /* ******************************/

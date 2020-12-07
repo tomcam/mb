@@ -1,4 +1,4 @@
-Branding = "Textual theme"
+Branding = "NewsMag"
 Description = ""
 RootStylesheets = ["reset.css", "fonts.css", "bind.css"]
 Stylesheets = ["sizes.css", "theme-light.css", "home.css"]

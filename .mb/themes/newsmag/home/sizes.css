@@ -6,22 +6,22 @@
    * ******************************/
 
   /* Adjusts header height and keeps it vertically centered */
-  --header-height:3rem;
+  --header-height:2rem;
 
   /* Size of the main text in the header. */
-  --branding-height:3rem;
+  --branding-height:2rem;
 
   /* Same as header {margin-top:}  */
   --header-margin-top:0;
 
   /* Same as header {margin-bottom:}  */
-  --header-margin-bottom:3rem;
+  --header-margin-bottom:1em;
 
-   /* Same as header {padding-top:}  */
-  --header-padding-top:3rem;
+  /* Same as header {padding-top:}  */
+  --header-padding-top:1.5em;
 
   /* Same as header {padding-bottom} */
-  --header-padding-bottom:3.5rem;
+  --header-padding-bottom:1em;
 
   /* NOTE: MTF doesn't use padding-left for header.
    * It uses --text-start instead */
@@ -39,6 +39,12 @@
 
   /* Same as nav {margin-bottom} */
   --nav-margin-bottom:0em;
+
+  /* Same as nav {padding-top:}  */
+  --nav-padding-top:0em;
+
+  /* Same as nav {padding-bottom} */
+  --nav-padding-bottom:0em;
 
 
   /* ******************************
