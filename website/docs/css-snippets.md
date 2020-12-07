@@ -33,24 +33,25 @@ aside > ul {
   counter-reset:li;
   list-style-type:none;
   font-size:1rem;
-  line-height:2rem;
+  line-height:1.2rem;
   padding-left:1em;
   border-top:none;
 }
 
 aside > ul li {
+  list-style-type:none;
   border:none;
   font-weight:normal;
 }
 
 aside > ul > li > ul > li {
-  line-height:.75em;
+  line-height:1.5em;
   padding-bottom:1em;
 }
 aside > ul >li {
   font-weight:bold;
   position:relative;
-  padding: .5em .25em 0rem 3em;
+  padding: .5em 1em 0rem 3em;
   border:none;
 } 
 aside > ul > li:before {
@@ -58,6 +59,7 @@ aside > ul > li:before {
   content:counter(li);
   counter-increment:li;
   height:2rem;
+  line-height:2rem;
   width:2em;
   border-radius:50%;
   color: var(--bg);

@@ -19,6 +19,17 @@ https://icongr.am/simple/youtube.svg?size=32&color=FFFFFF
 ```
 
 
+//www.pexels.com/photo/woman-sitting-in-grey-fur-sofa-962784/
+Photo by Daria Shevtsova from Pexels
+
+
+https://www.pexels.com/photo/dark-fog-hot-smoke-6080937/
+Photo by Richard DeCruz from Pexels
+
+
+https://www.pexels.com/photo/mariah-carey-holding-a-microphone-65702/
+Photo by Pixabay from Pexels
+
 Skateboarder by [JayMantri](https://pixabay.com/users/jaymantri-362084/)
 https://pixabay.com/photos/skateboard-skateboarder-young-405894/
 
