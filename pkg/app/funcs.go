@@ -41,7 +41,10 @@ func (a *App) dirNames(params ...string) []string {
 
 // files() obtains a slice of filenames in the specified
 // directory, using a wildcard specified in suffix.
-// Example: {{ files "." "*.jpg }}
+// Example: {{ files "." "*.jpg" }}
+// TODO:
+// 1. Consider security issues
+// 2. Handle insufficent input
 func (a *App) files(dir, suffix string) []string {
 	files, err := filepath.Glob(filepath.Join(dir, suffix))
 	if err != nil {
