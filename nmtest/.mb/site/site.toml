@@ -1,0 +1,43 @@
+AssetDir = "assets"
+BaseDir = ""
+Branding = ""
+CSSDir = ""
+Ganalytics = ""
+ImageDir = ""
+Language = "en"
+Mode = ""
+Name = "ned"
+PublishDir = "/Users/tom/code/mb/ned/.pub"
+SearchJSONFilePath = "/Users/tom/code/mb/ned/.pub/metabuzz-search.json"
+Theme = ""
+ThemesDir = ""
+
+[Author]
+  FullName = ""
+  URL = ""
+  Role = ""
+
+[Company]
+  Name = ""
+  URL = ""
+  HeaderLogo = ""
+
+[MarkdownOptions]
+  HighlightStyle = "github"
+  HeadingIDs = true
+
+[Social]
+  DeviantArt = ""
+  Facebook = "https://www.facebook.com/getmetabuzz"
+  Github = "https://github.com/metabuzz"
+  Gitlab = ""
+  Instagram = ""
+  LinkedIn = ""
+  Pinterest = "https://www.pinterest.com/metabuzz/"
+  Reddit = ""
+  Tumblr = ""
+  Twitter = "https://twitter.com/trymetabuzz"
+  Weibo = ""
+  YouTube = ""
+
+[WebPages]
