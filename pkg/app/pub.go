@@ -20,7 +20,6 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"path"
 	"path/filepath"
 	"strings"
 )
@@ -31,6 +30,28 @@ var (
 </html>
 `
 )
+
+func (a *App) buildSearchIndex() {
+	// Extract the title and body from this page.
+	// Convert to JSON, and add as a record to the
+	// search index file.
+	node := a.markdownAST(a.Page.markdownStart)
+	//docPath := "/" + path.Join(a.Site.path, strings.TrimSuffix(a.Page.filename, ".html"))
+	docPath := a.Site.outfile
+	if strings.HasSuffix(docPath, "/index") {
+		docPath = strings.TrimSuffix(docPath, "index")
+	}
+  a.Verbose("buildSearchIndex(): docPath: %v", docPath)
+	doc := mdext.Doc{
+	Path:  docPath,
+		Title: a.titleTag(),
+		Body:  mdext.BuildDocBody(node, a.Page.markdownStart),
+	}
+	if err := appendIndexDoc(a.Site.SearchJSONFilePath, doc); err != nil {
+		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
+	}
+
+}
 
 // publishFile() is the heart of this program. It converts
 // a Markdown document (with optional TOML at the beginning)
@@ -73,30 +94,15 @@ func (a *App) publishFile(filename string) error {
 	// Open the <head> tag.
 	a.startHTML()
 
+	a.Site.outfile = replaceExtension(filename, "html")
 	// Output filename
-	outfile := replaceExtension(filename, "html")
-	relDir := relDirFile(a.Site.path, outfile)
+	relDir := relDirFile(a.Site.path, a.Site.outfile)
 	// Strip out everything but the filename.
-	base := filepath.Base(outfile)
+	base := filepath.Base(a.Site.outfile)
 
+	a.Site.outfile = filepath.Join(a.Site.PublishDir, relDir, base)
 	title := a.titleTag()
-
-	// Extract the title and body from this page.
-	// Convert to JSON, and add as a record to the
-	// search index file.
-	node := a.markdownAST(a.Page.markdownStart)
-	docPath := "/" + path.Join(relDir, strings.TrimSuffix(base, ".html"))
-	if strings.HasSuffix(docPath, "/index") {
-		docPath = strings.TrimSuffix(docPath, "index")
-	}
-	doc := mdext.Doc{
-		Path:  docPath,
-		Title: title,
-		Body:  mdext.BuildDocBody(node, a.Page.markdownStart),
-	}
-	if err := appendIndexDoc(a.Site.SearchJSONFilePath, doc); err != nil {
-		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
-	}
+  a.buildSearchIndex()
 
 	a.descriptionTag()
 
@@ -152,18 +158,18 @@ func (a *App) publishFile(filename string) error {
 
 	// Generate the full pathname of the matching output file, as it will
 	// appear in its published location.
-	outfile = filepath.Join(a.Site.PublishDir, relDir, base)
+	//a.Site.outfile = filepath.Join(a.Site.PublishDir, relDir, base)
 	// If the write succeeded, rename it to the output file
 	// This way if there was an existing HTML file but there was
 	// an error in output this time, it doesn't get clobbered.
-	if err = os.Rename(tmpFile.Name(), outfile); err != nil {
-		a.QuitError(errs.ErrCode("0212", outfile))
+	if err = os.Rename(tmpFile.Name(), a.Site.outfile); err != nil {
+		a.QuitError(errs.ErrCode("0212", a.Site.outfile))
 	}
 
-	if !fileExists(outfile) {
-		a.QuitError(errs.ErrCode("0910", outfile))
+	if !fileExists(a.Site.outfile) {
+		a.QuitError(errs.ErrCode("0910", a.Site.outfile))
 	}
-	a.Verbose("\tCreated file %s", outfile)
+	a.Verbose("\tCreated file %s", a.Site.outfile)
 	a.fileCount++
 	// a.Page.dir
 	if !a.Site.dirs[a.Page.dir].mdOptions.IsOptionSet(HasIndexMd) &&

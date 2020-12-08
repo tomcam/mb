@@ -87,6 +87,8 @@ type Site struct {
 	// no spaces, for example, 'my-project'
 	Name string
 
+  // Fullly qualified pathname of output file, e.g. index.html
+  outfile string
 	// Full path of the directory where the site source is.
 	path string
 
