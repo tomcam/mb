@@ -8,6 +8,29 @@
 # Replace with your favorite command line editor, which is
 # of course nvim
 editor=nvim
+if [ $1 = "." ]; then 
+  # Something like this:
+  # themevars debut
+  dir=$theme
+  outpath=$dir
+else
+  # Something like this:
+  # themevars debut/gallery
+  pagetype="pagetype=\"$theme\""
+  theme=`dirname ${1}`
+  dir=$theme/$basename
+  outpath=$dir
+fi
+echo "${0} INCOMPLETE 12/7/20. Add propert textual dark theme"
+read _
+mkdir -p $dir
+
+#echo "Created dir ${dir}"
+#echo "Pagetype: ${pagetype}"
+#echo "Theme: ${theme}"
+#echo "Basename: ${basename}"
+#echo "Outpath: ${outpath}"
+
 mkdir -p $1
 echo "Copying the wide theme to ${1}" 
 cp wide/*.md $1

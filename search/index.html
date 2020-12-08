@@ -13,6 +13,7 @@
   <form onsubmit="return doSearch();">
     <input type="text" id="search" name="search"> 
     <label  value="Search" for="search">Search</label>
+     <button type="submit"><i class="fa fa-search"></i></button>
   </form>
 
 
@@ -37,6 +38,7 @@ if (
 // Gets called when the HTML document has finally
 // been loaded. Function doesn't need to be named go().
 function go() {
+  console.log("OK");
   loadFile('metabuzz-search.json','demo')
 }
 
@@ -70,6 +72,7 @@ options = {
 
 function doSearch() {
   str = document.getElementById("search").value 
+  console.log("doSearch() " + str)
   const options = {
     keys: ['body']
   }

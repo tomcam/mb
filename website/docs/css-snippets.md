@@ -157,6 +157,57 @@ article > h3 + ul > li > h4 + p{
 
 
 
+## 12/7/20: Create table of contents in sidebar that shows as boxes of text - maybe a duplicaet of next one, not sure. Good for toc
+
+```
+aside {padding-left:1em;}
+/*
+ * --------------------------------------------------
+ * Sidebar unordered list shows as boxes, without
+ * indentation--it's for table of contents
+ * --------------------------------------------------
+ */
+aside > ul {
+  background-color:whitesmoke;
+  margin-right:1em;
+  margin-left:var(--left-margin);
+  border-collapse:collapse;
+}
+
+
+aside > ul li {
+  list-style-type:none;
+  /* Border bottom stretches across column at all levels 
+   * but produces thicker border for cases in which
+   * a header (say, an h4) is followed by a higher
+   * level header (say, an h2).*/
+  border-top: 1px solid gray;
+  box-shadow: rgb(128,128,128) 1px 1px 1px 0px;
+}
+
+aside > ul li a {
+  padding-left:.5em;padding-right:.5em;
+  text-decoration:none;
+  line-height:1em;
+  /* Only underlines text. Doesn't stretch across the whole
+   * sidebar width. 
+   * border-bottom: 1px solid gray;
+   */
+}
+
+aside > ul li a:active, aside > ul li a:hover {
+  font-weight:bold;
+}
+
+/* Special case: h1 for table of contents
+ * gets distinct look */
+aside > ul > li > a {
+  font-weight:bold;
+}
+
+
+```
+
 
 
 ## Create table of contents in sidebar that shows as boxes of text
