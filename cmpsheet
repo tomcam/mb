@@ -10,8 +10,11 @@ if [ $# -ne 3 ]; then
   echo "$ cmpsheet wide pillar layout.css"
   exit 2
 fi
-echo "Comparing stylesheet ${1} to theme ${2}"
 
 themedir=~/code/mb/.mb/themes
+[ ! -f $themedir/$1/$3 ] && echo "Can't find stylesheet ${themedir}/${1}/${3}" && exit 1
+[ ! -f $themedir/$2/$3 ] && echo "Can't find stylesheet ${themedir}/${2}/${3}" && exit 1
+echo "Comparing stylesheet ${1} to theme ${2}" 
+
 diff $themedir/$1/$3 $themedir/$2/$3 | less
 
