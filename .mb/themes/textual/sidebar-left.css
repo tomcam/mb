@@ -9,13 +9,19 @@ article{padding-left:0;}
 /* Not loving this solution. */
 article { padding-right:var(--sidebar-width);}
 
-aside {padding-left:1em;}
+aside {padding-left:1.5em;padding-right:1.5em;}
+aside > p:first-child > img {border-radius:50%;padding:.5em;width:60%;}
+aside > p {font-weight:normal;font-size:.7rem;padding:0,.5em;0,.5em;text-align:center;}
+aside > p > img {margin:0;width:20%;padding-left:5%;padding-right:5%;}
+aside > hr {margin:2em;height:1px;color:darkgray;margin-left:25%;margin-right:25%;}
+aside > h3, aside > h4 {text-align:center;color:var(--fg);background-color:var(--bg);font-family:var(--informal);font-size:.75rem;font-weight:normal;margin-bottom:0;}
+aside > h3 {font-weight:bold;padding-bottom:1em;}
+aside > h5 {padding-left:2em;padding-right:2em;}
 /*
  * --------------------------------------------------
  * Sidebar unordered list shows as boxes, without
  * indentation--it's for table of contents
  * --------------------------------------------------
- */
 aside > ul {
   background-color:whitesmoke;
   margin-right:1em;
@@ -26,11 +32,6 @@ aside > ul {
 
 aside > ul li {
   list-style-type:none;
-  imargin-left:0;
-  /* Border bottom stretches across column at all levels 
-   * but produces thicker border for cases in which
-   * a header (say, an h4) is followed by a higher
-   * level header (say, an h2).*/
   border-top: 1px solid gray;
   box-shadow: rgb(128,128,128) 1px 1px 1px 0px;
 }
@@ -39,21 +40,16 @@ aside > ul li a {
   padding-left:.5em;padding-right:.5em;
   text-decoration:none;
   line-height:1em;
-  /* Only underlines text. Doesn't stretch across the whole
-   * sidebar width. 
-   * border-bottom: 1px solid gray;
-   */
 }
 
 aside > ul li a:active, aside > ul li a:hover {
   font-weight:bold;
 }
 
-/* Special case: h1 for table of contents
- * gets distinct look */
 aside > ul > li > a {
   font-weight:bold;
 }
+ */
 
 
 

@@ -15,13 +15,13 @@
   --header-margin-top:0;
 
   /* Same as header {margin-bottom:}  */
-  --header-margin-bottom:3rem;
+  --header-margin-bottom:0em;
 
    /* Same as header {padding-top:}  */
-  --header-padding-top:3rem;
+  --header-padding-top:1em;
 
   /* Same as header {padding-bottom} */
-  --header-padding-bottom:3.5rem;
+  --header-padding-bottom:1em;
 
   /* NOTE: MTF doesn't use padding-left for header.
    * It uses --text-start instead */
@@ -32,7 +32,7 @@
    * ******************************/
 
   /* Adjusts navbar height and keeps it vertically centered */
-  --nav-height:5rem;
+  --nav-height:2em;
 
   /* Same as nav {margin-top} */
   --nav-margin-top:0em;

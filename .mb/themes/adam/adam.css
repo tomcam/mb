@@ -166,11 +166,9 @@ article > p >  a:active
  * --------------------------------------------------
  */
 article > img, article > p > img {
-  /*
-   * width:100%;
+  width:100%;
   box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
   display:block;
-   * */
 }
 
 article > table {margin-top:2rem;margin-bottom:3rem;}
@@ -182,10 +180,9 @@ article > table > tbody > tr > td {padding:1rem;}
 /*  SIDEBAR (ASIDE TAG)         */
 /* ******************************/
 
-aside {height:100vh;padding:2em;}
-aside {padding:5%;}
+aside {height:100vh;padding:2.5%;}
 aside > p {text-align:center;}
-iaside > svg {filter: brightness(0.5) sepia(1) hue-rotate(140deg) saturate(6);}
+aside > p > img {width:100%;}
 aside > svg {filter: blur(10px);}
 aside > p > img:last-child {border-radius:50%;margin-top:15vh;width:70%;}
 aside > hr {margin:2em;height:1px;color:darkgray;margin-left:25%;margin-right:25%;}
