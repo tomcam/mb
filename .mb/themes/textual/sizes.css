@@ -144,7 +144,7 @@
    * ******************************/
 
   /* --article-column-width is width of article plus sidebar */
-  --article-column-width:80%;
+  --article-column-width:75%;
 
   --article-text-width: 75%;
 
@@ -156,7 +156,7 @@
   /* --sidebar-width must be the same as
    * --article-column-width MINUS --alt-article-column-width
    */
-  --sidebar-width:20%;    
+  --sidebar-width:25%;    
   --left-margin:0%;
   --right-margin:0%;
   --header-footer-width:100%; 

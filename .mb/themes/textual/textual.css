@@ -59,7 +59,7 @@ nav > img {display:inline;}
  * --------------------------------------------------
  */
 nav > p {margin-top:0;line-height:var(--nav-height);}
-nav > p > a {font-size:1.25em;margin-right:1em;font-weight:700;}
+nav > p > a {font-size:1.25em;margin-right:1em;}
 nav > p > a {font-style:normal;}
 
 nav > p > a,
@@ -90,12 +90,10 @@ nav > ul > li > a:active {text-decoration:underline;}
 /* ******************************/
 
 article {padding-right:var(--article-pad-text-end);}
-article > p, article > ul, article > ol {font-family:var(--formal);}
 article > h1,article > h2 {font-weight:700;}
 article h1 + h2 {margin-top:0;font-size:1.5rem;padding-top:.5em;padding-bottom:.5em;}
 article > h4 {font-weight:normal;font-size:1.25rem;} /* Byline */
 article > h4 > strong {font-weight:bold;} /* Byline */
-article > h4 > em {font-family:var(--times);}
 article > h5 {font-family:var(--code);}
 article > p > strong {font-weight:700;}
 

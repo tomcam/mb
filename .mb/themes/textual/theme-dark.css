@@ -21,17 +21,17 @@
   /* https://coolors.co/01675a-04aa84-9ea93f-fed766-fc9d65-fa6363-696773-3d405b-010536-f8f8f8 */
 
     /* Default foreground (text) and background colors  */
-    --fg:white;
-    --bg:#010536; /* Dark blue. darker #071412;	darkest #040D0B; */
+    --fg:#F6F3EC;
+    --bg:#212121;   /* Charcoal */ 
     /* Default link colors */
-    --a:cyan;
+    --a:var(--fg);
     --a-link: var(--a);
     --a-visited: var(--a);
     --a-hover: var(--a);
     --a-active: var(--a);
 
     /* Secondary foreground (text) and background colors for accents. */
-    --trim-fg:#fed766; /* Lemoney: fed766 Orangey: fc9d65 Light green: 40FFC2; */
+    --trim-fg:#FDA870; /* Lemoney: fed766 Orangey: fc9d65 Light green: 40FFC2; */
     --trim-bg: white;
  
     /* Primary foreground (text) and background colors in header */
@@ -103,10 +103,10 @@ header > p {color:var(--header-fg);background-color:var(--header-bg);}
 header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
-	{color:var(--header-fg);}
+	{color:var(--a);}
 header > ul > li > a:hover,
 header > ul > li > a:active
-	{color:var(--header-fg);}
+	{color:var(--a);}
 
 /*
  * --------------------------------------------------
@@ -147,7 +147,7 @@ article > ul > li > ul > li > a:visited,
 article > ul > li > ul > li > ul > li > a,
 article > ul > li > ul > li > ul > li > a:link,
 article > ul > li > ul > li > ul > li > a:visited
-	{color:#7cbefc;} 
+	{color:var(--a);} 
 article > p >  a:hover,
 article > p >  a:active,
 article > ul > li > a:hover,
@@ -155,39 +155,32 @@ article > ul > li > a:active,
 article > ul > li > ul > li > a:hover,
 article > ul > li > ul > li > a:active,
 article > ul > li > ul > li > ul > li > a:hover
-	{background-color:var(--trim-fg);}
+	{color:var(--a);}
 
-article > p{color:#F2F2F2;}
-article > h1 {color:#F2F2F2;}
-article h1 + h2 {color:var(--trim-fg);}
-article > h2, article > h3 {color:#b8c6d4;}
-article > h4 {color:#F2F2F2;} 
-article > h4 > strong {color:black; } 
+article > p{color:var(--fg);}
 
 article > p > code, article > code, article > pre, article > pre > code {
-		color:#F2F2F2;
+		color:var(--fg);
 }
 
-
-article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
+article > p > strong, article > h3 {font-family:var(--informal);color:var(--trim-fg);}
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
 
+article > h2 {font-weight:bold;}
 
 /* ******************************/
 /*  SIDEBAR COLORS AND BORDERS  */
 /* ******************************/
 
+/*
 aside > p > a,
 aside > p > a:link,
 aside > p >  a:visited
-	{color:#7cbefc;} /* 46AC7A */
-aside > p {color:#F2F2F2;}
-aside > h2 {color:#F2F2F2;}
-aside > h3 {color:#F2F2F2;}
+	{color:#7cbefc;}
 aside > h4 {color:var(--header-bg);background-color:var(--header-fg)}
 aside > h3 > del {color:var(--header-bg);} 
 aside > h5 {color:red;}
-
+*/
 
 /* ******************************/
 /*  FOOTER COLORS AND BORDERS   */

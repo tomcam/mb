@@ -1,3 +1,9 @@
+:root
+{
+  --article-column-width:75%;
+  --sidebar-width:25%;    
+  --text-start:25%;
+}
 
 article{float:right;}
 
@@ -8,15 +14,16 @@ article{padding-left:0;}
 
 /* Not loving this solution. */
 article { padding-right:var(--sidebar-width);}
-
 aside {padding-left:1.5em;padding-right:1.5em;}
-aside > p:first-child > img {border-radius:50%;padding:.5em;width:60%;}
-aside > p {font-weight:normal;font-size:.7rem;padding:0,.5em;0,.5em;text-align:center;}
-aside > p > img {margin:0;width:20%;padding-left:5%;padding-right:5%;}
+aside > p:first-child > img {border-radius:50%;padding:.5em;width:40%;}
+aside > p {font-weight:normal;font-size:.7rem;padding:2em;text-align:center;}
+aside > p > img, aside > p > a > img {width:40%;margin:0;width:20%;padding-left:5%;padding-right:5%;}
 aside > hr {margin:2em;height:1px;color:darkgray;margin-left:25%;margin-right:25%;}
 aside > h3, aside > h4 {text-align:center;color:var(--fg);background-color:var(--bg);font-family:var(--informal);font-size:.75rem;font-weight:normal;margin-bottom:0;}
 aside > h3 {font-weight:bold;padding-bottom:1em;}
-aside > h5 {padding-left:2em;padding-right:2em;}
+aside > h5 {padding-left:4.5em;padding-right:4em;line-height:1.4em;}
+aside a {color:#49A2E5;}
+aside a:hover, aside a:active {text-decoration:none;}
 /*
  * --------------------------------------------------
  * Sidebar unordered list shows as boxes, without
