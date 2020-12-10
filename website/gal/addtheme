@@ -21,7 +21,7 @@ else
   dir=$theme/$basename
   outpath=$dir
 fi
-echo "${0} INCOMPLETE 12/7/20. Add propert textual dark theme"
+echo "${0} INCOMPLETE 12/7/20. Add proper textual dark theme"
 read _
 mkdir -p $dir
 

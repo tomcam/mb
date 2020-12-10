@@ -10,8 +10,16 @@ at [Example site file](site-file-example.html)
 [[[Authors]]](#author): The document creators and maintainers  
 [Branding](#branding): the site's full name  
 [[Company]](#company): Your Organization name and logo  
+[DefaultTheme](#defaulttheme): Theme used by all pages of the site unless specified otherwise in the page's [front matter](front-matter.html)
+[DefaultSidebar](#defaultsidebar): Sidebar setting used by all pages of the site unless specified otherwise in the page's [front matter](front-matter.html)
 [ExcludeExtensions](#exclude-extensions): Prevent types of files from being copied to the publish directory
 
+## DefaultTheme
+Theme used by all pages of the site unless specified otherwise in the page's [front matter](front-matter.html#theme)
+
+## DefaultSidebar
+
+Sidebar setting used by all pages of the site unless specified otherwise in the page's [front matter](front-matter.html#sidebar)
 
 [[Social] section: Social media URLs](#social)  
 

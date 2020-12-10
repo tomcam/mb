@@ -4,16 +4,16 @@ Branding = "Metabuzz"
 Ganalytics = ""
 Language = "en"
 Mode = ""
-Theme = ""
+DefaultTheme = ""
 
 [Author]
-  FullName = ""
-  URL = ""
+  FullName = "Tom Campbell"
+  URL = "https://metabuzz.com"
   Role = ""
 
 [Company]
-  Name = ""
-  URL = ""
+  Name = "Metabuzz"
+  URL = "https://metabuzz.com"
   HeaderLogo = ""
 
 [MarkdownOptions]

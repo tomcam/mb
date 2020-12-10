@@ -23,6 +23,20 @@ Remember to keep your product keyk secret.
 
 ```
 
+## PageType
+See also [Theme](#theme)
+
+## Theme
+Allows you to set the visual appearance on a per-page basis
+by naming a Metabuzz [theme](themes.html). If you don't
+name a theme, Metabuzz looks for a default theme
+set in the [site file](site-file.html#defaulttheme). If
+it can't find one there, it uses the 
+[default theme](themes.html#default-theme).
+
+
+See also [PageType](#pagetype)
+
 ## List
 
 TODO: Explain it needs to be last
