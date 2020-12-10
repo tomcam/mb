@@ -1,9 +1,9 @@
 package app
 
 import (
+	"fmt"
 	"bytes"
 	"encoding/json"
-	//"fmt"
 	//"github.com/tdewolff/minify/v2/css"
 	"github.com/tomcam/mb/pkg/defaults"
 	"github.com/tomcam/mb/pkg/errs"
@@ -51,6 +51,28 @@ func (a *App) buildSearchIndex() {
 		a.QuitError(errs.ErrCode("PREVIOUS", err.Error()))
 	}
 
+}
+
+// sidebarType() determines what sidebar to use,
+// if any.
+// If no value has been set for this page, 
+// it assigns the sidebar value set in 
+// Site.DefaultSidebar.
+func (a *App) sidebarType() {
+	sidebar := strings.ToLower(a.FrontMatter.Sidebar)
+  if sidebar == "" {
+    sidebar = strings.ToLower(a.Site.DefaultSidebar)
+  }
+  if sidebar == "left" || sidebar == "right" {
+    a.FrontMatter.Sidebar = sidebar
+  }
+}
+
+// sidebar() adds a sidebar as appropriate.
+func (a *App) sidebar() {
+	if a.FrontMatter.Sidebar == "left" || a.FrontMatter.Sidebar == "right" {
+		a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Sidebar, "<aside id=\"sidebar\">"))
+	}
 }
 
 // publishFile() is the heart of this program. It converts
@@ -116,6 +138,7 @@ func (a *App) publishFile(filename string) error {
 
 	// Hoover up any miscellaneous files lying around,
 	// like other HTML files, graphic assets, etc.
+  a.sidebarType()
 	a.localFiles(relDir)
 
 	// Write the closing head tag and the opening
@@ -125,10 +148,7 @@ func (a *App) publishFile(filename string) error {
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Header, "<header>"))
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Nav, "<nav>"))
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Article, "<article id=\"article\">"))
-	sidebar := strings.ToLower(a.FrontMatter.Sidebar)
-	if sidebar == "left" || sidebar == "right" {
-		a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Sidebar, "<aside id=\"sidebar\">"))
-	}
+  a.sidebar()
 	a.appendStr(a.layoutElementToHTML(&a.Page.Theme.PageType.Footer, "<footer>"))
 
 	// Inject closing script tags here
@@ -450,7 +470,8 @@ func (a *App) publishAssets() {
 	a.findThemeAssets()
 	// Copy out different stylesheet depending on the
 	// type of sidebar, if any.
-	switch strings.ToLower(a.FrontMatter.Sidebar) {
+  fmt.Printf("publishAssets(): sidebar %v\n", a.FrontMatter.Sidebar)
+	switch a.FrontMatter.Sidebar {
 	case "left":
 		p.Stylesheets = append(p.Stylesheets, "sidebar-left.css")
 	case "right":

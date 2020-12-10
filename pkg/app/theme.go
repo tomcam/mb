@@ -136,7 +136,7 @@ func (a *App) childThemeFullPath() string {
 	return filepath.Join(a.childThemeFullDirectory(), a.FrontMatter.PageType+"."+defaults.ConfigFileDefaultExt)
 }
 
-// loadDefaltTheme(): If the site has a preset theme, load it.
+// loadDefaultTheme(): If the site has a preset theme, load it.
 // If no theme was specified, use the default.
 func (a *App) loadDefaultTheme() {
 	if !dirExists(a.themesPath) {
@@ -145,8 +145,8 @@ func (a *App) loadDefaultTheme() {
 	// If no theme was specified in the front matter,
 	// but one was specified in the site config site.toml,
 	// make the one specified in site.toml the theme.
-	if a.Site.Theme != "" && a.FrontMatter.Theme == "" {
-		a.FrontMatter.Theme = a.Site.Theme
+	if a.Site.DefaultTheme != "" && a.FrontMatter.Theme == "" {
+		a.FrontMatter.Theme = a.Site.DefaultTheme
 	}
 	// If no theme was specified at all, use the Metabuzz default.
 	if a.FrontMatter.Theme == "" {
@@ -786,8 +786,8 @@ func (a *App) updateThemeDirectory(from, dest, tomlFile string, isChild bool) er
 // source theme is specified.
 func (a *App) defaultTheme() string {
 	theme := defaults.DefaultThemeName
-	if a.Site.Theme != "" {
-		theme = a.Site.Theme
+	if a.Site.DefaultTheme != "" {
+		theme = a.Site.DefaultTheme
 	}
 	if cfgString("defaulttheme") != "" {
 		theme = cfgString("defaulttheme")

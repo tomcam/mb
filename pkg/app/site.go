@@ -110,8 +110,12 @@ type Site struct {
 	// Social media URLs
 	Social socialConfig
 
+  // Site defaults to using this sidebar setting unless
+  // a page specifies otherwise
+  DefaultSidebar string
+
 	// Name (not path) of Theme used by this site unless overridden in front matter.
-	Theme string
+	DefaultTheme string
 
 	// Target subdirectory where themes get copied for publication.
 	// It's expected to be a child of the Publish directory.
@@ -198,7 +202,7 @@ func (m MdOptions) IsOptionSet(opt MdOptions) bool {
 type socialConfig struct {
 	DeviantArt string
 	Facebook   string
-	Github     string
+	GitHub     string
 	Gitlab     string
 	Instagram  string
 	LinkedIn   string
