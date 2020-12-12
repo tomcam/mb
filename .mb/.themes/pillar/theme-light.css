@@ -173,6 +173,15 @@ article > h4 > strong {color:black; }
 article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
 
+/*
+ * --------------------------------------------------
+ * Images: light drop shadow 
+ * --------------------------------------------------
+ */
+article > img, article > p > img {
+  box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
+}
+
 
 /* ******************************/
 /*  SIDEBAR COLORS AND BORDERS  */

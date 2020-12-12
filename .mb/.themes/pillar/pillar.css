@@ -3,16 +3,7 @@ html,body,p {font-family:var(--informal),sans-serif;}
 /* OTOH Courier is a lousy code font by default */
 code,pre{font-family:var(--code),monospace;}
 
-/* Indent lists */
-li {margin-left:0em;}
-li li {margin-left:1em;}
-li li li {margin-left:1em;}
-li li li li {margin-left:1em;}
-li li li li li {margin-left:1em;}
-li li li li li li {margin-left:1em;}
-
 table > thead > tr > th  {margin-top:4rem;}
-blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
 /* ****************************/
 /*  HEADER BRANDING AND LINKS */
@@ -86,7 +77,7 @@ nav > p > a {font-style:normal;}
 
 nav > p > a,
 nav > p > a:link,
-nav > p > a:visited {display:inline;text-decoration:none;;} 
+nav > p > a:visited {display:inline;text-decoration:none;padding-right:1em;} 
 /* For accessibility purposes show visual distinction when hovering or active */
 nav > p > a:hover,
 nav > p > a:active {text-decoration:underline;} 
@@ -98,14 +89,13 @@ nav > p > a:active {text-decoration:underline;}
  * a bullet list. 
  * --------------------------------------------------
  */
-nav > ul > li {list-style-type:none;} 
+nav > ul > li {list-style-type:none;padding-right:1em;} 
 nav > ul > li > a,
 nav > ul > li > a:link,
-nav > ul > li > a:visited {display:inline;text-decoration:none;;} 
+nav > ul > li > a:visited {display:inline;text-decoration:none;} 
 /* For accessibility purposes show visual distinction when hovering or active */
 nav > ul > li > a:hover,
 nav > ul > li > a:active {text-decoration:underline;} 
-
 
 /* ******************************/
 /*  ARTICLE-MAIN PORTION OF TEXT*/
@@ -131,15 +121,16 @@ article > ul, article > ol {margin-top:.5em;}
 article > li {margin-left:1rem;}
 
 /* Indent lists */
-article > li {margin-left:0em;}
-article > li li {margin-left:1em;}
-article > li li li {margin-left:1em;}
-article > li li li li {margin-left:1em;}
-article > li li li li li {margin-left:1em;}
-article > li li li li li li {margin-left:1em;}
+/* Handle all levels of nested indentation */
+article ul > li {margin-left:1em; padding-left:0em;}
+article ol > li {margin-left:1em; padding-left:0em;}
 
 article > table > thead > tr > th  {padding-top:2em;}
-article > blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
+article > blockquote  > p{text-indent:-3rem;font-size:1.5em;font-family:var(--times);font-style:italic;margin: 2rem 15% 2rem 15%;padding:2em 1em 2em 4em;border-top:1rem solid var(--nav-fg);background-color:var(--bg);line-height:2rem;}
+article > blockquote > p:before {font-style:normal;content:"\275D";color:var(--trim-fg);font-size:3em;position:relative;left:-.25em;top:-.25em;}
+article > blockquote > p:after {font-style:normal;content: "\275E";color:var(--trim-fg);font-size:3em;line-height:0;vertical-align:-1em;}
+
+
 /*
  * --------------------------------------------------
  * Code listings
@@ -179,7 +170,7 @@ article > img, article > p > img {
   display:block;
 }
 
-article > table {margin-top:2rem;margin-bottom:3rem;}
+article > table {padding-top:1em;padding-bottom:1.5em;}
 article > table > td,th {padding:1rem;}
 article > table > tbody > tr > td {padding:1rem;}
 

@@ -24,7 +24,7 @@
     --fg:#F6F3EC;
     --bg:#212121;   /* Charcoal */ 
     /* Default link colors */
-    --a:var(--fg);
+    --a:#49A2E5;  /* Light blue */v
     --a-link: var(--a);
     --a-visited: var(--a);
     --a-hover: var(--a);
@@ -70,7 +70,7 @@
     --aside-fg: var(--fg);
     --aside-bg: var(--bg);
     /* Link colors specific to sidebar */
-    --a-sidebar: var(--a); 
+    --a-sidebar: var(--a);
     --a-sidebar-link:  var(--a);
     --a-sidebar-visited:  var(--a);
     --a-sidebar-hover: var(--a); 
@@ -135,30 +135,6 @@ nav > p > a:visited {color:var(--nav-fg);}
 /*  ARTICLE COLORS AND BORDERS  */
 /* ******************************/
 
-article > p > a,
-article > p > a:link,
-article > p >  a:visited,
-article > ul > li > a,
-article > ul > li > a:link,
-article > ul > li > a:visited,
-article > ul > li > ul > li > a,
-article > ul > li > ul > li > a:link,
-article > ul > li > ul > li > a:visited,
-article > ul > li > ul > li > ul > li > a,
-article > ul > li > ul > li > ul > li > a:link,
-article > ul > li > ul > li > ul > li > a:visited
-	{color:var(--a);} 
-article > p >  a:hover,
-article > p >  a:active,
-article > ul > li > a:hover,
-article > ul > li > a:active,
-article > ul > li > ul > li > a:hover,
-article > ul > li > ul > li > a:active,
-article > ul > li > ul > li > ul > li > a:hover
-	{color:var(--a);}
-
-article > p{color:var(--fg);}
-
 article > p > code, article > code, article > pre, article > pre > code {
 		color:var(--fg);
 }
@@ -167,6 +143,37 @@ article > p > strong, article > h3 {font-family:var(--informal);color:var(--trim
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
 
 article > h2 {font-weight:bold;}
+
+article ul > li,article ol > li {color:var(--fg);}
+
+
+/* Colors in all levels of lists, including links */
+/* Links default to foreground color with link underline color */
+article a,
+article > p > a,
+article ul > li > a,
+article ul > li > a:link,
+article ul > li > a:visited,
+article ol > li > a,
+article ol > li > a:link,
+article ol > li > a:visited
+  {color:var(--fg);text-decoration:solid underline var(--a);}
+
+article ul > li > a:hover,
+article ul > li > a:active,
+article ol > li > a:hover,
+article ol > li > a:active
+  {text-decoration:none;}
+
+/*
+ * --------------------------------------------------
+ * Images: light drop shadow 
+ * --------------------------------------------------
+ */
+article > img, article > p > img {
+  box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
+}
+
 
 /* ******************************/
 /*  SIDEBAR COLORS AND BORDERS  */
