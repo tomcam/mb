@@ -23,7 +23,7 @@
     --fg:black;
     --bg:#F6F3EC;
     /* Default link colors */
-    --a:#1919DB; /*441997; */ /* var(--trim-fg); */
+    --a:var(--nav-fg); /*441997; */ /* var(--trim-fg); */
     --a-link: var(--a);
     --a-visited: var(--a);
     --a-hover: var(--a);
@@ -139,39 +139,30 @@ nav > p > a:visited {color:var(--nav-fg);}
 /*  ARTICLE COLORS AND BORDERS  */
 /* ******************************/
 
-article > p > a,
-article > p > a:link,
-article > p >  a:visited,
-article > ul > li > a,
-article > ul > li > a:link,
-article > ul > li > a:visited,
-article > ul > li > ul > li > a,
-article > ul > li > ul > li > a:link,
-article > ul > li > ul > li > a:visited,
-article > ul > li > ul > li > ul > li > a,
-article > ul > li > ul > li > ul > li > a:link,
-article > ul > li > ul > li > ul > li > a:visited
-  {
-  color:var(--fg);
-  text-decoration: solid underline red;
-  text-decoration-thickness:.06em;
-  text-underline-offset:.07em;
-  }
-article > p >  a:hover,
-article > p >  a:active,
-article > ul > li > a:hover,
-article > ul > li > a:active,
-article > ul > li > ul > li > a:hover,
-article > ul > li > ul > li > a:active,
-article > ul > li > ul > li > ul > li > a:hover
-	{color:var(--trim-bg);background-color:var(--trim-fg);}
-
 article > p > code, article > code, article > pre, article > pre > code 
   {background-color:#F0F0F0;}    
 article > h4 {color:gray;} 
 article > h4 > strong {color:black; } 
 article > table > thead > tr > th {color:var(--header-bg);background-color:var(--header-fg);}
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
+
+/* Colors in all levels of lists, including links */
+/* Links default to foreground color with link underline color */
+article a,
+article > p > a,
+article ul > li > a,
+article ul > li > a:link,
+article ul > li > a:visited,
+article ol > li > a,
+article ol > li > a:link,
+article ol > li > a:visited
+  {color:var(--fg);text-decoration:solid underline var(--a);}
+
+article ul > li > a:hover,
+article ul > li > a:active,
+article ol > li > a:hover,
+article ol > li > a:active
+  {text-decoration:none;}
 
 /*
  * --------------------------------------------------

@@ -146,7 +146,6 @@ article > h2 {font-weight:bold;}
 
 article ul > li,article ol > li {color:var(--fg);}
 
-
 /* Colors in all levels of lists, including links */
 /* Links default to foreground color with link underline color */
 article a,

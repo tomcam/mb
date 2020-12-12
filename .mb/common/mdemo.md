@@ -1,5 +1,9 @@
 # Metabuzz Markdown quick reference
 
+Metabuzz was designed from the ground up to make creating information-dense websites as fast as possible. If you only know Markdown, you can create a full website starting right now. You don't need to know CSS or HTML. You don't need to understand how to edit front matter, though knowing these things helps. 
+
+If you don't even know Markdown, you're still fine. This page is a quick reference showing all Markdown features and the website has a complete [tutorial](https://metabuzz.com/website/docs/tutorial.html).
+
 **Table of contents** 
 
 * [Common text formatting](#common-text-formatting)
@@ -337,7 +341,7 @@ And here's what results from the table markdown shown above:
 
 #### You type:
 ```
->Hypocrisy waits silently for us all. 
+> Hypocrisy waits silently for us all. 
 ```
 
 #### It shows as:
