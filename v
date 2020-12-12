@@ -12,6 +12,7 @@ vnu=html5validator
 OUTFILE="VNU_CHECK.HTML"
 # Read the file named on the command line, which is $1, 
 # into the variable $INFILE.
+[ ! -f $1 ] && echo "Please specify the CSS filename" && exit 1 
 INFILE=$(<$1)
 # Create the variable $CONTENTS from this HTML, plus
 # insert the contents of $1 inside a style tag. 
