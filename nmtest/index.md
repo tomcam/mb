@@ -3,12 +3,14 @@
 #sidebar="right"
 #pagetype="home"
 theme="textual"
-sidebar="left"
+#sidebar="left"
 
 ===
 
 
 # No Comeback Necessary
+
+Look at [themes](themes/index.html)
 
 #### Story by **Tom Campbell** | Staff reporter | *January 29*
 

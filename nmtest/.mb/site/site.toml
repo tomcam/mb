@@ -9,7 +9,8 @@ Mode = ""
 Name = "ned"
 PublishDir = "/Users/tom/code/mb/ned/.pub"
 SearchJSONFilePath = "/Users/tom/code/mb/ned/.pub/metabuzz-search.json"
-Theme = ""
+DefaultSidebar = ""
+DefaultTheme = ""
 ThemesDir = ""
 
 [Author]
