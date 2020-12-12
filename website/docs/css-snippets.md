@@ -5,6 +5,13 @@ article > h3:before { content: 'foo'; }
 See css-snippets.txt
 
 
+## FUNKY
+
+On the pillar theme, this produced a big red quote at the top of the header.
+```
+article > blockquote {font-size:1.5em;font-family:var(--times);margin: 2rem 15% 2rem 15%;padding:2em;border-top:1rem solid var(--header-bg);background-color:var(--bg);}
+article > blockquote:before {content:"\275D";color:red;font-size:3em;position:absolute;left:1em;top:.5rem;}
+```
 ## Show unordered list in a sidebar as numbers in circles For a news-type section
 
 

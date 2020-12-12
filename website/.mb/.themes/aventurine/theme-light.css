@@ -1,0 +1,55 @@
+/* IMPORTANT: Downloadable fonts should be imported above this rule  */
+:root 
+{
+
+		/* ****************/
+		/* COLORS         */
+		/* ****************/
+		/*
+		 * Most but not all colors used by a theme appear
+		 * in this CSS file as CSS variables, so that you
+		 * can make big changes to your theme by doing 
+		 * nothing more than altering these values.
+		 * 
+		 * Text colors use fg, meaning foreground, and
+		 * background colors use fg. Sometimes they're
+		 * used to color non-text objects, which is why
+		 * they aren't called -text or -background.
+		 *
+		 * --------------------------------------------------
+		 * Header style
+		 * --------------------------------------------------
+		 */
+	
+		/* Default foreground (text) and background colors  */
+		--fg: darkgray;
+		--bg: white;
+
+		/* Default foreground (text) and background colors in article */
+		--article-fg: black;
+		--article-bg: var(--bg);
+				
+		/* Default foreground (text) and background colors in aside */
+		--aside-fg: black;
+		--aside-bg: var(--bg);
+
+		/* Primary foreground (text) and background colors in header */
+		--header-fg: #F5F5F5;
+		--header-bg:white;/* Aventurine #4CB69F; */
+
+		/* Primary foreground (text) and background colors in navbar */
+		--nav-fg:black;
+		--nav-bg:white;
+
+		/* Secondary foreground (text) and background colors for accents. */
+		--trim-fg: #201D3A;
+		--trim-bg: white;
+		
+		/* Primary foreground (text) and background colors in footer */
+		--footer-fg: var(--header-fg);
+		--footer-bg: var(--header-bg);
+
+
+}
+
+

@@ -151,6 +151,7 @@ You can also link to an anchor to other websites, if they have anchors. Here's a
 ```
 
 #### It shows as:
+
 # h1
 ## h2
 ### h3
@@ -213,31 +214,34 @@ fmt.Println("This is a code block")
 
 
 <a name="unordered-lists"><a/>
+
 ### Unordered, or bullet lists
 
 #### You type:
 ```
 Reasons people hate bullet lists
 
-* It reminds them of bad PowerPoint
-* I actually like bullet lists
+* They were traumatized bybad PowerPoint
+* Some peple actually like bullet lists
   + You can indent bullet lists
-  + Just go in a couple spaces, and use `+` instead of bullet
+    - Just use tab, then one of the characters `*`, `+`, `-`
   + The `+` isn't required. It's just for clarity
     - Most Metabuzz themes go up to 3 visible levels
     - Any more levels than 3 makes it hard for the reader
+      + Therefore the Metabuzz theme framework seldom covers indentation levels as deep as this bullet point
 ```
 
 #### It shows as:
 Reasons people hate bullet lists
 
-* It reminds them of bad PowerPoint
-* I actually like bullet lists
+* They were traumatized bybad PowerPoint
+* Some peple actually like bullet lists
   + You can indent bullet lists
-  + Just go in a couple spaces, and use `+` instead of bullet
+    - Just use tab, then one of the characters `*`, `+`, `-`
   + The `+` isn't required. It's just for clarity
     - Most Metabuzz themes go up to 3 visible levels
     - Any more levels than 3 makes it hard for the reader
+      + Therefore the Metabuzz theme framework seldom covers indentation levels as deep as this bullet point
 
 <a name="def-lists"></a>
 ### The "third" list type: definition lists
