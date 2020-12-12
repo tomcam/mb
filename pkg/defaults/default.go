@@ -132,7 +132,7 @@ Welcome to %s
 	// from being made to the originals, and makes it much easier to
 	// make theme changes, especially if you're a noob or just want to
 	// type less.
-	ThemeDir = "themes"
+	ThemeDir = ".themes"
 
 	// Configuration file found in the current site source directory
 	SourceDirConfigFilename = ProductName + "." + ConfigFileDefaultExt

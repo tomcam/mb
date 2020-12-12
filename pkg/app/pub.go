@@ -1,7 +1,7 @@
 package app
 
 import (
-	"fmt"
+	//"fmt"
 	"bytes"
 	"encoding/json"
 	//"github.com/tdewolff/minify/v2/css"
@@ -470,7 +470,6 @@ func (a *App) publishAssets() {
 	a.findThemeAssets()
 	// Copy out different stylesheet depending on the
 	// type of sidebar, if any.
-  fmt.Printf("publishAssets(): sidebar %v\n", a.FrontMatter.Sidebar)
 	switch a.FrontMatter.Sidebar {
 	case "left":
 		p.Stylesheets = append(p.Stylesheets, "sidebar-left.css")
