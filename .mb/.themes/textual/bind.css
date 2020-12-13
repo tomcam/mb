@@ -38,8 +38,7 @@ article > p,
   article > ol, 
   article > li, 
   article > dd, 
-  article > dl,
-  article > hr{
+  article > dl{
   font-size:var(--p-font-size);padding-top:var(--p-padding-top);padding-bottom:var(--p-padding-bottom);margin-top:var(--p-margin-top);margin-bottom:var(--p-margin-bottom);}
 
 article > h1{font-size:var(--h1-font-size);padding-top:var(--h1-padding-top);padding-bottom:var(--h1-padding-bottom);margin-top:var(--h1-margin-top);margin-bottom:var(--h1-margin-bottom);}

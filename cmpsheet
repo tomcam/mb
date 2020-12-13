@@ -11,7 +11,7 @@ if [ $# -ne 3 ]; then
   exit 2
 fi
 
-themedir=~/code/mb/.mb/themes
+themedir=~/code/mb/.mb/.themes
 [ ! -f $themedir/$1/$3 ] && echo "Can't find stylesheet ${themedir}/${1}/${3}" && exit 1
 [ ! -f $themedir/$2/$3 ] && echo "Can't find stylesheet ${themedir}/${2}/${3}" && exit 1
 echo "Comparing stylesheet ${1} to theme ${2}" 

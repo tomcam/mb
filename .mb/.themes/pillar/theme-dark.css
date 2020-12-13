@@ -63,8 +63,8 @@
     --a-article-hover: var(--a); 
     --a-article-active:  var(--a);
     /* Horizontal rule */
-    --hr-fg:var(--article-fg);
-    --hr-bg:var(--article-bg);
+    --hr-fg:var(--fg);
+    --hr-bg:var(--bg);
 
     /* Default foreground (text) and background colors in aside */
     --aside-fg: var(--fg);

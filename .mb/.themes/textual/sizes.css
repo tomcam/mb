@@ -106,6 +106,9 @@
   --h6-margin-top:0em;
   --h6-margin-bottom:0em;
 
+  /* Horizontal rule (hr tag). Same as article > hr  */
+  --hr-height:.125em;
+
 
   /* ******************************
    *  Sidebar dimensions          *

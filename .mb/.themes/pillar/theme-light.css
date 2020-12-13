@@ -63,6 +63,9 @@
     --a-article-hover: var(--a); 
     --a-article-active:  var(--a);
 
+    /* Color of horizontal rule */
+    --hr-fg: var(--fg);
+
     /* Default foreground (text) and background colors in aside */
     --sidebar-fg: var(--fg);
     --sidebar-bg: white;
