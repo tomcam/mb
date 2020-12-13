@@ -24,7 +24,7 @@
     --fg:#F6F3EC;
     --bg:#212121;   /* Charcoal */ 
     /* Default link colors */
-    --a:#49A2E5;  /* Light blue */v
+    --a:#49A2E5;  /* Light blue */
     --a-link: var(--a);
     --a-visited: var(--a);
     --a-hover: var(--a);
