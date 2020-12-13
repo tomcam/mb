@@ -37,9 +37,11 @@ header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
 	{font-weight:400;text-decoration:none;}
+/*
 header > ul > li > a:hover,
 header > ul > li > a:active
 	{text-decoration:underline;}
+*/
 
 /*
  * --------------------------------------------------
@@ -131,6 +133,37 @@ article > blockquote > p:before {font-style:normal;content:"\275D";color:var(--t
 article > blockquote > p:after {font-style:normal;content: "\275E";color:var(--trim-fg);font-size:3em;line-height:0;vertical-align:-1em;}
 
 
+/* Link appearance including all list levels */
+article a,
+article a:link,
+article a:visited,
+article ol a,
+article ol a:link,
+article ol a:visited,
+article ul a,
+article ul a:link,
+article ul a:visited
+  {text-decoration:none;}
+
+/* Link appearance during click or passing over */
+article a:hover,
+article ul a:hover,
+article ul a:active,
+article ol a:hover,
+article ol a:active
+  {text-decoration:none;}
+
+/*
+ * --------------------------------------------------
+ * Images: full width, light drop shadow 
+ * --------------------------------------------------
+ */
+article > img, article > p > img {
+  width:100%;
+  box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
+  display:block;
+}
+
 /*
  * --------------------------------------------------
  * Code listings
@@ -145,30 +178,6 @@ article > p > code, article > code, article > pre, article > pre > code {
   padding: .5em;
   }
 article > pre {line-height:1.5em;font-size:1.1em;}
-
-/*
- * --------------------------------------------------
- * Links in normal paragraph text
- * --------------------------------------------------
- */
-article > p > a,
-article > p > a:link,
-article > p >  a:visited
-	{font-family:var(--informal);}
-article > p >  a:hover,
-article > p >  a:active
-	{text-decoration:none;}
-
-/*
- * --------------------------------------------------
- * Images: full width, light drop shadow 
- * --------------------------------------------------
- */
-article > img, article > p > img {
-  width:100%;
-  box-shadow: rgb(128,128,128) 1px 1px 3px 0px;
-  display:block;
-}
 
 article > table {padding-top:1em;padding-bottom:1.5em;}
 article > table > td,th {padding:1rem;}

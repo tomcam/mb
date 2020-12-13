@@ -147,7 +147,6 @@ article > table > thead > tr > th {color:var(--header-bg);background-color:var(-
 article > table > tbody > tr > td {border-bottom:.1px solid gray;}
 
 /* Colors in all levels of lists, including links */
-/* Links default to foreground color with link underline color */
 article a,
 article a:link,
 article a:visited,
@@ -157,9 +156,9 @@ article ol a:visited,
 article ul a,
 article ul a:link,
 article ul a:visited
-  {text-decoration:none;border-bottom:var(--a) .125em solid;}
+  {color:var(--fg);text-decoration:none;border-bottom:.125em solid var(--a);}
 
-/* Hover states for all links. */
+/* Hover and button hold states for all links. */
 article a:hover,
 article a:active,
 article ol a:hover

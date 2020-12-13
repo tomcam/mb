@@ -32,9 +32,11 @@ header > ul > li > a,
 header > ul > li > a:link,
 header > ul > li > a:visited
 	{font-weight:400;text-decoration:none;}
+
 header > ul > li > a:hover,
 header > ul > li > a:active
 	{text-decoration:underline;}
+
 
 /*
  * --------------------------------------------------
@@ -112,6 +114,26 @@ article > p,
 		line-height:2.5rem;
 }
 
+/* Link appearance including all list levels */
+article a,
+article a:link,
+article a:visited,
+article ol a,
+article ol a:link,
+article ol a:visited,
+article ul a,
+article ul a:link,
+article ul a:visited
+  {text-decoration:none;}
+
+/* Link appearance during click or passing over */
+article a:hover,
+article ul a:hover,
+article ul a:active,
+article ol a:hover,
+article ol a:active
+  {text-decoration:none;}
+
 article > table > thead > tr > th  {padding-top:1em;}
 article > blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
 
@@ -137,20 +159,6 @@ article > pre { padding-left: 1em;line-height:1.5em;font-size:1.1em;}
  * Links in normal paragraph text and lists
  * --------------------------------------------------
  */
-
-article  p > a,
-article  p > a:link,
-article  p >  a:visited,
-ul > li > a,
-ul > li > a:link,
-ul > li > a:visited
-	{font-family:var(--informal);}
-
-article  p > a:hover,
-article  p > a:active,
-article ul > li > a:hover
-article ul > li > a:active
-	{text-decoration:none;}
 
 
 /*

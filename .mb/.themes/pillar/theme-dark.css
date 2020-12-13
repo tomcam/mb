@@ -98,9 +98,6 @@
 /* ******************************/
 
 header > p {color:var(--header-fg);background-color:var(--header-bg);} 
-iheader {border-bottom:1px solid #2d1a52;}  
-iheader {border-bottom:1px solid white;}  
-iheader {border-bottom:1px solid #b8c6d4;}  
 
 header > ul > li > a,
 header > ul > li > a:link,
@@ -140,22 +137,25 @@ nav > p, nav > p > a {color:var(--nav-fg);}
 /* ******************************/
 
 /* Colors in all levels of lists, including links */
-/* Links default to foreground color with link underline color */
 article a,
-article > p > a,
-article ul > li > a,
-article ul > li > a:link,
-article ul > li > a:visited,
-article ol > li > a,
-article ol > li > a:link,
-article ol > li > a:visited
-  {color:var(--fg);text-decoration:solid underline var(--a);}
+article a:link,
+article a:visited,
+article ol a,
+article ol a:link,
+article ol a:visited,
+article ul a,
+article ul a:link,
+article ul a:visited
+  {color:var(--fg);text-decoration:none;border-bottom:.125em solid var(--a);}
 
-article ul > li > a:hover,
-article ul > li > a:active,
-article ol > li > a:hover,
-article ol > li > a:active
-  {text-decoration:none;}
+/* Hover and button hold states for all links. */
+article a:hover,
+article a:active,
+article ol a:hover
+article ol a:active,
+article ul a:hover,
+article ul a:active
+  {text-decoration:none;border-bottom:none;}
 
 
 article > h2, article > h3, article > h4 {font-weight:bold;color:#b8c6d4;}
