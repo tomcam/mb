@@ -23,7 +23,7 @@
     --fg: black;
     --bg: white;
     /* Default link colors */
-    --a:#0072CB;
+    --a:blue; /* #0072CB; */
     --a-visited: var(--a);
     --a-hover: var(--a);
     --a-active: var(--a);
@@ -147,7 +147,7 @@ article > table > thead > tr > th {color:var(--header-bg);background-color:var(-
 article > table > tbody > tr > td {border-bottom:1px solid gray;}
 
 /* Colors in all levels of lists, including links */
-article ul > li,
+article a,
 article ul > li > a,
 article ul > li > a:link,
 article ul > li > a:visited,
@@ -155,7 +155,7 @@ article ol > li,
 article ol > li > a,
 article ol > li > a:link,
 article ol > li > a:visited
-  {color:var(--a);}
+ {color:var(--fg);text-decoration:1px solid underline var(--a);}
 
 article ul > li > a:hover,
 article ul > li > a:active,

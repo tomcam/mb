@@ -19,7 +19,7 @@
 
 {{- if .Site.Social.Twitter }}[![Twitter logo](twitter-blue-30x30.svg)]({{ .Site.Social.Twitter }}){{ end -}}
 
-{{- if .Site.Social.Facebook }}[![Facebook logo](facebook-blue-30x30.svg)]({{ .Site.Social.Facebook }}){{ end -}} 
+{{- if .Site.Social.Facebook }}[![Facebook logo](facebook-blueish-30x30.svg)]({{ .Site.Social.Facebook }}){{ end -}} 
 
 {{- if .Site.Social.Instagram }}[![Instagram logo](instagram-blue-30x30.svg)]({{ .Site.Social.Instagram }}){{ end -}} 
 

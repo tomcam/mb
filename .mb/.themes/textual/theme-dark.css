@@ -156,7 +156,7 @@ article ul > li > a:visited,
 article ol > li > a,
 article ol > li > a:link,
 article ol > li > a:visited
-  {color:var(--fg);text-decoration:solid underline var(--a);}
+  {color:var(--fg);text-underline:solid underline var(--a);}
 
 article ul > li > a:hover,
 article ul > li > a:active,

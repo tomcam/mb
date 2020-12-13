@@ -149,20 +149,24 @@ article > table > tbody > tr > td {border-bottom:.1px solid gray;}
 /* Colors in all levels of lists, including links */
 /* Links default to foreground color with link underline color */
 article a,
-article > p > a,
-article ul > li > a,
-article ul > li > a:link,
-article ul > li > a:visited,
-article ol > li > a,
-article ol > li > a:link,
-article ol > li > a:visited
-  {color:var(--fg);text-decoration:solid underline var(--a);}
+article a:link,
+article a:visited,
+article ol a,
+article ol a:link,
+article ol a:visited,
+article ul a,
+article ul a:link,
+article ul a:visited
+  {text-decoration:none;border-bottom:var(--a) .125em solid;}
 
-article ul > li > a:hover,
-article ul > li > a:active,
-article ol > li > a:hover,
-article ol > li > a:active
-  {text-decoration:none;}
+/* Hover states for all links. */
+article a:hover,
+article a:active,
+article ol a:hover
+article ol a:active,
+article ul a:hover,
+article ul a:active
+  {text-decoration:none;border-bottom:none;}
 
 /*
  * --------------------------------------------------
