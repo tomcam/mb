@@ -262,6 +262,7 @@ func (a *App) writeSiteConfig() error {
 // NewSite() attempts to create an empty
 // project site using the supplied directory name.
 func (a *App) NewSite(sitename string) error {
+  a.Verbose("NewSite %s", sitename)
 	if sitename == "" {
 		return errs.ErrCode("1013", "")
 	}
@@ -284,7 +285,7 @@ func (a *App) NewSite(sitename string) error {
 		return errs.ErrCode("0951", sitename)
 	}
 
-	a.Verbose("Creating site named %s", sitename)
+	a.Verbose("\tCreating site named %s", sitename)
 	// Create the site subdirectory.
 	// Don't do it if already in the directory
 	if !inDirAlready {
@@ -314,6 +315,7 @@ func (a *App) NewSite(sitename string) error {
 
 	// Copy all themes from the application data directory
 	// to the site directory.
+  a.Verbose("\tCopy themes from %s to %s", a.themesPath, a.Site.themesPath)
 	err = copyDirAll(a.themesPath, a.Site.themesPath)
 	if err != nil {
 		a.QuitError(errs.ErrCode("0911", "from '"+a.themesPath+"' to '"+a.Site.themesPath+"'"))

@@ -4,6 +4,10 @@ Metabuzz was designed from the ground up to make creating information-dense webs
 
 If you don't even know Markdown, you're still fine. This page is a quick reference showing all Markdown features and the website has a complete [tutorial](https://metabuzz.com/website/docs/tutorial.html).
 
+** Autogen TOC **
+
+{{ toc }}
+
 **Table of contents** 
 
 * [Common text formatting](#common-text-formatting)

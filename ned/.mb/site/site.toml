@@ -1,0 +1,44 @@
+AssetDir = "assets"
+BaseDir = ""
+Branding = "eBook"
+CSSDir = ""
+Ganalytics = ""
+ImageDir = ""
+Language = "en"
+Mode = ""
+Name = "ned"
+PublishDir = "/Users/tom/code/mb/ned/.pub"
+SearchJSONFilePath = "/Users/tom/code/mb/ned/.pub/metabuzz-search.json"
+DefaultSidebar = ""
+DefaultTheme = ""
+ThemesDir = ""
+
+[Author]
+  FullName = ""
+  URL = ""
+  Role = ""
+
+[Company]
+  Name = ""
+  URL = ""
+  HeaderLogo = ""
+
+[MarkdownOptions]
+  HighlightStyle = "github"
+  HeadingIDs = true
+
+[Social]
+  DeviantArt = ""
+  Facebook = ""
+  GitHub = ""
+  Gitlab = ""
+  Instagram = ""
+  LinkedIn = ""
+  Pinterest = ""
+  Reddit = ""
+  Tumblr = ""
+  Twitter = ""
+  Weibo = ""
+  YouTube = ""
+
+[WebPages]

@@ -1,5 +1,1 @@
-* [News](/)
-* [Specials](/)
-* [Privacy](/)
-* [Contact](/)
 

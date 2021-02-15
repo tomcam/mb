@@ -184,6 +184,7 @@ aside > ul {
 
 aside > ul li {
   list-style-type:none;
+  padding-left:.5em;padding-right:.5em;
   /* Border bottom stretches across column at all levels 
    * but produces thicker border for cases in which
    * a header (say, an h4) is followed by a higher
@@ -193,7 +194,6 @@ aside > ul li {
 }
 
 aside > ul li a {
-  padding-left:.5em;padding-right:.5em;
   text-decoration:none;
   line-height:1em;
   /* Only underlines text. Doesn't stretch across the whole

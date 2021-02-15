@@ -9,7 +9,7 @@
 # The stub HTML file, given in $OUTFILE 
 # below, remains.
 vnu=html5validator
-OUTFILE="VNU_CHECK.HTML"
+OUTFILE="${1}.bak"
 # Read the file named on the command line, which is $1, 
 # into the variable $INFILE.
 [ ! -f $1 ] && echo "Please specify the CSS filename" && exit 1 

@@ -1,5 +1,10 @@
 # Metabuzz Markdown quick reference
 
+## Automatically generated TOC
+
+{{ toc }}
+
+
 **Table of contents** 
 
 * [Common text formatting](#common-text-formatting)

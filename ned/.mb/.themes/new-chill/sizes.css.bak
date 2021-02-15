@@ -1,0 +1,33 @@
+:root 
+{
+  /* ******************************
+   *  Header dimensions           *
+   * ******************************/
+
+	/* Adjusts header height and keeps it vertically centered */
+	--header-height:8rem;
+
+	/* Size of the main text in the header. */
+	--branding-height:4rem;
+
+  /* ******************************
+   *  Navbar dimensions           *
+   * ******************************/
+
+	/* Adjusts navbar height and keeps it vertically centered */
+	--nav-height:2rem;
+
+  /* ******************************
+   *  Make theme pillar style     *
+   * ******************************/
+
+  --article-column-width:65%;
+	--sidebar-width:15%;    
+  --left-margin:10%; 
+  --right-margin:05%;
+  --header-footer-width:80%;
+  --text-start: 0%;
+
+}
+
+ 

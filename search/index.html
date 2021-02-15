@@ -20,8 +20,8 @@
 <!-- <script src="fuse.min.js"></script>
 -->
 <script src="https://cdn.jsdelivr.net/npm/fuse.js"></script>
-var list = {}
 <script>
+var list = {}
 // Ensure document's loaded before running Javascript
 if (
     document.readyState === "complete" ||
@@ -72,7 +72,7 @@ options = {
 
 function doSearch() {
   str = document.getElementById("search").value 
-  console.log("doSearch() " + str)
+  console.log("doSearch() searching for: " + str)
   const options = {
     keys: ['body']
   }
@@ -89,7 +89,9 @@ function doSearch() {
 <pre>python -m SimpleHTTPServer</pre>
 <p>Then navigate to:</p><pre>
 <script>
-document.write('0.0.0.0:8000/' + window.location.pathname.split("/").pop())
+//document.write('window.location: ' + window.location)
+//document.write('0.0.0.0:8000/' + window.location.pathname.split("/").pop())
+document.write(window.location.host)
 </script>
 </pre>
 <!-- This div is filled with the file contents on startup -->

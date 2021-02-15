@@ -10,6 +10,7 @@ theme="reference"
 [Chill](chill/index.html)  
 [CV](cv/index.html)  
 [Debut](debut/index.html)   
+[eBrochure](ebrochure/index.html)   
 [Future](future/index.html)  
 [Genuine](genuine/index.html)  
 [Intro](intro/index.html)  
@@ -20,9 +21,9 @@ theme="reference"
 [Roma](roma/index.html)  
 [Sage](sage/index.html)  
 [Scribble](scribble/index.html)  
+[Textual](textual/index.html)  
 [Timeline](timeline/index.html)  
 [Update](update/index.html)  
-[Wide](wide/index.html)  
 [Wings](wings/index.html)  
 [Zack](zack/index.html)  
 

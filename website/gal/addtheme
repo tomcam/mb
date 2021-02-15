@@ -5,6 +5,9 @@
 # You still have a number of things to personalize, documented below.
 [ ! $1 ] && echo "Please specify the new theme name" && exit 1
 
+# Theme to copy and paste
+startwith=textual
+
 # Replace with your favorite command line editor, which is
 # of course nvim
 editor=nvim
@@ -21,8 +24,6 @@ else
   dir=$theme/$basename
   outpath=$dir
 fi
-echo "${0} INCOMPLETE 12/7/20. Add proper textual dark theme"
-read _
 mkdir -p $dir
 
 #echo "Created dir ${dir}"
@@ -33,8 +34,8 @@ mkdir -p $dir
 
 mkdir -p $1
 echo "Copying the wide theme to ${1}" 
-cp wide/*.md $1
-cp wide/*.sidebar $1
+cp $startwith/*.md $1
+cp $startwith/*.sidebar $1
 [ ! -d $1 ] && echo "theme directory ${1} doesn't exist" && exit 1
 declare -a filenames=(
 	'dark.md'
@@ -54,8 +55,8 @@ declare -a filenames=(
 dest=$1
 
 # Displays prompt, and waits for user to answer 
-# with either a Y or N. Repeats prompt until
-# it gets one of those two.
+# with either a Y or N (either case), then pressing Enter. 
+# Repeats prompt until it gets one of those two.
 # Return 0 if answer was Y,
 # return 1 if answer was N.
 # 
@@ -65,7 +66,6 @@ dest=$1
 #   wait_for_yes "Please enter y or n "
 wait_for_yes() {
   while :; do
-    #echo -n "${1} "
     echo "${1} "
     read answer
     case "$answer" in
@@ -86,14 +86,14 @@ wait_for_yes() {
 for file in "${filenames[@]}"
 do
 	# Display the commmand to execute...
-	echo "${file}"
+	echo "    ${file}"
 	# And execute the command
   # Thank you, Sundeep!
   # https://stackoverflow.com/questions/62254934/zsh-on-macos-1-not-expanding-in-a-sed-script?noredirect=1#comment110102949_62254934
   sed -i.bak -E 's/theme=\"(.*).*\"/\theme=\"'$1'\"/' $dest/$file > $dest/$file.bak
-  #sed -E 's/theme=\"(.*).*\"/\theme=\"'$1'\"/' < $dest/$file 
 done
   sed -i.bak -E 's/DemoTheme=\"(.*).*\"/\DemoTheme=\"'$1'\"/' $1/index.md > $1/index.bak
+echo ""
 echo "Don't forget to fix Next in the front matter. That links to the next theme."
 echo "Now customize the following:"
 echo "* Replace ${dest}/intro.md with any images, text or other material you"
@@ -101,10 +101,10 @@ echo "* would like to precede the kitchensink with"
 echo "* Replace ${dest}/description.md with a pitch describing the theme"
 echo "* Replace ${dest}/left-sidebar-example.md with left sidebar content for this theme"
 echo "* Replace ${dest}/right-sidebar-example.md with right sidebar content for this theme"
-echo "* Create a 1280x1280 PNG image of the best-looking version of the theme and save it as theme-1280x1024.png"
-echo "* Create a 1280x1280 PNG image of the best-looking version of the theme and save it as theme-1280x1280.png"
-     
-wait_for_yes "Run nvim on these files?"
+echo "* Create a 1280x1024 PNG image of the best-looking version of the theme and save it as theme-1280x1024.png"
+echo "" 
+
+wait_for_yes "Ready to edit these files?"
 if [ $? == 0 ]; then
 $editor ${dest}/index.md ${dest}/intro.md ${dest}/description.md ${dest}/left-sidebar-example.md ${dest}/right-sidebar-example.md 
 fi
@@ -115,13 +115,13 @@ if [ $? == 0 ]; then
 rm $1/*.bak 
 fi
 
-echo "* Create 6 thumbnails (ideally 3 light, 3 dark) of themes and name them as needed:"
-echo "  light-sidebar-left-256x256.png"
-echo "  light-sidebar-right-256x256.png"
-echo "  light-sidebar-none-256x256.png"
-echo "  dark-sidebar-left-256x256.png"
-echo "  dark-sidebar-right-256x256.png"
-echo "  dark-sidebar-none-256x256.png"
+echo "Create 6 thumbnails (ideally 3 light, 3 dark) of themes and name them as follows:"
+echo "* light-sidebar-left-256x256.png"
+echo "* light-sidebar-right-256x256.png"
+echo "* light-sidebar-none-256x256.png"
+echo "* dark-sidebar-left-256x256.png"
+echo "* dark-sidebar-right-256x256.png"
+echo "* dark-sidebar-none-256x256.png"
  
 exit 0
 
