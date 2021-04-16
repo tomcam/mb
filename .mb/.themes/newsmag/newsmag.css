@@ -107,18 +107,14 @@ article > p,
   article > dl,
   article > hr {
 		line-height:2.5rem;
+		padding-right:var(--right-end);
 }
 
-/* Indent lists */
-article > li {margin-left:0em;}
-article > li li {margin-left:1em;}
-article > li li li {margin-left:1em;}
-article > li li li li {margin-left:1em;}
-article > li li li li li {margin-left:1em;}
-article > li li li li li li {margin-left:1em;}
-
 article > ul, article > ol {margin-top:.5em;}
+/* Indent lists */
 article > li {margin-left:1rem;}
+article ul > li {margin-left:1em;padding-left:0em;}
+article ol > li {margin-left:1em;padding-left:0em;}
 
 article > table > thead > tr > th  {padding-top:2em;}
 article > blockquote {font-style:italic;margin: 2rem 2rem 2rem 2rem;}
@@ -144,28 +140,25 @@ article > pre { padding-left: 1em;line-height:1.5em;font-size:1.1em;}
  * Links in normal paragraph text and lists
  * --------------------------------------------------
  */
-article > p > a,
-article > p > a:link,
-article > p >  a:visited,
-article > ul > li > a,
-article > ul > li > a:link,
-article > ul > li > a:visited,
-article > ul > li > ul > li > a,
-article > ul > li > ul > li > a:link,
-article > ul > li > ul > li > a:visited,
-article > ul > li > ul > li > ul > li > a,
-article > ul > li > ul > li > ul > li > a:link,
-article > ul > li > ul > li > ul > li > a:visited
-	{font-family:var(--informal);text-decoration:underline;}
-article > p >  a:hover,
-article > p >  a:active,
-article > ul > li > a:hover,
-article > ul > li > a:active,
-article > ul > li > ul > li > a:hover,
-article > ul > li > ul > li > a:active,
-article > ul > li > ul > li > ul > li > a:hover,
-article > ul > li > ul > li > ul > li > a:active
-	{text-decoration:none;}
+/* Link appearance including all list levels */
+article a,
+article a:link,
+article a:visited,
+article ol a,
+article ol a:link,
+article ol a:visited,
+article ul a,
+article ul a:link,
+article ul a:visited
+  {text-decoration:none;}
+
+/* Link appearance during click or passing over */
+article a:hover,
+article ul a:hover,
+article ul a:active,
+article ol a:hover,
+article ol a:active
+  {text-decoration:none;}
 
 /*
  * --------------------------------------------------
