@@ -226,7 +226,7 @@ fmt.Println("This is a code block")
 ```
 Reasons people hate bullet lists
 
-* They were traumatized bybad PowerPoint
+* They were traumatized by bad PowerPoint
 * Some peple actually like bullet lists
   + You can indent bullet lists
     - Just use tab, then one of the characters `*`, `+`, `-`
@@ -237,9 +237,10 @@ Reasons people hate bullet lists
 ```
 
 #### It shows as:
+
 Reasons people hate bullet lists
 
-* They were traumatized bybad PowerPoint
+* They were traumatized by bad PowerPoint
 * Some peple actually like bullet lists
   + You can indent bullet lists
     - Just use tab, then one of the characters `*`, `+`, `-`
@@ -298,7 +299,7 @@ You can combine them to make a clickable image, like this:
 ## Tables
 
 Use this method of creating tables. Columns are normally left-aligned,
-but `:|` on the row of dashes right-aligns a column, and  `|:--:|` center-aligns a column.
+but `:|` on the row of dashes right-aligns a column, and  `|:-` and  `-:|` center-aligns a column.
 Headers are always centered.
 
 #### You type:
