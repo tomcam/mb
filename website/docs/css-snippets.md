@@ -75,7 +75,7 @@ aside > ul > li:before {
   left:0;
 }
 
-``
+```
 
 ## Under an h3, show 3 pictures per row with a caption area underneath
 
@@ -256,6 +256,8 @@ aside > ul li a:active, aside > ul li a:hover {
 
 
 ## Remove bullet characters from nested ul li for table of contents generation
+
+```
 article > ul > li, 
   article > ul > li > ul > li, 
   article > ul > li > ul > li > ul > li,
@@ -263,14 +265,16 @@ article > ul > li,
   article > ul > li > ul > li > ul > li > ul > li > ul > li,
   article > ul > li > ul > li > ul > li > ul > li > ul > li, ul > li
   {list-style-type:none;}
+```
 
-## Last item shows as button-type thing
+## Last item in a header unordered list shows outlined, simulating a button
 
 ```
 header > ul > li:last-child > a {border: 2px solid var(--header-fg);color:var(--header-fg);}  
 ```
 ## Gallery thingie
 
+```
 article > h2 {margin-top:4rem;clear:left;}
 article > h2 + ul {
 	padding:0;
@@ -301,10 +305,11 @@ article > h2 + ul li {
 article > h2 + ul li:nth-child(2) {
 	display:block;
 }
+```
 
+## Alt version of gallery? Don't remember.
 
-## Backup cpy of ballery thingie Iguess
-
+```
 article > h2 {margin-top:4rem;clear:left;}
 article > h2 + ul {
 	padding:0;
@@ -335,7 +340,7 @@ article > h2 + ul li {
 article > h2 + ul li:nth-child(2) {
 	display:block;
 }
-
+```
 
 
 
